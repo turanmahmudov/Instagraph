@@ -13,14 +13,10 @@ Search "Instagraph" on Ubuntu Store and Install the app
 ## Missing Features
 
 ## Contributing
-1. Fork it
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request
 
 ## Credits
 - Creator & Developer: Turan Mahmudov <[turan.mahmudov@gmail.com](mailto:turan.mahmudov@gmail.com)>
+- Icons: Kevin Feyder <[kevinfeyder@gmail.com](mailto:kevinfeyder@gmail.com)>
 
 ## Support
 Reach out to me at one of the following places!
