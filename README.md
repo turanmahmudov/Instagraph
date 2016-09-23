@@ -18,6 +18,12 @@ Search "Instagraph" on Ubuntu Store and Install the app
 - Creator & Developer: Turan Mahmudov <[turan.mahmudov@gmail.com](mailto:turan.mahmudov@gmail.com)>
 - Icons: Kevin Feyder <[kevinfeyder@gmail.com](mailto:kevinfeyder@gmail.com)>
 
+## Libraries
+- <[mgp25/Instagram-API](https://github.com/mgp25/Instagram-API)>: Instagram's private API
+- <[instantfx](http://launchpad.net/instantfx)>: A photo filter application for Ubuntu Devices
+- <[neochapay/Prostogram](https://github.com/neochapay/Prostogram)>: An unoffical Instagram client for Sailfish
+- <[mitmproxy/mitmproxy](https://github.com/mitmproxy/mitmproxy)>: An interactive SSL-capable intercepting HTTP proxy
+
 ## Support
 Reach out to me at one of the following places!
 
