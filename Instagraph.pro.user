@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.1.0, 2016-09-23T21:41:11. -->
+<!-- Written by QtCreator 4.1.0, 2016-09-23T23:29:33. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -774,8 +774,8 @@
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">UbuntuProjectManager.UploadStep</value>
       <valuelist type="QVariantList" key="Qt4ProjectManager.MaemoRunConfiguration.LastDeployedFiles">
-       <value type="QString">/home/turan/Apps/build-Instagraph-UbuntuSDK_for_device_armhf_GCC_armhf_ubuntu_sdk_15_04-Debug/instagraph-donate.turan-mahmudov-l_0.0.8_multi.click</value>
        <value type="QString">/home/turan/Apps/build-Instagraph-UbuntuSDK_for_device_armhf_GCC_armhf_ubuntu_sdk_15_04-Debug/instagraph-donate.turan-mahmudov-l_0.0.9_multi.click</value>
+       <value type="QString">/home/turan/Apps/build-Instagraph-UbuntuSDK_for_device_armhf_GCC_armhf_ubuntu_sdk_15_04-Debug/instagraph-donate.turan-mahmudov-l_0.0.8_multi.click</value>
        <value type="QString">/home/turan/Apps/build-Instagraph-UbuntuSDK_for_device_armhf_GCC_armhf_ubuntu_sdk_15_04-Debug/instagraph-donate.turan-mahmudov-l_0.0.10_multi.click</value>
        <value type="QString">/usr/ubuntu-sdk-ide/share/qtcreator/ubuntu/scripts/qtc_device_applaunch.py</value>
       </valuelist>
@@ -798,8 +798,8 @@
        <value type="QString">/var/lib/lxd/containers/device-armhf/rootfs</value>
       </valuelist>
       <valuelist type="QVariantList" key="Qt4ProjectManager.MaemoRunConfiguration.LastDeployedTimes">
-       <value type="QDateTime">2016-09-03T15:29:25</value>
        <value type="QDateTime">2016-09-20T17:38:36</value>
+       <value type="QDateTime">2016-09-03T15:29:25</value>
        <value type="QDateTime">2016-09-13T01:28:08</value>
        <value type="QDateTime">2016-09-20T17:38:36</value>
       </valuelist>

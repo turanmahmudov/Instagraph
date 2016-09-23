@@ -88,7 +88,7 @@ Page {
                }
            }
 
-           /*ListItem.Base {
+           ListItem.Base {
                width: parent.width
                progression: true
                showDivider: true
@@ -114,7 +114,7 @@ Page {
                        text: "An unoffical Instagram client for Sailfish"
                    }
                }
-           }*/
+           }
 
            ListItem.Base {
                width: parent.width
