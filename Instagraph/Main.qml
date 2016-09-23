@@ -95,13 +95,9 @@ MainView {
         onImageSaved: {
             __output.setDefaultSize()
 
-            //isSavingImage = false
-
             console.log("file saved as", path);
 
             Scripts.pushImageCaption(path)
-
-            //exportPeer.save(path)
         }
     }
 
