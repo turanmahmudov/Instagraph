@@ -1,5 +1,3 @@
-![Instagraph](https://raw.githubusercontent.com/turanmahmudov/Instagraph/master/Instagraph/Instagraph.png)
-
 # Instagraph
 [![License](https://img.shields.io/badge/license-GPLv3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.en.html)
 [![GitHub release](https://img.shields.io/github/release/turanmahmudov/Instagraph.svg)](https://github.com/turanmahmudov/Instagraph)
