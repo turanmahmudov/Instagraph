@@ -1,0 +1,18 @@
+[
+    {
+        "protocol": "http",
+        "domain-suffix": "www.instagram.com"
+    },
+    {
+        "protocol": "http",
+        "domain-suffix": "instagram.com"
+    },
+    {
+        "protocol": "https",
+        "domain-suffix": "www.instagram.com"
+    },
+    {
+        "protocol": "https",
+        "domain-suffix": "instagram.com"
+    }
+]

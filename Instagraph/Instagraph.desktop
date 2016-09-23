@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Instagraph
+Comment=Unofficial Instagram Client
+Keywords=instagram;insta;gram;instagraph;
+Exec=Instagraph
+Icon=Instagraph/Instagraph.png
+Terminal=false
+Type=Application
+X-Ubuntu-Touch=true
+X-Ubuntu-Splash-Color=#ffffff

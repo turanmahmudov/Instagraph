@@ -1,0 +1,19 @@
+{
+    "name": "instagraph-donate.turan-mahmudov-l",
+    "description": "Unofficial Instagram Client",
+    "architecture": [
+        "armhf",
+        "i386",
+        "amd64"
+    ],
+    "title": "Instagraph",
+    "hooks": {
+        "Instagraph": {
+            "apparmor": "Instagraph/Instagraph.apparmor",
+            "desktop": "Instagraph/Instagraph.desktop"
+        }
+    },
+    "version": "0.0.9",
+    "maintainer": "Turan Mahmudov <turan.mahmudov@gmail.com>",
+    "framework": "ubuntu-sdk-15.04.6"
+}
