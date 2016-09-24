@@ -135,5 +135,6 @@ DISTFILES += \
     qml/ui/ImportPhotoPage.qml \
     qml/ui/SearchLocation.qml \
     qml/ui/LocationFeedPage.qml \
-    qml/components/ClaritySettingsPanel.qml
+    qml/components/ClaritySettingsPanel.qml \
+    qml/components/EmptyBox.qml
 

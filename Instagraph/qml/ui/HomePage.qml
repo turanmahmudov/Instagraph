@@ -241,7 +241,7 @@ Page {
         }
     }
 
-    Column {
+    EmptyBox {
         visible: isEmpty
         width: parent.width
         spacing: units.gu(0.5)
@@ -250,49 +250,8 @@ Page {
             horizontalCenter: parent.horizontalCenter
         }
 
-        Rectangle {
-            width: parent.width
-            height: units.gu(0.17)
-            color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
-        }
-
-        Item {
-            width: parent.width
-            height: units.gu(4)
-        }
-
-        Item {
-            width: parent.width
-            height: units.gu(2)
-
-            Label {
-                text: i18n.tr("Welcome to Instagraph!")
-                font.weight: Font.DemiBold
-                fontSize: "large"
-                wrapMode: Text.WordWrap
-                anchors.centerIn: parent
-            }
-        }
-
-        Item {
-            width: parent.width
-            height: units.gu(1)
-        }
-
-        Item {
-            width: parent.width
-            height: empDescription.height
-
-            Label {
-                id: empDescription
-                width: parent.width - units.gu(2)
-                text: i18n.tr("Follow accounts to see photos and videos here in your feed.")
-                horizontalAlignment: Text.AlignHCenter
-                font.weight: Font.Light
-                wrapMode: Text.WordWrap
-                anchors.centerIn: parent
-            }
-        }
+        title: i18n.tr("Welcome to Instagraph!")
+        description: i18n.tr("Follow accounts to see photos and videos here in your feed.")
     }
 
     Connections{

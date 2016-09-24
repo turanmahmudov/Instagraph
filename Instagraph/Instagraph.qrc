@@ -94,5 +94,6 @@
         <file>qml/ui/SearchLocation.qml</file>
         <file>qml/ui/LocationFeedPage.qml</file>
         <file>qml/components/ClaritySettingsPanel.qml</file>
+        <file>qml/components/EmptyBox.qml</file>
     </qresource>
 </RCC>
