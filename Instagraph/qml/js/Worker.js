@@ -6,17 +6,27 @@ WorkerScript.onMessage = function(msg) {
     if (msg.commentsModel) {
         var commentsModel = msg.commentsModel;
     }
+    if (msg.suggestionsModel) {
+        var suggestionsModel = msg.suggestionsModel;
+    }
 
     if (msg.clear_model) {
         model.clear();
         if (msg.commentsModel) {
             commentsModel.clear();
         }
+        if (msg.suggestionsModel) {
+            suggestionsModel.clear();
+        }
     }
 
     // Object loop
     for (var i = 0; i < obj.length; i++) {
-        if (feed != "homePage" || obj[i].type != "3") {
+        if (feed == 'homePage' && obj[i].type == "3") {
+            suggestionsModel.append(obj[i]);
+
+            suggestionsModel.sync();
+        } else {
             if (feed != 'searchPage') {
                 obj[i].video_url = obj[i].video_versions ? obj[i].video_versions[0].url : ''
             }

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-23 01:44+0000\n"
+"POT-Creation-Date: 2016-09-24 01:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -251,7 +251,7 @@ msgstr ""
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:14
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:75
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:464
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:310
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:317
 msgid "Edit Profile"
 msgstr ""
 
@@ -290,6 +290,14 @@ msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:15
 msgid "Instagraph"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:269
+msgid "Welcome to Instagraph!"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:289
+msgid "Follow accounts to see photos and videos here in your feed."
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ImportPhotoPage.qml:28
@@ -340,6 +348,15 @@ msgstr ""
 msgid "You"
 msgstr ""
 
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:489
+msgid "Activity from people you follow"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:509
+msgid ""
+"When someone you follow comments on or likes a post, you'll see it here."
+msgstr ""
+
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:16
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:27
 msgid "Options"
@@ -381,17 +398,17 @@ msgid "Block"
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:331
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:227
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:234
 msgid "posts"
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:358
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:254
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:261
 msgid "followers"
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:393
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:289
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:296
 msgid "following"
 msgstr ""
 
@@ -411,7 +428,7 @@ msgstr ""
 msgid "This account is private."
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:684
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:686
 msgid "Follow to see their photos and videos."
 msgstr ""
 
@@ -456,6 +473,10 @@ msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:16
 msgid "User"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:509
+msgid "Start capturing and sharing your moments"
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:55

@@ -13,7 +13,7 @@
             "desktop": "Instagraph/Instagraph.desktop"
         }
     },
-    "version": "0.0.9",
+    "version": "0.0.10",
     "maintainer": "Turan Mahmudov <turan.mahmudov@gmail.com>",
     "framework": "ubuntu-sdk-15.04.6"
 }

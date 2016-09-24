@@ -678,10 +678,13 @@ Page {
 
                 Item {
                     width: parent.width
-                    height: units.gu(2)
+                    height: prvDescription.height
 
                     Label {
+                        id: prvDescription
+                        width: parent.width - units.gu(2)
                         text: i18n.tr("Follow to see their photos and videos.")
+                        horizontalAlignment: Text.AlignHCenter
                         font.weight: Font.Light
                         wrapMode: Text.WordWrap
                         anchors.centerIn: parent

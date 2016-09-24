@@ -31,15 +31,23 @@ Page {
 
     property bool list_loading: false
 
+    property bool isEmpty: false
+
     function mediaDataFinished(data) {
+        if (data.num_results == 0) {
+            isEmpty = true;
+        } else {
+            isEmpty = false;
+        }
+
         if (next_max_id == data.next_max_id) {
             return false;
         } else {
-            next_max_id = data.next_max_id;
+            next_max_id = data.more_available == true ? data.next_max_id : "";
             more_available = data.more_available;
             next_coming = true;
 
-            worker.sendMessage({'feed': 'homePage', 'obj': data.items, 'model': homePhotosModel, 'commentsModel': homePhotosCommentsModel, 'clear_model': clear_models})
+            worker.sendMessage({'feed': 'homePage', 'obj': data.items, 'model': homePhotosModel, 'commentsModel': homePhotosCommentsModel, 'suggestionsModel': homeSuggestionsModel, 'clear_model': clear_models})
 
             next_coming = false;
         }
@@ -81,15 +89,134 @@ Page {
         id: homePhotosModel
     }
 
+    ListModel {
+        id: homeSuggestionsModel
+    }
+
+    ListView {
+        id: homeSuggestionsList
+        visible: homeSuggestionsModel.count > 0
+        anchors {
+            left: parent.left
+            leftMargin: units.gu(1)
+            right: parent.right
+            rightMargin: units.gu(1)
+            top: homepage.header.bottom
+        }
+        model: homeSuggestionsModel
+        delegate: ListItem {
+            id: searchUsersDelegate
+            divider.visible: false
+            height: entry_column.height + units.gu(1)
+
+            Column {
+                id: entry_column
+                spacing: units.gu(1)
+                anchors {
+                    left: parent.left
+                    leftMargin: units.gu(1)
+                    right: parent.right
+                    rightMargin: units.gu(1)
+                }
+
+                Item {
+                    width: parent.width
+                    height: units.gu(0.1)
+                }
+
+                Row {
+                    spacing: units.gu(1)
+                    width: parent.width
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    Item {
+                        width: units.gu(5)
+                        height: width
+
+                        UbuntuShape {
+                            width: parent.width
+                            height: width
+                            radius: "large"
+
+                            source: Image {
+                                id: feed_user_profile_image
+                                width: parent.width
+                                height: width
+                                source: status == Image.Error ? "../images/not_found_user.jpg" : profile_pic_url
+                                fillMode: Image.PreserveAspectCrop
+                                anchors.centerIn: parent
+                                sourceSize: Qt.size(width,height)
+                                smooth: true
+                                clip: true
+                            }
+                        }
+
+                        Item {
+                            width: activity.width
+                            height: width
+                            anchors.centerIn: parent
+                            opacity: feed_user_profile_image.status == Image.Loading
+
+                            Behavior on opacity {
+                                UbuntuNumberAnimation {
+                                    duration: UbuntuAnimation.SlowDuration
+                                }
+                            }
+
+                            ActivityIndicator {
+                                id: activity
+                                running: true
+                            }
+                        }
+                    }
+
+                    Column {
+                        width: parent.width - units.gu(12)
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        Text {
+                            text: username
+                            wrapMode: Text.WordWrap
+                            elide: Text.ElideRight
+                            maximumLineCount: 1
+                            font.weight: Font.DemiBold
+                            width: parent.width
+                        }
+
+                        Text {
+                            text: full_name
+                            wrapMode: Text.WordWrap
+                            elide: Text.ElideRight
+                            maximumLineCount: 1
+                            width: parent.width
+                        }
+                    }
+
+                    FollowComponent {
+                        width: units.gu(5)
+                        height: units.gu(3)
+                        friendship_var: friendship_status
+                        userId: pk
+                    }
+                }
+            }
+
+            onClicked: {
+                pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameString: username});
+            }
+        }
+    }
+
     ListView {
         id: homePhotosList
+        visible: !isEmpty
         anchors {
             left: parent.left
             leftMargin: units.gu(1)
             right: parent.right
             rightMargin: units.gu(1)
             bottom: bottomMenu.top
-            top: homepage.header.bottom
+            top: homeSuggestionsModel.count == 0 ? homepage.header.bottom : homeSuggestionsList.bottom
         }
         onMovementEnded: {
             if (atYEnd && more_available && !next_coming) {
@@ -114,11 +241,70 @@ Page {
         }
     }
 
+    Column {
+        visible: isEmpty
+        width: parent.width
+        spacing: units.gu(0.5)
+        anchors {
+            top: homeSuggestionsModel.count == 0 ? homepage.header.bottom : homeSuggestionsList.bottom
+            horizontalCenter: parent.horizontalCenter
+        }
+
+        Rectangle {
+            width: parent.width
+            height: units.gu(0.17)
+            color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
+        }
+
+        Item {
+            width: parent.width
+            height: units.gu(4)
+        }
+
+        Item {
+            width: parent.width
+            height: units.gu(2)
+
+            Label {
+                text: i18n.tr("Welcome to Instagraph!")
+                font.weight: Font.DemiBold
+                fontSize: "large"
+                wrapMode: Text.WordWrap
+                anchors.centerIn: parent
+            }
+        }
+
+        Item {
+            width: parent.width
+            height: units.gu(1)
+        }
+
+        Item {
+            width: parent.width
+            height: empDescription.height
+
+            Label {
+                id: empDescription
+                width: parent.width - units.gu(2)
+                text: i18n.tr("Follow accounts to see photos and videos here in your feed.")
+                horizontalAlignment: Text.AlignHCenter
+                font.weight: Font.Light
+                wrapMode: Text.WordWrap
+                anchors.centerIn: parent
+            }
+        }
+    }
+
     Connections{
         target: instagram
         onTimeLineDataReady: {
+            console.log(answer)
             var data = JSON.parse(answer);
-            mediaDataFinished(data);
+            if (data.status == "ok") {
+                mediaDataFinished(data);
+            } else {
+                // error
+            }
         }
     }
 

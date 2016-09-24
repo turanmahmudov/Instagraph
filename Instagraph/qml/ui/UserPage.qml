@@ -43,6 +43,8 @@ Page {
 
     property bool list_loading: false
 
+    property bool isEmpty: false
+
     function usernameDataFinished(data) {
         userPage.header.title = data.user.username;
         uzimage.source = data.user.profile_pic_url;
@@ -54,11 +56,16 @@ Page {
         uzfollowing_count.text = data.user.following_count;
     }
 
-    function userTimeLineDataFinished(data) {
+    function userTimeLineDataFinished(data) {if (data.num_results == 0) {
+            isEmpty = true;
+        } else {
+            isEmpty = false;
+        }
+
         if (next_max_id == data.next_max_id) {
             return false;
         } else {
-            next_max_id = data.next_max_id;
+            next_max_id = data.more_available == true ? data.next_max_id : "";
             more_available = data.more_available;
             next_coming = true;
 
@@ -464,13 +471,47 @@ Page {
             }
 
             Column {
-                width: parent.width
+                visible: !isEmpty
+                width: !isEmpty ? parent.width : 0
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 Loader {
                     id: viewLoader
                     width: parent.width
                     sourceComponent: gridviewComponent
+                }
+            }
+
+            Column {
+                visible: isEmpty
+                width: parent.width
+                spacing: units.gu(0.5)
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                Rectangle {
+                    width: parent.width
+                    height: units.gu(0.17)
+                    color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
+                }
+
+                Item {
+                    width: parent.width
+                    height: units.gu(4)
+                }
+
+                Item {
+                    width: parent.width
+                    height: empDescription.height
+
+                    Label {
+                        id: empDescription
+                        width: parent.width - units.gu(2)
+                        text: i18n.tr("Start capturing and sharing your moments")
+                        horizontalAlignment: Text.AlignHCenter
+                        font.weight: Font.Light
+                        wrapMode: Text.WordWrap
+                        anchors.centerIn: parent
+                    }
                 }
             }
         }
@@ -649,7 +690,11 @@ Page {
         target: instagram
         onUserTimeLineDataReady: {
             var data = JSON.parse(answer);
-            userTimeLineDataFinished(data);
+            if (data.status == "ok") {
+                userTimeLineDataFinished(data);
+            } else {
+                // error
+            }
         }
         onUsernameDataReady: {
             var data = JSON.parse(answer);

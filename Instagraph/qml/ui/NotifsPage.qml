@@ -46,6 +46,8 @@ Page {
 
     property int current_notifs_section: 1
 
+    property bool isEmptyFollowing: false
+
     function recentActivityDataFinished(data) {
         if (data.new_stories.length) {
             new_notifs = true
@@ -56,6 +58,12 @@ Page {
     }
 
     function followingRecentActivityDataFinished(data) {
+        if (data.stories.length == 0) {
+            isEmptyFollowing = true;
+        } else {
+            isEmptyFollowing = false;
+        }
+
         worker.sendMessage({'obj': data.stories, 'model': followingRecentActivityModel})
     }
 
@@ -104,7 +112,7 @@ Page {
             top: notifspage.header.bottom
         }
         active: recentActivityComponent
-        sourceComponent: current_notifs_section == 0 ? followingRecentActivityComponent : (current_notifs_section == 1 ? recentActivityComponent : undefined)
+        sourceComponent: current_notifs_section == 0 ? (isEmptyFollowing ? emptyFollowingRecentActivityComponent : followingRecentActivityComponent) : (current_notifs_section == 1 ? recentActivityComponent : undefined)
     }
 
     Component {
@@ -436,6 +444,78 @@ Page {
         }
     }
 
+    Component {
+        id: emptyFollowingRecentActivityComponent
+
+        Column {
+            width: parent.width
+            spacing: units.gu(0.5)
+            anchors.fill: parent
+
+            Rectangle {
+                width: parent.width
+                height: units.gu(0.17)
+                color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
+            }
+
+            Item {
+                width: parent.width
+                height: units.gu(4)
+            }
+
+            Item {
+                width: parent.width
+                height: units.gu(6)
+
+                Icon {
+                    width: units.gu(6)
+                    height: width
+                    name: "unlike"
+                    color: "#003569"
+                    anchors.centerIn: parent
+                }
+            }
+
+            Item {
+                width: parent.width
+                height: units.gu(2)
+            }
+
+            Item {
+                width: parent.width
+                height: units.gu(2)
+
+                Label {
+                    text: i18n.tr("Activity from people you follow")
+                    font.weight: Font.DemiBold
+                    fontSize: "large"
+                    wrapMode: Text.WordWrap
+                    anchors.centerIn: parent
+                }
+            }
+
+            Item {
+                width: parent.width
+                height: units.gu(1)
+            }
+
+            Item {
+                width: parent.width
+                height: empDescription.height
+
+                Label {
+                    id: empDescription
+                    width: parent.width - units.gu(2)
+                    text: i18n.tr("When someone you follow comments on or likes a post, you'll see it here.")
+                    horizontalAlignment: Text.AlignHCenter
+                    font.weight: Font.Light
+                    wrapMode: Text.WordWrap
+                    anchors.centerIn: parent
+                }
+            }
+        }
+    }
+
     Connections{
         target: instagram
         onRecentActivityDataReady: {
@@ -444,7 +524,11 @@ Page {
         }
         onFollowingRecentDataReady: {
             var data = JSON.parse(answer);
-            followingRecentActivityDataFinished(data);
+            if (data.status == "ok") {
+                followingRecentActivityDataFinished(data);
+            } else {
+                // error
+            }
         }
     }
 
