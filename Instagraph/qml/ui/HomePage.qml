@@ -244,7 +244,6 @@ Page {
     EmptyBox {
         visible: isEmpty
         width: parent.width
-        spacing: units.gu(0.5)
         anchors {
             top: homeSuggestionsModel.count == 0 ? homepage.header.bottom : homeSuggestionsList.bottom
             horizontalCenter: parent.horizontalCenter

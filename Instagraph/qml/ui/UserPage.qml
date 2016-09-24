@@ -482,37 +482,12 @@ Page {
                 }
             }
 
-            Column {
+            EmptyBox {
                 visible: isEmpty
                 width: parent.width
-                spacing: units.gu(0.5)
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                Rectangle {
-                    width: parent.width
-                    height: units.gu(0.17)
-                    color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
-                }
-
-                Item {
-                    width: parent.width
-                    height: units.gu(4)
-                }
-
-                Item {
-                    width: parent.width
-                    height: empDescription.height
-
-                    Label {
-                        id: empDescription
-                        width: parent.width - units.gu(2)
-                        text: i18n.tr("Start capturing and sharing your moments")
-                        horizontalAlignment: Text.AlignHCenter
-                        font.weight: Font.Light
-                        wrapMode: Text.WordWrap
-                        anchors.centerIn: parent
-                    }
-                }
+                description: i18n.tr("Start capturing and sharing your moments")
             }
         }
         PullToRefresh {

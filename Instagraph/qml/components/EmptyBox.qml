@@ -3,14 +3,15 @@ import Ubuntu.Components 1.3
 
 Column {
     width: parent.width
+    spacing: 0
 
     property bool icon: false
-    property var iconName
-    property var iconSource
-    property var iconColor
+    property string iconName: ""
+    property string iconSource
+    property string iconColor
 
-    property var title
-    property var description
+    property string title
+    property string description
 
     Item {
         width: parent.width
@@ -20,14 +21,14 @@ Column {
     Item {
         visible: icon
         width: parent.width
-        height: units.gu(6)
+        height: icon ? units.gu(6) : 0
 
         Icon {
             width: units.gu(6)
             height: width
-            name: iconName ? iconName : ""
-            color: iconColor ? iconColor : "#003569"
-            source: iconName ? "image://theme/%1".arg(iconName) : iconSource
+            name: iconName.length > 0 ? iconName : ""
+            color: iconColor.length > 0 ? iconColor : "#003569"
+            source: iconName.length > 0 ? "image://theme/%1".arg(iconName) : iconSource
             anchors.centerIn: parent
         }
     }
@@ -35,13 +36,13 @@ Column {
     Item {
         visible: icon
         width: parent.width
-        height: units.gu(2)
+        height: icon ? units.gu(2) : 0
     }
 
     Item {
-        visible: title
+        visible: title.length > 0
         width: parent.width
-        height: units.gu(2)
+        height: title.length > 0 ? units.gu(2) : 0
 
         Label {
             text: title
@@ -53,15 +54,15 @@ Column {
     }
 
     Item {
-        visible: title
+        visible: title.length > 0
         width: parent.width
-        height: units.gu(1)
+        height: title.length > 0 ? units.gu(1) : 0
     }
 
     Item {
-        visible: description
+        visible: description.length > 0
         width: parent.width
-        height: empDescription.height
+        height: description.length > 0 ? empDescription.height : 0
 
         Label {
             id: empDescription
@@ -75,8 +76,8 @@ Column {
     }
 
     Item {
-        visible: description
+        visible: description.length > 0
         width: parent.width
-        height: units.gu(1)
+        height: description.length > 0 ? units.gu(1) : 0
     }
 }
