@@ -79,16 +79,6 @@ Page {
         width: parent.width
         spacing: units.gu(2)
 
-        /*Image {
-            width: parent.width*0.5
-            source: Qt.resolvedUrl("../images/white_text_logo.png")
-            fillMode: Image.PreserveAspectFit
-            smooth: true
-            clip: true
-            mipmap: true
-            anchors.horizontalCenter: parent.horizontalCenter
-        }*/
-
         Label {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Instagraph"

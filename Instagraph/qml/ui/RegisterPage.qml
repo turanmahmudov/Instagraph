@@ -78,16 +78,6 @@ Page {
         width: parent.width
         spacing: units.gu(2)
 
-        /*Image {
-            width: parent.width*0.5
-            source: Qt.resolvedUrl("../images/white_text_logo.png")
-            fillMode: Image.PreserveAspectFit
-            smooth: true
-            clip: true
-            mipmap: true
-            anchors.horizontalCenter: parent.horizontalCenter
-        }*/
-
         Label {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Instagraph"
@@ -197,13 +187,21 @@ Page {
         onCreateAccountDataReady: {
             console.log(answer);
             var data = JSON.parse(answer);
-            if (data.status == "ok" && data.account_created == true) {
-                Storage.set("password", passwordField.text);
-                Storage.set("username", usernameField.text);
+            if (data.status == "ok") {
+                if (data.account_created == true) {
+                    Storage.set("password", passwordField.text);
+                    Storage.set("username", usernameField.text);
 
-                Scripts.registered()
+                    Scripts.registered()
 
-                anchorToKeyboard = true
+                    anchorToKeyboard = true
+                } else {
+                    if (data.errors && data.errors.length > 0) {
+
+                    }
+                }
+            } else {
+                // error
             }
         }
     }
