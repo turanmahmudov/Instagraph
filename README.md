@@ -14,6 +14,9 @@ Search "Instagraph" on Ubuntu Store and Install the app
 
 ## Contributing
 
+## Translations
+POEditor [https://poeditor.com/join/project/wZiqQyM7ZS](https://poeditor.com/join/project/wZiqQyM7ZS)
+
 ## Credits
 - Creator & Developer: Turan Mahmudov <[turan.mahmudov@gmail.com](mailto:turan.mahmudov@gmail.com)>
 - Icons: Kevin Feyder <[kevinfeyder@gmail.com](mailto:kevinfeyder@gmail.com)>
