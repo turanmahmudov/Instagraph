@@ -256,7 +256,7 @@ Page {
     Connections{
         target: instagram
         onTimeLineDataReady: {
-            console.log(answer)
+            //console.log(answer)
             var data = JSON.parse(answer);
             if (data.status == "ok") {
                 mediaDataFinished(data);

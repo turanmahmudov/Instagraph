@@ -99,7 +99,7 @@ Page {
                width: parent.width
                showDivider: true
                onClicked: {
-                   //pageStack.push(Qt.resolvedUrl("PostsLiked.qml"))
+                   pageStack.push(Qt.resolvedUrl("LikedMediaPage.qml"))
                }
                Column {
                    anchors.verticalCenter: parent.verticalCenter

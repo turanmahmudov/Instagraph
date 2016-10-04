@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-24 22:33+0300\n"
+"POT-Creation-Date: 2016-10-05 00:47+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -272,7 +272,7 @@ msgid "Private Information"
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:146
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:111
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:101
 msgid "Email"
 msgstr ""
 
@@ -313,21 +313,21 @@ msgstr ""
 msgid "Open Source"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:112
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:128
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:102
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:118
 msgid "Username"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:130
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:141
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:120
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:131
 msgid "Password"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:142
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:132
 msgid "Log In"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:170
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:160
 msgid "Don't have an account? <b>Sign Up</b>."
 msgstr ""
 
@@ -432,11 +432,11 @@ msgstr ""
 msgid "Follow to see their photos and videos."
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:153
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:143
 msgid "Sign Up"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:179
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:169
 msgid "Already have an account? <b>Log In</b>."
 msgstr ""
 

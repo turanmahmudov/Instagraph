@@ -67,7 +67,7 @@ public slots:
     void block(QString userId);
     void unBlock(QString userId);
     void userFriendship(QString userId);
-    void getLikedMedia();
+    void getLikedMedia(QString max_id = "");
 
     void checkUsername(QString username);
     void createAccount(QString username, QString password, QString email);

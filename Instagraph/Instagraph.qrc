@@ -95,5 +95,6 @@
         <file>qml/ui/LocationFeedPage.qml</file>
         <file>qml/components/ClaritySettingsPanel.qml</file>
         <file>qml/components/EmptyBox.qml</file>
+        <file>qml/ui/LikedMediaPage.qml</file>
     </qresource>
 </RCC>

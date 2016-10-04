@@ -788,10 +788,19 @@ void Instagram::userFriendship(QString userId)
     QObject::connect(userFriendshipRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(userFriendshipDataReady(QVariant)));
 }
 
-void Instagram::getLikedMedia()
+void Instagram::getLikedMedia(QString max_id)
 {
+    QString target ="feed/liked/?";
+
+    if(max_id.length() > 0)
+    {
+        target += "max_id="+max_id+"&";
+    }
+
+    //qDebug() << "target: " << target;
+
     InstagramRequest *getLikedMediaRequest = new InstagramRequest();
-    getLikedMediaRequest->request("feedd/liked/?",NULL);
+    getLikedMediaRequest->request(target,NULL);
     QObject::connect(getLikedMediaRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(likedMediaDataReady(QVariant)));
 }
 
