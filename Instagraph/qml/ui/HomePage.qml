@@ -47,7 +47,7 @@ Page {
             more_available = data.more_available;
             next_coming = true;
 
-            worker.sendMessage({'feed': 'homePage', 'obj': data.items, 'model': homePhotosModel, 'commentsModel': homePhotosCommentsModel, 'suggestionsModel': homeSuggestionsModel, 'clear_model': clear_models})
+            worker.sendMessage({'feed': 'homePage', 'obj': data.feed_items, 'model': homePhotosModel, 'commentsModel': homePhotosCommentsModel, 'suggestionsModel': homeSuggestionsModel, 'clear_model': clear_models})
 
             next_coming = false;
         }

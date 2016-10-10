@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-05 00:47+0300\n"
+"POT-Creation-Date: 2016-10-11 00:14+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,20 +18,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:44
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:46
 msgid "Refresh"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:52
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:54
 msgid "Inbox"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:60
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:62
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DiscoverPeoplePage.qml:15
 msgid "Discover People"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:68
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:70
 msgid "New Message"
 msgstr ""
 
@@ -201,15 +201,15 @@ msgstr ""
 msgid "Comments"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:118
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:125
 msgid "Remove"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:267
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:274
 msgid "Add a comment"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:279
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:286
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:395
 msgid "Send"
 msgstr ""
@@ -313,6 +313,11 @@ msgstr ""
 msgid "Open Source"
 msgstr ""
 
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LikedMediaPage.qml:15
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:111
+msgid "Posts You've Liked"
+msgstr ""
+
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:102
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:118
 msgid "Username"
@@ -327,7 +332,7 @@ msgstr ""
 msgid "Log In"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:160
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:172
 msgid "Don't have an account? <b>Sign Up</b>."
 msgstr ""
 
@@ -364,10 +369,6 @@ msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:59
 msgid "Account"
-msgstr ""
-
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:111
-msgid "Posts You've Liked"
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:129

@@ -104,6 +104,9 @@ void Instagram::login(bool forse)
     if(!this->m_isLoggedIn or forse)
     {
         this->setUser();
+
+        Instagram::syncFeatures(true);
+
         InstagramRequest *loginRequest = new InstagramRequest();
         loginRequest->request("si/fetch_headers/?challenge_type=signup&guid="+this->m_uuid,NULL);
         QObject::connect(loginRequest,SIGNAL(replySrtingReady(QVariant)),this,SLOT(doLogin()));
@@ -197,19 +200,28 @@ void Instagram::profileConnect(QVariant profile)
     emit busyChanged();
 }
 
-void Instagram::syncFeatures()
+void Instagram::syncFeatures(bool prelogin)
 {
-    InstagramRequest *syncRequest = new InstagramRequest();
-    QJsonObject data;
-        data.insert("_uuid",        this->m_uuid);
-        data.insert("_csrftoken",   "Set-Cookie: csrftoken="+this->m_token);
-        data.insert("_uid",         this->m_username_id);
-        data.insert("id",           this->m_username_id);
-        data.insert("password",     this->m_password);
-        data.insert("experiments",  EXPERIMENTS);
+    if (prelogin) {
+        InstagramRequest *syncRequest = new InstagramRequest();
+        QJsonObject data;;
+            data.insert("id",           this->m_uuid);
+            data.insert("experiments",  LOGIN_EXPERIMENTS);
 
-    QString signature = syncRequest->generateSignature(data);
-    syncRequest->request("qe/sync/",signature.toUtf8());
+        QString signature = syncRequest->generateSignature(data);
+        syncRequest->request("qe/sync/",signature.toUtf8());
+    } else {
+        InstagramRequest *syncRequest = new InstagramRequest();
+        QJsonObject data;
+            data.insert("_uuid",        this->m_uuid);
+            data.insert("_uid",         this->m_username_id);
+            data.insert("_csrftoken",   "Set-Cookie: csrftoken="+this->m_token);
+            data.insert("id",           this->m_username_id);
+            data.insert("experiments",  EXPERIMENTS);
+
+        QString signature = syncRequest->generateSignature(data);
+        syncRequest->request("qe/sync/",signature.toUtf8());
+    }
 }
 
 void Instagram::postImage(QString path, QString caption, QVariantMap location, QString upload_id)

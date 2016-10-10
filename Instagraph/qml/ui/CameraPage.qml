@@ -197,9 +197,6 @@ Page {
                     var importPage = pageStack.push(Qt.resolvedUrl("ImportPhotoPage.qml"))
 
                     importPage.imported.connect(function(fileUrl) {
-                        // Resource optimizations for low-end devices
-                        //pageStack.clear()
-
                         //console.log("File" << fileUrl << "has been imported!")
                         Scripts.pushImageCrop(fileUrl)
                     })

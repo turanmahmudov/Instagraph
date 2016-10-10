@@ -53,6 +53,8 @@ void InstagramRequest::fileRquest(QString endpoint, QString boundary, QByteArray
     request.setRawHeader("Cookie2","$Version=1");
     request.setRawHeader("Accept-Language","en-US");
     request.setRawHeader("Accept-Encoding","gzip");
+    request.setRawHeader("X-IG-Capabilities",X_IG_CAPABILITIES.toUtf8());
+    request.setRawHeader("X-IG-Connection-Type","WIFI");
 
     this->m_manager->setCookieJar(this->m_jar);
     this->m_reply = this->m_manager->post(request,data);
@@ -86,6 +88,8 @@ void InstagramRequest::request(QString endpoint, QByteArray post)
     request.setRawHeader("Cookie2","$Version=1");
     request.setRawHeader("Accept-Language","en-US");
     request.setRawHeader("User-Agent",USER_AGENT.toUtf8());
+    request.setRawHeader("X-IG-Capabilities",X_IG_CAPABILITIES.toUtf8());
+    request.setRawHeader("X-IG-Connection-Type","WIFI");
 
     this->m_manager->setCookieJar(this->m_jar);
     this->m_reply = this->m_manager->post(request,post);

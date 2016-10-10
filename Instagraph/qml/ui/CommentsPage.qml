@@ -32,10 +32,17 @@ Page {
     }
 
     function mediaCommentsDataFinished(data) {
-        data.caption.ctext = typeof data.caption != 'undefined' && data.caption ? data.caption.text : ""
-        commentCaption = data.caption;
+        if (typeof data.caption != 'undefined' && data.caption) {
+            data.caption.ctext = typeof data.caption != 'undefined' && data.caption ? data.caption.text : ""
 
-        worker.sendMessage({'feed': 'CommentsPage', 'obj': [data.caption], 'model': mediaCommentsModel, 'clear_model': clear_models})
+            worker.sendMessage({'feed': 'CommentsPage', 'obj': [data.caption], 'model': mediaCommentsModel, 'clear_model': clear_models})
+        } else {
+            data.caption = '';
+
+            worker.sendMessage({'feed': 'CommentsPage', 'obj': [], 'model': mediaCommentsModel, 'clear_model': clear_models})
+        }
+
+        commentCaption = data.caption;
 
         worker.sendMessage({'feed': 'CommentsPage', 'obj': data.comments, 'model': mediaCommentsModel})
 

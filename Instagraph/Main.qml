@@ -26,6 +26,8 @@ MainView {
     property bool new_notifs: false
     property bool logged_in: false
 
+    property bool loginPageIsActive: false
+
     property var my_usernameId
 
     property bool searchPageOpenFirstTime: true
@@ -114,6 +116,7 @@ MainView {
         var username = Storage.get("username");
         var password = Storage.get("password")
         if (username === "" ||  password === "" || username === undefined || password === undefined || username === null || password === null ) {
+            loginPageIsActive = true;
             pageStack.push(Qt.resolvedUrl("qml/ui/LoginPage.qml"));
         } else {
             instagram.setUsername(username);
@@ -242,7 +245,10 @@ MainView {
     Connections{
         target: instagram
         onProfileConnectedFail: {
-            pageStack.push(Qt.resolvedUrl("qml/ui/LoginPage.qml"));
+            if (!loginPageIsActive) {
+                loginPageIsActive = true;
+                pageStack.push(Qt.resolvedUrl("qml/ui/LoginPage.qml"));
+            }
         }
     }
 }

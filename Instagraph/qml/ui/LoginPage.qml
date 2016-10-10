@@ -138,6 +138,18 @@ Page {
                 }
             }
         }
+
+        Item {
+            width: parent.width
+            height: units.gu(2)
+        }
+
+        Label {
+            id: errorTextLabel
+            anchors.horizontalCenter: parent.horizontalCenter
+            wrapMode: Text.WordWrap
+            color: "#ffffff"
+        }
     }
 
     Column {
@@ -181,6 +193,7 @@ Page {
             Storage.set("username",usernameField.text)
             pageStack.push(tabs);
             anchorToKeyboard = true
+            loginPageIsActive = true
         }
     }
 
@@ -188,6 +201,10 @@ Page {
         target: instagram
         onProfileConnectedFail:{
             console.log('login failed')
+        }
+        onError:{
+            console.log(message);
+            errorTextLabel.text = message;
         }
     }
 }
