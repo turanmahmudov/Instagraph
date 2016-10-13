@@ -28,7 +28,7 @@ WorkerScript.onMessage = function(msg) {
 
 
         if (feed == 'homePage') {
-            if (typeof obj[i].media_or_ad != 'undefined') {
+            if (typeof obj[i].media_or_ad != 'undefined' && typeof obj[i].media_or_ad.injected == 'undefined') {
 
                 obj[i].media_or_ad.video_url = typeof obj[i].media_or_ad.video_versions != 'undefined' ? obj[i].media_or_ad.video_versions[0].url : ''
 
