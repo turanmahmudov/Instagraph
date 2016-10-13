@@ -1,9 +1,10 @@
 function formatString(string)
 {
-    var user_reg = "/@(\w*)/g";
+    //var user_reg = "/@(\w*)/g";
+    var user_reg = "/@([a-zA-Z0-9._]*)/g"
     var tag_reg = "/#(\S*)/g"
 
-    string = string.replace(/@(\w*)/g,'<a href="user://$1" style="text-decoration:none;color:rgb(0,53,105);">@$1</a>');
+    string = string.replace(/@([a-zA-Z0-9._]*)/g,'<a href="user://$1" style="text-decoration:none;color:rgb(0,53,105);">@$1</a>');
     string = string.replace(/#(\S*)/g,'<a href="tag://$1" style="text-decoration:none;color:rgb(0,53,105);">#$1</a>');
 
     return string;
