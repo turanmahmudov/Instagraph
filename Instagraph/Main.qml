@@ -247,6 +247,7 @@ MainView {
         onProfileConnectedFail: {
             if (!loginPageIsActive) {
                 loginPageIsActive = true;
+                pageStack.clear();
                 pageStack.push(Qt.resolvedUrl("qml/ui/LoginPage.qml"));
             }
         }
