@@ -487,7 +487,12 @@ Page {
                 width: parent.width
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                description: i18n.tr("Start capturing and sharing your moments")
+                icon: current_user_section == 3 ? true : false
+                iconName: current_user_section == 3 ? "stock_image" : ""
+
+                title: current_user_section == 3 ? i18n.tr("No Photos Yet") : ""
+
+                description: current_user_section == 3 ? i18n.tr("Photos you're tagged in will appear here.") : i18n.tr("Start capturing and sharing your moments")
             }
         }
         PullToRefresh {

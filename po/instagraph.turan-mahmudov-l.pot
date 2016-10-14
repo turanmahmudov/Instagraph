@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 13:13+0300\n"
+"POT-Creation-Date: 2016-10-14 13:22+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -476,7 +476,15 @@ msgstr ""
 msgid "User"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:490
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:493
+msgid "No Photos Yet"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:495
+msgid "Photos you're tagged in will appear here."
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:495
 msgid "Start capturing and sharing your moments"
 msgstr ""
 
