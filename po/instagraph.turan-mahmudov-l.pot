@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 14:58+0300\n"
+"POT-Creation-Date: 2016-10-14 16:37+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -443,11 +443,11 @@ msgstr ""
 msgid "No Photos Yet"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:669
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:670
 msgid "This account is private."
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:670
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:671
 msgid "Follow to see their photos and videos."
 msgstr ""
 

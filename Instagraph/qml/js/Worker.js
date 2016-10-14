@@ -44,7 +44,11 @@ WorkerScript.onMessage = function(msg) {
                 }
 
                 model.sync();
+
+            } else if (typeof obj[i].media_or_ad != 'undefined' && typeof obj[i].media_or_ad.injected != 'undefined') {
+                WorkerScript.sendMessage(obj[i]);
             }
+
         } else {
             if (feed != 'searchPage') {
                 obj[i].video_url = obj[i].video_versions ? obj[i].video_versions[0].url : ''
