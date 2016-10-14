@@ -154,7 +154,7 @@ Page {
                                     id: feed_user_profile_image
                                     width: parent.width
                                     height: width
-                                    source: status == Image.Error ? "../images/not_found_user.jpg" : story.args.profile_image
+                                    source: story.type == 13 ? "image://theme/info" : (status == Image.Error ? "../images/not_found_user.jpg" : story.args.profile_image)
                                     fillMode: Image.PreserveAspectCrop
                                     anchors.centerIn: parent
                                     sourceSize: Qt.size(width,height)
@@ -191,6 +191,7 @@ Page {
                                 wrapMode: Text.WordWrap
                                 width: parent.width
                                 textFormat: Text.RichText
+                                font.weight: story.type == 13 ? Font.DemiBold : Font.Normal
                                 onLinkActivated: {
                                     Scripts.linkClick(link)
                                 }
