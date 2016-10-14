@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 13:38+0300\n"
+"POT-Creation-Date: 2016-10-14 13:45+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -235,9 +235,17 @@ msgstr ""
 msgid "Special Thanks"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:17
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:19
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:21
 msgid "Direct"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:226
+msgid "Welcome to Instagraph Direct!"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:227
+msgid "Tap the + icon to send a photo, video or message."
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:385

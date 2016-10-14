@@ -13,6 +13,8 @@ Page {
 
     property bool list_loading: false
 
+    property bool isEmpty: false
+
     header: PageHeader {
         title: i18n.tr("Direct")
         StyleHints {
@@ -26,6 +28,12 @@ Page {
     }
 
     function v2InboxDataFinished(data) {
+        if (data.inbox.threads.length == 0) {
+            isEmpty = true;
+        } else {
+            isEmpty = false;
+        }
+
         v2InboxModel.clear()
 
         for (var i = 0; i < data.inbox.threads.length; i++) {
@@ -61,6 +69,7 @@ Page {
 
     ListView {
         id: v2InboxList
+        visible: !isEmpty
         anchors {
             left: parent.left
             leftMargin: units.gu(1)
@@ -201,6 +210,21 @@ Page {
                 getv2Inbox()
             }
         }
+    }
+
+    EmptyBox {
+        visible: isEmpty
+        width: parent.width
+        anchors {
+            top: directinboxpage.header.bottom
+            horizontalCenter: parent.horizontalCenter
+        }
+
+        icon: true
+        iconName: "mail-unread"
+
+        title: i18n.tr("Welcome to Instagraph Direct!")
+        description: i18n.tr("Tap the + icon to send a photo, video or message.")
     }
 
     Connections{
