@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 13:22+0300\n"
+"POT-Creation-Date: 2016-10-14 13:38+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -250,8 +250,8 @@ msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:14
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:75
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:464
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:317
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:472
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:318
 msgid "Edit Profile"
 msgstr ""
 
@@ -345,7 +345,7 @@ msgid "Activity"
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:31
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:416
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:424
 msgid "Following"
 msgstr ""
 
@@ -394,42 +394,51 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:193
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:201
 msgid "Block"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:331
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:234
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:339
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:235
 msgid "posts"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:358
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:261
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:366
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:262
 msgid "followers"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:393
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:296
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:401
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:297
 msgid "following"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:428
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:436
 msgid "Follow"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:440
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:448
 msgid "Requested"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:452
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:460
 msgid "Unblock"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:672
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:649
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:494
+msgid "No Photos Yet"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:651
+msgid "No photos or videos yet!"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:669
 msgid "This account is private."
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:686
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:670
 msgid "Follow to see their photos and videos."
 msgstr ""
 
@@ -476,15 +485,11 @@ msgstr ""
 msgid "User"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:493
-msgid "No Photos Yet"
-msgstr ""
-
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:495
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:496
 msgid "Photos you're tagged in will appear here."
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:495
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:496
 msgid "Start capturing and sharing your moments"
 msgstr ""
 

@@ -56,7 +56,8 @@ Page {
         uzfollowing_count.text = data.user.following_count;
     }
 
-    function userTimeLineDataFinished(data) {if (data.num_results == 0) {
+    function userTimeLineDataFinished(data) {
+        if (data.num_results == 0) {
             isEmpty = true;
         } else {
             isEmpty = false;

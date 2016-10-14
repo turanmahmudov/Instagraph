@@ -65,6 +65,8 @@ Page {
 
     property bool list_loading: false
 
+    property bool isEmpty: false
+
     function usernameDataFinished(data) {
         otheruserpage.header.title = data.user.username;
         uzimage.source = data.user.profile_pic_url;
@@ -78,6 +80,12 @@ Page {
 
     function userTimeLineDataFinished(data) {
         //console.log(JSON.stringify(data))
+        if (data.num_results == 0) {
+            isEmpty = true;
+        } else {
+            isEmpty = false;
+        }
+
         if (next_max_id == data.next_max_id) {
             return false;
         } else {
@@ -619,8 +627,8 @@ Page {
             }
 
             Column {
-                visible: !isPrivate
-                width: !isPrivate ? parent.width : 0
+                visible: !isPrivate && !isEmpty
+                width: !isPrivate && !isEmpty ? parent.width : 0
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 Loader {
@@ -630,66 +638,36 @@ Page {
                 }
             }
 
-            Column {
-                visible: isPrivate
+            EmptyBox {
+                visible: isEmpty
                 width: parent.width
-                spacing: units.gu(0.5)
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                Rectangle {
-                    width: parent.width
-                    height: units.gu(0.17)
-                    color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
-                }
+                icon: true
+                iconName: "stock_image"
 
-                Item {
-                    width: parent.width
-                    height: units.gu(4)
-                }
+                title: current_user_section == 3 ? i18n.tr("No Photos Yet") : ""
 
-                Item {
-                    width: parent.width
-                    height: units.gu(6)
+                description: current_user_section == 3 ? "" : i18n.tr("No photos or videos yet!")
+            }
 
-                    Icon {
-                        width: units.gu(6)
-                        height: width
-                        name: "lock"
-                        anchors.centerIn: parent
-                    }
-                }
+            Rectangle {
+                width: parent.width
+                height: units.gu(0.17)
+                color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
+            }
 
-                Item {
-                    width: parent.width
-                    height: units.gu(2)
-                }
+            EmptyBox {
+                visible: isPrivate
+                width: parent.width
+                anchors.horizontalCenter: parent.horizontalCenter
 
-                Item {
-                    width: parent.width
-                    height: units.gu(2)
+                icon: true
+                iconName: "lock"
+                iconColor: UbuntuColors.darkGrey
 
-                    Label {
-                        text: i18n.tr("This account is private.")
-                        font.weight: Font.Light
-                        wrapMode: Text.WordWrap
-                        anchors.centerIn: parent
-                    }
-                }
-
-                Item {
-                    width: parent.width
-                    height: prvDescription.height
-
-                    Label {
-                        id: prvDescription
-                        width: parent.width - units.gu(2)
-                        text: i18n.tr("Follow to see their photos and videos.")
-                        horizontalAlignment: Text.AlignHCenter
-                        font.weight: Font.Light
-                        wrapMode: Text.WordWrap
-                        anchors.centerIn: parent
-                    }
-                }
+                description: i18n.tr("This account is private.")
+                description2: i18n.tr("Follow to see their photos and videos.")
             }
         }
         PullToRefresh {

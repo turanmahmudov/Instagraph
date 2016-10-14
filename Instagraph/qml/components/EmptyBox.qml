@@ -12,6 +12,7 @@ Column {
 
     property string title
     property string description
+    property string description2
 
     Item {
         width: parent.width
@@ -79,5 +80,27 @@ Column {
         visible: description.length > 0
         width: parent.width
         height: description.length > 0 ? units.gu(1) : 0
+    }
+
+    Item {
+        visible: description2.length > 0
+        width: parent.width
+        height: description2.length > 0 ? empDescription2.height : 0
+
+        Label {
+            id: empDescription2
+            width: parent.width - units.gu(2)
+            text: description2
+            horizontalAlignment: Text.AlignHCenter
+            font.weight: Font.Light
+            wrapMode: Text.WordWrap
+            anchors.centerIn: parent
+        }
+    }
+
+    Item {
+        visible: description2.length > 0
+        width: parent.width
+        height: description2.length > 0 ? units.gu(1) : 0
     }
 }
