@@ -12,7 +12,7 @@ Page {
     id: likedmediapage
 
     header: PageHeader {
-        title: i18n.tr("Posts You've Liked")
+        title: i18n.tr("Likes")
         StyleHints {
             backgroundColor: "#275A84"
             foregroundColor: "#ffffff"
@@ -29,10 +29,16 @@ Page {
     property bool isEmpty: false
 
     function likedMediaDataFinished(data) {
+        if (data.num_results == 0) {
+            isEmpty = true;
+        } else {
+            isEmpty = false;
+        }
+
         if (next_max_id == data.next_max_id) {
             return false;
         } else {
-            next_max_id = data.next_max_id;
+            next_max_id = data.more_available == true ? data.next_max_id : "";
             more_available = data.more_available;
             next_coming = true;
 
@@ -80,6 +86,7 @@ Page {
 
     GridView {
         id: gridView
+        visible: !isEmpty
         anchors {
             left: parent.left
             right: parent.right
@@ -166,10 +173,23 @@ Page {
         }
     }
 
+    EmptyBox {
+        visible: isEmpty
+        width: parent.width
+        anchors {
+            top: likedmediapage.header.bottom
+            horizontalCenter: parent.horizontalCenter
+        }
+
+        icon: true
+        iconName: "stock_image"
+
+        description: i18n.tr("No photos or videos yet!")
+    }
+
     Connections{
         target: instagram
         onLikedMediaDataReady: {
-            //console.log(answer);
             var data = JSON.parse(answer);
             likedMediaDataFinished(data);
         }

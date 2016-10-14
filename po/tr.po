@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Instagraph\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 13:45+0300\n"
+"POT-Creation-Date: 2016-10-14 13:52+0300\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -314,9 +314,14 @@ msgid "Open Source"
 msgstr "Açık Kaynak"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LikedMediaPage.qml:15
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:111
-msgid "Posts You've Liked"
-msgstr "Beğendiğin Paylaşımlar"
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/MediaLikersPage.qml:22
+msgid "Likes"
+msgstr "Beğeniler"
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LikedMediaPage.qml:187
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:651
+msgid "No photos or videos yet!"
+msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:102
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:118
@@ -335,10 +340,6 @@ msgstr ""
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:172
 msgid "Don't have an account? <b>Sign Up</b>."
 msgstr ""
-
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/MediaLikersPage.qml:22
-msgid "Likes"
-msgstr "Beğeniler"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:15
 msgid "Activity"
@@ -370,6 +371,10 @@ msgstr ""
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:59
 msgid "Account"
 msgstr "Hesap"
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:111
+msgid "Posts You've Liked"
+msgstr "Beğendiğin Paylaşımlar"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:129
 msgid "Blocked Users"
@@ -428,10 +433,6 @@ msgstr ""
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:649
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:494
 msgid "No Photos Yet"
-msgstr ""
-
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:651
-msgid "No photos or videos yet!"
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:669
