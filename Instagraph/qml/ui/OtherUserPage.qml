@@ -652,8 +652,9 @@ Page {
             }
 
             Rectangle {
-                width: parent.width
-                height: units.gu(0.17)
+                visible: isPrivate ? true : false
+                width: isPrivate ? parent.width : 0
+                height: isPrivate ? units.gu(0.17) : 0
                 color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
             }
 
