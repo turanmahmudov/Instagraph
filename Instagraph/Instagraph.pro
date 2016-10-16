@@ -11,14 +11,16 @@ SOURCES += main.cpp \
     src/cripto/hmacsha.cpp \
     src/imageprocessor.cpp \
     src/offscreenrenderer.cpp \
-    src/cropimageprovider.cpp
+    src/cropimageprovider.cpp \
+    src/instagramcheckpoint.cpp
 
 HEADERS += src/instagram.h \
     src/instagramrequest.h \
     src/cripto/hmacsha.h \
     src/imageprocessor.h \
     src/offscreenrenderer.h \
-    src/cropimageprovider.h
+    src/cropimageprovider.h \
+    src/instagramcheckpoint.h
 
 RESOURCES += Instagraph.qrc
 
@@ -137,5 +139,6 @@ DISTFILES += \
     qml/ui/LocationFeedPage.qml \
     qml/components/ClaritySettingsPanel.qml \
     qml/components/EmptyBox.qml \
-    qml/ui/LikedMediaPage.qml
+    qml/ui/LikedMediaPage.qml \
+    qml/ui/CheckpointInfo.qml
 
