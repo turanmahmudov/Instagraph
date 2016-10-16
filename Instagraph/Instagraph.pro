@@ -140,5 +140,6 @@ DISTFILES += \
     qml/components/ClaritySettingsPanel.qml \
     qml/components/EmptyBox.qml \
     qml/ui/LikedMediaPage.qml \
-    qml/ui/CheckpointInfo.qml
+    qml/ui/CheckpointInfo.qml \
+    qml/components/FloatingActionButton.qml
 

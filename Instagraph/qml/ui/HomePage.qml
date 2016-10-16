@@ -253,6 +253,21 @@ Page {
         description: i18n.tr("Follow accounts to see photos and videos here in your feed.")
     }
 
+    FloatingActionButton {
+        z: 1
+        anchors {
+            right: parent.right
+            bottom: parent.bottom
+            margins: units.gu(1)
+            bottomMargin: units.gu(7)
+        }
+        imageName: "go-up"
+        backgroundColor: "#2B2B2B"
+        onClicked: {
+            homePhotosList.positionViewAtBeginning();
+        }
+    }
+
     Connections{
         target: instagram
         onTimeLineDataReady: {
