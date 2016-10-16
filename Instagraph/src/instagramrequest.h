@@ -18,10 +18,11 @@ public:
     QString buildBody(QList<QList<QString> > bodies, QString boundary);
 
 private:
-    QString API_URL         = "https://i.instagram.com/api/v1/";
-    QString USER_AGENT      = "Instagram 9.4.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; en_US)";
-    QString IG_SIG_KEY      = "fc4720e1bf9d79463f62608c86fbddd374cc71bbfb98216b52e3f75333bd130d";
-    QString SIG_KEY_VERSION = "4";
+    QString API_URL             = "https://i.instagram.com/api/v1/";
+    QString USER_AGENT          = "Instagram 9.4.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; en_US)";
+    QString C_USER_AGENT        = "Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_3 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13G34 Instagram 8.5.2 (iPhone5,2; iPhone OS 9_3_3; es_ES; es-ES; scale=2.00; 640x1136)";
+    QString IG_SIG_KEY          = "fc4720e1bf9d79463f62608c86fbddd374cc71bbfb98216b52e3f75333bd130d";
+    QString SIG_KEY_VERSION     = "4";
     QString X_IG_CAPABILITIES   = "3R4=";
 
     QDir m_data_path;

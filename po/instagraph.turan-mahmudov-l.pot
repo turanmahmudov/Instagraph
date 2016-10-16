@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-16 04:06+0300\n"
+"POT-Creation-Date: 2016-10-16 21:21+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,20 +18,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:46
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:47
 msgid "Refresh"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:54
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:55
 msgid "Inbox"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:62
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:63
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DiscoverPeoplePage.qml:15
 msgid "Discover People"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:70
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:71
 msgid "New Message"
 msgstr ""
 

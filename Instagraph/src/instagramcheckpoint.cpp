@@ -1,4 +1,5 @@
 #include <src/instagramcheckpoint.h>
+#include <src/instagramrequest.h>
 
 #include <QCryptographicHash>
 

@@ -11,6 +11,7 @@ import "qml/ui"
 import "qml/components"
 
 import Instagram 1.0
+import InstagramCheckPoint 1.0
 import ImageProcessor 1.0
 
 MainView {
@@ -77,6 +78,10 @@ MainView {
 
     Instagram {
         id: instagram
+    }
+
+    InstagramCheckPoint {
+        id: instagramCheckPoint
     }
 
     ImageProcessor {
