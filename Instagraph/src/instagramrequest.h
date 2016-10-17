@@ -39,6 +39,8 @@ public slots:
 private slots:
     void finishGetUrl();
     void saveCookie();
+
+    void progressChanged(qint64 a, qint64 b);
 };
 
 #endif // INSTAGRAMREQUEST_H

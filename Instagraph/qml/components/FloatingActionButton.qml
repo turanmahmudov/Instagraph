@@ -23,7 +23,6 @@ Button {
             horizontalOffset: 1
             spread: 0.5
         }
-
         Icon {
             name: imageName
             color: "#ffffff"

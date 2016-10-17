@@ -59,6 +59,7 @@ void InstagramRequest::fileRquest(QString endpoint, QString boundary, QByteArray
     this->m_manager->setCookieJar(this->m_jar);
     this->m_reply = this->m_manager->post(request,data);
 
+    QObject::connect(this->m_reply, SIGNAL(uploadProgress(qint64, qint64)), SLOT(progressChanged(qint64, qint64)));
     QObject::connect(this->m_reply, SIGNAL(finished()), this, SLOT(finishGetUrl()));
     QObject::connect(this->m_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(saveCookie()));
 }
@@ -158,6 +159,12 @@ void InstagramRequest::saveCookie()
     f.close();
 }
 
+void InstagramRequest::progressChanged(qint64 a, qint64 b)
+{
+    if (b > 0) {
+        qDebug() << "Uploading " << a  << "/" << b << "%" << 100.0*(double)a/(double)b;
+    }
+}
 
 QString InstagramRequest::generateSignature(QJsonObject data)
 {
