@@ -263,7 +263,7 @@ void Instagram::postImage(QString path, QString caption, QVariantMap location, Q
 
     body += "--"+boundary+"\r\n";
     body += "Content-Disposition: form-data; name=\"image_compression\"\r\n\r\n";
-    body += "{\"lib_name\":\"jt\",\"lib_version\":\"1.3.0\",\"quality\":\"70\"}\r\n";
+    body += "{\"lib_name\":\"jt\",\"lib_version\":\"1.3.0\",\"quality\":\"87\"}\r\n";
 
     body += "--"+boundary+"\r\n";
     body += "Content-Disposition: form-data; name=\"photo\"; filename=\"pending_media_"+upload_id+"."+ext+"\"\r\n";
