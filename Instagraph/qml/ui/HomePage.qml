@@ -255,6 +255,7 @@ Page {
 
     FloatingActionButton {
         z: 1
+        visible: homePhotosList.contentY > units.gu(150)
         anchors {
             right: parent.right
             bottom: parent.bottom
