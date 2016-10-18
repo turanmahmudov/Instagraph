@@ -162,7 +162,7 @@ void InstagramRequest::saveCookie()
 void InstagramRequest::progressChanged(qint64 a, qint64 b)
 {
     if (b > 0) {
-        qDebug() << "Uploading " << a  << "/" << b << "%" << 100.0*(double)a/(double)b;
+        emit progressReady(100.0*(double)a/(double)b);
     }
 }
 

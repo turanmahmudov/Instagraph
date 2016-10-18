@@ -203,6 +203,8 @@ signals:
     void imgCropped();
     void imgScaled();
 
+    void imageUploadProgressDataReady(double answer);
+
 private slots:
     void setUser();
     void doLogin();

@@ -18,6 +18,8 @@ Page {
 
     property var locationVar: {}
 
+    property bool imageUploading: false
+
     header: PageHeader {
         title: i18n.tr("Publish")
         leadingActionBar.actions: [
@@ -36,6 +38,7 @@ Page {
                 text: i18n.tr("Share")
                 iconName: "tick"
                 onTriggered: {
+                    imageUploading = true
                     Scripts.publishImage(imagePath, caption.text, locationVar)
                 }
             }
@@ -47,7 +50,35 @@ Page {
         id: bouncingProgress
         z: 10
         anchors.top: cameracaptionpage.header.bottom
-        visible: instagram.busy
+        visible: false
+    }
+
+    Column {
+        id: uploadProgressBarItem
+        visible: imageUploading
+        anchors.top: cameracaptionpage.header.bottom
+        width: parent.width
+
+        Rectangle {
+            width: parent.width
+            height: units.gu(5)
+            color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
+
+            Label {
+                anchors.left: parent.left
+                anchors.leftMargin: units.gu(1)
+                anchors.verticalCenter: parent.verticalCenter
+                text: uploadProgressBar.value == 100 ? i18n.tr("Saving") : i18n.tr("Posting")
+            }
+        }
+
+        ProgressBar {
+            id: uploadProgressBar
+            width: parent.width
+            maximumValue: 100
+            minimumValue: 0
+            value: 0
+        }
     }
 
     Column {
@@ -55,7 +86,7 @@ Page {
         anchors {
             left: parent.left
             right: parent.right
-            top: cameracaptionpage.header.bottom
+            top: !imageUploading ? cameracaptionpage.header.bottom : uploadProgressBarItem.bottom
             topMargin: units.gu(1)
         }
 
@@ -66,7 +97,6 @@ Page {
                 leftMargin: units.gu(1)
                 right: parent.right
                 rightMargin: units.gu(1)
-                top: cameracaptionpage.header.bottom
                 topMargin: units.gu(1)
             }
             spacing: units.gu(1)
@@ -191,6 +221,10 @@ Page {
             var data = JSON.parse(answer);
 
             pageStack.push(Qt.resolvedUrl("SinglePhoto.qml"), {photoId: data.media.id});
+        }
+        onImageUploadProgressDataReady: {
+            //console.log(answer);
+            uploadProgressBar.value = answer
         }
     }
 }

@@ -276,6 +276,7 @@ void Instagram::postImage(QString path, QString caption, QVariantMap location, Q
     InstagramRequest *putPhotoReqest = new InstagramRequest();
     putPhotoReqest->fileRquest("upload/photo/",boundary, body);
 
+    QObject::connect(putPhotoReqest,SIGNAL(progressReady(double)),this,SIGNAL(imageUploadProgressDataReady(double)));
     QObject::connect(putPhotoReqest,SIGNAL(replySrtingReady(QVariant)),this,SLOT(configurePhoto(QVariant)));
 }
 

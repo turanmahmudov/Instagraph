@@ -256,9 +256,6 @@ MainView {
                 pageStack.push(Qt.resolvedUrl("qml/ui/LoginPage.qml"));
             }
         }
-        onProgressValueChanged: {
-            console.log(answer);
-        }
     }
 }
 

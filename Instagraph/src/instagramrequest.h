@@ -34,6 +34,8 @@ private:
 signals:
     void replySrtingReady(QVariant ans);
 
+    void progressReady(double ans);
+
 public slots:
 
 private slots:
