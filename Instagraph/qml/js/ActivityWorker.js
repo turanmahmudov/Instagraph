@@ -3,12 +3,17 @@ WorkerScript.onMessage = function(msg) {
     var obj = msg.obj;
     var model = msg.model;
 
+    if (msg.clear_model) {
+        model.clear();
+    }
+
     // Object loop
     for (var i = 0; i < obj.length; i++) {
         var story = obj[i];
 
         var act_text = "";
 
+        // empty
         if (story.args && typeof story.args.links == 'undefined') {
 
             act_text = story.args.text;

@@ -31,7 +31,9 @@ Page {
                     text: i18n.tr("Following")
                     onTriggered: {
                         current_notifs_section = 0
-                        getFollowingRecentActivity();
+                        if (followingRecentActivityModel.count == 0) {
+                            getFollowingRecentActivity();
+                        }
                     }
                 },
                 Action {
@@ -46,6 +48,9 @@ Page {
 
     property int current_notifs_section: 1
 
+    property bool list_loading: false
+    property bool list_loading_following: false
+
     property bool isEmptyFollowing: false
 
     function recentActivityDataFinished(data) {
@@ -53,8 +58,10 @@ Page {
             new_notifs = true
         }
 
-        worker.sendMessage({'obj': data.new_stories, 'model': recentActivityModel})
-        worker.sendMessage({'obj': data.old_stories, 'model': recentActivityModel})
+        worker.sendMessage({'obj': data.new_stories, 'model': recentActivityModel, 'clear_model': true})
+        worker.sendMessage({'obj': data.old_stories, 'model': recentActivityModel, 'clear_model': false})
+
+        list_loading = false
     }
 
     function followingRecentActivityDataFinished(data) {
@@ -64,7 +71,9 @@ Page {
             isEmptyFollowing = false;
         }
 
-        worker.sendMessage({'obj': data.stories, 'model': followingRecentActivityModel})
+        worker.sendMessage({'obj': data.stories, 'model': followingRecentActivityModel, 'clear_model': true})
+
+        list_loading_following = false
     }
 
     WorkerScript {
@@ -77,11 +86,13 @@ Page {
 
     function getRecentActivity()
     {
+        recentActivityModel.clear()
         instagram.getRecentActivity();
     }
 
     function getFollowingRecentActivity()
     {
+        followingRecentActivityModel.clear()
         instagram.getFollowingRecentActivity();
     }
 
@@ -89,7 +100,7 @@ Page {
         id: bouncingProgress
         z: 10
         anchors.top: notifspage.header.bottom
-        visible: instagram.busy
+        visible: instagram.busy || list_loading || list_loading_following
     }
 
     ListModel {
@@ -260,6 +271,14 @@ Page {
                             userId: story.args.profile_id
                         }
                     }
+                }
+            }
+            PullToRefresh {
+                id: pullToRefresh
+                refreshing: list_loading && recentActivityModel.count == 0
+                onRefresh: {
+                    list_loading = true
+                    getRecentActivity()
                 }
             }
         }
@@ -440,6 +459,14 @@ Page {
                             }
                         }
                     }
+                }
+            }
+            PullToRefresh {
+                id: pullToRefresh
+                refreshing: list_loading_following && followingRecentActivityModel.count == 0
+                onRefresh: {
+                    list_loading_following = true
+                    getFollowingRecentActivity()
                 }
             }
         }

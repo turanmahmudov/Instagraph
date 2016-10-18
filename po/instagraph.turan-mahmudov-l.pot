@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-18 16:18+0300\n"
+"POT-Creation-Date: 2016-10-18 17:44+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -366,15 +366,15 @@ msgstr ""
 msgid "Following"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:38
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:40
 msgid "You"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:457
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:484
 msgid "Activity from people you follow"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:458
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:485
 msgid ""
 "When someone you follow comments on or likes a post, you'll see it here."
 msgstr ""
