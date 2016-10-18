@@ -94,19 +94,24 @@ Page {
     property string next_max_id: ""
     property bool more_available: true
     property bool next_coming: true
+    property bool clear_models: true
+
+    property bool list_loading: false
 
     function popularFeedDataFinished(data) {
         if (next_max_id == data.next_max_id) {
             return false;
         } else {
-            next_max_id = data.next_max_id;
+            next_max_id = data.more_available == true ? data.next_max_id : "";
             more_available = data.more_available;
             next_coming = true;
 
-            worker.sendMessage({'feed': 'searchPage', 'obj': data.items, 'model': popularFeedModel})
+            worker.sendMessage({'feed': 'searchPage', 'obj': data.items, 'model': popularFeedModel, 'clear_model': clear_models})
 
             next_coming = false;
         }
+
+        list_loading = false
     }
 
     function searchUsersDataFinished(data) {
@@ -137,6 +142,12 @@ Page {
 
     function getPopular(next_id)
     {
+        clear_models = false
+        if (!next_id) {
+            popularFeedModel.clear();
+            next_max_id = "";
+            clear_models = true;
+        }
         instagram.getPopularFeed(next_id);
     }
 
@@ -144,7 +155,7 @@ Page {
         id: bouncingProgress
         z: 10
         anchors.top: searchpage.header.bottom
-        visible: instagram.busy
+        visible: instagram.busy || list_loading
     }
 
     ListModel {
@@ -240,6 +251,14 @@ Page {
                         pageStack.push(Qt.resolvedUrl("SinglePhoto.qml"), {photoId: id});
                     }
                 }
+            }
+        }
+        PullToRefresh {
+            id: pullToRefresh
+            refreshing: list_loading && popularFeedModel.count == 0
+            onRefresh: {
+                list_loading = true
+                getPopular()
             }
         }
     }
