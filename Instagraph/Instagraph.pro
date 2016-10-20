@@ -38,7 +38,7 @@ OTHER_FILES += $${CONF_FILES} \
                $${QML_FILES} \
                $${AP_TEST_FILES} \
                Instagraph.desktop \
-               Instagraph.dispatcher
+               dispatcher.json
 
 #specify where the config files are installed to
 config_files.path = /Instagraph

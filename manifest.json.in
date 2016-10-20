@@ -10,7 +10,8 @@
     "hooks": {
         "Instagraph": {
             "apparmor": "Instagraph/Instagraph.apparmor",
-            "desktop": "Instagraph/Instagraph.desktop"
+            "desktop": "Instagraph/Instagraph.desktop",
+            "urls": "Instagraph/dispatcher.json"
         }
     },
     "version": "0.0.10",
