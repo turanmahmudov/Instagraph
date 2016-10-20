@@ -97,6 +97,6 @@
         <file>qml/components/EmptyBox.qml</file>
         <file>qml/ui/LikedMediaPage.qml</file>
         <file>qml/components/FloatingActionButton.qml</file>
-        <file>dispatcher.json</file>
+        <file>Instagraph.dispatcher</file>
     </qresource>
 </RCC>

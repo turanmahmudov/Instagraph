@@ -28,6 +28,7 @@ QML_FILES += $$files(*.qml,true) \
              $$files(*.js,true)
 
 CONF_FILES +=  Instagraph.apparmor \
+               Instagraph.dispatcher \
                Instagraph.png
 
 AP_TEST_FILES += tests/autopilot/run \
@@ -38,7 +39,7 @@ OTHER_FILES += $${CONF_FILES} \
                $${QML_FILES} \
                $${AP_TEST_FILES} \
                Instagraph.desktop \
-               dispatcher.json
+               Instagraph.dispatcher
 
 #specify where the config files are installed to
 config_files.path = /Instagraph

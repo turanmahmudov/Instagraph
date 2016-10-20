@@ -11,7 +11,7 @@
         "Instagraph": {
             "apparmor": "Instagraph/Instagraph.apparmor",
             "desktop": "Instagraph/Instagraph.desktop",
-            "urls": "Instagraph/dispatcher.json"
+            "urls": "Instagraph/Instagraph.dispatcher"
         }
     },
     "version": "0.0.10",
