@@ -195,9 +195,13 @@ ListItem {
             VideoOutput {
                 id: videoOutput
                 source: player
+                fillMode: VideoOutput.PreserveAspectCrop
+                width: 800
+                height: 600
                 anchors.fill: parent
                 visible: media_type == 2
             }*/
+
             Icon {
                 visible: media_type == 2
                 width: units.gu(3)

@@ -22,12 +22,16 @@ WorkerScript.onMessage = function(msg) {
 
     // Object loop
     for (var i = 0; i < obj.length; i++) {
-        // Suggestions
-        //suggestionsModel.append(obj[i]);
-        //suggestionsModel.sync();
-
-
         if (feed == 'homePage') {
+            if (typeof obj[i].suggested_users != 'undefined') {
+
+                for (var k = 0; k < obj[i].suggested_users.suggestions; k++) {
+                    suggestionsModel.append(obj[i].suggested_users.suggestions[k]);
+                    suggestionsModel.sync();
+                }
+
+            }
+
             if (typeof obj[i].media_or_ad != 'undefined' && typeof obj[i].media_or_ad.injected == 'undefined') {
 
                 obj[i].media_or_ad.video_url = typeof obj[i].media_or_ad.video_versions != 'undefined' ? obj[i].media_or_ad.video_versions[0].url : ''

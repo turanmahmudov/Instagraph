@@ -119,7 +119,7 @@ MainView {
 
     function init() {
         var username = Storage.get("username");
-        var password = Storage.get("password")
+        var password = Storage.get("password");
         if (username === "" ||  password === "" || username === undefined || password === undefined || username === null || password === null ) {
             loginPageIsActive = true;
             pageStack.push(Qt.resolvedUrl("qml/ui/LoginPage.qml"));
@@ -131,6 +131,8 @@ MainView {
         }
     }
 
+    // Works: Home, Tags, Users
+    // Doesn't work: Single Media, Location Feed
     function processUri() {
         // no process
         if (typeof uri === "undefined") return;
@@ -143,6 +145,7 @@ MainView {
 
             if (commands[1] == "p") {
                 // media
+                return;
             } else if (commands[1] == "explore") {
                 // no process
                 if (commands[2] == "") return;
@@ -152,17 +155,18 @@ MainView {
                     pageStack.push(Qt.resolvedUrl("qml/ui/TagFeedPage.qml"), {tag: commands[3]});
                 } else if (commands[2] == "locations") {
                     // location
+                    return;
                 }
             } else {
                 pageStack.push(Qt.resolvedUrl("qml/ui/OtherUserPage.qml"), {usernameString: commands[1]});
             }
 
             console.log(uri)
-            // https://www.instagram.com/ - main
-            // https://www.instagram.com/esmer_elizadeh/ - user
-            // https://www.instagram.com/p/BJL8VdDj60C6qZ8ovtBVzsufLIyiMNcTKZ1SBU0/ - media
-            // https://www.instagram.com/explore/tags/gallery/ - tag
-            // https://www.instagram.com/explore/locations/239426709/ - location
+            // https://www.instagram.com/ - main = Home
+            // https://www.instagram.com/esmer_elizadeh/ - user == Users
+            // https://www.instagram.com/p/BJL8VdDj60C6qZ8ovtBVzsufLIyiMNcTKZ1SBU0/ - media == Single Media
+            // https://www.instagram.com/explore/tags/gallery/ - tag == Tags
+            // https://www.instagram.com/explore/locations/239426709/ - location == Location Feed
         }
     }
 
@@ -233,14 +237,14 @@ MainView {
             homePage.getMedia();
 
             // Search page
-            //searchPage.getPopular();
+            searchPage.getPopular();
 
             // Activity page
             notifsPage.getRecentActivity();
 
             // User page
             userPage.getUsernameInfo();
-            //userPage.getUsernameFeed();
+            userPage.getUsernameFeed();
 
             // Open requested url after login
             processUri();
