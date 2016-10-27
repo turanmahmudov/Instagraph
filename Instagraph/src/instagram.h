@@ -83,6 +83,7 @@ public slots:
     void getv2Inbox();
     void directThread(QString threadId);
     void directMessage(QString recipients, QString text, QString thread_id = "0");
+    void directShare(QString mediaId, QString recipients, QString text = "");
 
     void changePassword(QString oldPassword, QString newPassword);
 
@@ -186,6 +187,7 @@ signals:
     void v2InboxDataReady(QVariant answer);
     void directThreadReady(QVariant answer);
     void directMessageReady(QVariant answer);
+    void directShareReady(QVariant answer);
 
     void changePasswordReady(QVariant answer);
 

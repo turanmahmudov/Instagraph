@@ -953,6 +953,48 @@ void Instagram::directThread(QString threadId)
     QObject::connect(directThreadRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(directThreadReady(QVariant)));
 }
 
+void Instagram::directShare(QString mediaId, QString recipients, QString text)
+{
+    m_busy = true;
+    emit busyChanged();
+
+    //QString recipient_users = "\""+recipients+"\"";
+
+    QString boundary = this->m_uuid;
+
+    /*Body build*/
+    QByteArray body = "";
+
+    body += "--"+boundary+"\r\n";
+    body += "Content-Disposition: form-data; name=\"media_id\"\r\n\r\n";
+    body += mediaId+"\r\n";
+
+    body += "--"+boundary+"\r\n";
+    body += "Content-Disposition: form-data; name=\"recipient_users\"\r\n\r\n";
+    body += "[["+recipients+"]]\r\n";
+
+    body += "--"+boundary+"\r\n";
+    body += "Content-Disposition: form-data; name=\"client_context\"\r\n\r\n";
+    body += this->m_uuid.replace("{","").replace("}","")+"\r\n";
+
+    body += "--"+boundary+"\r\n";
+    body += "Content-Disposition: form-data; name=\"thread_ids\"\r\n\r\n";
+    body += "[\"0\"]\r\n";
+
+    body += "--"+boundary+"\r\n";
+    body += "Content-Disposition: form-data; name=\"text\"\r\n\r\n";
+    body += text+"\r\n";
+
+    body += "--"+boundary+"--";
+
+    InstagramRequest *directMessageShare = new InstagramRequest();
+    directMessageShare->directRquest("direct_v2/threads/broadcast/media_share/?media_type=photo",boundary, body);
+    QObject::connect(directMessageShare,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(directShareReady(QVariant)));
+
+    m_busy = false;
+    emit busyChanged();
+}
+
 void Instagram::directMessage(QString recipients, QString text, QString thread_id)
 {
     m_busy = true;

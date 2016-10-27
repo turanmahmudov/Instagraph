@@ -268,7 +268,7 @@ ListItem {
                     width: units.gu(3)
                     height: width
                     name: has_liked == true ? "like" : "unlike"
-                    color: has_liked == true ? UbuntuColors.red : ""
+                    color: has_liked == true ? UbuntuColors.red : "#000000"
                 }
 
                 MouseArea {
@@ -294,6 +294,7 @@ ListItem {
                     width: units.gu(3)
                     height: width
                     name: "message"
+                    color: "#000000"
                 }
 
                 MouseArea {
@@ -312,7 +313,28 @@ ListItem {
                     anchors.centerIn: parent
                     width: units.gu(3)
                     height: width
+                    name: "share"
+                    color: "#000000"
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+
+                    }
+                }
+            }
+
+            Item {
+                width: units.gu(4)
+                height: width
+
+                Icon {
+                    anchors.centerIn: parent
+                    width: units.gu(3)
+                    height: width
                     name: "save"
+                    color: "#000000"
                 }
 
                 MouseArea {
