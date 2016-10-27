@@ -24,6 +24,8 @@ WorkerScript.onMessage = function(msg) {
     for (var i = 0; i < obj.length; i++) {
 
         if (feed == 'homePage') {
+
+            // Suggestions
             if (typeof obj[i].suggested_users != 'undefined') {
 
                 for (var k = 0; k < obj[i].suggested_users.suggestions.length; k++) {

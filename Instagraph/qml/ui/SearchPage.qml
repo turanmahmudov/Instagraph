@@ -21,10 +21,10 @@ Page {
             backgroundColor: "#275A84"
             foregroundColor: "#ffffff"
         }
-        /*trailingActionBar {
+        trailingActionBar {
             numberOfSlots: 1
             actions: [addPeopleAction]
-        }*/
+        }
         contents: TextField {
             id: searchInput
             anchors {

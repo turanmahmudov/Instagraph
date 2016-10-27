@@ -24,24 +24,30 @@ Page {
     property bool next_coming: true
 
     property bool list_loading: false
+    property bool clear_models: true
 
     function discoverPeopleDataFinished(data) {
         if (next_max_id == data.next_max_id) {
             return false;
         } else {
-            next_max_id = data.next_max_id;
+            next_max_id = data.more_available == true ? data.next_max_id : "";
             more_available = data.more_available;
             next_coming = true;
 
-            for (var i = 0; i < data.items.length; i++) {
-
-                discoverPeopleModel.append(data.items[i]);
-            }
+            worker.sendMessage({'feed': 'discoverPeoplePage', 'obj': data.items, 'model': discoverPeopleModel, 'clear_model': clear_models})
 
             next_coming = false;
         }
 
         list_loading = false
+    }
+
+    WorkerScript {
+        id: worker
+        source: "../js/SimpleWorker.js"
+        onMessage: {
+            console.log(msg)
+        }
     }
 
     Component.onCompleted: {
@@ -50,11 +56,12 @@ Page {
 
     function discoverPeople(next_id)
     {
+        clear_models = false;
         if (!next_id) {
             discoverPeopleModel.clear()
             next_max_id = ""
+            clear_models = true
         }
-        list_loading = true
         instagram.explore(next_id);
     }
 
@@ -62,7 +69,7 @@ Page {
         id: bouncingProgress
         z: 10
         anchors.top: discoverpeoplepage.header.bottom
-        visible: instagram.busy
+        visible: instagram.busy || list_loading
     }
 
     ListModel {
@@ -73,9 +80,7 @@ Page {
         id: recentActivityList
         anchors {
             left: parent.left
-            leftMargin: units.gu(1)
             right: parent.right
-            rightMargin: units.gu(1)
             bottom: parent.bottom
             bottomMargin: bottomMenu.height
             top: discoverpeoplepage.header.bottom
@@ -97,8 +102,14 @@ Page {
             Column {
                 id: entry_column
                 spacing: units.gu(1)
-                width: parent.width
                 y: units.gu(1)
+                width: parent.width
+                anchors {
+                    left: parent.left
+                    leftMargin: units.gu(1)
+                    right: parent.right
+                    rightMargin: units.gu(1)
+                }
 
                 Row {
                     spacing: units.gu(1)
@@ -151,20 +162,16 @@ Page {
                         anchors.verticalCenter: parent.verticalCenter
 
                         Text {
-                            text: Helper.formatUser(media.user.username)
+                            text: media.user.username
+                            font.weight: Font.DemiBold
                             wrapMode: Text.WordWrap
                             width: parent.width
-                            textFormat: Text.RichText
-                            onLinkActivated: {
-                                Scripts.linkClick(link)
-                            }
                         }
 
                         Text {
                             text: media.user.full_name
                             wrapMode: Text.WordWrap
                             width: parent.width
-                            textFormat: Text.RichText
                         }
                     }
 
@@ -176,17 +183,24 @@ Page {
                     }
                 }
             }
+
+            onClicked: {
+                pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameString: media.user.username});
+            }
         }
         PullToRefresh {
             refreshing: list_loading && discoverPeopleModel.count == 0
-            onRefresh: discoverPeople()
+            onRefresh: {
+                list_loading = true
+                discoverPeople()
+            }
         }
     }
 
     Connections{
         target: instagram
         onExploreDataReady: {
-            console.log(answer)
+            //console.log(answer)
             var data = JSON.parse(answer);
             discoverPeopleDataFinished(data);
         }
