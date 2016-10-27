@@ -71,9 +71,7 @@ Page {
         id: mediaLikersList
         anchors {
             left: parent.left
-            leftMargin: units.gu(1)
             right: parent.right
-            rightMargin: units.gu(1)
             bottom: parent.bottom
             top: medialikerspage.header.bottom
         }
@@ -93,6 +91,12 @@ Page {
                 spacing: units.gu(1)
                 width: parent.width
                 y: units.gu(1)
+                anchors {
+                    left: parent.left
+                    leftMargin: units.gu(1)
+                    right: parent.right
+                    rightMargin: units.gu(1)
+                }
 
                 Row {
                     spacing: units.gu(1)
@@ -145,13 +149,10 @@ Page {
                         anchors.verticalCenter: parent.verticalCenter
 
                         Text {
-                            text: Helper.formatUser(username)
+                            text: username
                             wrapMode: Text.WordWrap
+                            font.weight: Font.DemiBold
                             width: parent.width
-                            textFormat: Text.RichText
-                            onLinkActivated: {
-                                Scripts.linkClick(link)
-                            }
                         }
 
                         Text {
@@ -162,6 +163,10 @@ Page {
                         }
                     }
                 }
+            }
+
+            onClicked: {
+                pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameString: username});
             }
         }
         PullToRefresh {

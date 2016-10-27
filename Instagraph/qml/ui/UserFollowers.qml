@@ -71,9 +71,7 @@ Page {
         id: userFollowingsList
         anchors {
             left: parent.left
-            leftMargin: units.gu(1)
             right: parent.right
-            rightMargin: units.gu(1)
             bottom: parent.bottom
             top: userfollowerspage.header.bottom
         }
@@ -93,6 +91,12 @@ Page {
                 spacing: units.gu(1)
                 width: parent.width
                 y: units.gu(1)
+                anchors {
+                    left: parent.left
+                    leftMargin: units.gu(1)
+                    right: parent.right
+                    rightMargin: units.gu(1)
+                }
 
                 Row {
                     spacing: units.gu(1)
@@ -145,13 +149,10 @@ Page {
                         anchors.verticalCenter: parent.verticalCenter
 
                         Text {
-                            text: Helper.formatUser(username)
+                            text: username
+                            font.weight: Font.DemiBold
                             wrapMode: Text.WordWrap
                             width: parent.width
-                            textFormat: Text.RichText
-                            onLinkActivated: {
-                                Scripts.linkClick(link)
-                            }
                         }
 
                         Text {
@@ -162,6 +163,10 @@ Page {
                         }
                     }
                 }
+            }
+
+            onClicked: {
+                pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameString: username});
             }
         }
         PullToRefresh {
