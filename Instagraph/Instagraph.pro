@@ -142,5 +142,6 @@ DISTFILES += \
     qml/components/EmptyBox.qml \
     qml/ui/LikedMediaPage.qml \
     qml/ui/CheckpointInfo.qml \
-    qml/components/FloatingActionButton.qml
+    qml/components/FloatingActionButton.qml \
+    qml/ui/SuggestionsPage.qml
 

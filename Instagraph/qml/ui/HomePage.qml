@@ -94,116 +94,204 @@ Page {
         id: homeSuggestionsModel
     }
 
-    ListView {
+    Column {
         id: homeSuggestionsList
         visible: homeSuggestionsModel.count > 0
+        z: 10
         anchors {
             left: parent.left
-            leftMargin: units.gu(1)
             right: parent.right
-            rightMargin: units.gu(1)
             top: homepage.header.bottom
         }
-        model: homeSuggestionsModel
-        delegate: ListItem {
-            id: searchUsersDelegate
-            divider.visible: false
-            height: entry_column.height + units.gu(1)
 
-            Column {
-                id: entry_column
-                spacing: units.gu(1)
+        ListItem {
+            height: suggestionsHeaderRow.height + units.gu(4)
+            color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
+
+            Row {
+                id: suggestionsHeaderRow
+                width: parent.width
                 anchors {
                     left: parent.left
                     leftMargin: units.gu(1)
                     right: parent.right
                     rightMargin: units.gu(1)
                 }
+                anchors.verticalCenter: parent.verticalCenter
 
-                Item {
-                    width: parent.width
-                    height: units.gu(0.1)
+                Label {
+                    text: i18n.tr("Suggestions for You")
+                    width: parent.width - suggestionsCloseRectangle.width
+                    wrapMode: Text.WordWrap
+                    font.weight: Font.DemiBold
+                    anchors.verticalCenter: parent.verticalCenter
                 }
 
-                Row {
+                Rectangle {
+                    id: suggestionsCloseRectangle
+                    height: parent.height
+                    width: height
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: "transparent"
+
+                    Row {
+                        width: parent.width
+
+                        Icon {
+                            height: units.gu(2)
+                            width: height
+                            name: "close"
+                            color: UbuntuColors.darkGrey
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            homeSuggestionsList.visible = false
+                            homePhotosList.anchors.top = homepage.header.bottom
+                        }
+                    }
+                }
+            }
+        }
+
+        Repeater {
+            model: homeSuggestionsModel
+
+            ListItem {
+                id: searchUsersDelegate
+                divider.visible: true
+                height: entry_column.height + units.gu(1)
+                color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
+
+                Column {
+                    id: entry_column
                     spacing: units.gu(1)
-                    width: parent.width
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors {
+                        left: parent.left
+                        leftMargin: units.gu(1)
+                        right: parent.right
+                        rightMargin: units.gu(1)
+                    }
 
                     Item {
-                        width: units.gu(5)
-                        height: width
+                        width: parent.width
+                        height: units.gu(0.1)
+                    }
 
-                        UbuntuShape {
-                            width: parent.width
-                            height: width
-                            radius: "large"
-
-                            source: Image {
-                                id: feed_user_profile_image
-                                width: parent.width
-                                height: width
-                                source: status == Image.Error ? "../images/not_found_user.jpg" : user.profile_pic_url
-                                fillMode: Image.PreserveAspectCrop
-                                anchors.centerIn: parent
-                                sourceSize: Qt.size(width,height)
-                                smooth: true
-                                clip: true
-                            }
-                        }
+                    Row {
+                        spacing: units.gu(1)
+                        width: parent.width
+                        anchors.horizontalCenter: parent.horizontalCenter
 
                         Item {
-                            width: activity.width
+                            width: units.gu(5)
                             height: width
-                            anchors.centerIn: parent
-                            opacity: feed_user_profile_image.status == Image.Loading
 
-                            Behavior on opacity {
-                                UbuntuNumberAnimation {
-                                    duration: UbuntuAnimation.SlowDuration
+                            UbuntuShape {
+                                width: parent.width
+                                height: width
+                                radius: "large"
+
+                                source: Image {
+                                    id: feed_user_profile_image
+                                    width: parent.width
+                                    height: width
+                                    source: status == Image.Error ? "../images/not_found_user.jpg" : user.profile_pic_url
+                                    fillMode: Image.PreserveAspectCrop
+                                    anchors.centerIn: parent
+                                    sourceSize: Qt.size(width,height)
+                                    smooth: true
+                                    clip: true
                                 }
                             }
 
-                            ActivityIndicator {
-                                id: activity
-                                running: true
+                            Item {
+                                width: activity.width
+                                height: width
+                                anchors.centerIn: parent
+                                opacity: feed_user_profile_image.status == Image.Loading
+
+                                Behavior on opacity {
+                                    UbuntuNumberAnimation {
+                                        duration: UbuntuAnimation.SlowDuration
+                                    }
+                                }
+
+                                ActivityIndicator {
+                                    id: activity
+                                    running: true
+                                }
                             }
                         }
-                    }
 
-                    Column {
-                        width: parent.width - units.gu(12)
-                        anchors.verticalCenter: parent.verticalCenter
+                        Column {
+                            width: parent.width - units.gu(12)
+                            anchors.verticalCenter: parent.verticalCenter
 
-                        Text {
-                            text: user.username
-                            wrapMode: Text.WordWrap
-                            elide: Text.ElideRight
-                            maximumLineCount: 1
-                            font.weight: Font.DemiBold
-                            width: parent.width
+                            Text {
+                                text: user.username
+                                wrapMode: Text.WordWrap
+                                elide: Text.ElideRight
+                                maximumLineCount: 1
+                                font.weight: Font.DemiBold
+                                width: parent.width
+                            }
+
+                            Text {
+                                text: user.full_name
+                                wrapMode: Text.WordWrap
+                                elide: Text.ElideRight
+                                maximumLineCount: 1
+                                width: parent.width
+                            }
                         }
 
-                        Text {
-                            text: user.full_name
-                            wrapMode: Text.WordWrap
-                            elide: Text.ElideRight
-                            maximumLineCount: 1
-                            width: parent.width
+                        FollowComponent {
+                            width: units.gu(5)
+                            height: units.gu(3)
+                            friendship_var: {"following": false, "outgoing_request": false}
+                            userId: user.pk
                         }
                     }
+                }
 
-                    FollowComponent {
-                        width: units.gu(5)
-                        height: units.gu(3)
-                        friendship_var: user.friendship_status
-                        userId: user.pk
-                    }
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameString: user.username});
+                }
+            }
+        }
+
+        ListItem {
+            height: suggestionsFooterRow.height + units.gu(4)
+            color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
+            divider.visible: false
+
+            Row {
+                id: suggestionsFooterRow
+                width: parent.width
+                anchors {
+                    left: parent.left
+                    leftMargin: units.gu(1)
+                    right: parent.right
+                    rightMargin: units.gu(1)
+                }
+                anchors.verticalCenter: parent.verticalCenter
+
+                Label {
+                    text: i18n.tr("See All Suggestions")
+                    width: parent.width
+                    color: "#275A84"
+                    wrapMode: Text.WordWrap
+                    font.weight: Font.DemiBold
+                    anchors.verticalCenter: parent.verticalCenter
                 }
             }
 
             onClicked: {
-                pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameString: username});
+                //pageStack.push(Qt.resolvedUrl("SuggestionsPage.qml"));
             }
         }
     }

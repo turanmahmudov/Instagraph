@@ -22,12 +22,16 @@ WorkerScript.onMessage = function(msg) {
 
     // Object loop
     for (var i = 0; i < obj.length; i++) {
+
         if (feed == 'homePage') {
             if (typeof obj[i].suggested_users != 'undefined') {
 
-                for (var k = 0; k < obj[i].suggested_users.suggestions; k++) {
+                for (var k = 0; k < obj[i].suggested_users.suggestions.length; k++) {
                     suggestionsModel.append(obj[i].suggested_users.suggestions[k]);
                     suggestionsModel.sync();
+                    if (k >= 2) {
+                        break;
+                    }
                 }
 
             }
