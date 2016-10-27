@@ -131,6 +131,8 @@ signals:
     void profileConnected(QVariant answer);
     void profileConnectedFail();
 
+    void autoCompleteUserListReady(QVariant answer);
+
     void mediaInfoReady(QVariant answer);
     void mediaEdited(QVariant answer);
     void mediaDeleted(QVariant answer);
@@ -211,6 +213,7 @@ private slots:
     void setUser();
     void doLogin();
     void syncFeatures(bool prelogin = false);
+    void autoCompleteUserList();
     void profileConnect(QVariant profile);
     void configurePhoto(QVariant answer);
 };

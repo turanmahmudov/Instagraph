@@ -192,6 +192,7 @@ void Instagram::profileConnect(QVariant profile)
         this->m_rank_token = this->m_username_id+"_"+this->m_uuid;
 
         this->syncFeatures();
+        this->autoCompleteUserList();
 
         emit profileConnected(profile);
     }
@@ -222,6 +223,13 @@ void Instagram::syncFeatures(bool prelogin)
         QString signature = syncRequest->generateSignature(data);
         syncRequest->request("qe/sync/",signature.toUtf8());
     }
+}
+
+void Instagram::autoCompleteUserList()
+{
+    InstagramRequest *autoCompleteUserListRequest = new InstagramRequest();
+    autoCompleteUserListRequest->request("friendships/autocomplete_user_list/?version=2",NULL);
+    QObject::connect(autoCompleteUserListRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(autoCompleteUserListReady(QVariant)));
 }
 
 void Instagram::postImage(QString path, QString caption, QVariantMap location, QString upload_id)
