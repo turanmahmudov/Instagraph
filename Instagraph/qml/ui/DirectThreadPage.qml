@@ -160,6 +160,17 @@ Page {
                         clip: true
                     }
 
+                    Image {
+                        visible: item_type == "media_share"
+                        width: item_type == "media_share" ? entry_column.width/2 - units.gu(2.5) : 0
+                        height: item_type == "media_share" ? width/media_share.image_versions2.candidates[0].width*media_share.image_versions2.candidates[0].height : 0
+                        source: status == Image.Error ? "../images/not_found_user.jpg" : (item_type == "media_share" ? media_share.image_versions2.candidates[0].url : '')
+                        fillMode: Image.PreserveAspectCrop
+                        sourceSize: Qt.size(width,height)
+                        smooth: true
+                        clip: true
+                    }
+
                     Row {
                         width: units.gu(5)
                         visible: item_type == "action_log"
