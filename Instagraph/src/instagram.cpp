@@ -1083,6 +1083,20 @@ void Instagram::explore(QString max_id)
     emit busyChanged();
 }
 
+void Instagram::getRankedRecipients()
+{
+    InstagramRequest *getRankedRecipientsRequest = new InstagramRequest();
+    getRankedRecipientsRequest->request("direct_v2/ranked_recipients/?show_threads=true",NULL);
+    QObject::connect(getRankedRecipientsRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(rankedRecipientsDataReady(QVariant)));
+}
+
+void Instagram::getRecentRecipients()
+{
+    InstagramRequest *getRecentRecipientsRequest = new InstagramRequest();
+    getRecentRecipientsRequest->request("direct_share/recent_recipients/",NULL);
+    QObject::connect(getRecentRecipientsRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(recentRecipientsDataReady(QVariant)));
+}
+
 void Instagram::getUserFollowings(QString usernameId, QString max_id)
 {
     m_busy = true;

@@ -9,7 +9,7 @@ WorkerScript.onMessage = function(msg) {
     }
 
     // Object loop
-    for (var i = 0; i < obj.length; i++) {
+    for (var i = 2; i < obj.length; i++) {
         if (feed == 'CommentsPage') {
             obj[i].ctext = obj[i].text ? obj[i].text : "";
         }

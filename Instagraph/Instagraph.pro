@@ -143,5 +143,6 @@ DISTFILES += \
     qml/ui/LikedMediaPage.qml \
     qml/ui/CheckpointInfo.qml \
     qml/components/FloatingActionButton.qml \
-    qml/ui/SuggestionsPage.qml
+    qml/ui/SuggestionsPage.qml \
+    qml/ui/ShareMediaPage.qml
 

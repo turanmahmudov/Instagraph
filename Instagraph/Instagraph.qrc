@@ -99,5 +99,6 @@
         <file>qml/components/FloatingActionButton.qml</file>
         <file>Instagraph.dispatcher</file>
         <file>qml/ui/SuggestionsPage.qml</file>
+        <file>qml/ui/ShareMediaPage.qml</file>
     </qresource>
 </RCC>

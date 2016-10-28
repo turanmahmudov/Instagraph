@@ -292,7 +292,7 @@ Column {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-
+                    pageStack.push(Qt.resolvedUrl("../ui/ShareMediaPage.qml"), {mediaId: id});
                 }
             }
         }

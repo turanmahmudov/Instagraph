@@ -89,6 +89,9 @@ public slots:
 
     void explore(QString max_id = "");
 
+    void getRankedRecipients();
+    void getRecentRecipients();
+
     void getUserFollowings(QString usernameId, QString max_id = "");
     void getUserFollowers(QString usernameId, QString max_id = "");
 
@@ -194,6 +197,9 @@ signals:
     void changePasswordReady(QVariant answer);
 
     void exploreDataReady(QVariant answer);
+
+    void rankedRecipientsDataReady(QVariant answer);
+    void recentRecipientsDataReady(QVariant answer);
 
     void userFollowingsDataReady(QVariant answer);
     void userFollowersDataReady(QVariant answer);
