@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-28 03:19+0300\n"
+"POT-Creation-Date: 2016-10-28 16:29+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -177,8 +177,8 @@ msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraPage.qml:25
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:40
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:29
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:62
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:31
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:64
 msgid "Close"
 msgstr ""
 
@@ -222,7 +222,7 @@ msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:286
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:406
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:254
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:276
 msgid "Send"
 msgstr ""
 
@@ -483,9 +483,9 @@ msgstr ""
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchLocation.qml:62
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:19
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:51
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:41
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:54
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:92
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:43
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:56
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:94
 msgid "Search"
 msgstr ""
 
@@ -505,11 +505,11 @@ msgstr ""
 msgid " posts"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:21
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:23
 msgid "Send To"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:244
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:266
 msgid "Add a message..."
 msgstr ""
 

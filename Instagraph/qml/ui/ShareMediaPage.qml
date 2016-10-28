@@ -17,6 +17,8 @@ Page {
 
     property var threadUsers: []
 
+    property bool clear_models: true
+
     header: PageHeader {
         title: i18n.tr("Send To")
         StyleHints {
@@ -106,6 +108,12 @@ Page {
         worker.sendMessage({'feed': 'ShareMediaPage', 'obj': data.ranked_recipients, 'model': rankedRecipientsModel, 'clear_model': true})
     }
 
+    function userFollowingsDataFinished(data) {
+        userFollowingsModel.clear()
+
+        worker.sendMessage({'feed': 'UserFollowingsPage', 'obj': data.users, 'model': userFollowingsModel, 'clear_model': clear_models})
+    }
+
     WorkerScript {
         id: worker
         source: "../js/SimpleWorker.js"
@@ -115,8 +123,9 @@ Page {
     }
 
     Component.onCompleted: {
-        getRankedRecipients();
+        //getRankedRecipients();
         //getRecentRecipients();
+        getUserFollowings();
     }
 
     function getRankedRecipients()
@@ -127,6 +136,16 @@ Page {
     function getRecentRecipients()
     {
         instagram.getRecentRecipients();
+    }
+
+    function getUserFollowings(next_id)
+    {
+        clear_models = false
+        if (!next_id) {
+            userFollowingsModel.clear()
+            clear_models = true
+        }
+        instagram.getUserFollowings(userId);
     }
 
     function sendMessage(text)
@@ -145,7 +164,10 @@ Page {
 
     ListModel {
         id: rankedRecipientsModel
-        dynamicRoles: true
+    }
+
+    ListModel {
+        id: userFollowingsModel
     }
 
     Column {
@@ -172,7 +194,7 @@ Page {
                 spacing: units.gu(4)
 
                 Repeater {
-                    model: rankedRecipientsModel
+                    model: userFollowingsModel
 
                     Column {
                         width: units.gu(9)
@@ -190,7 +212,7 @@ Page {
                                 }
                                 width: parent.width
                                 height: width
-                                source: typeof user != 'undefined' && typeof user.profile_pic_url != 'undefined' ? user.profile_pic_url : "../images/not_found_user.jpg"
+                                source: status == Image.Error ? "../images/not_found_user.jpg" : profile_pic_url
                                 fillMode: Image.PreserveAspectCrop
                                 sourceSize: Qt.size(width,height)
                                 asynchronous: true
@@ -209,7 +231,7 @@ Page {
                             width: parent.width
 
                             Label {
-                                text: user.username
+                                text: username
                                 color: "#000000"
                                 fontSize: "small"
                                 font.weight: Font.DemiBold
@@ -217,7 +239,7 @@ Page {
                             }
 
                             Label {
-                                text: user.full_name
+                                text: full_name
                                 fontSize: "small"
                                 anchors.horizontalCenter: parent.horizontalCenter
                             }
@@ -263,7 +285,7 @@ Page {
     Connections{
         target: instagram
         onRankedRecipientsDataReady: {
-            //console.log(answer)
+            console.log(answer)
             var data = JSON.parse(answer);
             rankedRecipientsFinished(data);
         }
