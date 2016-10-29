@@ -100,5 +100,6 @@
         <file>Instagraph.dispatcher</file>
         <file>qml/ui/SuggestionsPage.qml</file>
         <file>qml/ui/ShareMediaPage.qml</file>
+        <file>qml/components/ContentDownloadDialog.qml</file>
     </qresource>
 </RCC>

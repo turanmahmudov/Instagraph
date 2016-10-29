@@ -1,7 +1,9 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
 import QtQuick.LocalStorage 2.0
+import Ubuntu.Components.Popups 1.3
 import Ubuntu.Content 1.3
+import Ubuntu.DownloadManager 1.2
 
 import "qml/js/Storage.js" as Storage
 import "qml/js/Helper.js" as Helper
@@ -225,6 +227,26 @@ MainView {
     ContentStore {
         id: appStore
         scope: ContentScope.App
+    }
+
+    Component {
+        id: downloadComponent
+        SingleDownload {
+            autoStart: false
+            property var contentType
+            onDownloadIdChanged: {
+                PopupUtils.open(downloadDialog, mainView, {"contentType" : contentType, "downloadId" : downloadId})
+            }
+
+            onFinished: {
+                destroy()
+            }
+        }
+    }
+
+    Component {
+        id: downloadDialog
+        ContentDownloadDialog { }
     }
 
     Connections{
