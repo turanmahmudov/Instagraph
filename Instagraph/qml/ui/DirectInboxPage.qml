@@ -37,7 +37,7 @@ Page {
         v2InboxModel.clear()
 
         for (var i = 0; i < data.inbox.threads.length; i++) {
-            data.inbox.threads[i].user_profile_pic_url = data.inbox.threads[i].users[0].profile_pic_url;
+            data.inbox.threads[i].user_profile_pic_url = typeof data.inbox.threads[i].users[0] != 'undefined' ? data.inbox.threads[i].users[0].profile_pic_url : data.inbox.threads[i].inviter.profile_pic_url;
             data.inbox.threads[i].item_text = data.inbox.threads[i].items[0].text;
             data.inbox.threads[i].item_timestamp = data.inbox.threads[i].items[0].timestamp;
             v2InboxModel.append(data.inbox.threads[i]);
@@ -146,7 +146,7 @@ Page {
                         anchors.verticalCenter: parent.verticalCenter
 
                         Text {
-                            text: thread_title
+                            text: thread_title != "" ? thread_title : inviter.username
                             wrapMode: Text.WordWrap
                             font.weight: Font.DemiBold
                             width: parent.width

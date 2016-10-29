@@ -14,6 +14,7 @@ Page {
     property bool list_loading: false
 
     property var mediaId
+    property var mediaUser
 
     property var threadUsers: []
 
@@ -35,7 +36,7 @@ Page {
                 }
             }
         ]
-        trailingActionBar {
+        /*trailingActionBar {
             numberOfSlots: 1
             actions: [
                 Action {
@@ -47,7 +48,7 @@ Page {
                     }
                 }
             ]
-        }
+        }*/
     }
 
     PageHeader {
@@ -145,7 +146,7 @@ Page {
             userFollowingsModel.clear()
             clear_models = true
         }
-        instagram.getUserFollowings(userId);
+        instagram.getUserFollowings(my_usernameId);
     }
 
     function sendMessage(text)
@@ -153,8 +154,8 @@ Page {
         var recip_array = [];
         var recip_string = '';
         for (var i in threadUsers) {
-            if (i != 0) {
-                recip_array.push('"'+i+'"');
+            if (threadUsers[i] != 0) {
+                recip_array.push('"'+threadUsers[i]+'"');
             }
         }
         recip_string = recip_array.join(',');
@@ -182,6 +183,28 @@ Page {
         }
         spacing: units.gu(2)
 
+        Column {
+            id: privateUserWarning
+            width: parent.width
+            visible: mediaUser.is_private
+
+            Label {
+                text: i18n.tr("%1 has a private account.").arg(mediaUser.username)
+                fontSize: "small"
+                font.weight: Font.Light
+                wrapMode: Text.WordWrap
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            Label {
+                text: i18n.tr("Only their followers will be able to see this photo.")
+                fontSize: "small"
+                font.weight: Font.Light
+                wrapMode: Text.WordWrap
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+        }
+
         Flickable {
             width: parent.width
             height: usersRow.height
@@ -200,6 +223,8 @@ Page {
                         width: units.gu(9)
                         spacing: units.gu(1)
 
+                        property bool selected: false
+
                         UbuntuShape {
                             width: units.gu(7)
                             height: width
@@ -212,7 +237,7 @@ Page {
                                 }
                                 width: parent.width
                                 height: width
-                                source: status == Image.Error ? "../images/not_found_user.jpg" : profile_pic_url
+                                source: typeof profile_pic_url != 'undefined' ? profile_pic_url : "../images/not_found_user.jpg"
                                 fillMode: Image.PreserveAspectCrop
                                 sourceSize: Qt.size(width,height)
                                 asynchronous: true
@@ -222,7 +247,23 @@ Page {
                             MouseArea {
                                 anchors.fill: parent
                                 onClicked: {
-                                    threadUsers.push(user.pk)
+                                    if (!selected) {
+                                        selected = true
+                                        threadUsers.push(pk)
+                                    } else {
+                                        selected = false
+
+                                        var index = threadUsers.indexOf(pk);
+                                        if (index > -1) {
+                                            threadUsers.splice(index, 1);
+                                        }
+                                    }
+
+                                    if (threadUsers.length > 0) {
+                                        addMessageItem.visible = true;
+                                    } else {
+                                        addMessageItem.visible = false;
+                                    }
                                 }
                             }
                         }
@@ -243,6 +284,18 @@ Page {
                                 fontSize: "small"
                                 anchors.horizontalCenter: parent.horizontalCenter
                             }
+
+                            Item {
+                                width: parent.width
+                                height: units.gu(1)
+                            }
+
+                            Rectangle {
+                                visible: selected
+                                width: parent.width
+                                height: units.gu(0.3)
+                                color: "#275A84"
+                            }
                         }
                     }
                 }
@@ -253,7 +306,7 @@ Page {
             id: addMessageItem
             height: units.gu(5)
             width: parent.width
-            visible: rankedRecipientsModel.count > 0
+            visible: false
 
             Row {
                 width: parent.width
@@ -285,17 +338,23 @@ Page {
     Connections{
         target: instagram
         onRankedRecipientsDataReady: {
-            console.log(answer)
+            //console.log(answer)
             var data = JSON.parse(answer);
             rankedRecipientsFinished(data);
         }
         onRecentRecipientsDataReady: {
-            console.log(answer)
+            //console.log(answer)
             var data = JSON.parse(answer);
             recentRecipientsFinished(data);
         }
+        onUserFollowingsDataReady: {
+            var data = JSON.parse(answer);
+            userFollowingsDataFinished(data);
+        }
         onDirectShareReady: {
-            console.log(answer)
+            //console.log(answer)
+            var data = JSON.parse(answer);
+            pageStack.pop();
         }
     }
 }
