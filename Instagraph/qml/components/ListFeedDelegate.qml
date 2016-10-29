@@ -223,6 +223,12 @@ ListItem {
                     fill: parent
                 }
                 onClicked: {
+                    if (media_type == 2) {
+                        var singleDownload = downloadComponent.createObject(mainView)
+                        singleDownload.contentType = ContentType.Videos
+                        singleDownload.download(video_url)
+                    }
+
                     /*if (media_type == 2) {
                         console.log(video_url)
                         if (player.playbackState == MediaPlayer.PlayingState) {
