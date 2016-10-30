@@ -42,6 +42,7 @@ msgstr "Sil"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:69
 #: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:65
+#, fuzzy
 msgid "Remove Tag"
 msgstr ""
 
