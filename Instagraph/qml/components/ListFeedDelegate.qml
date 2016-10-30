@@ -77,9 +77,8 @@ ListItem {
                       enabled: !user.is_private && code
                       text: i18n.tr("Copy Share URL")
                       onTriggered: {
-                          var code = "https://instagram.com/p/"+code;
-                          Clipboard.push(code);
-                          Clipboard.push(["application/x-color", "black"]);
+                          var share_url = "https://instagram.com/p/"+code;
+                          Clipboard.push(share_url);
                           PopupUtils.close(popoverElement);
                       }
                   }
