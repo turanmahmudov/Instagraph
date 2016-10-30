@@ -22,7 +22,8 @@ Column {
         ActionSelectionPopover {
             id: popoverElement
             delegate: ListItem {
-                height: entry_column.height + units.gu(4)
+                visible: action.visible
+                height: action.visible ? entry_column.height + units.gu(4) : 0
 
                 Column {
                     id: entry_column
@@ -41,6 +42,8 @@ Column {
             }
             actions: ActionList {
                   Action {
+                      visible: my_usernameId == user.pk
+                      enabled: my_usernameId == user.pk
                       text: i18n.tr("Edit")
                       onTriggered: {
                           PopupUtils.close(popoverElement);
@@ -48,10 +51,21 @@ Column {
                       }
                   }
                   Action {
+                      visible: my_usernameId == user.pk
+                      enabled: my_usernameId == user.pk
                       text: i18n.tr("Delete")
                       onTriggered: {
                           last_deleted_media = index
                           instagram.deleteMedia(id);
+                      }
+                  }
+                  Action {
+                      visible: photo_of_you
+                      enabled: photo_of_you
+                      text: i18n.tr("Remove Tag")
+                      onTriggered: {
+                          last_deleted_media = index
+                          instagram.removeSelftag(id);
                       }
                   }
             }
@@ -63,6 +77,17 @@ Column {
                         var data = JSON.parse(answer);
                         if (data.did_delete) {
                             thismodel.remove(index)
+                        }
+                    }
+                }
+                onRemoveSelftagDone: {
+                    if (index == last_deleted_media) {
+                        var data = JSON.parse(answer);
+                        if (data.status == "ok") {
+                            thismodel.remove(index)
+                            if (thismodel.count == 0) {
+                                pageStack.pop();
+                            }
                         }
                     }
                 }
@@ -123,7 +148,7 @@ Column {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    if (my_usernameId == user.pk) {
+                    if (my_usernameId == user.pk || photo_of_you) {
                         PopupUtils.open(popoverComponent)
                     }
                 }
@@ -196,6 +221,12 @@ Column {
         MouseArea {
             anchors.fill: parent
             onClicked: {
+                if (media_type == 2) {
+                    var singleDownload = downloadComponent.createObject(mainView)
+                    singleDownload.contentType = ContentType.Videos
+                    singleDownload.download(video_url)
+                }
+
                 /*if (media_type == 2) {
                     if (player.playbackState == MediaPlayer.PlayingState) {
                         player.stop()

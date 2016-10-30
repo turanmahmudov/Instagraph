@@ -23,7 +23,8 @@ ListItem {
         ActionSelectionPopover {
             id: popoverElement
             delegate: ListItem {
-                height: entry_column.height + units.gu(4)
+                visible: action.visible
+                height: action.visible ? entry_column.height + units.gu(4) : 0
 
                 Column {
                     id: entry_column
@@ -45,6 +46,8 @@ ListItem {
             }
             actions: ActionList {
                   Action {
+                      visible: my_usernameId == user.pk
+                      enabled: my_usernameId == user.pk
                       text: i18n.tr("Edit")
                       onTriggered: {
                           PopupUtils.close(popoverElement);
@@ -52,10 +55,21 @@ ListItem {
                       }
                   }
                   Action {
+                      visible: my_usernameId == user.pk
+                      enabled: my_usernameId == user.pk
                       text: i18n.tr("Delete")
                       onTriggered: {
                           last_deleted_media = index
                           instagram.deleteMedia(id);
+                      }
+                  }
+                  Action {
+                      visible: photo_of_you
+                      enabled: photo_of_you
+                      text: i18n.tr("Remove Tag")
+                      onTriggered: {
+                          last_deleted_media = index
+                          instagram.removeSelftag(id);
                       }
                   }
             }
@@ -66,6 +80,17 @@ ListItem {
                     if (index == last_deleted_media) {
                         var data = JSON.parse(answer);
                         if (data.did_delete) {
+                            thismodel.remove(index)
+                            if (thismodel.count == 0) {
+                                pageStack.pop();
+                            }
+                        }
+                    }
+                }
+                onRemoveSelftagDone: {
+                    if (index == last_deleted_media) {
+                        var data = JSON.parse(answer);
+                        if (data.status == "ok") {
                             thismodel.remove(index)
                             if (thismodel.count == 0) {
                                 pageStack.pop();
@@ -161,7 +186,7 @@ ListItem {
                         fill: parent
                     }
                     onClicked: {
-                        if (my_usernameId == user.pk) {
+                        if (my_usernameId == user.pk || photo_of_you) {
                             PopupUtils.open(popoverComponent)
                         }
                     }

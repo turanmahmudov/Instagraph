@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-30 02:23+0300\n"
+"POT-Creation-Date: 2016-10-30 03:37+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,25 +36,30 @@ msgstr ""
 msgid "New Message"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:48
-#: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:44
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:51
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:47
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:25
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:19
 msgid "Edit"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:55
-#: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:51
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:60
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:56
 msgid "Delete"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:390
-#: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:356
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:69
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:65
+msgid "Remove Tag"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:415
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:387
 msgid " likes"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:420
-#: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:386
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:445
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:417
 #, qt-format
 msgid "View all %1 comments"
 msgstr ""
