@@ -16,6 +16,8 @@ UBUNTU_MANIFEST_FILE=manifest.json.in
 # app name in the manifest file
 UBUNTU_TRANSLATION_DOMAIN="instagraph.turan-mahmudov-l"
 
+export(UBUNTU_TRANSLATION_DOMAIN)
+
 # specify the source files that should be included into
 # the translation file, from those files a translation
 # template is created in po/template.pot, to create a

@@ -13,6 +13,8 @@
 
 int main(int argc, char *argv[])
 {
+    setlocale(LC_ALL, "");
+
     QGuiApplication app(argc, argv);
 
     qmlRegisterType<Instagram>("Instagram",1,0,"Instagram");
