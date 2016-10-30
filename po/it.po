@@ -1,0 +1,594 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-30 05:12+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:49
+msgid "Refresh"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:57
+msgid "Inbox"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:65
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DiscoverPeoplePage.qml:15
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SuggestionsPage.qml:15
+msgid "Discover People"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:73
+msgid "New Message"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:51
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:47
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:25
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:19
+msgid "Edit"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:60
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:56
+msgid "Delete"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:69
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:65
+msgid "Remove Tag"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:78
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:74
+msgid "Copy Share URL"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:425
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:397
+msgid " likes"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:455
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:427
+#, qt-format
+msgid "View all %1 comments"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/effects/EffectsList.qml:23
+msgid "Adjust"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/effects/EffectsList.qml:34
+msgid "Brightness"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/effects/EffectsList.qml:45
+msgid "Contrast"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/effects/EffectsList.qml:56
+msgid "Saturation"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/effects/EffectsList.qml:67
+msgid "Temperature"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/effects/EffectsList.qml:78
+msgid "Highlights"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/effects/EffectsList.qml:89
+msgid "Shadows"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/effects/EffectsList.qml:100
+msgid "Vignette"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/effects/EffectsList.qml:111
+msgid "Sharpen"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/About.qml:8
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:185
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:201
+msgid "About"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/About.qml:50
+msgid "Unofficial Instagram Client"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/About.qml:78
+msgid "Released under the terms of the GNU GPL v3"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/About.qml:87
+#, qt-format
+msgid "Source code available on %1"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:24
+msgid "Publish"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:28
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCropPage.qml:26
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:29
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:23
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:39
+msgid "Back"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:38
+msgid "Share"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:71
+msgid "Saving"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:71
+msgid "Posting"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:118
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:95
+msgid "Write a caption..."
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:174
+msgid "Add Location"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCropPage.qml:22
+msgid "Crop"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCropPage.qml:37
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:40
+msgid "Next"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:188
+msgid "Filters"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:188
+msgid "Tools"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraPage.qml:21
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraPage.qml:192
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SinglePhoto.qml:15
+msgid "Photo"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraPage.qml:21
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraPage.qml:192
+msgid "Video"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraPage.qml:25
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:40
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:32
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:65
+msgid "Close"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraPage.qml:192
+msgid "Library"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:14
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:93
+msgid "Change Password"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:24
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:24
+msgid "Save"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:70
+msgid "Current password"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:91
+msgid "New password"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:112
+msgid "New password, again"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:27
+msgid "Comments"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:125
+msgid "Remove"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:274
+msgid "Add a comment"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:286
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:406
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:336
+msgid "Send"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:9
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:219
+msgid "Credits"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:32
+msgid "Creator"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:64
+msgid "Developers"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:96
+msgid "Icons"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:128
+msgid "Special Thanks"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:19
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:21
+msgid "Direct"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:226
+msgid "Welcome to Instagraph Direct!"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:227
+msgid "Tap the + icon to send a photo, video or message."
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:396
+msgid "Write a message..."
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:33
+msgid "Done"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:14
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:75
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:482
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:328
+msgid "Edit Profile"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:78
+msgid "Name"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:98
+msgid "Website"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:120
+msgid "Bio"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:131
+msgid "Private Information"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:146
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:101
+msgid "Email"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:166
+msgid "Phone"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:187
+msgid "Female"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:188
+msgid "Male"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:16
+msgid "Instagraph"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:123
+msgid "Suggestions for You"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:284
+msgid "See All Suggestions"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:341
+msgid "Welcome to Instagraph!"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:342
+msgid "Follow accounts to see photos and videos here in your feed."
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ImportPhotoPage.qml:28
+msgid "Choose from"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Libraries.qml:9
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:237
+msgid "Libraries"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Libraries.qml:32
+msgid "Open Source"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LikedMediaPage.qml:15
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/MediaLikersPage.qml:22
+msgid "Likes"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LikedMediaPage.qml:187
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:664
+msgid "No photos or videos yet!"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:102
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:118
+msgid "Username"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:120
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:131
+msgid "Password"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:132
+msgid "Log In"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:172
+msgid "Don't have an account? <b>Sign Up</b>."
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:15
+msgid "Activity"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:31
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:434
+msgid "Following"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:40
+msgid "You"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:484
+msgid "Activity from people you follow"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:485
+msgid ""
+"When someone you follow comments on or likes a post, you'll see it here."
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:16
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:27
+msgid "Options"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:59
+msgid "Account"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:111
+msgid "Posts You've Liked"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:129
+msgid "Blocked Users"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:144
+msgid "Private Account"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:179
+msgid ""
+"When your account is private, only people you approve can see your photos "
+"and videos. Your existing followers won't be affected."
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:255
+msgid "Log Out"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:40
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:26
+msgid "Settings"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:207
+msgid "Block"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:349
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:245
+msgid "posts"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:376
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:272
+msgid "followers"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:411
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:307
+msgid "following"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:446
+msgid "Follow"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:458
+msgid "Requested"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:470
+msgid "Unblock"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:662
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:507
+msgid "No Photos Yet"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:683
+msgid "This account is private."
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:684
+msgid "Follow to see their photos and videos."
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:143
+msgid "Sign Up"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:169
+msgid "Already have an account? <b>Log In</b>."
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchLocation.qml:30
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchLocation.qml:62
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:19
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:51
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:57
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:95
+msgid "Search"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:71
+msgid "People"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:77
+msgid "Tags"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:83
+msgid "Places"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:457
+msgid " posts"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:24
+msgid "Send To"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:199
+#, qt-format
+msgid "%1 has a private account."
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:207
+msgid "Only their followers will be able to see this photo."
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:326
+msgid "Add a message..."
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserFollowers.qml:22
+msgid "Followers"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserFollowings.qml:22
+msgid "Followings"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:16
+msgid "User"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:509
+msgid "Photos you're tagged in will appear here."
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:509
+msgid "Start capturing and sharing your moments"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:56
+#, qt-format
+msgid "%1 MONTH AGO"
+msgid_plural "%1 MONTHS AGO"
+msgstr[0] ""
+msgstr[1] ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:58
+#, qt-format
+msgid "%1 WEEK AGO"
+msgid_plural "%1 WEEKS AGO"
+msgstr[0] ""
+msgstr[1] ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:60
+#, qt-format
+msgid "%1 DAY AGO"
+msgid_plural "%1 DAYS AGO"
+msgstr[0] ""
+msgstr[1] ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:62
+#, qt-format
+msgid "%1 HOUR AGO"
+msgid_plural "%1 HOURS AGO"
+msgstr[0] ""
+msgstr[1] ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:64
+#, qt-format
+msgid "%1 MINUTE AGO"
+msgid_plural "%1 MINUTES AGO"
+msgstr[0] ""
+msgstr[1] ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:66
+#, qt-format
+msgid "%1 SECOND AGO"
+msgid_plural "%1 SECONDS AGO"
+msgstr[0] ""
+msgstr[1] ""
