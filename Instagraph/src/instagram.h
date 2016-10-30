@@ -51,6 +51,7 @@ public slots:
     void getFollowingRecentActivity();
 
     void getUserTags(QString usernameId);
+    void getGeoMedia(QString usernameId);
     void tagFeed(QString tag, QString max_id = "");
     void getTimeLine(QString max_id = "");
     void getUsernameFeed(QString usernameID, QString maxid = "", QString minTimestamp = "");
@@ -157,6 +158,7 @@ signals:
     void followingRecentDataReady(QVariant answer);
 
     void userTagsDataReady(QVariant answer);
+    void geoMediaDataReady(QVariant answer);
     void tagFeedDataReady(QVariant answer);
     void timeLineDataReady(QVariant answer);
     void userTimeLineDataReady(QVariant answer);

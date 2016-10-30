@@ -590,6 +590,8 @@ Page {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
+                                //next_max_id = 0
+                                //instagram.getGeoMedia(usernameId)
                                 current_user_section = 2
                             }
                         }
@@ -855,6 +857,9 @@ Page {
         onUserTagsDataReady: {
             var data = JSON.parse(answer);
             userTagDataFinished(data);
+        }
+        onGeoMediaDataReady: {
+            console.log(answer)
         }
         onSearchUsernameDataReady: {
             var data = JSON.parse(answer);

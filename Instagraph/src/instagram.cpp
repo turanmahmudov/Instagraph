@@ -612,6 +612,13 @@ void Instagram::getUserTags(QString usernameId)
     QObject::connect(getUserTagsRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(userTagsDataReady(QVariant)));
 }
 
+void Instagram::getGeoMedia(QString usernameId)
+{
+    InstagramRequest *getGeoMediaRequest = new InstagramRequest();
+    getGeoMediaRequest->request("maps/user/"+usernameId+"/",NULL);
+    QObject::connect(getGeoMediaRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(geoMediaDataReady(QVariant)));
+}
+
 void Instagram::tagFeed(QString tag, QString max_id)
 {
     m_busy = true;
