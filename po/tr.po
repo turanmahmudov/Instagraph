@@ -1,29 +1,27 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Instagraph\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-19 22:53+0300\n"
-"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
+"Project-Id-Version: Instagraph\n"
+"Language: tr\n"
 "Plural-Forms: nplurals=2; plural=(n>1);\n"
 
-#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:47
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:44
 msgid "Refresh"
 msgstr "Yenile"
 
-#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:55
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:52
 msgid "Inbox"
 msgstr "Gelen Kutusu"
 
-#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:63
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:60
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DiscoverPeoplePage.qml:15
 msgid "Discover People"
 msgstr "Kişileri Keşfet"
 
-#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:71
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:68
 msgid "New Message"
 msgstr "Yeni Mesaj"
 
@@ -46,9 +44,8 @@ msgstr " beğeni"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:384
 #: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:360
-#, qt-format
 msgid "View all %1 comments"
-msgstr ""
+msgstr "Tüm %1 yorumu göster"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/effects/EffectsList.qml:23
 msgid "Adjust"
@@ -101,15 +98,14 @@ msgid "Released under the terms of the GNU GPL v3"
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/About.qml:87
-#, qt-format
 msgid "Source code available on %1"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:24
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:22
 msgid "Publish"
 msgstr "Yayınla"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:28
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:26
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCropPage.qml:26
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:29
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:23
@@ -117,24 +113,16 @@ msgstr "Yayınla"
 msgid "Back"
 msgstr "Geri"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:38
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:36
 msgid "Share"
 msgstr "Paylaş"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:71
-msgid "Saving"
-msgstr ""
-
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:71
-msgid "Posting"
-msgstr ""
-
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:118
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:88
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:95
 msgid "Write a caption..."
 msgstr "Başlık yaz..."
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:174
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:144
 msgid "Add Location"
 msgstr "Konum Ekle"
 
@@ -195,21 +183,21 @@ msgstr "Yeni parola"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:112
 msgid "New password, again"
-msgstr ""
+msgstr "Yeni parola, tekrar"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:27
 msgid "Comments"
 msgstr "Yorumlar"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:125
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:118
 msgid "Remove"
 msgstr "Kaldır"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:274
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:267
 msgid "Add a comment"
 msgstr "Yorum ekle"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:286
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:279
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:395
 msgid "Send"
 msgstr "Gönder"
@@ -235,18 +223,10 @@ msgstr "Simgeler"
 msgid "Special Thanks"
 msgstr "Özel Teşekkürler"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:19
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:17
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:21
 msgid "Direct"
 msgstr "Direkt"
-
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:226
-msgid "Welcome to Instagraph Direct!"
-msgstr ""
-
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:227
-msgid "Tap the + icon to send a photo, video or message."
-msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:385
 msgid "Write a message..."
@@ -258,8 +238,8 @@ msgstr "Tamam"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:14
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:75
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:472
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:318
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:464
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:317
 msgid "Edit Profile"
 msgstr "Profili Düzenle"
 
@@ -273,7 +253,7 @@ msgstr "Web Sitesi"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:120
 msgid "Bio"
-msgstr ""
+msgstr "Biyografi"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:131
 msgid "Private Information"
@@ -298,11 +278,11 @@ msgstr "Erkek"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:15
 msgid "Instagraph"
-msgstr ""
+msgstr "Instagraph"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:252
 msgid "Welcome to Instagraph!"
-msgstr ""
+msgstr "Instagraph 'a Hoş Geldiniz!"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:253
 msgid "Follow accounts to see photos and videos here in your feed."
@@ -322,14 +302,9 @@ msgid "Open Source"
 msgstr "Açık Kaynak"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LikedMediaPage.qml:15
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/MediaLikersPage.qml:22
-msgid "Likes"
-msgstr "Beğeniler"
-
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LikedMediaPage.qml:187
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:651
-msgid "No photos or videos yet!"
-msgstr ""
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:111
+msgid "Posts You've Liked"
+msgstr "Beğendiğin Paylaşımlar"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:102
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:118
@@ -343,32 +318,35 @@ msgstr "Parola"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:132
 msgid "Log In"
-msgstr ""
+msgstr "Giriş"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:172
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:160
 msgid "Don't have an account? <b>Sign Up</b>."
-msgstr ""
+msgstr "Bir hesabınız yok mu? <b>Kayıt Ol</b>"
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/MediaLikersPage.qml:22
+msgid "Likes"
+msgstr "Beğeniler"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:15
 msgid "Activity"
 msgstr "Etkinlik"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:31
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:424
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:416
 msgid "Following"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:40
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:38
 msgid "You"
-msgstr ""
+msgstr "Siz"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:484
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:456
 msgid "Activity from people you follow"
-msgstr ""
+msgstr "İzlediğiniz kişilerin aktiviteleri"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:485
-msgid ""
-"When someone you follow comments on or likes a post, you'll see it here."
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:457
+msgid "When someone you follow comments on or likes a post, you'll see it here."
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:16
@@ -380,22 +358,16 @@ msgstr ""
 msgid "Account"
 msgstr "Hesap"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:111
-msgid "Posts You've Liked"
-msgstr "Beğendiğin Paylaşımlar"
-
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:129
 msgid "Blocked Users"
-msgstr ""
+msgstr "Engellenmiş Kullanıcılar"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:144
 msgid "Private Account"
-msgstr ""
+msgstr "Gizli Hesap"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:179
-msgid ""
-"When your account is private, only people you approve can see your photos "
-"and videos. Your existing followers won't be affected."
+msgid "When your account is private, only people you approve can see your photos and videos. Your existing followers won't be affected."
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:255
@@ -407,47 +379,42 @@ msgstr "Çıkış"
 msgid "Settings"
 msgstr "Ayarlar"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:201
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:193
 msgid "Block"
 msgstr "Engelle"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:339
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:235
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:331
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:234
 msgid "posts"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:366
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:262
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:358
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:261
 msgid "followers"
-msgstr ""
+msgstr "takipçi"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:401
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:297
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:393
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:296
 msgid "following"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:436
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:428
 msgid "Follow"
 msgstr "İzle"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:448
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:440
 msgid "Requested"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:460
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:452
 msgid "Unblock"
-msgstr ""
+msgstr "Engeli Kaldır"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:649
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:494
-msgid "No Photos Yet"
-msgstr ""
-
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:670
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:672
 msgid "This account is private."
-msgstr ""
+msgstr "Bu hesap engelli."
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:671
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:686
 msgid "Follow to see their photos and videos."
 msgstr ""
 
@@ -457,7 +424,7 @@ msgstr "Kayıt Ol"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:169
 msgid "Already have an account? <b>Log In</b>."
-msgstr ""
+msgstr "Bir hesabınız var mı? <b>Giriş</b>"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchLocation.qml:30
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchLocation.qml:62
@@ -478,7 +445,7 @@ msgstr "Etiketler"
 msgid "Places"
 msgstr "Yerler"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:457
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:438
 msgid " posts"
 msgstr ""
 
@@ -494,52 +461,43 @@ msgstr ""
 msgid "User"
 msgstr "Kullanıcı"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:496
-msgid "Photos you're tagged in will appear here."
-msgstr ""
-
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:496
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:490
 msgid "Start capturing and sharing your moments"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:56
-#, qt-format
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:55
 msgid "%1 MONTH AGO"
 msgid_plural "%1 MONTHS AGO"
 msgstr[0] "%1 AY ÖNCE"
 msgstr[1] "%1 AY ÖNCE"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:58
-#, qt-format
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:57
 msgid "%1 WEEK AGO"
 msgid_plural "%1 WEEKS AGO"
 msgstr[0] "%1 HAFTA ÖNCE"
 msgstr[1] "%1 HAFTA ÖNCE"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:60
-#, qt-format
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:59
 msgid "%1 DAY AGO"
 msgid_plural "%1 DAYS AGO"
 msgstr[0] "%1 GÜN ÖNCE"
 msgstr[1] "%1 GÜN ÖNCE"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:62
-#, qt-format
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:61
 msgid "%1 HOUR AGO"
 msgid_plural "%1 HOURS AGO"
 msgstr[0] "%1 SAAT ÖNCE"
 msgstr[1] "%1 SAAT ÖNCE"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:64
-#, qt-format
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:63
 msgid "%1 MINUTE AGO"
 msgid_plural "%1 MINUTES AGO"
 msgstr[0] "%1 DAKİKA ÖNCE"
 msgstr[1] "%1 DAKİKA ÖNCE"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:66
-#, qt-format
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:65
 msgid "%1 SECOND AGO"
 msgid_plural "%1 SECONDS AGO"
 msgstr[0] "%1 SANİYE ÖNCE"
 msgstr[1] "%1 SANİYE ÖNCE"
+
