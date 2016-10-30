@@ -163,6 +163,13 @@ Page {
         instagram.directShare(mediaId, recip_string, text);
     }
 
+    BouncingProgressBar {
+        id: bouncingProgress
+        z: 10
+        anchors.top: sharemediapage.header.bottom
+        visible: instagram.busy || list_loading
+    }
+
     ListModel {
         id: rankedRecipientsModel
     }
