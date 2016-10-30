@@ -94,6 +94,12 @@ Page {
         list_loading = false
     }
 
+    function userGeoDataFinished(data) {
+        worker.sendMessage({'feed': 'userPage', 'obj': data.geo_media, 'model': userGeoPhotosModel, 'clear_model': clear_models})
+
+        list_loading = false
+    }
+
     WorkerScript {
         id: worker
         source: "../js/Worker.js"
@@ -136,6 +142,10 @@ Page {
 
     ListModel {
         id: userTagPhotosModel
+    }
+
+    ListModel {
+        id: userGeoPhotosModel
     }
 
     Flickable {
@@ -435,9 +445,10 @@ Page {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                //next_max_id = 0
-                                //instagram.getGeoMedia(my_usernameId)
+                                next_max_id = 0
+                                instagram.getGeoMedia(my_usernameId)
                                 current_user_section = 2
+                                viewLoader.sourceComponent = geoviewComponent
                             }
                         }
                     }
@@ -669,6 +680,63 @@ Page {
         }
     }
 
+    Component {
+        id: geoviewComponent
+
+        Grid {
+            columns: 3
+            spacing: units.gu(0.1)
+
+            Repeater {
+                model: userGeoPhotosModel
+
+                Item {
+                    width: (viewLoader.width-units.gu(0.1))/3
+                    height: width
+
+                    Image {
+                        id: feed_image
+                        width: parent.width
+                        height: width
+                        source: display_url
+                        fillMode: Image.PreserveAspectCrop
+                        sourceSize: Qt.size(width,height)
+                        clip: true
+                        asynchronous: true
+                        cache: true
+                        smooth: true
+                    }
+
+                    Item {
+                        width: activity2.width
+                        height: width
+                        anchors.centerIn: parent
+                        opacity: feed_image.status == Image.Loading
+
+                        Behavior on opacity {
+                            UbuntuNumberAnimation {
+                                duration: UbuntuAnimation.SlowDuration
+                            }
+                        }
+
+                        ActivityIndicator {
+                            id: activity2
+                            running: true
+                        }
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+
+                        onClicked: {
+                            pageStack.push(Qt.resolvedUrl("SinglePhoto.qml"), {photoId: media_id});
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     Connections{
         target: instagram
         onUserTimeLineDataReady: {
@@ -688,7 +756,8 @@ Page {
             userTagDataFinished(data);
         }
         onGeoMediaDataReady: {
-            console.log(answer)
+            var data = JSON.parse(answer);
+            userGeoDataFinished(data);
         }
     }
 
