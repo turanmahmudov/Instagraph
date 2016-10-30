@@ -26,7 +26,7 @@ Page {
     }
 
     function directThreadFinished(data) {
-        directthreadpage.header.title = data.thread.thread_title;
+        directthreadpage.header.title = data.thread.thread_title != "" ? data.thread.thread_title : data.thread.inviter.username;
 
         directThreadModel.clear()
         for (var j = 0; j < data.thread.users.length; j++) {
