@@ -14,5 +14,9 @@
     {
         "protocol": "https",
         "domain-suffix": "instagram.com"
+    },
+    {
+        "protocol": "intent",
+        "domain-suffix": "instagram.com"
     }
 ]
