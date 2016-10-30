@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-30 03:37+0300\n"
+"POT-Creation-Date: 2016-10-30 03:55+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,13 +53,18 @@ msgstr ""
 msgid "Remove Tag"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:415
-#: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:387
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:78
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:74
+msgid "Copy Share URL"
+msgstr ""
+
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:426
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:398
 msgid " likes"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:445
-#: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:417
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:456
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:428
 #, qt-format
 msgid "View all %1 comments"
 msgstr ""

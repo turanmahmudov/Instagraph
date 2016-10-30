@@ -68,6 +68,17 @@ Column {
                           instagram.removeSelftag(id);
                       }
                   }
+                  Action {
+                      visible: !user.is_private && code
+                      enabled: !user.is_private && code
+                      text: i18n.tr("Copy Share URL")
+                      onTriggered: {
+                          var code = "https://instagram.com/p/"+code;
+                          Clipboard.push(code);
+                          Clipboard.push(["application/x-color", "black"]);
+                          PopupUtils.close(popoverElement);
+                      }
+                  }
             }
 
             Connections {
@@ -148,7 +159,7 @@ Column {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    if (my_usernameId == user.pk || photo_of_you) {
+                    if (my_usernameId == user.pk || photo_of_you || (!user.is_private && code)) {
                         PopupUtils.open(popoverComponent)
                     }
                 }
