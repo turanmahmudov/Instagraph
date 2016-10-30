@@ -221,283 +221,283 @@ msgstr "Pictogrammen"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:128
 msgid "Special Thanks"
-msgstr ""
+msgstr "Dank Aan"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:17
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:21
 msgid "Direct"
-msgstr ""
+msgstr "Direct"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:385
 msgid "Write a message..."
-msgstr ""
+msgstr "Schrijf een bericht..."
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:33
 msgid "Done"
-msgstr ""
+msgstr "Klaar"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:14
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:75
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:464
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:317
 msgid "Edit Profile"
-msgstr ""
+msgstr "Bewerk Profiel"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:78
 msgid "Name"
-msgstr ""
+msgstr "Naam"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:98
 msgid "Website"
-msgstr ""
+msgstr "Website"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:120
 msgid "Bio"
-msgstr ""
+msgstr "Bio"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:131
 msgid "Private Information"
-msgstr ""
+msgstr "Privé Informatie"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:146
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:101
 msgid "Email"
-msgstr ""
+msgstr "E-mail"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:166
 msgid "Phone"
-msgstr ""
+msgstr "Telefoon"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:187
 msgid "Female"
-msgstr ""
+msgstr "Vrouw"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:188
 msgid "Male"
-msgstr ""
+msgstr "Man"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:15
 msgid "Instagraph"
-msgstr ""
+msgstr "Instagraph"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:252
 msgid "Welcome to Instagraph!"
-msgstr ""
+msgstr "Welkom bij Instagraph!"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:253
 msgid "Follow accounts to see photos and videos here in your feed."
-msgstr ""
+msgstr "Volg accounts om hier foto's en video's te zien."
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ImportPhotoPage.qml:28
 msgid "Choose from"
-msgstr ""
+msgstr "Kies van"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Libraries.qml:9
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:237
 msgid "Libraries"
-msgstr ""
+msgstr "Bibliotheken"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Libraries.qml:32
 msgid "Open Source"
-msgstr ""
+msgstr "Open Broncode"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LikedMediaPage.qml:15
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:111
 msgid "Posts You've Liked"
-msgstr ""
+msgstr "Gelikete Berichten"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:102
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:118
 msgid "Username"
-msgstr ""
+msgstr "Gebruikersnaam"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:120
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:131
 msgid "Password"
-msgstr ""
+msgstr "Wachtwoord"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:132
 msgid "Log In"
-msgstr ""
+msgstr "Inloggen"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:160
 msgid "Don't have an account? <b>Sign Up</b>."
-msgstr ""
+msgstr "Geen account? <b>Aanmelden</b>"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/MediaLikersPage.qml:22
 msgid "Likes"
-msgstr ""
+msgstr "Likes"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:15
 msgid "Activity"
-msgstr ""
+msgstr "Activiteit"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:31
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:416
 msgid "Following"
-msgstr ""
+msgstr "Volgend"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:38
 msgid "You"
-msgstr ""
+msgstr "Jij"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:456
 msgid "Activity from people you follow"
-msgstr ""
+msgstr "Activiteit van mensen die jij volgt"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:457
 msgid "When someone you follow comments on or likes a post, you'll see it here."
-msgstr ""
+msgstr "Als iemand jou volgt, reageert of een bericht liked, zal je dat hier zien."
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:16
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:27
 msgid "Options"
-msgstr ""
+msgstr "Opties"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:59
 msgid "Account"
-msgstr ""
+msgstr "Account"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:129
 msgid "Blocked Users"
-msgstr ""
+msgstr "Geblokkeerde Gebruikers"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:144
 msgid "Private Account"
-msgstr ""
+msgstr "Privé Account"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:179
 msgid "When your account is private, only people you approve can see your photos and videos. Your existing followers won't be affected."
-msgstr ""
+msgstr "Wanneer je account privé is, kunnen alleen mensen die je toelaat tot je profiel jouw foto's en video's zien. Dit heeft geen invloed op je huidige volgers."
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:255
 msgid "Log Out"
-msgstr ""
+msgstr "Uitloggen"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:40
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:26
 msgid "Settings"
-msgstr ""
+msgstr "Instellingen"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:193
 msgid "Block"
-msgstr ""
+msgstr "Blokkeren"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:331
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:234
 msgid "posts"
-msgstr ""
+msgstr "berichten"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:358
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:261
 msgid "followers"
-msgstr ""
+msgstr "volgers"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:393
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:296
 msgid "following"
-msgstr ""
+msgstr "volgend"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:428
 msgid "Follow"
-msgstr ""
+msgstr "Volgen"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:440
 msgid "Requested"
-msgstr ""
+msgstr "Aangevraagd"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:452
 msgid "Unblock"
-msgstr ""
+msgstr "Deblokkeren"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:672
 msgid "This account is private."
-msgstr ""
+msgstr "Dit account is privé."
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:686
 msgid "Follow to see their photos and videos."
-msgstr ""
+msgstr "Volg om zijn/haar foto's en video's te zien."
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:143
 msgid "Sign Up"
-msgstr ""
+msgstr "Aanmelden"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:169
 msgid "Already have an account? <b>Log In</b>."
-msgstr ""
+msgstr "Al een account? <b>Inloggen</b>"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchLocation.qml:30
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchLocation.qml:62
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:19
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:51
 msgid "Search"
-msgstr ""
+msgstr "Zoeken"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:71
 msgid "People"
-msgstr ""
+msgstr "Mensen"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:77
 msgid "Tags"
-msgstr ""
+msgstr "Tags"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:83
 msgid "Places"
-msgstr ""
+msgstr "Plaatsen"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:438
 msgid " posts"
-msgstr ""
+msgstr "␣berichten"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserFollowers.qml:22
 msgid "Followers"
-msgstr ""
+msgstr "Volgers"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserFollowings.qml:22
 msgid "Followings"
-msgstr ""
+msgstr "Volgenden"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:16
 msgid "User"
-msgstr ""
+msgstr "Gebruiker"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:490
 msgid "Start capturing and sharing your moments"
-msgstr ""
+msgstr "Beginnen met het vastleggen en delen van je momenten"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:55
 msgid "%1 MONTH AGO"
 msgid_plural "%1 MONTHS AGO"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 MAAND GELEDEN"
+msgstr[1] "%1 MAANDEN GELEDEN"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:57
 msgid "%1 WEEK AGO"
 msgid_plural "%1 WEEKS AGO"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 WEEK GELEDEN"
+msgstr[1] "%1 WEKEN GELEDEN"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:59
 msgid "%1 DAY AGO"
 msgid_plural "%1 DAYS AGO"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 DAG GELEDEN"
+msgstr[1] "%1 DAGEN GELEDEN"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:61
 msgid "%1 HOUR AGO"
 msgid_plural "%1 HOURS AGO"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 UUR GELEDEN"
+msgstr[1] "%1 UREN GELEDEN"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:63
 msgid "%1 MINUTE AGO"
 msgid_plural "%1 MINUTES AGO"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 MINUUT GELEDEN"
+msgstr[1] "%1 MINUTEN GELEDEN"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:65
 msgid "%1 SECOND AGO"
 msgid_plural "%1 SECONDS AGO"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 SECONDE GELEDEN"
+msgstr[1] "%1 SECONDEN GELEDEN"
 
