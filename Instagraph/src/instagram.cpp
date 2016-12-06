@@ -1090,6 +1090,30 @@ void Instagram::explore(QString max_id)
     emit busyChanged();
 }
 
+void Instagram::suggestions()
+{
+    m_busy = true;
+    emit busyChanged();
+
+    InstagramRequest *suggestionsRequest = new InstagramRequest();
+
+    QUuid uuid;
+    QJsonObject data;
+        data.insert("phone_id", uuid.createUuid().toString());
+        data.insert("_csrftoken", "Set-Cookie: csrftoken="+this->m_token);
+        data.insert("module", "explore_people");
+        data.insert("_uuid", this->m_uuid);
+        data.insert("paginate", "true");
+        data.insert("num_media", "3");
+
+    QString signature = suggestionsRequest->generateSignature(data);
+    suggestionsRequest->request("discover/ayml/",signature.toUtf8());
+    QObject::connect(suggestionsRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(suggestionsDataReady(QVariant)));
+
+    m_busy = false;
+    emit busyChanged();
+}
+
 void Instagram::getRankedRecipients()
 {
     InstagramRequest *getRankedRecipientsRequest = new InstagramRequest();

@@ -291,7 +291,7 @@ Page {
             }
 
             onClicked: {
-                //pageStack.push(Qt.resolvedUrl("SuggestionsPage.qml"));
+                pageStack.push(Qt.resolvedUrl("SuggestionsPage.qml"));
             }
         }
     }

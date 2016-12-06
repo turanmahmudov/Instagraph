@@ -67,7 +67,7 @@ Page {
         clear_models = false
         if (!next_id) {
             likedMediaModel.clear()
-            next_max_id = 0
+            next_max_id = ""
             clear_models = true
         }
         instagram.getLikedMedia(next_id);

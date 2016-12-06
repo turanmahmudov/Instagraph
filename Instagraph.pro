@@ -3,6 +3,8 @@
 # file and takes care of subprojects
 TEMPLATE = subdirs
 
+CONFIG += c++11
+
 #load Ubuntu specific features
 load(ubuntu-click)
 
@@ -40,5 +42,3 @@ unittest.commands = /usr/bin/qmltestrunner -input $$PWD/Instagraph/tests/unit
 unittest.depends  = sub-Instagraph
 
 QMAKE_EXTRA_TARGETS += aptest unittest
-
-

@@ -9,10 +9,10 @@ import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
 Page {
-    id: discoverpeoplepage
+    id: suggestionspage
 
     header: PageHeader {
-        title: i18n.tr("Discover People")
+        title: i18n.tr("Suggestions")
         StyleHints {
             backgroundColor: "#275A84"
             foregroundColor: "#ffffff"
@@ -25,48 +25,40 @@ Page {
 
     property bool list_loading: false
 
-    function discoverPeopleDataFinished(data) {
-        if (next_max_id == data.next_max_id) {
-            return false;
-        } else {
-            next_max_id = data.next_max_id;
-            more_available = data.more_available;
-            next_coming = true;
+    function suggestionsDataFinished(data) {
+        more_available = data.more_available
+        next_coming = true
 
-            for (var i = 0; i < data.items.length; i++) {
+        for (var i = 0; i < data.groups[0].items.length; i++) {
 
-                discoverPeopleModel.append(data.items[i]);
-            }
-
-            next_coming = false;
+            suggestionsModel.append(data.groups[0].items[i]);
         }
+
+        next_coming = false;
 
         list_loading = false
     }
 
     Component.onCompleted: {
-        discoverPeople();
+        suggestions();
     }
 
-    function discoverPeople(next_id)
+    function suggestions()
     {
-        if (!next_id) {
-            discoverPeopleModel.clear()
-            next_max_id = ""
-        }
+        suggestionsModel.clear()
         list_loading = true
-        instagram.explore(next_id);
+        instagram.suggestions();
     }
 
     BouncingProgressBar {
         id: bouncingProgress
         z: 10
-        anchors.top: discoverpeoplepage.header.bottom
+        anchors.top: suggestionspage.header.bottom
         visible: instagram.busy
     }
 
     ListModel {
-        id: discoverPeopleModel
+        id: suggestionsModel
     }
 
     ListView {
@@ -76,17 +68,17 @@ Page {
             right: parent.right
             bottom: parent.bottom
             bottomMargin: bottomMenu.height
-            top: discoverpeoplepage.header.bottom
+            top: suggestionspage.header.bottom
         }
         onMovementEnded: {
             if (atYEnd && more_available && !next_coming) {
-                discoverPeople(next_max_id)
+                suggestions()
             }
         }
 
         clip: true
-        cacheBuffer: discoverpeoplepage.height*2
-        model: discoverPeopleModel
+        cacheBuffer: suggestionspage.height*2
+        model: suggestionsModel
         delegate: ListItem {
             id: searchUsersDelegate
             divider.visible: false
@@ -122,7 +114,7 @@ Page {
                                 id: feed_user_profile_image
                                 width: parent.width
                                 height: width
-                                source: status == Image.Error ? "../images/not_found_user.jpg" : media.user.profile_pic_url
+                                source: status == Image.Error ? "../images/not_found_user.jpg" : user.profile_pic_url
                                 fillMode: Image.PreserveAspectCrop
                                 anchors.centerIn: parent
                                 sourceSize: Qt.size(width,height)
@@ -155,14 +147,14 @@ Page {
                         anchors.verticalCenter: parent.verticalCenter
 
                         Text {
-                            text: media.user.username
+                            text: user.username
                             font.weight: Font.DemiBold
                             wrapMode: Text.WordWrap
                             width: parent.width
                         }
 
                         Text {
-                            text: media.user.full_name
+                            text: user.full_name
                             wrapMode: Text.WordWrap
                             width: parent.width
                             textFormat: Text.RichText
@@ -172,28 +164,28 @@ Page {
                     FollowComponent {
                         width: units.gu(5)
                         height: units.gu(3)
-                        friendship_var: media.user.friendship_status
-                        userId: media.user.pk
+                        friendship_var: user.friendship_status
+                        userId: user.pk
                     }
                 }
             }
 
             onClicked: {
-                pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameString: media.user.username});
+                pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameString: user.username});
             }
         }
         PullToRefresh {
-            refreshing: list_loading && discoverPeopleModel.count == 0
-            onRefresh: discoverPeople()
+            refreshing: list_loading && suggestionsModel.count == 0
+            onRefresh: suggestions()
         }
     }
 
     Connections{
         target: instagram
-        onExploreDataReady: {
-            console.log(answer)
+        onSuggestionsDataReady: {
+            //console.log(answer)
             var data = JSON.parse(answer);
-            discoverPeopleDataFinished(data);
+            suggestionsDataFinished(data);
         }
     }
 

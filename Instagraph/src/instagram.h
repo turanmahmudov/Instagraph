@@ -89,6 +89,7 @@ public slots:
     void changePassword(QString oldPassword, QString newPassword);
 
     void explore(QString max_id = "");
+    void suggestions();
 
     void getRankedRecipients();
     void getRecentRecipients();
@@ -199,6 +200,7 @@ signals:
     void changePasswordReady(QVariant answer);
 
     void exploreDataReady(QVariant answer);
+    void suggestionsDataReady(QVariant answer);
 
     void rankedRecipientsDataReady(QVariant answer);
     void recentRecipientsDataReady(QVariant answer);

@@ -42,6 +42,9 @@ MainView {
     property alias appStore: appStore
     property var activeTransfer
 
+    readonly property bool isLandscape: width > height
+    readonly property bool isWideScreen: (width > units.gu(120)) && isLandscape
+
     // Main Actions
     actions: [
         Action {
