@@ -18,6 +18,16 @@ Page {
             backgroundColor: "#275A84"
             foregroundColor: "#ffffff"
         }
+        leadingActionBar.actions: [
+            Action {
+                id: addPeopleAction
+                text: i18n.tr("Suggestions")
+                iconName: "contact-new"
+                onTriggered: {
+                    pageStack.push(Qt.resolvedUrl("SuggestionsPage.qml"));
+                }
+            }
+        ]
         trailingActionBar {
             numberOfSlots: 1
             actions: [

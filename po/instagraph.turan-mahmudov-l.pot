@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-06 13:06+0300\n"
+"POT-Creation-Date: 2016-12-19 13:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -280,7 +280,7 @@ msgstr ""
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:14
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:75
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:482
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:328
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:338
 msgid "Edit Profile"
 msgstr ""
 
@@ -432,7 +432,7 @@ msgid "Log Out"
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:40
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:26
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:36
 msgid "Settings"
 msgstr ""
 
@@ -441,17 +441,17 @@ msgid "Block"
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:349
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:245
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:255
 msgid "posts"
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:376
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:272
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:282
 msgid "followers"
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:411
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:307
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:317
 msgid "following"
 msgstr ""
 
@@ -468,7 +468,7 @@ msgid "Unblock"
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:662
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:507
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:517
 msgid "No Photos Yet"
 msgstr ""
 
@@ -531,6 +531,7 @@ msgid "Add a message..."
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SuggestionsPage.qml:15
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:24
 msgid "Suggestions"
 msgstr ""
 
@@ -546,11 +547,11 @@ msgstr ""
 msgid "User"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:509
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:519
 msgid "Photos you're tagged in will appear here."
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:509
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:519
 msgid "Start capturing and sharing your moments"
 msgstr ""
 
