@@ -171,6 +171,32 @@ Page {
                         clip: true
                     }
 
+                    Image {
+                        visible: item_type == "reel_share"
+                        width: item_type == "reel_share" ? entry_column.width/2 - units.gu(2.5) : 0
+                        height: item_type == "reel_share" ? width/reel_share.media.image_versions2.candidates[0].width*reel_share.media.image_versions2.candidates[0].height : 0
+                        source: status == Image.Error ? "../images/not_found_user.jpg" : (item_type == "reel_share" ? reel_share.media.image_versions2.candidates[0].url : '')
+                        fillMode: Image.PreserveAspectCrop
+                        sourceSize: Qt.size(width,height)
+                        smooth: true
+                        clip: true
+                    }
+
+                    Rectangle {
+                        visible: item_type == "reel_share" && reel_share.text
+                        width: item_type == "reel_share" && reel_share.text ? myReelText.width + units.gu(2.5) : 0
+                        height: item_type == "reel_share" && reel_share.text ? myReelText.height + units.gu(2.5) : 0
+                        color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
+
+                        Label {
+                            id: myReelText
+                            wrapMode: Text.WordWrap
+                            width: contentWidth >= entry_column.width/2 - units.gu(2.5) ? entry_column.width/2 - units.gu(2.5) : contentWidth
+                            anchors.centerIn: parent
+                            text: item_type == "reel_share" && reel_share.text ? reel_share.text : ''
+                        }
+                    }
+
                     Row {
                         width: units.gu(5)
                         visible: item_type == "action_log"
@@ -330,6 +356,17 @@ Page {
                                 width: item_type == "media_share" ? entry_column.width/2 - units.gu(2.5) : 0
                                 height: item_type == "media_share" ? width/media_share.image_versions2.candidates[0].width*media_share.image_versions2.candidates[0].height : 0
                                 source: status == Image.Error ? "../images/not_found_user.jpg" : (item_type == "media_share" ? media_share.image_versions2.candidates[0].url : '')
+                                fillMode: Image.PreserveAspectCrop
+                                sourceSize: Qt.size(width,height)
+                                smooth: true
+                                clip: true
+                            }
+
+                            Image {
+                                visible: item_type == "reel_share"
+                                width: item_type == "reel_share" ? entry_column.width/2 - units.gu(2.5) : 0
+                                height: item_type == "reel_share" ? width/reel_share.media.image_versions2.candidates[0].width*reel_share.media.image_versions2.candidates[0].height : 0
+                                source: status == Image.Error ? "../images/not_found_user.jpg" : (item_type == "reel_share" ? reel_share.media.image_versions2.candidates[0].url : '')
                                 fillMode: Image.PreserveAspectCrop
                                 sourceSize: Qt.size(width,height)
                                 smooth: true

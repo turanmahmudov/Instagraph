@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-19 13:19+0300\n"
+"POT-Creation-Date: 2017-03-15 23:57+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -230,7 +230,7 @@ msgid "Add a comment"
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:286
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:406
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:443
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:336
 msgid "Send"
 msgstr ""
@@ -269,7 +269,7 @@ msgstr ""
 msgid "Tap the + icon to send a photo, video or message."
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:396
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:433
 msgid "Write a message..."
 msgstr ""
 
