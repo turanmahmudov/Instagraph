@@ -818,14 +818,12 @@ void Instagram::userFriendship(QString userId)
 
 void Instagram::getLikedMedia(QString max_id)
 {
-    QString target ="feed/liked/?";
+    QString target ="feed/liked/";
 
     if(max_id.length() > 0)
     {
-        target += "max_id="+max_id+"&";
+        target += "?max_id="+max_id;
     }
-
-    //qDebug() << "target: " << target;
 
     InstagramRequest *getLikedMediaRequest = new InstagramRequest();
     getLikedMediaRequest->request(target,NULL);

@@ -38,7 +38,7 @@ Page {
         if (next_max_id == data.next_max_id) {
             return false;
         } else {
-            next_max_id = data.more_available == true ? data.next_max_id : "";
+            next_max_id = data.more_available ? data.next_max_id : "";
             more_available = data.more_available;
             next_coming = true;
 
@@ -190,7 +190,8 @@ Page {
     Connections{
         target: instagram
         onLikedMediaDataReady: {
-            var data = JSON.parse(answer);
+            var new_answer = answer.replace(/([\[:])?(\d{18,})([,\}\]])/g, "$1\"$2\"$3");
+            var data = JSON.parse(new_answer);
             likedMediaDataFinished(data);
         }
     }
