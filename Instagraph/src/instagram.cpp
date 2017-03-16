@@ -1017,6 +1017,8 @@ void Instagram::directMessage(QString recipients, QString text, QString thread_i
 
     QString boundary = this->m_uuid;
 
+    QUuid uuid;
+
     /*Body build*/
     QByteArray body = "";
     body += "--"+boundary+"\r\n";
@@ -1025,7 +1027,7 @@ void Instagram::directMessage(QString recipients, QString text, QString thread_i
 
     body += "--"+boundary+"\r\n";
     body += "Content-Disposition: form-data; name=\"client_context\"\r\n\r\n";
-    body += this->m_uuid.replace("{","").replace("}","")+"\r\n";
+    body += uuid.createUuid().toString().replace("{","").replace("}","")+"\r\n";
 
     body += "--"+boundary+"\r\n";
     body += "Content-Disposition: form-data; name=\"thread_ids\"\r\n\r\n";
