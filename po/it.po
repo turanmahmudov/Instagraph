@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Instagraph\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-16 04:07+0300\n"
+"POT-Creation-Date: 2017-03-16 20:39+0300\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -98,8 +98,8 @@ msgid "Sharpen"
 msgstr "Sharpen"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/About.qml:8
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:185
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:201
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:155
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:165
 msgid "About"
 msgstr "Informazioni"
 
@@ -189,7 +189,7 @@ msgid "Library"
 msgstr "Libreria"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:14
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:93
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:84
 msgid "Change Password"
 msgstr "Cambia Password"
 
@@ -228,24 +228,24 @@ msgstr "Aggiungi un commento"
 msgid "Send"
 msgstr "Invia"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:9
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:219
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:8
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:177
 msgid "Credits"
 msgstr "Crediti"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:32
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:35
 msgid "Creator"
 msgstr "Creatore"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:64
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:60
 msgid "Developers"
 msgstr "Sviluppatori"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:96
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:85
 msgid "Icons"
 msgstr "Icone"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:128
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:110
 msgid "Special Thanks"
 msgstr "Ringraziamenti Speciali"
 
@@ -272,7 +272,7 @@ msgid "Done"
 msgstr "Fatto"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:14
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:75
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:72
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:482
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:338
 msgid "Edit Profile"
@@ -337,7 +337,7 @@ msgid "Choose from"
 msgstr "Scegli da"
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Libraries.qml:9
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:237
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:190
 msgid "Libraries"
 msgstr "Librerie"
 
@@ -395,28 +395,28 @@ msgid ""
 "When someone you follow comments on or likes a post, you'll see it here."
 msgstr "Quando qualcuno commenta i tuoi post, lo vedrai qui."
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:16
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:15
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:27
 msgid "Options"
 msgstr "Opzioni"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:59
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:62
 msgid "Account"
 msgstr "Profilo"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:111
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:96
 msgid "Posts You've Liked"
 msgstr "Post che ti sono Piaciuti"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:129
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:108
 msgid "Blocked Users"
 msgstr "Utenti Bloccati"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:144
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:120
 msgid "Private Account"
 msgstr "Profilo Privato"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:179
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:143
 msgid ""
 "When your account is private, only people you approve can see your photos "
 "and videos. Your existing followers won't be affected."
@@ -425,7 +425,7 @@ msgstr ""
 "vedere le tue foto ed i tuoi video. I tuoi seguaci già esistenti non "
 "subiranno alcun cambiamento."
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:255
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:203
 msgid "Log Out"
 msgstr "Esci"
 

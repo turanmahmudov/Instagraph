@@ -1013,8 +1013,6 @@ void Instagram::directMessage(QString recipients, QString text, QString thread_i
     m_busy = true;
     emit busyChanged();
 
-    //QString recipient_users = "\""+recipients+"\"";
-
     QString boundary = this->m_uuid;
 
     QUuid uuid;

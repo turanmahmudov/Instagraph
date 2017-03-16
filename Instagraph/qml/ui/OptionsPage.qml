@@ -1,7 +1,6 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
 import QtQuick.LocalStorage 2.0
-import Ubuntu.Components.ListItems 1.3 as ListItem
 
 import "../components"
 
@@ -47,7 +46,6 @@ Page {
             bottom: parent.bottom
             bottomMargin: bottomMenu.height
             top: optionspage.header.bottom
-            topMargin: units.gu(1)
         }
         contentHeight: columnSuperior.height
 
@@ -55,205 +53,157 @@ Page {
            id: columnSuperior
            width: parent.width
 
-           ListItem.Header {
-               text: i18n.tr("Account")
+           ListItem {
+               height: accountHeaderLayout.height
+
+               ListItemLayout {
+                   id: accountHeaderLayout
+
+                   title.text: i18n.tr("Account")
+                   title.font.weight: Font.Normal
+               }
            }
 
-           ListItem.Base {
-               width: parent.width
-               showDivider: true
+           ListItem {
+               height: editProfileLayout.height
+               ListItemLayout {
+                   id: editProfileLayout
+
+                   title.text: i18n.tr("Edit Profile")
+               }
                onClicked: {
                    pageStack.push(Qt.resolvedUrl("EditProfilePage.qml"))
                }
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
-                   Label {
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       text: i18n.tr("Edit Profile")
-                   }
-               }
            }
 
-           ListItem.Base {
-               width: parent.width
-               showDivider: true
+           ListItem {
+               height: changePasswordLayout.height
+               ListItemLayout {
+                   id: changePasswordLayout
+
+                   title.text: i18n.tr("Change Password")
+               }
                onClicked: {
                    pageStack.push(Qt.resolvedUrl("ChangePasswordPage.qml"))
                }
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
-                   Label {
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       text: i18n.tr("Change Password")
-                   }
-               }
            }
 
-           ListItem.Base {
-               width: parent.width
-               showDivider: true
+           ListItem {
+               height: likedMediaLayout.height
+               ListItemLayout {
+                   id: likedMediaLayout
+
+                   title.text: i18n.tr("Posts You've Liked")
+               }
                onClicked: {
                    pageStack.push(Qt.resolvedUrl("LikedMediaPage.qml"))
                }
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
-                   Label {
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       text: i18n.tr("Posts You've Liked")
-                   }
-               }
            }
 
-           ListItem.Base {
-               width: parent.width
-               showDivider: true
+           ListItem {
+               height: blockedUsersLayout.height
+               ListItemLayout {
+                   id: blockedUsersLayout
+
+                   title.text: i18n.tr("Blocked Users")
+               }
                onClicked: {
                    //pageStack.push(Qt.resolvedUrl("BlockedUsers.qml"))
                }
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
-                   Label {
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       text: i18n.tr("Blocked Users")
+           }
+
+           ListItem {
+               height: privateAccountLayout.height
+               ListItemLayout {
+                   id: privateAccountLayout
+
+                   title.text: i18n.tr("Private Account")
+
+                   Switch {
+                       id: privateSwitch
+                       SlotsLayout.position: SlotsLayout.Trailing
+                       checked: false
+                       onCheckedChanged: {
+                            if (checked) {
+                                instagram.setPrivateAccount()
+                            } else {
+                                instagram.setPublicAccount()
+                            }
+                       }
                    }
                }
            }
 
-           ListItem.Base {
-               width: parent.width
-               showDivider: true
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
-                   Label {
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       text: i18n.tr("Private Account")
-                   }
-               }
+           ListItem {
+               height: privateAccountInfoLayout.height
+               divider.visible: false
+               ListItemLayout {
+                   id: privateAccountInfoLayout
 
-               Switch {
-                   id: privateSwitch
-                   anchors {
-                       right: parent.right
-                       verticalCenter: parent.verticalCenter
-                   }
-                   checked: false
-                   onCheckedChanged: {
-                        if (checked) {
-                            instagram.setPrivateAccount()
-                        } else {
-                            instagram.setPublicAccount()
-                        }
-                   }
+                   subtitle.text: i18n.tr("When your account is private, only people you approve can see your photos and videos. Your existing followers won't be affected.")
+                   subtitle.maximumLineCount: 3
+                   subtitle.wrapMode: Text.WordWrap
                }
            }
 
-           ListItem.Base {
-               width: parent.width
-               showDivider: false
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
+           ListItem {
+               height: aboutHeaderLayout.height
 
-                   Label {
-                       fontSize: "small"
-                       color: UbuntuColors.darkGrey
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       elide: Text.ElideRight
-                       text: i18n.tr("When your account is private, only people you approve can see your photos and videos. Your existing followers won't be affected.")
-                   }
+               ListItemLayout {
+                   id: aboutHeaderLayout
+
+                   title.text: i18n.tr("About")
+                   title.font.weight: Font.Normal
                }
            }
 
-           ListItem.Header {
-               text: i18n.tr("About")
-           }
+           ListItem {
+               height: aboutLayout.height
+               ListItemLayout {
+                   id: aboutLayout
 
-           ListItem.Base {
-               width: parent.width
-               showDivider: true
+                   title.text: i18n.tr("About")
+               }
                onClicked: {
                    pageStack.push(Qt.resolvedUrl("About.qml"))
                }
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
-                   Label {
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       text: i18n.tr("About")
-                   }
-               }
            }
 
-           ListItem.Base {
-               width: parent.width
-               showDivider: true
+           ListItem {
+               height: creditsLayout.height
+               ListItemLayout {
+                   id: creditsLayout
+
+                   title.text: i18n.tr("Credits")
+               }
                onClicked: {
                    pageStack.push(Qt.resolvedUrl("Credits.qml"))
                }
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
-                   Label {
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       text: i18n.tr("Credits")
-                   }
-               }
            }
 
-           ListItem.Base {
-               width: parent.width
-               showDivider: false
+           ListItem {
+               height: librariesLayout.height
+               divider.visible: false
+               ListItemLayout {
+                   id: librariesLayout
+
+                   title.text: i18n.tr("Libraries")
+               }
                onClicked: {
                    pageStack.push(Qt.resolvedUrl("Libraries.qml"))
                }
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
-                   Label {
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       text: i18n.tr("Libraries")
-                   }
-               }
            }
 
-           ListItem.Base {
-               width: parent.width
-               showDivider: false
-               onClicked: {
-                    Scripts.logOut()
+           ListItem {
+               height: logOutLayout.height
+               divider.visible: false
+               ListItemLayout {
+                   id: logOutLayout
+
+                   title.text: i18n.tr("Log Out")
                }
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
-                   Label {
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       text: i18n.tr("Log Out")
-                   }
+               onClicked: {
+                   Scripts.logOut()
                }
            }
         }

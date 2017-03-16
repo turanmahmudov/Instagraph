@@ -1,6 +1,5 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
-import Ubuntu.Components.ListItems 1.3 as ListItem
 
 Page {
     id: creditsPage
@@ -20,7 +19,6 @@ Page {
             right: parent.right
             bottom: parent.bottom
             top: creditsPage.header.bottom
-            topMargin: units.gu(1)
         }
         contentHeight: columnSuperior.height
 
@@ -28,131 +26,103 @@ Page {
            id: columnSuperior
            width: parent.width
 
-           ListItem.Header {
-               text: i18n.tr("Creator")
+           ListItem {
+               height: creatorHeaderLayout.height
+
+               ListItemLayout {
+                   id: creatorHeaderLayout
+
+                   title.text: i18n.tr("Creator")
+                   title.font.weight: Font.Normal
+               }
            }
 
-           ListItem.Base {
-               width: parent.width
-               progression: true
-               showDivider: false
+           ListItem {
+               height: prs1Layout.height
+               divider.visible: false
+               ListItemLayout {
+                   id: prs1Layout
+
+                   title.text: "Turan Mahmudov"
+                   subtitle.text: "turan.mahmudov@gmail.com"
+               }
                onClicked: {
                    Qt.openUrlExternally("mailto:turan.mahmudov@gmail.com")
                }
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
-                   Label {
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       text: "Turan Mahmudov"
-                   }
+           }
 
-                   Label {
-                       fontSize: "small"
-                       color: UbuntuColors.darkGrey
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       elide: Text.ElideRight
-                       text: "turan.mahmudov@gmail.com"
-                   }
+           ListItem {
+               height: developersHeaderLayout.height
+
+               ListItemLayout {
+                   id: developersHeaderLayout
+
+                   title.text: i18n.tr("Developers")
+                   title.font.weight: Font.Normal
                }
            }
 
-           ListItem.Header {
-               text: i18n.tr("Developers")
-           }
+           ListItem {
+               height: prs2Layout.height
+               divider.visible: false
+               ListItemLayout {
+                   id: prs2Layout
 
-           ListItem.Base {
-               width: parent.width
-               progression: true
-               showDivider: false
+                   title.text: "Turan Mahmudov"
+                   subtitle.text: "turan.mahmudov@gmail.com"
+               }
                onClicked: {
                    Qt.openUrlExternally("mailto:turan.mahmudov@gmail.com")
                }
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
-                   Label {
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       text: "Turan Mahmudov"
-                   }
+           }
 
-                   Label {
-                       fontSize: "small"
-                       color: UbuntuColors.darkGrey
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       elide: Text.ElideRight
-                       text: "turan.mahmudov@gmail.com"
-                   }
+           ListItem {
+               height: iconsHeaderLayout.height
+
+               ListItemLayout {
+                   id: iconsHeaderLayout
+
+                   title.text: i18n.tr("Icons")
+                   title.font.weight: Font.Normal
                }
            }
 
-           ListItem.Header {
-               text: i18n.tr("Icons")
-           }
+           ListItem {
+               height: prs3Layout.height
+               divider.visible: false
+               ListItemLayout {
+                   id: prs3Layout
 
-           ListItem.Base {
-               width: parent.width
-               progression: true
-               showDivider: false
+                   title.text: "Kevin Feyder"
+                   subtitle.text: "kevinfeyder@gmail.com"
+               }
                onClicked: {
                    Qt.openUrlExternally("mailto:kevinfeyder@gmail.com")
                }
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
-                   Label {
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       text: "Kevin Feyder"
-                   }
+           }
 
-                   Label {
-                       fontSize: "small"
-                       color: UbuntuColors.darkGrey
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       elide: Text.ElideRight
-                       text: "kevinfeyder@gmail.com"
-                   }
+           ListItem {
+               height: thanksHeaderLayout.height
+
+               ListItemLayout {
+                   id: thanksHeaderLayout
+
+                   title.text: i18n.tr("Special Thanks")
+                   title.font.weight: Font.Normal
                }
            }
 
-           ListItem.Header {
-               text: i18n.tr("Special Thanks")
-           }
+           ListItem {
+               height: prs4Layout.height
+               divider.visible: false
+               ListItemLayout {
+                   id: prs4Layout
 
-           ListItem.Base {
-               width: parent.width
-               progression: true
-               showDivider: false
+                   title.text: "Ozan Erdem Boyoglu"
+                   subtitle.text: "boyogluozan@gmail.com"
+               }
                onClicked: {
                    Qt.openUrlExternally("mailto:boyogluozan@gmail.com")
-               }
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
-                   Label {
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       text: "Ozan Erdem Boyoglu"
-                   }
-
-                   Label {
-                       fontSize: "small"
-                       color: UbuntuColors.darkGrey
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       elide: Text.ElideRight
-                       text: "boyogluozan@gmail.com"
-                   }
                }
            }
         }

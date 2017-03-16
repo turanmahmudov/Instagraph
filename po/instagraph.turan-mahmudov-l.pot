@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-16 04:07+0300\n"
+"POT-Creation-Date: 2017-03-16 20:39+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,8 +105,8 @@ msgid "Sharpen"
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/About.qml:8
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:185
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:201
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:155
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:165
 msgid "About"
 msgstr ""
 
@@ -196,7 +196,7 @@ msgid "Library"
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:14
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:93
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:84
 msgid "Change Password"
 msgstr ""
 
@@ -235,24 +235,24 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:9
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:219
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:8
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:177
 msgid "Credits"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:32
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:35
 msgid "Creator"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:64
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:60
 msgid "Developers"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:96
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:85
 msgid "Icons"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:128
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:110
 msgid "Special Thanks"
 msgstr ""
 
@@ -278,7 +278,7 @@ msgid "Done"
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:14
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:75
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:72
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:482
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:338
 msgid "Edit Profile"
@@ -342,7 +342,7 @@ msgid "Choose from"
 msgstr ""
 
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Libraries.qml:9
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:237
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:190
 msgid "Libraries"
 msgstr ""
 
@@ -400,34 +400,34 @@ msgid ""
 "When someone you follow comments on or likes a post, you'll see it here."
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:16
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:15
 #: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:27
 msgid "Options"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:59
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:62
 msgid "Account"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:111
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:96
 msgid "Posts You've Liked"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:129
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:108
 msgid "Blocked Users"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:144
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:120
 msgid "Private Account"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:179
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:143
 msgid ""
 "When your account is private, only people you approve can see your photos "
 "and videos. Your existing followers won't be affected."
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:255
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:203
 msgid "Log Out"
 msgstr ""
 
