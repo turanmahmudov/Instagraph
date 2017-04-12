@@ -455,7 +455,6 @@ Page {
             directThreadFinished(data);
         }
         onDirectMessageReady: {
-            console.log(answer)
             var data = JSON.parse(answer);
             messagePostedFinished(data);
         }

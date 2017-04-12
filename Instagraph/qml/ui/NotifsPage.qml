@@ -191,6 +191,15 @@ Page {
                                     running: true
                                 }
                             }
+
+                            MouseArea {
+                                anchors {
+                                    fill: parent
+                                }
+                                onClicked: {
+                                    pageStack.push(Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: story.args.profile_id});
+                                }
+                            }
                         }
 
                         Column {
@@ -347,6 +356,15 @@ Page {
                                 ActivityIndicator {
                                     id: activity
                                     running: true
+                                }
+                            }
+
+                            MouseArea {
+                                anchors {
+                                    fill: parent
+                                }
+                                onClicked: {
+                                    pageStack.push(Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: story.args.profile_id});
                                 }
                             }
                         }

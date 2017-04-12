@@ -106,9 +106,6 @@ MainView {
 
         onImageSaved: {
             __output.setDefaultSize()
-
-            console.log("file saved as", path);
-
             Scripts.pushImageCaption(path)
         }
     }

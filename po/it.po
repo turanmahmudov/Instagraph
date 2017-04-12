@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Instagraph\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-16 20:39+0300\n"
+"POT-Creation-Date: 2017-04-13 00:56+0400\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -50,12 +50,12 @@ msgstr "Rimuovi"
 msgid "Copy Share URL"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:425
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:434
 #: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:397
 msgid " likes"
 msgstr " mi piace"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:455
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:464
 #: /home/turan/Apps/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:427
 #, qt-format
 msgid "View all %1 comments"
@@ -386,11 +386,11 @@ msgstr "Persone seguite"
 msgid "You"
 msgstr "Tu"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:484
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:502
 msgid "Activity from people you follow"
 msgstr "Attività delle persone che segui"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:485
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:503
 msgid ""
 "When someone you follow comments on or likes a post, you'll see it here."
 msgstr "Quando qualcuno commenta i tuoi post, lo vedrai qui."

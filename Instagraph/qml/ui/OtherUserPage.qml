@@ -13,7 +13,7 @@ Page {
     id: otheruserpage
 
     header: PageHeader {
-        title: usernameString
+        title: usernameString ? usernameString : ''
         StyleHints {
             backgroundColor: "#275A84"
             foregroundColor: "#ffffff"

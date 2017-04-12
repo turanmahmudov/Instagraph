@@ -152,6 +152,15 @@ ListItem {
                         cache: true
                     }
                 }
+
+                MouseArea {
+                    anchors {
+                        fill: parent
+                    }
+                    onClicked: {
+                        pageStack.push(Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameString: user.username});
+                    }
+                }
             }
 
             Column {
