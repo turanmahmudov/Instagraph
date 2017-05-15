@@ -1,11 +1,7 @@
 {
     "name": "instagraph-donate.turan-mahmudov-l",
     "description": "Unofficial Instagram Client",
-    "architecture": [
-        "armhf",
-        "i386",
-        "amd64"
-    ],
+    "architecture": "@CLICK_ARCH@",
     "title": "Instagraph",
     "hooks": {
         "Instagraph": {

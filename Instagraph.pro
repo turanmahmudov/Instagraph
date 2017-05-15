@@ -16,7 +16,7 @@ UBUNTU_MANIFEST_FILE=manifest.json.in
 
 # specify translation domain, this must be equal with the
 # app name in the manifest file
-UBUNTU_TRANSLATION_DOMAIN="instagraph.turan-mahmudov-l"
+UBUNTU_TRANSLATION_DOMAIN="instagraph-donate.turan-mahmudov-l"
 
 export(UBUNTU_TRANSLATION_DOMAIN)
 

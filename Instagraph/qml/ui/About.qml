@@ -92,26 +92,5 @@ Page {
             fontSize: "small"
             onLinkActivated: Qt.openUrlExternally(link)
         }
-
-        /*Column {
-            width: parent.width
-            spacing: units.gu(1)
-
-            Item {
-                width: parent.width
-                height: units.gu(1)
-            }
-
-            Button {
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                }
-                text: i18n.tr("Donate")
-                color: UbuntuColors.green
-                onTriggered: {
-                    Qt.openUrlExternally("scope://com.canonical.scopes.clickstore?q=instgrphdnt")
-                }
-            }
-        }*/
     }
 }

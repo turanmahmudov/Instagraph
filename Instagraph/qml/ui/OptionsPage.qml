@@ -108,7 +108,7 @@ Page {
                    title.text: i18n.tr("Blocked Users")
                }
                onClicked: {
-                   //pageStack.push(Qt.resolvedUrl("BlockedUsers.qml"))
+                   pageStack.push(Qt.resolvedUrl("BlockedUsers.qml"))
                }
            }
 

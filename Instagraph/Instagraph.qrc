@@ -101,5 +101,6 @@
         <file>qml/ui/SuggestionsPage.qml</file>
         <file>qml/ui/ShareMediaPage.qml</file>
         <file>qml/components/ContentDownloadDialog.qml</file>
+        <file>qml/ui/BlockedUsers.qml</file>
     </qresource>
 </RCC>

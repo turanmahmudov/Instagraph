@@ -1166,6 +1166,21 @@ void Instagram::getUserFollowers(QString usernameId, QString max_id)
     emit busyChanged();
 }
 
+void Instagram::getUserBlockedList()
+{
+    m_busy = true;
+    emit busyChanged();
+
+    QString target ="users/blocked_list/";
+
+    InstagramRequest *getUserBlockedListRequest = new InstagramRequest();
+    getUserBlockedListRequest->request(target,NULL);
+    QObject::connect(getUserBlockedListRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(userBlockedListDataReady(QVariant)));
+
+    m_busy = false;
+    emit busyChanged();
+}
+
 // Camera
 void Instagram::rotateImg(QString filename, qreal deg)
 {

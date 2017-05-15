@@ -184,7 +184,7 @@ Column {
             smooth: false
         }
 
-        /*MediaPlayer {
+        MediaPlayer {
             id: player
             source: video_url
             autoLoad: false
@@ -197,7 +197,7 @@ Column {
             fillMode: VideoOutput.PreserveAspectCrop
             anchors.fill: parent
             visible: media_type == 2
-        }*/
+        }
         Icon {
             visible: media_type == 2
             width: units.gu(3)
@@ -231,19 +231,19 @@ Column {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                if (media_type == 2) {
+                /*if (media_type == 2) {
                     var singleDownload = downloadComponent.createObject(mainView)
                     singleDownload.contentType = ContentType.Videos
                     singleDownload.download(video_url)
-                }
+                }*/
 
-                /*if (media_type == 2) {
+                if (media_type == 2) {
                     if (player.playbackState == MediaPlayer.PlayingState) {
                         player.stop()
                     } else {
                         player.play()
                     }
-                }*/
+                }
             }
             onDoubleClicked: {
                 last_like_id = id;
