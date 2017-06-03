@@ -117,12 +117,6 @@ Page {
         list_loading = false
     }
 
-    function userGeoDataFinished(data) {
-        worker.sendMessage({'feed': 'userPage', 'obj': data.geo_media, 'model': userGeoPhotosModel, 'clear_model': clear_models})
-
-        list_loading = false
-    }
-
     function followDataFinished(data) {
         if (usernameId == latest_follow_request) {
             if (data.friendship_status) {
@@ -246,10 +240,6 @@ Page {
 
     ListModel {
         id: userTagPhotosModel
-    }
-
-    ListModel {
-        id: userGeoPhotosModel
     }
 
     Flickable {
@@ -541,7 +531,7 @@ Page {
                     anchors {
                         horizontalCenter: parent.horizontalCenter
                     }
-                    spacing: (parent.width-units.gu(20))/4
+                    spacing: (parent.width-units.gu(15))/3
 
                     Item {
                         width: units.gu(5)
@@ -581,29 +571,6 @@ Page {
                             onClicked: {
                                 current_user_section = 1
                                 viewLoader.sourceComponent = listviewComponent
-                            }
-                        }
-                    }
-
-                    Item {
-                        width: units.gu(5)
-                        height: width
-
-                        Icon {
-                            anchors.centerIn: parent
-                            width: units.gu(3)
-                            height: width
-                            name: "location"
-                            color: current_user_section == 2 ? "#003569" : UbuntuColors.darkGrey
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                next_max_id = 0
-                                instagram.getGeoMedia(usernameId)
-                                current_user_section = 2
-                                viewLoader.sourceComponent = geoviewComponent
                             }
                         }
                     }
@@ -855,63 +822,6 @@ Page {
         }
     }
 
-    Component {
-        id: geoviewComponent
-
-        Grid {
-            columns: 3
-            spacing: units.gu(0.1)
-
-            Repeater {
-                model: userGeoPhotosModel
-
-                Item {
-                    width: (viewLoader.width-units.gu(0.1))/3
-                    height: width
-
-                    Image {
-                        id: feed_image
-                        width: parent.width
-                        height: width
-                        source: display_url
-                        fillMode: Image.PreserveAspectCrop
-                        sourceSize: Qt.size(width,height)
-                        clip: true
-                        asynchronous: true
-                        cache: true
-                        smooth: true
-                    }
-
-                    Item {
-                        width: activity2.width
-                        height: width
-                        anchors.centerIn: parent
-                        opacity: feed_image.status == Image.Loading
-
-                        Behavior on opacity {
-                            UbuntuNumberAnimation {
-                                duration: UbuntuAnimation.SlowDuration
-                            }
-                        }
-
-                        ActivityIndicator {
-                            id: activity2
-                            running: true
-                        }
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-
-                        onClicked: {
-                            pageStack.push(Qt.resolvedUrl("SinglePhoto.qml"), {photoId: media_id});
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     Connections{
         target: instagram
         onUserTimeLineDataReady: {
@@ -925,10 +835,6 @@ Page {
         onUserTagsDataReady: {
             var data = JSON.parse(answer);
             userTagDataFinished(data);
-        }
-        onGeoMediaDataReady: {
-            var data = JSON.parse(answer);
-            userGeoDataFinished(data);
         }
         onSearchUsernameDataReady: {
             var data = JSON.parse(answer);
