@@ -19,7 +19,7 @@ import ImageProcessor 1.0
 MainView {
     id: mainView
     objectName: "mainView"
-    applicationName: "instagraph-donate.turan-mahmudov-l"
+    applicationName: "instagraph-devs.turan-mahmudov-l"
     anchorToKeyboard: true
     automaticOrientation: false
 
@@ -37,7 +37,7 @@ MainView {
 
     property var uri: undefined
 
-    property string current_version: "Alpha Donate"
+    property string current_version: "Alpha"
 
     property alias appStore: appStore
     property var activeTransfer

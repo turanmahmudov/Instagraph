@@ -33,7 +33,6 @@
         <file>qml/ui/ChangePasswordPage.qml</file>
         <file>qml/ui/DiscoverPeoplePage.qml</file>
         <file>qml/ui/RegisterPage.qml</file>
-        <file>Instagraph.png</file>
         <file>qml/js/Worker.js</file>
         <file>qml/js/ActivityWorker.js</file>
         <file>qml/js/SimpleWorker.js</file>
@@ -102,5 +101,6 @@
         <file>qml/ui/ShareMediaPage.qml</file>
         <file>qml/components/ContentDownloadDialog.qml</file>
         <file>qml/ui/BlockedUsers.qml</file>
+        <file>Instagraph.png</file>
     </qresource>
 </RCC>
