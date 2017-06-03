@@ -1,9 +1,13 @@
-function linkClick(link) {
+function linkClick(link, photoId) {
     var result = link.split("://");
     if(result[0] == "user") {
         pageStack.push(Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameString: result[1]});
+    } else if(result[0] == "userid") {
+        pageStack.push(Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: result[1]});
     } else if(result[0] == "tag") {
         pageStack.push(Qt.resolvedUrl("../ui/TagFeedPage.qml"), {tag: result[1]});
+    } else if(result[0] == "likes") {
+        pageStack.push(Qt.resolvedUrl("../ui/MediaLikersPage.qml"), {photoId: photoId});
     } else {
         Qt.openUrlExternally(link)
     }

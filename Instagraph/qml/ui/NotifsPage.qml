@@ -213,7 +213,7 @@ Page {
                                 textFormat: Text.RichText
                                 font.weight: story.type == 13 ? Font.DemiBold : Font.Normal
                                 onLinkActivated: {
-                                    Scripts.linkClick(link)
+                                    Scripts.linkClick(link, story.type == 1 ? story.args.media[0].id : 0)
                                 }
                             }
 
@@ -379,7 +379,7 @@ Page {
                                 width: parent.width
                                 textFormat: Text.RichText
                                 onLinkActivated: {
-                                    Scripts.linkClick(link)
+                                    Scripts.linkClick(link, story.type == 1 ? story.args.media[0].id : 0)
                                 }
                             }
 
