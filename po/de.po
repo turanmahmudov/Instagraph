@@ -1,0 +1,589 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Instagraph\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-06-03 17:05+0000\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: POEditor.com\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: /home/bjarne/Instagraph/Instagraph/Main.qml:52
+msgid "Refresh"
+msgstr "Aktualisieren"
+
+#: /home/bjarne/Instagraph/Instagraph/Main.qml:60
+msgid "Inbox"
+msgstr "Eingang"
+
+#: /home/bjarne/Instagraph/Instagraph/Main.qml:68
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/DiscoverPeoplePage.qml:15
+msgid "Discover People"
+msgstr "Entdecke Leute"
+
+#: /home/bjarne/Instagraph/Instagraph/Main.qml:76
+msgid "New Message"
+msgstr "Neue Nachricht"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:51
+#: /home/bjarne/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:47
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:25
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:19
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:60
+#: /home/bjarne/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:56
+msgid "Delete"
+msgstr "Löschen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:69
+#: /home/bjarne/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:65
+msgid "Remove Tag"
+msgstr "Schlagwort entfernen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:78
+#: /home/bjarne/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:74
+msgid "Copy Share URL"
+msgstr "Kopiere die Teilungs-URL"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:434
+#: /home/bjarne/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:397
+msgid " likes"
+msgstr " Likes"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:464
+#: /home/bjarne/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:427
+#, qt-format
+msgid "View all %1 comments"
+msgstr "Alle %1 Kommentare ansehen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/effects/EffectsList.qml:23
+msgid "Adjust"
+msgstr "Korrektur"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/effects/EffectsList.qml:34
+msgid "Brightness"
+msgstr "Helligkeit"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/effects/EffectsList.qml:45
+msgid "Contrast"
+msgstr "Kontrast"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/effects/EffectsList.qml:56
+msgid "Saturation"
+msgstr "Sättigung"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/effects/EffectsList.qml:67
+msgid "Temperature"
+msgstr "Farbtemperatur"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/effects/EffectsList.qml:78
+msgid "Highlights"
+msgstr "Highlights"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/effects/EffectsList.qml:89
+msgid "Shadows"
+msgstr "Schatten"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/effects/EffectsList.qml:100
+msgid "Vignette"
+msgstr "Vignette"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/effects/EffectsList.qml:111
+msgid "Sharpen"
+msgstr "Schärfen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/About.qml:8
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OptionsPage.qml:155
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OptionsPage.qml:165
+msgid "About"
+msgstr "Über"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/About.qml:50
+msgid "Unofficial Instagram Client"
+msgstr "Inoffizieller Instagram Client"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/About.qml:78
+msgid "Released under the terms of the GNU GPL v3"
+msgstr "Veröffentlicht unter den Bestimmungen der GNU GPL v3"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/About.qml:87
+#, qt-format
+msgid "Source code available on %1"
+msgstr "Quellcode verfügbar unter %1"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/BlockedUsers.qml:22
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OptionsPage.qml:108
+msgid "Blocked Users"
+msgstr "Gesperrte Benutzer"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:24
+msgid "Publish"
+msgstr "Veröffentlichen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:28
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraCropPage.qml:26
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:29
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:23
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/RegisterPage.qml:39
+msgid "Back"
+msgstr "Zurück"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:38
+msgid "Share"
+msgstr "Teilen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:71
+msgid "Saving"
+msgstr "Speichern..."
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:71
+msgid "Posting"
+msgstr "Postet"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:118
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:95
+msgid "Write a caption..."
+msgstr "Beschriftung hier..."
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:174
+msgid "Add Location"
+msgstr "Standort anfügen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraCropPage.qml:22
+msgid "Crop"
+msgstr "Zuschneiden"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraCropPage.qml:37
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:40
+msgid "Next"
+msgstr "Weiter"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:188
+msgid "Filters"
+msgstr "Filter"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:188
+msgid "Tools"
+msgstr "Werkzeuge"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraPage.qml:21
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraPage.qml:192
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/SinglePhoto.qml:15
+msgid "Photo"
+msgstr "Foto"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraPage.qml:21
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraPage.qml:192
+msgid "Video"
+msgstr "Video"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraPage.qml:25
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/LoginPage.qml:40
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:32
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:65
+msgid "Close"
+msgstr "Schließen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CameraPage.qml:192
+msgid "Library"
+msgstr "Andere Quelle"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:14
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OptionsPage.qml:84
+msgid "Change Password"
+msgstr "Passwort ändern"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:24
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:24
+msgid "Save"
+msgstr "Speichern"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:70
+msgid "Current password"
+msgstr "Aktuelles Passwort"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:91
+msgid "New password"
+msgstr "Neues Passwort"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:112
+msgid "New password, again"
+msgstr "Neues Passwort wiederholen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CommentsPage.qml:27
+msgid "Comments"
+msgstr "Kommentare"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CommentsPage.qml:125
+msgid "Remove"
+msgstr "Entfernen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CommentsPage.qml:274
+msgid "Add a comment"
+msgstr "Ein Kommentar schreiben"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/CommentsPage.qml:286
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:443
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:336
+msgid "Send"
+msgstr "Senden"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/Credits.qml:8
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OptionsPage.qml:177
+msgid "Credits"
+msgstr "Mitwirkende"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/Credits.qml:35
+msgid "Creator"
+msgstr "Autor"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/Credits.qml:60
+msgid "Developers"
+msgstr "Entwickler"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/Credits.qml:85
+msgid "Icons"
+msgstr "Icons"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/Credits.qml:110
+msgid "Special Thanks"
+msgstr "Besonderer Dank"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:19
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:21
+msgid "Direct"
+msgstr "Direkt"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:226
+msgid "Welcome to Instagraph Direct!"
+msgstr "Willkommen bei Instagraph Direkt!"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:227
+msgid "Tap the + icon to send a photo, video or message."
+msgstr "Klicke auf das + Icon, um ein Foto, Video oder eine Nachricht zu senden."
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:433
+msgid "Write a message..."
+msgstr "Eine Nachricht schreiben..."
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:33
+msgid "Done"
+msgstr "Fertig"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:14
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OptionsPage.qml:72
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:482
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/UserPage.qml:338
+msgid "Edit Profile"
+msgstr "Profil bearbeiten"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:78
+msgid "Name"
+msgstr "Name"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:98
+msgid "Website"
+msgstr "Website"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:120
+msgid "Bio"
+msgstr "Biografie"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:131
+msgid "Private Information"
+msgstr "Private Angaben"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:146
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/RegisterPage.qml:101
+msgid "Email"
+msgstr "Email"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:166
+msgid "Phone"
+msgstr "Handynummer"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:187
+msgid "Female"
+msgstr "Weiblich"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:188
+msgid "Male"
+msgstr "Männlich"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/HomePage.qml:16
+msgid "Instagraph"
+msgstr "Instagraph"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/HomePage.qml:123
+msgid "Suggestions for You"
+msgstr "Vorschläge für Dich"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/HomePage.qml:284
+msgid "See All Suggestions"
+msgstr "Betrachte alle Vorschläge"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/HomePage.qml:341
+msgid "Welcome to Instagraph!"
+msgstr "Willkommen bei Instagraph!"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/HomePage.qml:342
+msgid "Follow accounts to see photos and videos here in your feed."
+msgstr "Folge Nutzern, um hier Fotos und Videos zu betrachten."
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/ImportPhotoPage.qml:28
+msgid "Choose from"
+msgstr "Auswählen aus"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/Libraries.qml:9
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OptionsPage.qml:190
+msgid "Libraries"
+msgstr "Andere Quellen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/Libraries.qml:32
+msgid "Open Source"
+msgstr "Quelloffen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/LikedMediaPage.qml:15
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/MediaLikersPage.qml:22
+msgid "Likes"
+msgstr "Likes"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/LikedMediaPage.qml:187
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:664
+msgid "No photos or videos yet!"
+msgstr "Bisher keine Fotos oder Videos!"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/LoginPage.qml:102
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/RegisterPage.qml:118
+msgid "Username"
+msgstr "Benutzername"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/LoginPage.qml:120
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/RegisterPage.qml:131
+msgid "Password"
+msgstr "Passwort"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/LoginPage.qml:132
+msgid "Log In"
+msgstr "Einloggen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/LoginPage.qml:172
+msgid "Don't have an account? <b>Sign Up</b>."
+msgstr "Du hast noch kein Konto? <b>Jetzt Anmelden</b>"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/NotifsPage.qml:15
+msgid "Activity"
+msgstr "Aktivität"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/NotifsPage.qml:31
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:434
+msgid "Following"
+msgstr "Deine Kontakte"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/NotifsPage.qml:40
+msgid "You"
+msgstr "Du"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/NotifsPage.qml:502
+msgid "Activity from people you follow"
+msgstr "Aktivität von Leuten, denen Du folgst"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/NotifsPage.qml:503
+msgid "When someone you follow comments on or likes a post, you'll see it here."
+msgstr "Leute, die Dir folgen oder Dich liken, siehst Du hier."
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OptionsPage.qml:15
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:27
+msgid "Options"
+msgstr "Optionen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OptionsPage.qml:62
+msgid "Account"
+msgstr "Konto"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OptionsPage.qml:96
+msgid "Posts You've Liked"
+msgstr "Posts, die Du geliked hast"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OptionsPage.qml:120
+msgid "Private Account"
+msgstr "Privates Konto"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OptionsPage.qml:143
+msgid "When your account is private, only people you approve can see your photos and videos. Your existing followers won't be affected."
+msgstr "Wenn Du Dein Konte auf privat setzt, können nur die Leute Deine Fotos and Videos betrachten, denen Du es erlaubst. Deine bestehenden Kontakte sind davon nicht betroffen."
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OptionsPage.qml:203
+msgid "Log Out"
+msgstr "Abmelden"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:40
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/UserPage.qml:36
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:207
+msgid "Block"
+msgstr "Sperren"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:349
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/UserPage.qml:255
+msgid "posts"
+msgstr "Posts"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:376
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/UserPage.qml:282
+msgid "followers"
+msgstr "Follower"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:411
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/UserPage.qml:317
+msgid "following"
+msgstr "Freunde"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:446
+msgid "Follow"
+msgstr "Folgen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:458
+msgid "Requested"
+msgstr "Angefragt"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:470
+msgid "Unblock"
+msgstr "Freigeben"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:662
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/UserPage.qml:517
+msgid "No Photos Yet"
+msgstr "Bisher keine Fotos"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:683
+msgid "This account is private."
+msgstr "Dieser Benutzer ist privat."
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:684
+msgid "Follow to see their photos and videos."
+msgstr "Folge ihr/ihm, um Fotos und Videos zu betrachten."
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/RegisterPage.qml:143
+msgid "Sign Up"
+msgstr "Konto erstellen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/RegisterPage.qml:169
+msgid "Already have an account? <b>Log In</b>."
+msgstr "Du hast bereits ein Konto? <b>Einloggen</b>"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/SearchLocation.qml:30
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/SearchLocation.qml:62
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/SearchPage.qml:19
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/SearchPage.qml:51
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:57
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:95
+msgid "Search"
+msgstr "Suchen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/SearchPage.qml:71
+msgid "People"
+msgstr "Leute"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/SearchPage.qml:77
+msgid "Tags"
+msgstr "Schlagwörter"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/SearchPage.qml:83
+msgid "Places"
+msgstr "Orte"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/SearchPage.qml:457
+msgid " posts"
+msgstr " Posts"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:24
+msgid "Send To"
+msgstr "Senden an"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:199
+#, qt-format
+msgid "%1 has a private account."
+msgstr "%1 hat ein privates Konto."
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:207
+msgid "Only their followers will be able to see this photo."
+msgstr "Nur Freunde können die Inhalte sehen."
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:326
+msgid "Add a message..."
+msgstr "Schreibe eine Nachricht..."
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/SuggestionsPage.qml:15
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/UserPage.qml:24
+#, fuzzy
+msgid "Suggestions"
+msgstr "Vorschläge für Dich"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/UserFollowers.qml:22
+msgid "Followers"
+msgstr "Follower"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/UserFollowings.qml:22
+msgid "Followings"
+msgstr "Freunde"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/UserPage.qml:16
+msgid "User"
+msgstr "Benutzer"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/UserPage.qml:519
+msgid "Photos you're tagged in will appear here."
+msgstr "Fotos, die Du mit Schlgwörtern versehen hast, erscheinen hier."
+
+#: /home/bjarne/Instagraph/Instagraph/qml/ui/UserPage.qml:519
+msgid "Start capturing and sharing your moments"
+msgstr "Beginne, Deine Momente festzuhalten und zu teilen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/js/Helper.js:56
+#, qt-format
+msgid "%1 MONTH AGO"
+msgid_plural "%1 MONTHS AGO"
+msgstr[0] "Vor %1 Monat"
+msgstr[1] "Vor %1 Monaten"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/js/Helper.js:58
+#, qt-format
+msgid "%1 WEEK AGO"
+msgid_plural "%1 WEEKS AGO"
+msgstr[0] "Vor %1 Woche"
+msgstr[1] "Vor %1 Wochen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/js/Helper.js:60
+#, qt-format
+msgid "%1 DAY AGO"
+msgid_plural "%1 DAYS AGO"
+msgstr[0] "Vor %1 Tag"
+msgstr[1] "Vor %1 Tagen"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/js/Helper.js:62
+#, qt-format
+msgid "%1 HOUR AGO"
+msgid_plural "%1 HOURS AGO"
+msgstr[0] "Vor %1 Stunde"
+msgstr[1] "Vor %1 Stunden"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/js/Helper.js:64
+#, qt-format
+msgid "%1 MINUTE AGO"
+msgid_plural "%1 MINUTES AGO"
+msgstr[0] "Vor %1 Minute"
+msgstr[1] "Vor %1 Minuten"
+
+#: /home/bjarne/Instagraph/Instagraph/qml/js/Helper.js:66
+#, qt-format
+msgid "%1 SECOND AGO"
+msgid_plural "%1 SECONDS AGO"
+msgstr[0] "Vor %1 Sekunde"
+msgstr[1] "Vor %1 Sekunden"
