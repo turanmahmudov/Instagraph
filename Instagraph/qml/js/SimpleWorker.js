@@ -12,6 +12,9 @@ WorkerScript.onMessage = function(msg) {
     for (var i = 0; i < obj.length; i++) {
         if (feed == 'CommentsPage') {
             obj[i].ctext = obj[i].text ? obj[i].text : "";
+
+            obj[i].has_liked_c = obj[i].has_liked_comment == true ? true : false
+            obj[i].comment_like_c = obj[i].comment_like_count ? obj[i].comment_like_count : 0
         }
 
         model.append(obj[i]);

@@ -38,6 +38,8 @@ public slots:
 
     void postComment(QString mediaId, QString commentText);
     void deleteComment(QString mediaId, QString commentId);
+    void likeComment(QString commentId);
+    void unLikeComment(QString commentId);
 
     void setPrivateAccount();
     void setPublicAccount();
@@ -148,6 +150,8 @@ signals:
     void removeSelftagDone(QVariant answer);
     void commentPosted(QVariant answer);
     void commentDeleted(QVariant answer);
+    void commentLiked(QVariant answer);
+    void commentUnLiked(QVariant answer);
 
     void profilePictureDeleted(QVariant answer);
     void setProfilePrivate(QVariant answer);

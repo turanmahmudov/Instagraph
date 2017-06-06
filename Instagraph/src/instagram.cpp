@@ -477,6 +477,32 @@ void Instagram::deleteComment(QString mediaId, QString commentId)
     QObject::connect(deleteCommentRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(commentDeleted(QVariant)));
 }
 
+void Instagram::likeComment(QString commentId)
+{
+    InstagramRequest *likeCommentRequest = new InstagramRequest();
+    QJsonObject data;
+        data.insert("_uuid",        this->m_uuid);
+        data.insert("_uid",         this->m_username_id);
+        data.insert("_csrftoken",   "Set-Cookie: csrftoken="+this->m_token);
+
+    QString signature = likeCommentRequest->generateSignature(data);
+    likeCommentRequest->request("media/"+commentId+"/comment_like/",signature.toUtf8());
+    QObject::connect(likeCommentRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(commentLiked(QVariant)));
+}
+
+void Instagram::unLikeComment(QString commentId)
+{
+    InstagramRequest *unLikeCommentRequest = new InstagramRequest();
+    QJsonObject data;
+        data.insert("_uuid",        this->m_uuid);
+        data.insert("_uid",         this->m_username_id);
+        data.insert("_csrftoken",   "Set-Cookie: csrftoken="+this->m_token);
+
+    QString signature = unLikeCommentRequest->generateSignature(data);
+    unLikeCommentRequest->request("media/"+commentId+"/comment_unlike/",signature.toUtf8());
+    QObject::connect(unLikeCommentRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(commentUnLiked(QVariant)));
+}
+
 //FIXME changeProfilePicture is not public yeat. Give me few weeks to optimize code
 void Instagram::changeProfilePicture(QFile *photo)
 {

@@ -102,5 +102,6 @@
         <file>qml/components/ContentDownloadDialog.qml</file>
         <file>qml/ui/BlockedUsers.qml</file>
         <file>Instagraph.png</file>
+        <file>qml/components/LikeComponent.qml</file>
     </qresource>
 </RCC>

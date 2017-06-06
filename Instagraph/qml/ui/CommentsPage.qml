@@ -219,8 +219,9 @@ Page {
                     }
 
                     Column {
-                        width: parent.width - units.gu(6)
+                        width: parent.width - units.gu(11)
                         anchors.verticalCenter: parent.verticalCenter
+                        spacing: units.gu(0.5)
 
                         Text {
                             text: Helper.formatUser(user.username) + ' ' + Helper.formatString(ctext)
@@ -232,13 +233,35 @@ Page {
                             }
                         }
 
-                        Text {
-                            text: Helper.milisecondsToString(created_at)
-                            wrapMode: Text.WordWrap
+                        Row {
                             width: parent.width
-                            textFormat: Text.RichText
-                            font.capitalization: Font.AllLowercase
+                            spacing: units.gu(2)
+
+                            Label {
+                                text: Helper.milisecondsToString(created_at)
+                                fontSize: "small"
+                                color: UbuntuColors.darkGrey
+                                font.weight: Font.Light
+                                wrapMode: Text.WordWrap
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
+
+                            Label {
+                                text: comment_like_c == 0 ? "" : (comment_like_c + i18n.tr(" likes"))
+                                fontSize: "small"
+                                color: "#000000"
+                                wrapMode: Text.WordWrap
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
                         }
+                    }
+
+                    LikeComponent {
+                        visible: commentCaption.ctext != ctext
+                        width: commentCaption != ctext ? units.gu(4) : 0
+                        height: units.gu(5)
+                        commentId: pk
+                        has_liked: has_liked_c
                     }
                 }
             }
