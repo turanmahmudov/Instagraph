@@ -251,9 +251,26 @@ Page {
                                 visible: comment_like_c != 0
                                 text: comment_like_c == 0 ? "" : (comment_like_c + i18n.tr(" likes"))
                                 fontSize: "small"
-                                color: "#000000"
+                                font.weight: Font.Normal
                                 wrapMode: Text.WordWrap
                                 anchors.verticalCenter: parent.verticalCenter
+                            }
+
+                            Label {
+                                visible: commentCaption.ctext != ctext
+                                text: i18n.tr("Reply")
+                                fontSize: "small"
+                                font.weight: Font.Normal
+                                wrapMode: Text.WordWrap
+                                anchors.verticalCenter: parent.verticalCenter
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    onClicked: {
+                                        addCommentField.forceActiveFocus();
+                                        addCommentField.text = "@"+ user.username + " "
+                                    }
+                                }
                             }
                         }
                     }
