@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-06 13:23+0000\n"
+"POT-Creation-Date: 2017-06-06 13:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -59,7 +59,9 @@ msgstr ""
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:434
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:397
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:250
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:252
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:273
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:277
 msgid " likes"
 msgstr ""
 
@@ -231,11 +233,11 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:297
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:313
 msgid "Add a comment"
 msgstr ""
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:309
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:325
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:443
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:336
 msgid "Send"

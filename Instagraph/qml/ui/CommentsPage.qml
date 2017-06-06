@@ -247,6 +247,8 @@ Page {
                             }
 
                             Label {
+                                id: comment_likes_count
+                                visible: comment_like_c != 0
                                 text: comment_like_c == 0 ? "" : (comment_like_c + i18n.tr(" likes"))
                                 fontSize: "small"
                                 color: "#000000"
@@ -257,11 +259,25 @@ Page {
                     }
 
                     LikeComponent {
+                        id: comment_like_component
                         visible: commentCaption.ctext != ctext
                         width: commentCaption != ctext ? units.gu(4) : 0
                         height: units.gu(5)
                         commentId: pk
                         has_liked: has_liked_c
+                        onLikedfinished: {
+                            if (likedCommentId == pk) {
+                                if (liked) {
+                                    comment_like_c = comment_like_c + 1
+                                    comment_likes_count.visible = true
+                                    comment_likes_count.text = comment_like_c + i18n.tr(" likes")
+                                } else {
+                                    comment_like_c = comment_like_c - 1
+                                    comment_likes_count.visible = comment_like_c == 0 ? false : true
+                                    comment_likes_count.text = comment_like_c == 0 ? "" : (comment_like_c + i18n.tr(" likes"))
+                                }
+                            }
+                        }
                     }
                 }
             }

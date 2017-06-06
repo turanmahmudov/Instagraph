@@ -10,6 +10,8 @@ import "../js/Scripts.js" as Scripts
 
 Item {
 
+    signal likedfinished(bool liked, var likedCommentId)
+
     property var commentId
     property bool has_liked: false
     property var latest_like_request
@@ -17,6 +19,7 @@ Item {
     function commentLikeDataFinished(data) {
         if (commentId == latest_like_request) {
             if (data.status == "ok") {
+                likedfinished(true, commentId)
                 has_liked = true
 
                 commentlikeicon.name = "like"
@@ -30,6 +33,7 @@ Item {
     function commentUnLikeDataFinished(data) {
         if (commentId == latest_like_request) {
             if (data.status == "ok") {
+                likedfinished(false, commentId)
                 has_liked = false
 
                 commentlikeicon.name = "unlike"
