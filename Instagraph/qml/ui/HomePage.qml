@@ -60,7 +60,7 @@ Page {
         id: worker
         source: "../js/Worker.js"
         onMessage: {
-            Storage.set("media_or_ad", JSON.stringify(messageObject))
+
         }
     }
 
