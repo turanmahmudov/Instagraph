@@ -268,6 +268,91 @@ Column {
         }
     }
 
+    Item {
+        visible: carousel_media_obj.count > 0
+        property var bestImage: carousel_media_obj.count > 0 ? Helper.getBestImage(carousel_media_obj.get(0).image_versions2.candidates, parent.width) : {}
+
+        width: parent.width
+        height: (parent.width/bestImage.width*bestImage.height) + units.gu(2)
+
+        CarouselSlider {
+            id: carouselSlider
+            width: parent.width
+            height: parent.height - units.gu(2)
+            model: carousel_media_obj
+        }
+
+        Row {
+            id: slideIndicator
+            height: units.gu(2)
+            spacing: units.gu(0.5)
+            anchors {
+                bottom: parent.bottom
+                horizontalCenter: parent.horizontalCenter
+            }
+
+            Repeater {
+                model: carousel_media_obj
+                delegate: Rectangle {
+                    height: units.gu(0.7)
+                    width: units.gu(0.7)
+                    radius: width/2
+                    antialiasing: true
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: carouselSlider.currentIndex == index ? UbuntuColors.blue : "black"
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: UbuntuAnimation.FastDuration
+                        }
+                    }
+                }
+            }
+        }
+
+        MouseArea {
+            property string direction: "None"
+            property real lastX: -1
+            anchors {
+                fill: parent
+            }
+            onClicked: {
+            }
+            onDoubleClicked: {
+                last_like_id = id;
+                instagram.like(id);
+            }
+
+            onPressed: lastX = mouse.x
+
+            onReleased: {
+                var diff = mouse.x - lastX
+                if (Math.abs(diff) < units.gu(4)) {
+                    return;
+                } else if (diff < 0) {
+                    carouselSlider.nextSlide()
+                } else if (diff > 0) {
+                    carouselSlider.previousSlide()
+                }
+            }
+        }
+
+        Connections {
+            target: instagram
+            onLikeDataReady: {
+                if (JSON.parse(answer).status == "ok" && last_like_id == id) {
+                    imagelikeicon.color = UbuntuColors.red;
+                    imagelikeicon.name = "like";
+                }
+            }
+            onUnLikeDataReady: {
+                if (JSON.parse(answer).status == "ok" && last_like_id == id) {
+                    imagelikeicon.color = "";
+                    imagelikeicon.name = "unlike";
+                }
+            }
+        }
+    }
+
     Row {
         spacing: units.gu(2.3)
         width: parent.width

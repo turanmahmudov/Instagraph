@@ -64,6 +64,8 @@ WorkerScript.onMessage = function(msg) {
                 obj[i].video_url = obj[i].video_versions ? obj[i].video_versions[0].url : ''
             }
 
+            obj[i].carousel_media_obj = typeof obj[i].carousel_media != 'undefined' ? obj[i].carousel_media : []
+
             model.append(obj[i]);
 
             if (msg.commentsModel) {
