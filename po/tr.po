@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Instagraph\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-19 14:38+0000\n"
+"POT-Creation-Date: 2017-06-20 23:05+0000\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -50,7 +50,7 @@ msgstr "Kaldır"
 msgid "Copy Share URL"
 msgstr ""
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:434
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:519
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:397
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:252
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:290
@@ -58,7 +58,7 @@ msgstr ""
 msgid " likes"
 msgstr " beğeni"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:464
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:549
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:427
 #, qt-format
 msgid "View all %1 comments"
@@ -326,19 +326,19 @@ msgstr "Erkek"
 msgid "Instagraph"
 msgstr "Instagraph"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/HomePage.qml:123
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/HomePage.qml:124
 msgid "Suggestions for You"
 msgstr ""
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/HomePage.qml:284
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/HomePage.qml:285
 msgid "See All Suggestions"
 msgstr ""
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/HomePage.qml:341
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/HomePage.qml:342
 msgid "Welcome to Instagraph!"
 msgstr "Instagraph 'a Hoş Geldiniz!"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/HomePage.qml:342
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/HomePage.qml:343
 msgid "Follow accounts to see photos and videos here in your feed."
 msgstr ""
 

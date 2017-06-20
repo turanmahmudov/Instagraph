@@ -88,6 +88,7 @@ Page {
 
     ListModel {
         id: homePhotosModel
+        dynamicRoles: true
     }
 
     ListModel {
