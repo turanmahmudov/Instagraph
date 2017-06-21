@@ -43,6 +43,8 @@ WorkerScript.onMessage = function(msg) {
 
                 obj[i].media_or_ad.carousel_media_obj = typeof obj[i].media_or_ad.carousel_media != 'undefined' ? obj[i].media_or_ad.carousel_media : []
 
+                obj[i].media_or_ad.image_versions2 = typeof obj[i].media_or_ad.image_versions2 != 'undefined' ? obj[i].media_or_ad.image_versions2 : []
+
                 obj[i].media_or_ad.suggestions = false;
 
                 model.append(obj[i].media_or_ad);
@@ -66,6 +68,8 @@ WorkerScript.onMessage = function(msg) {
             }
 
             obj[i].carousel_media_obj = typeof obj[i].carousel_media != 'undefined' ? obj[i].carousel_media : []
+
+            obj[i].image_versions2 = typeof obj[i].image_versions2 != 'undefined' ? obj[i].image_versions2 : []
 
             obj[i].suggestions = false;
 

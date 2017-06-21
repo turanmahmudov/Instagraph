@@ -167,6 +167,7 @@ Column {
     }
 
     Item {
+        visible: carousel_media_obj.count == 0
         property var bestImage: Helper.getBestImage(image_versions2.candidates, parent.width)
 
         width: parent.width
