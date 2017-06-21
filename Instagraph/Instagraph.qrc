@@ -104,5 +104,6 @@
         <file>Instagraph.png</file>
         <file>qml/components/LikeComponent.qml</file>
         <file>qml/components/CarouselSlider.qml</file>
+        <file>qml/components/SuggestionsSlider.qml</file>
     </qresource>
 </RCC>

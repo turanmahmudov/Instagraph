@@ -12,11 +12,12 @@ import "../js/Scripts.js" as Scripts
 
 ListItem {
     divider.visible: false
-    height: entry_column.height + units.gu(4)
+    height: suggestions == true ? (suggestions_column.height + units.gu(4)) : (entry_column.height + units.gu(4))
 
     property var last_deleted_media
     property var thismodel
     property var thiscommentsmodel
+    property var thissuggestionsmodel
 
     Component {
         id: popoverComponent
@@ -113,8 +114,64 @@ ListItem {
     }
 
     Column {
+        id: suggestions_column
+        visible: suggestions == true
+        width: parent.width
+        spacing: units.gu(2)
+
+        ListItem {
+            height: suggestionsHeaderRow.height
+            divider.visible: false
+
+            Row {
+                id: suggestionsHeaderRow
+                width: parent.width
+                anchors {
+                    left: parent.left
+                    leftMargin: units.gu(1)
+                    right: parent.right
+                    rightMargin: units.gu(1)
+                }
+                anchors.verticalCenter: parent.verticalCenter
+
+                Label {
+                    text: i18n.tr("Suggestions for You")
+                    width: parent.width - seeAllSuggestionsLink.width
+                    wrapMode: Text.WordWrap
+                    font.weight: Font.DemiBold
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                Label {
+                    id: seeAllSuggestionsLink
+                    text: i18n.tr("See All")
+                    color: "#275A84"
+                    wrapMode: Text.WordWrap
+                    font.weight: Font.DemiBold
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            pageStack.push(Qt.resolvedUrl("../ui/SuggestionsPage.qml"));
+                        }
+                    }
+                }
+            }
+        }
+
+        SuggestionsSlider {
+            id: suggestionsSlider
+            width: parent.width
+            height: units.gu(15)
+            model: homeSuggestionsModel
+        }
+    }
+
+    Column {
         id: entry_column
         spacing: units.gu(1)
+        visible: suggestions == false
         width: parent.width
 
         Item {
@@ -214,6 +271,7 @@ ListItem {
         }
 
         Item {
+            visible: carousel_media_obj.count == 0
             property var bestImage: Helper.getBestImage(image_versions2.candidates, parent.width)
 
             width: parent.width

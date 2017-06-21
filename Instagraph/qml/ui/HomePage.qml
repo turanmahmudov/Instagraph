@@ -95,208 +95,6 @@ Page {
         id: homeSuggestionsModel
     }
 
-    Column {
-        id: homeSuggestionsList
-        visible: homeSuggestionsModel.count > 0
-        z: 10
-        anchors {
-            left: parent.left
-            right: parent.right
-            top: homepage.header.bottom
-        }
-
-        ListItem {
-            height: suggestionsHeaderRow.height + units.gu(4)
-            color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
-
-            Row {
-                id: suggestionsHeaderRow
-                width: parent.width
-                anchors {
-                    left: parent.left
-                    leftMargin: units.gu(1)
-                    right: parent.right
-                    rightMargin: units.gu(1)
-                }
-                anchors.verticalCenter: parent.verticalCenter
-
-                Label {
-                    text: i18n.tr("Suggestions for You")
-                    width: parent.width - suggestionsCloseRectangle.width
-                    wrapMode: Text.WordWrap
-                    font.weight: Font.DemiBold
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-
-                Rectangle {
-                    id: suggestionsCloseRectangle
-                    height: parent.height
-                    width: height
-                    anchors.verticalCenter: parent.verticalCenter
-                    color: "transparent"
-
-                    Row {
-                        width: parent.width
-
-                        Icon {
-                            height: units.gu(2)
-                            width: height
-                            name: "close"
-                            color: UbuntuColors.darkGrey
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            homeSuggestionsList.visible = false
-                            homePhotosList.anchors.top = homepage.header.bottom
-                        }
-                    }
-                }
-            }
-        }
-
-        Repeater {
-            model: homeSuggestionsModel
-
-            ListItem {
-                id: searchUsersDelegate
-                divider.visible: true
-                height: entry_column.height + units.gu(1)
-                color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
-
-                Column {
-                    id: entry_column
-                    spacing: units.gu(1)
-                    anchors {
-                        left: parent.left
-                        leftMargin: units.gu(1)
-                        right: parent.right
-                        rightMargin: units.gu(1)
-                    }
-
-                    Item {
-                        width: parent.width
-                        height: units.gu(0.1)
-                    }
-
-                    Row {
-                        spacing: units.gu(1)
-                        width: parent.width
-                        anchors.horizontalCenter: parent.horizontalCenter
-
-                        Item {
-                            width: units.gu(5)
-                            height: width
-
-                            UbuntuShape {
-                                width: parent.width
-                                height: width
-                                radius: "large"
-
-                                source: Image {
-                                    id: feed_user_profile_image
-                                    width: parent.width
-                                    height: width
-                                    source: status == Image.Error ? "../images/not_found_user.jpg" : user.profile_pic_url
-                                    fillMode: Image.PreserveAspectCrop
-                                    anchors.centerIn: parent
-                                    sourceSize: Qt.size(width,height)
-                                    smooth: true
-                                    clip: true
-                                }
-                            }
-
-                            Item {
-                                width: activity.width
-                                height: width
-                                anchors.centerIn: parent
-                                opacity: feed_user_profile_image.status == Image.Loading
-
-                                Behavior on opacity {
-                                    UbuntuNumberAnimation {
-                                        duration: UbuntuAnimation.SlowDuration
-                                    }
-                                }
-
-                                ActivityIndicator {
-                                    id: activity
-                                    running: true
-                                }
-                            }
-                        }
-
-                        Column {
-                            width: parent.width - units.gu(12)
-                            anchors.verticalCenter: parent.verticalCenter
-
-                            Text {
-                                text: user.username
-                                wrapMode: Text.WordWrap
-                                elide: Text.ElideRight
-                                maximumLineCount: 1
-                                font.weight: Font.DemiBold
-                                width: parent.width
-                            }
-
-                            Text {
-                                text: user.full_name
-                                wrapMode: Text.WordWrap
-                                elide: Text.ElideRight
-                                maximumLineCount: 1
-                                width: parent.width
-                            }
-                        }
-
-                        FollowComponent {
-                            width: units.gu(5)
-                            height: units.gu(3)
-                            friendship_var: {"following": false, "outgoing_request": false}
-                            userId: user.pk
-                        }
-                    }
-                }
-
-                onClicked: {
-                    pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameString: user.username});
-                }
-            }
-        }
-
-        ListItem {
-            height: suggestionsFooterRow.height + units.gu(4)
-            color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
-            divider.visible: false
-
-            Row {
-                id: suggestionsFooterRow
-                width: parent.width
-                anchors {
-                    left: parent.left
-                    leftMargin: units.gu(1)
-                    right: parent.right
-                    rightMargin: units.gu(1)
-                }
-                anchors.verticalCenter: parent.verticalCenter
-
-                Label {
-                    text: i18n.tr("See All Suggestions")
-                    width: parent.width
-                    color: "#275A84"
-                    wrapMode: Text.WordWrap
-                    font.weight: Font.DemiBold
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-            }
-
-            onClicked: {
-                pageStack.push(Qt.resolvedUrl("SuggestionsPage.qml"));
-            }
-        }
-    }
-
     ListView {
         id: homePhotosList
         visible: !isEmpty
@@ -306,7 +104,7 @@ Page {
             right: parent.right
             rightMargin: units.gu(1)
             bottom: bottomMenu.top
-            top: homeSuggestionsModel.count == 0 ? homepage.header.bottom : homeSuggestionsList.bottom
+            top: homepage.header.bottom
         }
         onMovementEnded: {
             if (atYEnd && more_available && !next_coming) {
@@ -320,6 +118,7 @@ Page {
             id: homePhotosDelegate
             thismodel: homePhotosModel
             thiscommentsmodel: homePhotosCommentsModel
+            thissuggestionsmodel: homeSuggestionsModel
         }
         PullToRefresh {
             id: pullToRefresh
@@ -335,7 +134,7 @@ Page {
         visible: isEmpty
         width: parent.width
         anchors {
-            top: homeSuggestionsModel.count == 0 ? homepage.header.bottom : homeSuggestionsList.bottom
+            top: homepage.header.bottom
             horizontalCenter: parent.horizontalCenter
         }
 
@@ -362,7 +161,6 @@ Page {
     Connections{
         target: instagram
         onTimeLineDataReady: {
-            //console.log(answer)
             var data = JSON.parse(answer);
             if (data.status == "ok") {
                 mediaDataFinished(data);

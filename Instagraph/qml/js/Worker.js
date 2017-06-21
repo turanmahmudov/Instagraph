@@ -31,10 +31,9 @@ WorkerScript.onMessage = function(msg) {
                 for (var k = 0; k < obj[i].suggested_users.suggestions.length; k++) {
                     suggestionsModel.append(obj[i].suggested_users.suggestions[k]);
                     suggestionsModel.sync();
-                    if (k >= 2) {
-                        break;
-                    }
                 }
+
+                model.append({"suggestions":true});
 
             }
 
@@ -43,6 +42,8 @@ WorkerScript.onMessage = function(msg) {
                 obj[i].media_or_ad.video_url = typeof obj[i].media_or_ad.video_versions != 'undefined' ? obj[i].media_or_ad.video_versions[0].url : ''
 
                 obj[i].media_or_ad.carousel_media_obj = typeof obj[i].media_or_ad.carousel_media != 'undefined' ? obj[i].media_or_ad.carousel_media : []
+
+                obj[i].media_or_ad.suggestions = false;
 
                 model.append(obj[i].media_or_ad);
 
@@ -65,6 +66,8 @@ WorkerScript.onMessage = function(msg) {
             }
 
             obj[i].carousel_media_obj = typeof obj[i].carousel_media != 'undefined' ? obj[i].carousel_media : []
+
+            obj[i].suggestions = false;
 
             model.append(obj[i]);
 
