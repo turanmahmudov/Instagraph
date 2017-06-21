@@ -13,10 +13,6 @@ Page {
 
     header: PageHeader {
         title: i18n.tr("Suggestions")
-        StyleHints {
-            backgroundColor: "#275A84"
-            foregroundColor: "#ffffff"
-        }
     }
 
     property string next_max_id: ""

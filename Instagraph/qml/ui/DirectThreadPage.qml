@@ -19,10 +19,6 @@ Page {
 
     header: PageHeader {
         title: i18n.tr("Direct")
-        StyleHints {
-            backgroundColor: "#275A84"
-            foregroundColor: "#ffffff"
-        }
     }
 
     function directThreadFinished(data) {

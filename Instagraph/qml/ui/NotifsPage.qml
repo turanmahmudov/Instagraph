@@ -13,15 +13,7 @@ Page {
 
     header: PageHeader {
         title: i18n.tr("Activity")
-        StyleHints {
-            backgroundColor: "#275A84"
-            foregroundColor: "#ffffff"
-        }
         extension: Sections {
-            StyleHints {
-                sectionColor: "#ffffff"
-                selectedSectionColor: "#ffffff"
-            }
             anchors {
                 bottom: parent.bottom
             }

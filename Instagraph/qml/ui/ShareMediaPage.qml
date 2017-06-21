@@ -22,10 +22,6 @@ Page {
 
     header: PageHeader {
         title: i18n.tr("Send To")
-        StyleHints {
-            backgroundColor: "#275A84"
-            foregroundColor: "#ffffff"
-        }
         leadingActionBar.actions: [
             Action {
                 id: closePageAction
@@ -55,10 +51,6 @@ Page {
         id: searchHeader
         visible: sharemediapage.header === searchHeader
         title: i18n.tr("Search")
-        StyleHints {
-            backgroundColor: "#275A84"
-            foregroundColor: "#ffffff"
-        }
         leadingActionBar.actions: [
             Action {
                 id: closePageAction2
@@ -76,21 +68,12 @@ Page {
                 right: parent.right
                 verticalCenter: parent.verticalCenter
             }
-            StyleHints {
-                backgroundColor: "#0D4168"
-                foregroundColor: "#ffffff"
-                borderColor: "#0D4168"
-                textColor: "#ffffff"
-                placeholderTextColor: "#ffffff"
-                selectedTextColor: "#ffffff"
-            }
             primaryItem: Icon {
                 anchors.leftMargin: units.gu(0.2)
                 height: parent.height*0.5
                 width: height
                 name: "find"
             }
-            color: "#ffffff"
             hasClearButton: true
             placeholderText: i18n.tr("Search")
             onAccepted: {

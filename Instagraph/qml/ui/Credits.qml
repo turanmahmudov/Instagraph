@@ -6,10 +6,6 @@ Page {
 
     header: PageHeader {
         title: i18n.tr("Credits")
-        StyleHints {
-            backgroundColor: "#275A84"
-            foregroundColor: "#ffffff"
-        }
     }
 
     Flickable {

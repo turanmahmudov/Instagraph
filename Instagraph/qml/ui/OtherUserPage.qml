@@ -14,10 +14,6 @@ Page {
 
     header: PageHeader {
         title: usernameString ? usernameString : ''
-        StyleHints {
-            backgroundColor: "#275A84"
-            foregroundColor: "#ffffff"
-        }
         trailingActionBar {
             numberOfSlots: 1
             actions: [

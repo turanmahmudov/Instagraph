@@ -14,32 +14,31 @@ Rectangle {
     anchors {
         bottom: parent.bottom
     }
-    color: "#2B2B2B"
+
+    Rectangle {
+        width: parent.width
+        height: units.gu(0.1)
+        color: UbuntuColors.lightGrey
+    }
 
     Row {
         width: parent.width
-        height: parent.height
+        height: parent.height-units.gu(0.2)
         anchors {
-            verticalCenter: parent.verticalCenter
             centerIn: parent
+            bottom: parent.bottom
         }
 
         Item {
             width: parent.width/5
             height: parent.height
 
-            Rectangle {
-                visible: tabs.selectedTabIndex == 0
-                anchors.fill: parent
-                color: "#1C1E20"
-            }
-
             Icon {
                 anchors.centerIn: parent
                 width: units.gu(3.2)
                 height: width
                 name: "navigation-menu"
-                color: "#ffffff"
+                color: tabs.selectedTabIndex == 0 ? "#000000" : "#999999"
             }
 
             MouseArea {
@@ -56,18 +55,12 @@ Rectangle {
             width: parent.width/5
             height: parent.height
 
-            Rectangle {
-                visible: tabs.selectedTabIndex == 1
-                anchors.fill: parent
-                color: "#1C1E20"
-            }
-
             Icon {
                 anchors.centerIn: parent
                 width: units.gu(3.2)
                 height: width
                 name: "find"
-                color: "#ffffff"
+                color: tabs.selectedTabIndex == 1 ? "#000000" : "#999999"
             }
 
             MouseArea {
@@ -89,17 +82,12 @@ Rectangle {
             width: parent.width/5
             height: parent.height
 
-            Rectangle {
-                anchors.fill: parent
-                color: "#275A84"
-            }
-
             Icon {
                 anchors.centerIn: parent
                 width: units.gu(3.2)
                 height: width
                 name: "camera-app-symbolic"
-                color: "#ffffff"
+                color: "#999999"
             }
 
             MouseArea {
@@ -109,7 +97,6 @@ Rectangle {
                         pageStack.clear();
                         pageStack.push(tabs);
                     }
-                    //pageStack.clear()
                     pageStack.push(Qt.resolvedUrl("../ui/CameraPage.qml"))
                 }
             }
@@ -119,18 +106,12 @@ Rectangle {
             width: parent.width/5
             height: parent.height
 
-            Rectangle {
-                visible: tabs.selectedTabIndex == 2
-                anchors.fill: parent
-                color: "#1C1E20"
-            }
-
             Icon {
                 anchors.centerIn: parent
                 width: units.gu(3.2)
                 height: width
                 name: "unlike"
-                color: "#ffffff"
+                color: tabs.selectedTabIndex == 2 ? "#000000" : "#999999"
             }
 
             Rectangle {
@@ -159,18 +140,12 @@ Rectangle {
             width: parent.width/5
             height: parent.height
 
-            Rectangle {
-                visible: tabs.selectedTabIndex == 3
-                anchors.fill: parent
-                color: "#1C1E20"
-            }
-
             Icon {
                 anchors.centerIn: parent
                 width: units.gu(3.2)
                 height: width
                 name: "account"
-                color: "#ffffff"
+                color: tabs.selectedTabIndex == 3 ? "#000000" : "#999999"
             }
 
             MouseArea {

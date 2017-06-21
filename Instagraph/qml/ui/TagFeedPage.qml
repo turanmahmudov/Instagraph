@@ -15,10 +15,6 @@ Page {
 
     header: PageHeader {
         title: "#" + tag
-        StyleHints {
-            backgroundColor: "#275A84"
-            foregroundColor: "#ffffff"
-        }
     }
 
     property string next_max_id: ""

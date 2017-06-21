@@ -16,10 +16,6 @@ Page {
 
     header: PageHeader {
         title: locationName
-        StyleHints {
-            backgroundColor: "#275A84"
-            foregroundColor: "#ffffff"
-        }
     }
 
     property string next_max_id: ""

@@ -14,10 +14,6 @@ Page {
 
     header: PageHeader {
         title: i18n.tr("User")
-        StyleHints {
-            backgroundColor: "#275A84"
-            foregroundColor: "#ffffff"
-        }
         leadingActionBar.actions: [
             Action {
                 id: addPeopleAction
@@ -325,7 +321,7 @@ Page {
                             width: parent.width - units.gu(2)
                             anchors.horizontalCenter: parent.horizontalCenter
                             color: UbuntuColors.green
-                            text: i18n.tr("Edit Profile")
+                            text: i18n.tr("Edit your profile")
                             onClicked: {
                                 pageStack.push(Qt.resolvedUrl("EditProfilePage.qml"));
                             }

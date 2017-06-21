@@ -12,10 +12,7 @@ Page {
     id: loginpage
 
     header: PageHeader {
-        //title: i18n.tr("Instagraph")
         StyleHints {
-            //backgroundColor: "#275A84"
-            //foregroundColor: "#ffffff"
             backgroundColor: "transparent"
             dividerColor: "transparent"
         }

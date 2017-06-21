@@ -25,10 +25,6 @@ Page {
 
     header: PageHeader {
         title: i18n.tr("Comments")
-        StyleHints {
-            backgroundColor: "#275A84"
-            foregroundColor: "#ffffff"
-        }
     }
 
     function mediaCommentsDataFinished(data) {

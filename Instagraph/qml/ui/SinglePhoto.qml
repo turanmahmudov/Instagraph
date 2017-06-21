@@ -13,10 +13,6 @@ Page {
 
     header: PageHeader {
         title: i18n.tr("Photo")
-        StyleHints {
-            backgroundColor: "#275A84"
-            foregroundColor: "#ffffff"
-        }
     }
 
     property var photoId

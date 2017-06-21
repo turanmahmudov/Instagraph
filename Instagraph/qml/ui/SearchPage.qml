@@ -17,10 +17,6 @@ Page {
         id: searchHeader
         visible: searchpage.header === searchHeader
         title: i18n.tr("Search")
-        StyleHints {
-            backgroundColor: "#275A84"
-            foregroundColor: "#ffffff"
-        }
         trailingActionBar {
             numberOfSlots: 1
             actions: [addPeopleAction]
@@ -32,21 +28,12 @@ Page {
                 right: parent.right
                 verticalCenter: parent.verticalCenter
             }
-            StyleHints {
-                backgroundColor: "#0D4168"
-                foregroundColor: "#ffffff"
-                borderColor: "#0D4168"
-                textColor: "#ffffff"
-                placeholderTextColor: "#ffffff"
-                selectedTextColor: "#ffffff"
-            }
             primaryItem: Icon {
                 anchors.leftMargin: units.gu(0.2)
                 height: parent.height*0.5
                 width: height
                 name: "find"
             }
-            color: "#ffffff"
             hasClearButton: true
             placeholderText: i18n.tr("Search")
             onAccepted: {
@@ -58,10 +45,6 @@ Page {
         extension: Sections {
             visible: searchInput.text != '' || searchInput.activeFocus
             height: searchInput.text != '' || searchInput.activeFocus ? units.gu(5) : 0
-            StyleHints {
-                sectionColor: "#ffffff"
-                selectedSectionColor: "#ffffff"
-            }
             anchors {
                 bottom: parent.bottom
             }
@@ -268,9 +251,7 @@ Page {
         visible: searchInput.text != '' || searchInput.activeFocus
         anchors {
             left: parent.left
-            //leftMargin: units.gu(1)
             right: parent.right
-            //rightMargin: units.gu(1)
             bottom: parent.bottom
             bottomMargin: bottomMenu.height
             top: searchpage.header.bottom

@@ -7,10 +7,6 @@ Page {
 
     header: PageHeader {
         title: i18n.tr("Libraries")
-        StyleHints {
-            backgroundColor: "#275A84"
-            foregroundColor: "#ffffff"
-        }
     }
 
     Flickable {

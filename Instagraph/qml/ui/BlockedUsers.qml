@@ -20,10 +20,6 @@ Page {
 
     header: PageHeader {
         title: i18n.tr("Blocked Users")
-        StyleHints {
-            backgroundColor: "#275A84"
-            foregroundColor: "#ffffff"
-        }
     }
 
     function userBlockedListDataFinished(data) {

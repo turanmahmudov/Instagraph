@@ -13,10 +13,6 @@ Page {
 
     header: PageHeader {
         title: i18n.tr("Options")
-        StyleHints {
-            backgroundColor: "#275A84"
-            foregroundColor: "#ffffff"
-        }
     }
 
     function profileDataFinished(data) {
