@@ -86,7 +86,7 @@ Rectangle {
                 anchors.centerIn: parent
                 width: units.gu(3.2)
                 height: width
-                name: "camera-app-symbolic"
+                name: "add"
                 color: "#999999"
             }
 
