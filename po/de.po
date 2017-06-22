@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Instagraph\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-22 00:40+0000\n"
+"POT-Creation-Date: 2017-06-22 01:57+0000\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -512,7 +512,7 @@ msgstr "Schlagwörter"
 msgid "Places"
 msgstr "Orte"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:438
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:449
 msgid " posts"
 msgstr " Posts"
 

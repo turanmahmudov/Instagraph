@@ -198,6 +198,17 @@ Page {
                     smooth: true
                 }
                 Icon {
+                    visible: media_type == 8
+                    width: units.gu(3)
+                    height: width
+                    name: "browser-tabs"
+                    color: "#ffffff"
+                    anchors.right: parent.right
+                    anchors.rightMargin: units.gu(1)
+                    anchors.top: parent.top
+                    anchors.topMargin: units.gu(1)
+                }
+                Icon {
                     visible: media_type == 2
                     width: units.gu(3)
                     height: width

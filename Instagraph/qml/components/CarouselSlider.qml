@@ -13,6 +13,7 @@ ListView {
     highlightMoveDuration: UbuntuAnimation.FastDuration
     highlightRangeMode: ListView.StrictlyEnforceRange
     highlightFollowsCurrentItem: true
+    clip: true
 
     delegate: Item {
         width: listView.width
