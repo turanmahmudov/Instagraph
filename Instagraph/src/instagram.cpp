@@ -1017,10 +1017,6 @@ void Instagram::directShare(QString mediaId, QString recipients, QString text)
     body += this->m_uuid.replace("{","").replace("}","")+"\r\n";
 
     body += "--"+boundary+"\r\n";
-    body += "Content-Disposition: form-data; name=\"thread_ids\"\r\n\r\n";
-    body += "[\"0\"]\r\n";
-
-    body += "--"+boundary+"\r\n";
     body += "Content-Disposition: form-data; name=\"text\"\r\n\r\n";
     body += text+"\r\n";
 
