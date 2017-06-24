@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Instagraph\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-24 02:28+0000\n"
+"POT-Creation-Date: 2017-06-24 02:50+0000\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -50,15 +50,15 @@ msgstr "Kaldır"
 msgid "Copy Share URL"
 msgstr ""
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:138
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:143
 msgid "Suggestions for You"
 msgstr ""
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:147
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:152
 msgid "See All"
 msgstr ""
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:596
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:602
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:483
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:248
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:286
@@ -66,7 +66,7 @@ msgstr ""
 msgid " likes"
 msgstr " beğeni"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:626
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:632
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/UserListFeedDelegate.qml:513
 #, qt-format
 msgid "View all %1 comments"
@@ -509,7 +509,7 @@ msgstr "Etiketler"
 msgid "Places"
 msgstr "Yerler"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:449
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:451
 msgid " posts"
 msgstr ""
 
