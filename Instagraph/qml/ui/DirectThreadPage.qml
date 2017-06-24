@@ -48,6 +48,16 @@ Page {
         addMessageField.text = '';
     }
 
+    function likePostedFinished(data) {
+        for (var j = 0; j < data.threads.length; j++) {
+            var thread = data.threads[j];
+            for (var i = 0; i < thread.items.length; i++) {
+                thread.items[i].ctext = thread.items[i].text;
+                directThreadModel.insert(0, thread.items[i]);
+            }
+        }
+    }
+
     Component.onCompleted: {
         directThread();
     }
@@ -68,6 +78,18 @@ Page {
         recip_string = recip_array.join(',');
 
         instagram.directMessage(recip_string, text, threadId);
+    }
+
+    function sendLike()
+    {
+        var recip_array = [];
+        var recip_string = '';
+        for (var i in threadUsers) {
+            recip_array.push('"'+i+'"');
+        }
+        recip_string = recip_array.join(',');
+
+        instagram.directLike(recip_string, threadId);
     }
 
     BouncingProgressBar {
@@ -424,11 +446,27 @@ Page {
 
             TextField {
                 id: addMessageField
-                width: parent.width - addMessageButton.width - units.gu(1)
+                width: parent.width - addMessageButton.width - sendLikeButton.width - units.gu(2)
                 anchors.verticalCenter: parent.verticalCenter
                 placeholderText: i18n.tr("Write a message...")
                 onAccepted: {
                     sendMessage(addMessageField.text)
+                }
+            }
+
+            Icon {
+                id: sendLikeButton
+                anchors.verticalCenter: parent.verticalCenter
+                color: UbuntuColors.red
+                height: units.gu(3)
+                width: height
+                name: "unlike"
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        sendLike()
+                    }
                 }
             }
 
@@ -453,6 +491,10 @@ Page {
         onDirectMessageReady: {
             var data = JSON.parse(answer);
             messagePostedFinished(data);
+        }
+        onDirectLikeReady: {
+            var data = JSON.parse(answer);
+            likePostedFinished(data);
         }
     }
 }

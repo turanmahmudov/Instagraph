@@ -1067,6 +1067,39 @@ void Instagram::directMessage(QString recipients, QString text, QString thread_i
     emit busyChanged();
 }
 
+void Instagram::directLike(QString recipients, QString thread_id)
+{
+    m_busy = true;
+    emit busyChanged();
+
+    QString boundary = this->m_uuid;
+
+    QUuid uuid;
+
+    /*Body build*/
+    QByteArray body = "";
+    body += "--"+boundary+"\r\n";
+    body += "Content-Disposition: form-data; name=\"recipient_users\"\r\n\r\n";
+    body += "[["+recipients+"]]\r\n";
+
+    body += "--"+boundary+"\r\n";
+    body += "Content-Disposition: form-data; name=\"client_context\"\r\n\r\n";
+    body += uuid.createUuid().toString().replace("{","").replace("}","")+"\r\n";
+
+    body += "--"+boundary+"\r\n";
+    body += "Content-Disposition: form-data; name=\"thread_ids\"\r\n\r\n";
+    body += "[\""+thread_id+"\"]\r\n";
+
+    body += "--"+boundary+"--";
+
+    InstagramRequest *directLikeRequest = new InstagramRequest();
+    directLikeRequest->directRquest("direct_v2/threads/broadcast/like/",boundary, body);
+    QObject::connect(directLikeRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(directLikeReady(QVariant)));
+
+    m_busy = false;
+    emit busyChanged();
+}
+
 void Instagram::changePassword(QString oldPassword, QString newPassword)
 {
     m_busy = true;
