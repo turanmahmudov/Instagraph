@@ -270,182 +270,201 @@ ListItem {
             }
         }
 
-        Item {
-            visible: carousel_media_obj.count == 0
-            property var bestImage: Helper.getBestImage(image_versions2.candidates, parent.width)
+        Component {
+            id: singleMedia
 
-            width: parent.width
-            height: parent.width/bestImage.width*bestImage.height
-
-            Image {
-                id: feed_image
-                width: parent.width
-                height:parent.width/parent.bestImage.width*parent.bestImage.height
-                fillMode: Image.PreserveAspectCrop
-                source: parent.bestImage.url
-                sourceSize: Qt.size(width,height)
-                asynchronous: true
-                cache: true // maybe false
-                smooth: false
-            }
-
-            MediaPlayer {
-                id: player
-                source: video_url
-                autoLoad: false
-                autoPlay: false
-                loops: MediaPlayer.Infinite
-            }
-            VideoOutput {
-                id: videoOutput
-                source: player
-                fillMode: VideoOutput.PreserveAspectCrop
-                width: 800
-                height: 600
-                anchors.fill: parent
-                visible: media_type == 2
-            }
-
-            Icon {
-                visible: media_type == 2
-                width: units.gu(3)
-                height: width
-                name: "camcorder"
-                color: "#ffffff"
-                anchors {
-                    right: parent.right
-                    rightMargin: units.gu(2)
-                    top: parent.top
-                    topMargin: units.gu(2)
+            Item {
+                Image {
+                    id: feed_image
+                    width: parent.width
+                    height:parent.width/bestImage.width*bestImage.height
+                    fillMode: Image.PreserveAspectCrop
+                    source: bestImage.url
+                    sourceSize: Qt.size(width,height)
+                    asynchronous: true
+                    cache: true // maybe false
+                    smooth: false
                 }
-            }
 
-            MouseArea {
-                anchors {
-                    fill: parent
+                MediaPlayer {
+                    id: player
+                    source: video_url
+                    autoLoad: false
+                    autoPlay: false
+                    loops: MediaPlayer.Infinite
                 }
-                onClicked: {
-                    /*if (media_type == 2) {
-                        var singleDownload = downloadComponent.createObject(mainView)
-                        singleDownload.contentType = ContentType.Videos
-                        singleDownload.download(video_url)
-                    }*/
+                VideoOutput {
+                    id: videoOutput
+                    source: player
+                    fillMode: VideoOutput.PreserveAspectCrop
+                    width: 800
+                    height: 600
+                    anchors.fill: parent
+                    visible: media_type == 2
+                }
 
-                    if (media_type == 2) {
-                        console.log(video_url)
-                        if (player.playbackState == MediaPlayer.PlayingState) {
-                            player.stop()
-                        } else {
-                            player.play()
+                Icon {
+                    visible: media_type == 2
+                    width: units.gu(3)
+                    height: width
+                    name: "camcorder"
+                    color: "#ffffff"
+                    anchors {
+                        right: parent.right
+                        rightMargin: units.gu(2)
+                        top: parent.top
+                        topMargin: units.gu(2)
+                    }
+                }
+
+                MouseArea {
+                    anchors {
+                        fill: parent
+                    }
+                    onClicked: {
+                        /*if (media_type == 2) {
+                            var singleDownload = downloadComponent.createObject(mainView)
+                            singleDownload.contentType = ContentType.Videos
+                            singleDownload.download(video_url)
+                        }*/
+
+                        if (media_type == 2) {
+                            console.log(video_url)
+                            if (player.playbackState == MediaPlayer.PlayingState) {
+                                player.stop()
+                            } else {
+                                player.play()
+                            }
                         }
                     }
-                }
-                onDoubleClicked: {
-                    last_like_id = id;
-                    instagram.like(id);
-                }
-            }
-
-            Connections {
-                target: instagram
-                onLikeDataReady: {
-                    if (JSON.parse(answer).status == "ok" && last_like_id == id) {
-                        imagelikeicon.color = UbuntuColors.red;
-                        imagelikeicon.name = "like";
+                    onDoubleClicked: {
+                        last_like_id = id;
+                        instagram.like(id);
                     }
                 }
-                onUnLikeDataReady: {
-                    if (JSON.parse(answer).status == "ok" && last_like_id == id) {
-                        imagelikeicon.color = "";
-                        imagelikeicon.name = "unlike";
+
+                Connections {
+                    target: instagram
+                    onLikeDataReady: {
+                        if (JSON.parse(answer).status == "ok" && last_like_id == id) {
+                            imagelikeicon.color = UbuntuColors.red;
+                            imagelikeicon.name = "like";
+                        }
+                    }
+                    onUnLikeDataReady: {
+                        if (JSON.parse(answer).status == "ok" && last_like_id == id) {
+                            imagelikeicon.color = "";
+                            imagelikeicon.name = "unlike";
+                        }
                     }
                 }
             }
         }
 
-        Item {
-            visible: carousel_media_obj.count > 0
-            property var bestImage: carousel_media_obj.count > 0 ? Helper.getBestImage(carousel_media_obj.get(0).image_versions2.candidates, parent.width) : {}
+        Component {
+            id: carouselMedia
 
-            width: parent.width
-            height: (parent.width/bestImage.width*bestImage.height) + units.gu(2)
-
-            CarouselSlider {
-                id: carouselSlider
-                width: parent.width
-                height: parent.height - units.gu(2)
-                model: carousel_media_obj
-            }
-
-            Row {
-                id: slideIndicator
-                height: units.gu(2)
-                spacing: units.gu(0.5)
-                anchors {
-                    bottom: parent.bottom
-                    horizontalCenter: parent.horizontalCenter
+            Item {
+                CarouselSlider {
+                    id: carouselSlider
+                    width: parent.width
+                    height: parent.height - units.gu(2)
+                    model: carousel_media_obj
                 }
 
-                Repeater {
-                    model: carousel_media_obj
-                    delegate: Rectangle {
-                        height: units.gu(0.7)
-                        width: units.gu(0.7)
-                        radius: width/2
-                        antialiasing: true
-                        anchors.verticalCenter: parent.verticalCenter
-                        color: carouselSlider.currentIndex == index ? UbuntuColors.blue : "black"
-                        Behavior on color {
-                            ColorAnimation {
-                                duration: UbuntuAnimation.FastDuration
+                Row {
+                    id: slideIndicator
+                    height: units.gu(2)
+                    spacing: units.gu(0.5)
+                    anchors {
+                        bottom: parent.bottom
+                        horizontalCenter: parent.horizontalCenter
+                    }
+
+                    Repeater {
+                        model: carousel_media_obj
+                        delegate: Rectangle {
+                            height: units.gu(0.7)
+                            width: units.gu(0.7)
+                            radius: width/2
+                            antialiasing: true
+                            anchors.verticalCenter: parent.verticalCenter
+                            color: carouselSlider.currentIndex == index ? UbuntuColors.blue : "black"
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: UbuntuAnimation.FastDuration
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            MouseArea {
-                property string direction: "None"
-                property real lastX: -1
-                anchors {
-                    fill: parent
-                }
-                onClicked: {
-                }
-                onDoubleClicked: {
-                    last_like_id = id;
-                    instagram.like(id);
+                MouseArea {
+                    property string direction: "None"
+                    property real lastX: -1
+                    anchors {
+                        fill: parent
+                    }
+                    onClicked: {
+                    }
+                    onDoubleClicked: {
+                        last_like_id = id;
+                        instagram.like(id);
+                    }
+
+                    onPressed: lastX = mouse.x
+
+                    onReleased: {
+                        var diff = mouse.x - lastX
+                        if (Math.abs(diff) < units.gu(4)) {
+                            return;
+                        } else if (diff < 0) {
+                            carouselSlider.nextSlide()
+                        } else if (diff > 0) {
+                            carouselSlider.previousSlide()
+                        }
+                    }
                 }
 
-                onPressed: lastX = mouse.x
-
-                onReleased: {
-                    var diff = mouse.x - lastX
-                    if (Math.abs(diff) < units.gu(4)) {
-                        return;
-                    } else if (diff < 0) {
-                        carouselSlider.nextSlide()
-                    } else if (diff > 0) {
-                        carouselSlider.previousSlide()
+                Connections {
+                    target: instagram
+                    onLikeDataReady: {
+                        if (JSON.parse(answer).status == "ok" && last_like_id == id) {
+                            imagelikeicon.color = UbuntuColors.red;
+                            imagelikeicon.name = "like";
+                        }
+                    }
+                    onUnLikeDataReady: {
+                        if (JSON.parse(answer).status == "ok" && last_like_id == id) {
+                            imagelikeicon.color = "";
+                            imagelikeicon.name = "unlike";
+                        }
                     }
                 }
             }
+        }
 
-            Connections {
-                target: instagram
-                onLikeDataReady: {
-                    if (JSON.parse(answer).status == "ok" && last_like_id == id) {
-                        imagelikeicon.color = UbuntuColors.red;
-                        imagelikeicon.name = "like";
-                    }
-                }
-                onUnLikeDataReady: {
-                    if (JSON.parse(answer).status == "ok" && last_like_id == id) {
-                        imagelikeicon.color = "";
-                        imagelikeicon.name = "unlike";
-                    }
-                }
-            }
+        Loader {
+            property var bestImage: typeof carousel_media_obj != 'undefined' ?
+                                        (carousel_media_obj.count > 0 ?
+                                             Helper.getBestImage(carousel_media_obj.get(0).image_versions2.candidates, parent.width) :
+                                             (typeof image_versions2.candidates != 'undefined' ?
+                                                  Helper.getBestImage(image_versions2.candidates, parent.width) :
+                                                  {"width":0, "height":0, "url":""})) :
+                                        {"width":0, "height":0, "url":""}
+
+            width: parent.width
+            height: typeof carousel_media_obj != 'undefined' ?
+                        (carousel_media_obj.count > 0 ?
+                             ((parent.width/bestImage.width*bestImage.height) + units.gu(2)) :
+                             parent.width/bestImage.width*bestImage.height) :
+                        parent.width/bestImage.width*bestImage.height
+
+            sourceComponent: typeof carousel_media_obj != 'undefined' ?
+                                 (carousel_media_obj.count > 0 ?
+                                      carouselMedia :
+                                      singleMedia) :
+                                 singleMedia
         }
 
         Row {

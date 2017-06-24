@@ -185,7 +185,9 @@ Page {
                 height: gridView.cellHeight
 
                 Image {
-                    property var bestImage: Helper.getBestImage(image_versions2.candidates, parent.width)
+                    property var bestImage: typeof image_versions2.candidates != 'undefined' ?
+                                                Helper.getBestImage(image_versions2.candidates, parent.width) :
+                                                {"width":0, "height":0, "url":""}
 
                     id: feed_image
                     width: parent.width

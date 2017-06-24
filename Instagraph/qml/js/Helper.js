@@ -16,7 +16,7 @@ function formatUser(string)
 }
 
 function getBestImage(imageObject, width) {
-    var closest = imageObject[0];
+    var closest = typeof imageObject[0] != 'undefined' ? imageObject[0] : {"width":0, "height":0, "url":""};
 
     for(var i = 0; i < imageObject.length; i++){
         if(imageObject[i].width >= width && imageObject[i].width < closest.width) closest = imageObject[i];
