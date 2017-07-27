@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-24 03:19+0000\n"
+"POT-Creation-Date: 2017-07-27 12:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,6 +32,7 @@ msgid "Discover People"
 msgstr ""
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/Main.qml:76
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:17
 msgid "New Message"
 msgstr ""
 
@@ -251,6 +252,7 @@ msgstr ""
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:338
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:477
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:72
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:319
 msgid "Send"
 msgstr ""
@@ -290,6 +292,7 @@ msgid "Tap the + icon to send a photo, video or message."
 msgstr ""
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:451
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:46
 msgid "Write a message..."
 msgstr ""
 
@@ -498,25 +501,25 @@ msgstr ""
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchLocation.qml:30
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchLocation.qml:45
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:19
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:38
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:41
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:53
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:78
 msgid "Search"
 msgstr ""
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:54
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:57
 msgid "People"
 msgstr ""
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:60
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:63
 msgid "Tags"
 msgstr ""
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:66
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:69
 msgid "Places"
 msgstr ""
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:451
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:454
 msgid " posts"
 msgstr ""
 

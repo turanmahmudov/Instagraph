@@ -17,6 +17,9 @@ Page {
         id: searchHeader
         visible: searchpage.header === searchHeader
         title: i18n.tr("Search")
+        StyleHints {
+            backgroundColor: "#ffffff"
+        }
         trailingActionBar {
             numberOfSlots: 1
             actions: [addPeopleAction]
