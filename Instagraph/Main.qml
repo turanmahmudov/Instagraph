@@ -76,7 +76,7 @@ MainView {
             text: i18n.tr("New Message")
             iconName: "add"
             onTriggered: {
-
+                pageStack.push(Qt.resolvedUrl("qml/ui/NewDirectMessagePage.qml"))
             }
         }
     ]
