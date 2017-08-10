@@ -5,7 +5,7 @@ load(ubuntu-click)
 
 QT += qml quick
 
-UBUNTU_TRANSLATION_DOMAIN="instagraph.turan-mahmudov-l"
+UBUNTU_TRANSLATION_DOMAIN="instagraph-devs.turan-mahmudov-l"
 
 SOURCES += main.cpp \
     src/instagram.cpp \
