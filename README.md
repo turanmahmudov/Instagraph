@@ -3,10 +3,21 @@
 [![GitHub release](https://img.shields.io/github/release/turanmahmudov/Instagraph.svg)](https://github.com/turanmahmudov/Instagraph)
 [![GitHub issues](https://img.shields.io/github/issues/turanmahmudov/Instagraph.svg)](https://github.com/turanmahmudov/Instagraph/issues)
 
-Unofficial Native Instagram Client for Ubuntu
+Unofficial Native Instagram Client
 
 ## Installation
-Search "Instagraph" on Ubuntu Store and Install the app
+
+### Click
+
+Search "Instagraph" on OpenStore and install the app
+
+### Snap
+
+`snap install instagraph`
+`snap connect instagraph:camera :camera`
+`snap connect instagraph:alsa :alsa`
+`snap connect instagraph:pulseaudio :pulseaudio`
+`snap connect instagraph:opengl :opengl`
 
 ## Usage
 
@@ -34,4 +45,4 @@ Reach out to me at one of the following places!
 - Twitter at <a href="http://twitter.com/turanmahmudov" target="_blank">`@turanmahmudov`</a>
 
 ## Donations
-Search "Instagraph Donate" on Ubuntu Store and Install the app
+Contact with me at <[turan.mahmudov@gmail.com](mailto:turan.mahmudov@gmail.com)>
