@@ -14,9 +14,13 @@ Search "Instagraph" on OpenStore and install the app
 ### Snap
 
 `snap install instagraph`
+
 `snap connect instagraph:camera :camera`
+
 `snap connect instagraph:alsa :alsa`
+
 `snap connect instagraph:pulseaudio :pulseaudio`
+
 `snap connect instagraph:opengl :opengl`
 
 ## Usage
