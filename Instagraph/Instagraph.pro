@@ -59,6 +59,9 @@ INSTALLS+=desktop_file
 target.path = /opt/$${TARGET}/bin
 INSTALLS+=target
 
+#target.path = $${UBUNTU_CLICK_BINARY_PATH}
+#INSTALLS+=target
+
 DISTFILES += \
     qml/js/Storage.js \
     qml/ui/LoginPage.qml \
