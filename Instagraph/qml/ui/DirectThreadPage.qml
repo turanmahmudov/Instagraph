@@ -17,20 +17,40 @@ Page {
 
     property var threadUsers: []
 
+    property string next_oldest_cursor_id: ""
+    property bool more_available: true
+    property bool next_coming: true
+    property bool clear_models: true
+
+    property bool firstLoad: true
+
     header: PageHeader {
         title: i18n.tr("Direct")
     }
 
     function directThreadFinished(data) {
-        directthreadpage.header.title = data.thread.thread_title != "" ? data.thread.thread_title : data.thread.inviter.username;
+        if (firstLoad == true) {
+            directthreadpage.header.title = data.thread.thread_title != "" ? data.thread.thread_title : data.thread.inviter.username;
 
-        directThreadModel.clear()
-        for (var j = 0; j < data.thread.users.length; j++) {
-            threadUsers[data.thread.users[j].pk] = data.thread.users[j];
+            for (var j = 0; j < data.thread.users.length; j++) {
+                threadUsers[data.thread.users[j].pk] = data.thread.users[j];
+            }
         }
-        for (var i = 0; i < data.thread.items.length; i++) {
-            data.thread.items[i].ctext = data.thread.items[i].text;
-            directThreadModel.append(data.thread.items[i]);
+
+        if (next_oldest_cursor_id == data.thread.oldest_cursor) {
+            return false;
+        } else {
+            next_oldest_cursor_id = data.thread.has_older == true ? data.thread.oldest_cursor : "";
+            more_available = data.thread.has_older;
+            next_coming = true;
+
+            for (var i = 0; i < data.thread.items.length; i++) {
+                data.thread.items[i].ctext = data.thread.items[i].text;
+
+                directThreadModel.append(data.thread.items[i]);
+            }
+
+            next_coming = false;
         }
 
         list_loading = false
@@ -59,13 +79,20 @@ Page {
     }
 
     Component.onCompleted: {
+        firstLoad = true;
         directThread();
     }
 
-    function directThread()
+    function directThread(oldest_cursor_id)
     {
+        clear_models = false
+        if (!oldest_cursor_id) {
+            directThreadModel.clear()
+            next_oldest_cursor_id = 0
+            clear_models = true
+        }
         list_loading = true
-        instagram.directThread(threadId);
+        instagram.directThread(threadId, oldest_cursor_id);
     }
 
     function sendMessage(text)
@@ -116,6 +143,9 @@ Page {
             top: directthreadpage.header.bottom
         }
         onMovementEnded: {
+            if (atYBeginning && more_available && !next_coming) {
+                directThread(next_oldest_cursor_id)
+            }
         }
         verticalLayoutDirection: ListView.BottomToTop
         clip: true

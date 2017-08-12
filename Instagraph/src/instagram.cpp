@@ -978,17 +978,32 @@ void Instagram::searchLocation(QString latitude, QString longitude, QString quer
     QObject::connect(searchLocationRequest,SIGNAL(replySrtingReady(QVariant)), this, SIGNAL(searchLocationDataReady(QVariant)));
 }
 
-void Instagram::getv2Inbox()
+void Instagram::getv2Inbox(QString cursor_id)
 {
+    QString target ="direct_v2/inbox/?use_unified_inbox=true";
+
+    if(cursor_id.length() > 0)
+    {
+        target += "&cursor="+cursor_id;
+    }
+
     InstagramRequest *getv2InboxRequest = new InstagramRequest();
-    getv2InboxRequest->request("direct_v2/inbox/?",NULL);
+    getv2InboxRequest->request(target,NULL);
     QObject::connect(getv2InboxRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(v2InboxDataReady(QVariant)));
 }
 
-void Instagram::directThread(QString threadId)
+void Instagram::directThread(QString threadId, QString cursor_id)
 {
+    QString target ="direct_v2/threads/"+threadId+"/?use_unified_inbox=true";
+
+    if(cursor_id.length() > 0)
+    {
+        target += "&cursor="+cursor_id;
+    }
+
     InstagramRequest *directThreadRequest = new InstagramRequest();
-    directThreadRequest->request("direct_v2/threads/"+threadId+"/?",NULL);
+    directThreadRequest->request(target,NULL);
+
     QObject::connect(directThreadRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(directThreadReady(QVariant)));
 }
 

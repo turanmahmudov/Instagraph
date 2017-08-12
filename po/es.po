@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-11 08:33+0000\n"
+"POT-Creation-Date: 2017-08-12 22:56+0000\n"
 "PO-Revision-Date: 2017-07-05 10:44+0200\n"
 "Last-Translator: Jujuyeh <paul.98.zgz@gmail.com>\n"
 "Language-Team: Español; Castellano <paul.98.zgz@gmail.com>\n"
@@ -253,7 +253,7 @@ msgid "Add a comment"
 msgstr "Añadir comentario"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:338
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:477
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:511
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:72
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:319
 msgid "Send"
@@ -280,20 +280,20 @@ msgstr "Iconos"
 msgid "Special Thanks"
 msgstr "Agradecimientos"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:19
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:21
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:24
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:28
 msgid "Direct"
 msgstr "Direct"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:222
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:244
 msgid "Welcome to Instagraph Direct!"
 msgstr "Bienvenido a Instagraph Direct!"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:223
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:245
 msgid "Tap the + icon to send a photo, video or message."
 msgstr "Pulse el icono + para enviar una foto, video o mensaje."
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:451
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:485
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:46
 msgid "Write a message..."
 msgstr "Escriba un mensaje..."

@@ -15,6 +15,11 @@ Page {
 
     property bool isEmpty: false
 
+    property string next_oldest_cursor_id: ""
+    property bool more_available: true
+    property bool next_coming: true
+    property bool clear_models: true
+
     header: PageHeader {
         title: i18n.tr("Direct")
         trailingActionBar {
@@ -30,13 +35,21 @@ Page {
             isEmpty = false;
         }
 
-        v2InboxModel.clear()
+        if (next_oldest_cursor_id == data.inbox.oldest_cursor) {
+            return false;
+        } else {
+            next_oldest_cursor_id = data.inbox.has_older == true ? data.inbox.oldest_cursor : "";
+            more_available = data.inbox.has_older;
+            next_coming = true;
 
-        for (var i = 0; i < data.inbox.threads.length; i++) {
-            data.inbox.threads[i].user_profile_pic_url = typeof data.inbox.threads[i].users[0] != 'undefined' ? data.inbox.threads[i].users[0].profile_pic_url : data.inbox.threads[i].inviter.profile_pic_url;
-            data.inbox.threads[i].item_text = data.inbox.threads[i].items[0].text;
-            data.inbox.threads[i].item_timestamp = data.inbox.threads[i].items[0].timestamp;
-            v2InboxModel.append(data.inbox.threads[i]);
+            for (var i = 0; i < data.inbox.threads.length; i++) {
+                data.inbox.threads[i].user_profile_pic_url = typeof data.inbox.threads[i].users[0] != 'undefined' ? data.inbox.threads[i].users[0].profile_pic_url : data.inbox.threads[i].inviter.profile_pic_url;
+                data.inbox.threads[i].item_text = data.inbox.threads[i].items[0].text;
+                data.inbox.threads[i].item_timestamp = data.inbox.threads[i].items[0].timestamp;
+                v2InboxModel.append(data.inbox.threads[i]);
+            }
+
+            next_coming = false;
         }
 
         list_loading = false
@@ -46,9 +59,15 @@ Page {
         getv2Inbox();
     }
 
-    function getv2Inbox()
+    function getv2Inbox(oldest_cursor_id)
     {
-        instagram.getv2Inbox();
+        clear_models = false
+        if (!oldest_cursor_id) {
+            v2InboxModel.clear()
+            next_oldest_cursor_id = 0
+            clear_models = true
+        }
+        instagram.getv2Inbox(oldest_cursor_id);
     }
 
     BouncingProgressBar {
@@ -75,6 +94,9 @@ Page {
             top: directinboxpage.header.bottom
         }
         onMovementEnded: {
+            if (atYEnd && more_available && !next_coming) {
+                getv2Inbox(next_oldest_cursor_id)
+            }
         }
 
         clip: true
