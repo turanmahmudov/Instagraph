@@ -10,6 +10,7 @@
 #include <src/imageprocessor.h>
 #include <src/offscreenrenderer.h>
 #include <src/cropimageprovider.h>
+#include <src/cacheimage.h>
 
 int main(int argc, char *argv[])
 {
@@ -21,6 +22,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<InstagramCheckPoint>("InstagramCheckPoint",1,0,"InstagramCheckPoint");
     qmlRegisterType<ImageProcessor>("ImageProcessor",1,0,"ImageProcessor");
     qmlRegisterType<OffscreenRenderer>("OffscreenRenderer",1,0,"OffscreenRenderer");
+    qmlRegisterType<CacheImage>("CacheImage",1,0,"CacheImage");
 
     QQuickView view;
 

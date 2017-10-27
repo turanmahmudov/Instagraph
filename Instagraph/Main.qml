@@ -15,6 +15,7 @@ import "qml/components"
 import Instagram 1.0
 import InstagramCheckPoint 1.0
 import ImageProcessor 1.0
+import CacheImage 1.0
 
 MainView {
     id: mainView
@@ -110,6 +111,10 @@ MainView {
         }
     }
 
+    CacheImage {
+        id: cacheImage
+    }
+
     Component.onCompleted: {
         start();
     }
@@ -130,6 +135,9 @@ MainView {
             instagram.setPassword(password);
             instagram.login(true);
             pageStack.push(tabs);
+
+            cacheImage.clean();
+            cacheImage.init();
         }
     }
 

@@ -14,7 +14,8 @@ SOURCES += main.cpp \
     src/imageprocessor.cpp \
     src/offscreenrenderer.cpp \
     src/cropimageprovider.cpp \
-    src/instagramcheckpoint.cpp
+    src/instagramcheckpoint.cpp \
+    src/cacheimage.cpp
 
 HEADERS += src/instagram.h \
     src/instagramrequest.h \
@@ -22,7 +23,8 @@ HEADERS += src/instagram.h \
     src/imageprocessor.h \
     src/offscreenrenderer.h \
     src/cropimageprovider.h \
-    src/instagramcheckpoint.h
+    src/instagramcheckpoint.h \
+    src/cacheimage.h
 
 RESOURCES += Instagraph.qrc
 
