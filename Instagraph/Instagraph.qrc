@@ -106,5 +106,6 @@
         <file>qml/components/CarouselSlider.qml</file>
         <file>qml/components/SuggestionsSlider.qml</file>
         <file>qml/ui/NewDirectMessagePage.qml</file>
+        <file>qml/components/StoriesTray.qml</file>
     </qresource>
 </RCC>

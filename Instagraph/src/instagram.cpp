@@ -1251,6 +1251,36 @@ void Instagram::getUserBlockedList()
     emit busyChanged();
 }
 
+void Instagram::getReelsTrayFeed()
+{
+    m_busy = true;
+    emit busyChanged();
+
+    QString target ="feed/reels_tray/";
+
+    InstagramRequest *getReelsTrayFeedRequest = new InstagramRequest();
+    getReelsTrayFeedRequest->request(target,NULL);
+    QObject::connect(getReelsTrayFeedRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(reelsTrayFeedDataReady(QVariant)));
+
+    m_busy = false;
+    emit busyChanged();
+}
+
+void Instagram::getUserReelsMediaFeed(QString user_id)
+{
+    m_busy = true;
+    emit busyChanged();
+
+    QString target = "feed/user/"+user_id+"/reel_media/";
+
+    InstagramRequest *getUserReelsMediaFeedRequest = new InstagramRequest();
+    getUserReelsMediaFeedRequest->request(target,NULL);
+    QObject::connect(getUserReelsMediaFeedRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(userReelsMediaFeedDataReady(QVariant)));
+
+    m_busy = false;
+    emit busyChanged();
+}
+
 // Camera
 void Instagram::rotateImg(QString filename, qreal deg)
 {

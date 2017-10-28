@@ -101,6 +101,9 @@ public slots:
     void getUserFollowers(QString usernameId, QString max_id = "");
     void getUserBlockedList();
 
+    void getReelsTrayFeed();
+    void getUserReelsMediaFeed(QString user_id = "");
+
     void rotateImg(QString filename, qreal deg);
     void squareImg(QString filename);
     void cropImg(QString filename, qreal propos);
@@ -215,6 +218,9 @@ signals:
     void userFollowingsDataReady(QVariant answer);
     void userFollowersDataReady(QVariant answer);
     void userBlockedListDataReady(QVariant answer);
+
+    void reelsTrayFeedDataReady(QVariant answer);
+    void userReelsMediaFeedDataReady(QVariant answer);
 
     void busyChanged();
     void errorChanged();

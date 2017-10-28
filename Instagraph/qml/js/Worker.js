@@ -25,6 +25,10 @@ WorkerScript.onMessage = function(msg) {
 
         if (feed == 'homePage') {
 
+            if (i == 0) {
+                model.append({"storiesFeedTray":true});
+            }
+
             // Suggestions
             if (typeof obj[i].suggested_users != 'undefined') {
 
