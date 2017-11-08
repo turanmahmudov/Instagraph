@@ -25,7 +25,7 @@ WorkerScript.onMessage = function(msg) {
 
         if (feed == 'homePage') {
 
-            if (i == 0) {
+            if (msg.clear_model && i == 0) {
                 model.append({"storiesFeedTray":true});
             }
 

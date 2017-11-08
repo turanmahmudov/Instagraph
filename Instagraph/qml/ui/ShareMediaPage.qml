@@ -195,97 +195,93 @@ Page {
             }
         }
 
-        Flickable {
+        ListView {
             width: parent.width
-            height: usersRow.height
+            height: units.gu(15)
 
-            contentWidth: usersRow.width
-            contentHeight: usersRow.height
+            clip: true
 
-            Row {
-                id: usersRow
-                spacing: units.gu(4)
+            snapMode: ListView.SnapToItem
+            orientation: Qt.Horizontal
+            highlightMoveDuration: UbuntuAnimation.FastDuration
+            highlightRangeMode: ListView.ApplyRange
+            highlightFollowsCurrentItem: true
 
-                Repeater {
-                    model: userFollowingsModel
+            model: userFollowingsModel
 
-                    Column {
-                        width: units.gu(9)
-                        spacing: units.gu(1)
+            delegate: ListItem {
+                width: units.gu(10)
+                height: storyColumn.height
+                divider.visible: false
 
-                        property bool selected: false
+                property bool selected: false
 
-                        UbuntuShape {
-                            width: units.gu(7)
-                            height: width
-                            radius: "large"
-                            anchors.horizontalCenter: parent.horizontalCenter
+                Column {
+                    id: storyColumn
+                    width: parent.width - units.gu(2)
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    spacing: units.gu(1)
 
-                            source: Image {
-                                anchors {
-                                    centerIn: parent
+                    CircleImage {
+                        width: parent.width
+                        height: width
+                        source: typeof profile_pic_url != 'undefined' ? profile_pic_url : "../images/not_found_user.jpg"
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                if (!selected) {
+                                    selected = true
+                                    threadUsers.push(pk)
+                                } else {
+                                    selected = false
+
+                                    var index = threadUsers.indexOf(pk);
+                                    if (index > -1) {
+                                        threadUsers.splice(index, 1);
+                                    }
                                 }
-                                width: parent.width
-                                height: width
-                                source: typeof profile_pic_url != 'undefined' ? profile_pic_url : "../images/not_found_user.jpg"
-                                fillMode: Image.PreserveAspectCrop
-                                sourceSize: Qt.size(width,height)
-                                asynchronous: true
-                                cache: true
-                            }
 
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: {
-                                    if (!selected) {
-                                        selected = true
-                                        threadUsers.push(pk)
-                                    } else {
-                                        selected = false
-
-                                        var index = threadUsers.indexOf(pk);
-                                        if (index > -1) {
-                                            threadUsers.splice(index, 1);
-                                        }
-                                    }
-
-                                    if (threadUsers.length > 0) {
-                                        addMessageItem.visible = true;
-                                    } else {
-                                        addMessageItem.visible = false;
-                                    }
+                                if (threadUsers.length > 0) {
+                                    addMessageItem.visible = true;
+                                } else {
+                                    addMessageItem.visible = false;
                                 }
                             }
                         }
+                    }
 
-                        Column {
+                    Column {
+                        width: parent.width
+
+                        Label {
+                            text: username
+                            color: "#000000"
+                            fontSize: "small"
+                            font.weight: Font.DemiBold
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            width: Math.min((parent.width+2), contentWidth)
+                            clip: true
+                        }
+
+                        Label {
+                            text: full_name
+                            fontSize: "small"
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            width: Math.min((parent.width+2), contentWidth)
+                            clip: true
+                        }
+
+                        Item {
                             width: parent.width
+                            height: units.gu(1)
+                        }
 
-                            Label {
-                                text: username
-                                color: "#000000"
-                                fontSize: "small"
-                                font.weight: Font.DemiBold
-                                anchors.horizontalCenter: parent.horizontalCenter
-                            }
-
-                            Label {
-                                text: full_name
-                                fontSize: "small"
-                                anchors.horizontalCenter: parent.horizontalCenter
-                            }
-
-                            Item {
-                                width: parent.width
-                                height: units.gu(1)
-                            }
-
-                            Rectangle {
-                                visible: selected
-                                width: parent.width
-                                height: units.gu(0.3)
-                                color: "#275A84"
-                            }
+                        Rectangle {
+                            visible: selected
+                            width: parent.width
+                            height: units.gu(0.3)
+                            color: "#275A84"
                         }
                     }
                 }

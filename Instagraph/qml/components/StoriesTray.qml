@@ -7,6 +7,8 @@ Item {
     width: parent.width
     height: parent.height
 
+    property var allUsers: []
+
     WorkerScript {
         id: worker
         source: "../js/SimpleWorker.js"
@@ -26,6 +28,31 @@ Item {
     Rectangle {
         anchors.fill: parent
         color: "#fbfbfb"
+        opacity: storiesTrayModel.count != 0
+
+        Behavior on opacity {
+            UbuntuNumberAnimation {
+                duration: UbuntuAnimation.SlowDuration
+            }
+        }
+    }
+
+    Item {
+        width: activity.width
+        height: width
+        anchors.centerIn: parent
+        opacity: storiesTrayModel.count == 0
+
+        Behavior on opacity {
+            UbuntuNumberAnimation {
+                duration: UbuntuAnimation.SlowDuration
+            }
+        }
+
+        ActivityIndicator {
+            id: activity
+            running: true
+        }
     }
 
     ListView {
@@ -54,32 +81,19 @@ Item {
 
             Column {
                 id: storyColumn
-                width: parent.width
+                width: parent.width - units.gu(2)
+                anchors.horizontalCenter: parent.horizontalCenter
                 spacing: units.gu(1)
 
-                UbuntuShape {
-                    width: parent.width*0.8
+                CircleImage {
+                    width: parent.width
                     height: width
-                    radius: "large"
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    source: Image {
-                        anchors {
-                            centerIn: parent
-                        }
-                        width: parent.width
-                        height: width
-                        source: typeof user.profile_pic_url != 'undefined' ? user.profile_pic_url : "../images/not_found_user.jpg"
-                        fillMode: Image.PreserveAspectCrop
-                        sourceSize: Qt.size(width,height)
-                        asynchronous: true
-                        cache: true
-                    }
+                    source: typeof user.profile_pic_url != 'undefined' ? user.profile_pic_url : "../images/not_found_user.jpg"
 
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            pageStack.push(Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: user.pk});
+                            pageStack.push(Qt.resolvedUrl("../ui/UserStoriesPage.qml"), {userId: user.pk, allUsers: allUsers});
                         }
                     }
                 }
@@ -89,11 +103,13 @@ Item {
                     color: "#000000"
                     fontSize: "small"
                     anchors.horizontalCenter: parent.horizontalCenter
+                    width: Math.min((parent.width+2), contentWidth)
+                    clip: true
 
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            pageStack.push(Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: user.pk});
+                            pageStack.push(Qt.resolvedUrl("../ui/UserStoriesPage.qml"), {userId: user.pk, allUsers: allUsers});
                         }
                     }
                 }
@@ -105,19 +121,12 @@ Item {
         target: instagram
         onReelsTrayFeedDataReady:{
             var data = JSON.parse(answer);
-            //console.log(answer)
 
             worker.sendMessage({'feed': 'StoriesTray', 'obj': data.tray, 'model': storiesTrayModel, 'clear_model': true})
-        }
 
-        onUserReelsMediaFeedDataReady: {
-            /*
-            while(!dataLoaded){}
-            var data = JSON.parse(answer);
-            for(var j=0;j<data.items.length;j++){
-                recentMediaModel.append(data.items[j]);
+            for (var i=0; i<data.tray.length; i++) {
+                allUsers.push(data.tray[i].user.pk)
             }
-            */
         }
     }
 }

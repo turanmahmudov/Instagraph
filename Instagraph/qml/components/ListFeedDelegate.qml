@@ -129,69 +129,81 @@ ListItem {
         }
     }
 
-    Loader {
-        id: suggestions_column_loader
-        width: parent.width
+    Rectangle {
         anchors {
             left: parent.left
-            leftMargin: units.gu(1)
             right: parent.right
-            rightMargin: units.gu(1)
         }
+        height: suggestions_column_loader.height + units.gu(6)
+        color: "#fbfbfb"
         visible: suggestions == true
-        active: suggestions == true
 
-        sourceComponent: Column {
-            id: suggestions_column
+        Loader {
+            id: suggestions_column_loader
             width: parent.width
-            spacing: units.gu(2)
+            anchors {
+                left: parent.left
+                leftMargin: units.gu(1)
+                right: parent.right
+                rightMargin: units.gu(1)
+                top: parent.top
+                topMargin: units.gu(1)
+            }
+            visible: suggestions == true
+            active: suggestions == true
 
-            ListItem {
-                height: suggestionsHeaderRow.height
-                divider.visible: false
+            sourceComponent: Column {
+                id: suggestions_column
+                width: parent.width
+                spacing: units.gu(2)
 
-                Row {
-                    id: suggestionsHeaderRow
-                    width: parent.width
-                    anchors {
-                        left: parent.left
-                        leftMargin: units.gu(1)
-                        right: parent.right
-                        rightMargin: units.gu(1)
-                    }
-                    anchors.verticalCenter: parent.verticalCenter
+                ListItem {
+                    height: suggestionsHeaderRow.height
+                    divider.visible: false
 
-                    Label {
-                        text: i18n.tr("Suggestions for You")
-                        width: parent.width - seeAllSuggestionsLink.width
-                        wrapMode: Text.WordWrap
-                        font.weight: Font.DemiBold
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-
-                    Label {
-                        id: seeAllSuggestionsLink
-                        text: i18n.tr("See All")
-                        color: "#275A84"
-                        wrapMode: Text.WordWrap
-                        font.weight: Font.DemiBold
+                    Row {
+                        id: suggestionsHeaderRow
+                        width: parent.width
+                        anchors {
+                            left: parent.left
+                            leftMargin: units.gu(1)
+                            right: parent.right
+                            rightMargin: units.gu(1)
+                        }
                         anchors.verticalCenter: parent.verticalCenter
 
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                pageStack.push(Qt.resolvedUrl("../ui/SuggestionsPage.qml"));
+                        Label {
+                            text: i18n.tr("Suggestions for You")
+                            width: parent.width - seeAllSuggestionsLink.width
+                            wrapMode: Text.WordWrap
+                            font.weight: Font.DemiBold
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+
+                        Label {
+                            id: seeAllSuggestionsLink
+                            text: i18n.tr("See All")
+                            color: "#275A84"
+                            wrapMode: Text.WordWrap
+                            font.weight: Font.DemiBold
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    pageStack.push(Qt.resolvedUrl("../ui/SuggestionsPage.qml"));
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            SuggestionsSlider {
-                id: suggestionsSlider
-                width: parent.width
-                height: units.gu(15)
-                model: homeSuggestionsModel
+                SuggestionsSlider {
+                    id: suggestionsSlider
+                    width: parent.width
+                    height: units.gu(15)
+                    model: homeSuggestionsModel
+                }
             }
         }
     }
@@ -229,24 +241,11 @@ ListItem {
                     width: units.gu(5)
                     height: width
 
-                    UbuntuShape {
+                    CircleImage {
+                        id: feed_user_profile_image
                         width: parent.width
                         height: width
-                        radius: "large"
-
-                        source: Image {
-                            id: feed_user_profile_image
-                            anchors {
-                                centerIn: parent
-                            }
-                            width: parent.width
-                            height: width
-                            source: typeof user != 'undefined' && typeof user.profile_pic_url != 'undefined' ? user.profile_pic_url : "../images/not_found_user.jpg"
-                            fillMode: Image.PreserveAspectCrop
-                            sourceSize: Qt.size(width,height)
-                            asynchronous: true
-                            cache: true
-                        }
+                        source: typeof user != 'undefined' && typeof user.profile_pic_url != 'undefined' ? user.profile_pic_url : "../images/not_found_user.jpg"
                     }
 
                     MouseArea {
@@ -323,6 +322,12 @@ ListItem {
                         asynchronous: true
                         cache: true // maybe false
                         smooth: false
+
+                        layer.enabled: status != Image.Ready
+                        layer.effect: Rectangle {
+                            anchors.fill: parent
+                            color: "#efefef"
+                        }
                     }
 
                     MediaPlayer {

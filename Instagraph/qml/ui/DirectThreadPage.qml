@@ -259,21 +259,10 @@ Page {
                             color: UbuntuColors.red
                         }
 
-                        UbuntuShape {
+                        CircleImage {
                             width: units.gu(2)
                             height: width
-                            radius: "large"
-
-                            source: Image {
-                                width: parent.width
-                                height: parent.height
-                                source: status == Image.Error ? "../images/not_found_user.jpg" : (user_id != my_usernameId ? threadUsers[user_id].profile_pic_url : '')
-                                fillMode: Image.PreserveAspectCrop
-                                anchors.centerIn: parent
-                                sourceSize: Qt.size(width,height)
-                                smooth: true
-                                clip: true
-                            }
+                            source: status == Image.Error ? "../images/not_found_user.jpg" : (user_id != my_usernameId ? threadUsers[user_id].profile_pic_url : '')
                         }
                     }
 
@@ -314,40 +303,10 @@ Page {
                             height: width
                             anchors.bottom: parent.bottom
 
-                            UbuntuShape {
+                            CircleImage {
                                 width: parent.width
                                 height: width
-                                radius: "large"
-
-                                source: Image {
-                                    id: feed_user_profile_image
-                                    width: parent.width
-                                    height: width
-                                    source: status == Image.Error ? "../images/not_found_user.jpg" : (user_id != my_usernameId ? threadUsers[user_id].profile_pic_url : '')
-                                    fillMode: Image.PreserveAspectCrop
-                                    anchors.centerIn: parent
-                                    sourceSize: Qt.size(width,height)
-                                    smooth: true
-                                    clip: true
-                                }
-                            }
-
-                            Item {
-                                width: activity.width
-                                height: width
-                                anchors.centerIn: parent
-                                opacity: feed_user_profile_image.status == Image.Loading
-
-                                Behavior on opacity {
-                                    UbuntuNumberAnimation {
-                                        duration: UbuntuAnimation.SlowDuration
-                                    }
-                                }
-
-                                ActivityIndicator {
-                                    id: activity
-                                    running: true
-                                }
+                                source: status == Image.Error ? "../images/not_found_user.jpg" : (user_id != my_usernameId ? threadUsers[user_id].profile_pic_url : '')
                             }
                         }
 
@@ -434,21 +393,10 @@ Page {
                                     color: UbuntuColors.red
                                 }
 
-                                UbuntuShape {
+                                CircleImage {
                                     width: units.gu(2)
                                     height: width
-                                    radius: "large"
-
-                                    source: Image {
-                                        width: parent.width
-                                        height: parent.height
-                                        source: status == Image.Error ? "../images/not_found_user.jpg" : (user_id != my_usernameId ? threadUsers[user_id].profile_pic_url : '')
-                                        fillMode: Image.PreserveAspectCrop
-                                        anchors.centerIn: parent
-                                        sourceSize: Qt.size(width,height)
-                                        smooth: true
-                                        clip: true
-                                    }
+                                    source: status == Image.Error ? "../images/not_found_user.jpg" : (user_id != my_usernameId ? threadUsers[user_id].profile_pic_url : '')
                                 }
                             }
                         }

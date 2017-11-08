@@ -22,24 +22,11 @@ ListView {
             width: parent.width
             spacing: units.gu(1)
 
-            UbuntuShape {
+            CircleImage {
                 width: parent.width/2
                 height: width
-                radius: "large"
                 anchors.horizontalCenter: parent.horizontalCenter
-
-                source: Image {
-                    anchors {
-                        centerIn: parent
-                    }
-                    width: parent.width
-                    height: width
-                    source: typeof user.profile_pic_url != 'undefined' ? user.profile_pic_url : "../images/not_found_user.jpg"
-                    fillMode: Image.PreserveAspectCrop
-                    sourceSize: Qt.size(width,height)
-                    asynchronous: true
-                    cache: true
-                }
+                source: typeof user.profile_pic_url != 'undefined' ? user.profile_pic_url : "../images/not_found_user.jpg"
 
                 MouseArea {
                     anchors.fill: parent

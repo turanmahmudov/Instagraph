@@ -25,7 +25,7 @@ function getBestImage(imageObject, width) {
     return closest;
 }
 
-function milisecondsToString(miliseconds) {
+function milisecondsToString(miliseconds, short) {
     try {
         //get different date time initials.
         var myDate = new Date();
@@ -53,17 +53,17 @@ function milisecondsToString(miliseconds) {
         }
         //check and return the largest value of date time initialized.
         if (months > 0) {
-            return i18n.tr("%1 MONTH AGO", "%1 MONTHS AGO", months).arg(months);
+            return short ? i18n.tr("%1M").arg(months) : i18n.tr("%1 MONTH AGO", "%1 MONTHS AGO", months).arg(months);
         } else if (weeks != 0) {
-            return i18n.tr("%1 WEEK AGO", "%1 WEEKS AGO", weeks).arg(weeks);
+            return short ? i18n.tr("%1w").arg(weeks) : i18n.tr("%1 WEEK AGO", "%1 WEEKS AGO", weeks).arg(weeks);
         } else if (days != 0) {
-            return i18n.tr("%1 DAY AGO", "%1 DAYS AGO", days).arg(days);
+            return short ? i18n.tr("%1d").arg(days) : i18n.tr("%1 DAY AGO", "%1 DAYS AGO", days).arg(days);
         } else if (hours != 0) {
-            return i18n.tr("%1 HOUR AGO", "%1 HOURS AGO", hours).arg(hours);
+            return short ? i18n.tr("%1h").arg(hours) : i18n.tr("%1 HOUR AGO", "%1 HOURS AGO", hours).arg(hours);
         } else if (minutes != 0) {
-            return i18n.tr("%1 MINUTE AGO", "%1 MINUTES AGO", minutes).arg(minutes);
+            return short ? i18n.tr("%1m").arg(minutes) : i18n.tr("%1 MINUTE AGO", "%1 MINUTES AGO", minutes).arg(minutes);
         } else if (seconds != 0) {
-            return i18n.tr("%1 SECOND AGO", "%1 SECONDS AGO", seconds).arg(seconds);
+            return short ? i18n.tr("%1s").arg(seconds) : i18n.tr("%1 SECOND AGO", "%1 SECONDS AGO", seconds).arg(seconds);
         }
     } catch (e) {
         console.log(e);

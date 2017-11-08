@@ -271,44 +271,11 @@ Page {
                     width: parent.width
                     anchors.horizontalCenter: parent.horizontalCenter
 
-                    Item {
+                    CircleImage {
+                        id: uzimage
                         width: units.gu(10)
                         height: width
-
-                        UbuntuShape {
-                            width: parent.width
-                            height: width
-                            radius: "large"
-
-                            source: Image {
-                                id: uzimage
-                                width: parent.width
-                                height: width
-                                fillMode: Image.PreserveAspectCrop
-                                anchors.centerIn: parent
-                                sourceSize: Qt.size(width,height)
-                                smooth: true
-                                clip: true
-                            }
-                        }
-
-                        Item {
-                            width: activity.width
-                            height: width
-                            anchors.centerIn: parent
-                            opacity: uzimage.status == Image.Loading
-
-                            Behavior on opacity {
-                                UbuntuNumberAnimation {
-                                    duration: UbuntuAnimation.SlowDuration
-                                }
-                            }
-
-                            ActivityIndicator {
-                                id: activity
-                                running: true
-                            }
-                        }
+                        source: status == Image.Error ? "../images/not_found_user.jpg" : profile_pic_url
                     }
 
                     Column {

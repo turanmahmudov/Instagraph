@@ -148,22 +148,11 @@ Page {
                             width: units.gu(5)
                             height: width
 
-                            UbuntuShape {
+                            CircleImage {
+                                id: feed_user_profile_image
                                 width: parent.width
                                 height: width
-                                radius: "large"
-
-                                source: Image {
-                                    id: feed_user_profile_image
-                                    width: parent.width
-                                    height: width
-                                    source: story.type == 13 ? "image://theme/info" : (status == Image.Error ? "../images/not_found_user.jpg" : story.args.profile_image)
-                                    fillMode: Image.PreserveAspectCrop
-                                    anchors.centerIn: parent
-                                    sourceSize: Qt.size(width,height)
-                                    smooth: true
-                                    clip: true
-                                }
+                                source: story.type == 13 ? "image://theme/info" : (status == Image.Error ? "../images/not_found_user.jpg" : story.args.profile_image)
                             }
 
                             Item {
@@ -315,22 +304,11 @@ Page {
                             width: units.gu(5)
                             height: width
 
-                            UbuntuShape {
+                            CircleImage {
+                                id: feed_user_profile_image
                                 width: parent.width
                                 height: width
-                                radius: "large"
-
-                                source: Image {
-                                    id: feed_user_profile_image
-                                    width: parent.width
-                                    height: width
-                                    source: status == Image.Error ? "../images/not_found_user.jpg" : story.args.profile_image
-                                    fillMode: Image.PreserveAspectCrop
-                                    anchors.centerIn: parent
-                                    sourceSize: Qt.size(width,height)
-                                    smooth: true
-                                    clip: true
-                                }
+                                source: status == Image.Error ? "../images/not_found_user.jpg" : story.args.profile_image
                             }
 
                             Item {

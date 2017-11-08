@@ -17,6 +17,12 @@ WorkerScript.onMessage = function(msg) {
             obj[i].comment_like_c = obj[i].comment_like_count ? obj[i].comment_like_count : 0
         }
 
+        if (feed == 'discoverPeoplePage') {
+            if (typeof obj[i].media == 'undefined') {
+                continue;
+            }
+        }
+
         model.append(obj[i]);
 
         model.sync();
