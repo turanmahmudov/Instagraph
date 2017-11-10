@@ -4,7 +4,7 @@ import Ubuntu.Components 1.3
 import "../js/Helper.js" as Helper
 
 ListView {
-    id: listView
+    id: listViewCarousel
 
     property var bestImage
 
@@ -16,8 +16,8 @@ ListView {
     clip: true
 
     delegate: Item {
-        width: listView.width
-        height: listView.height
+        width: listViewCarousel.width
+        height: listViewCarousel.height
         clip: true
 
         property var bestImage: Helper.getBestImage(image_versions2.candidates, parent.width)
@@ -37,15 +37,15 @@ ListView {
 
     // Go to next slide, if possible
     function nextSlide() {
-        if (listView.currentIndex < listView.model.count-1) {
-            listView.currentIndex++
+        if (listViewCarousel.currentIndex < listViewCarousel.model.count-1) {
+            listViewCarousel.currentIndex++
         }
     }
 
     // Go to previous slide, if possible
     function previousSlide() {
-        if (listView.currentIndex > 0) {
-            listView.currentIndex--
+        if (listViewCarousel.currentIndex > 0) {
+            listViewCarousel.currentIndex--
         }
     }
 }

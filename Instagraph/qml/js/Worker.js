@@ -23,7 +23,7 @@ WorkerScript.onMessage = function(msg) {
     // Object loop
     for (var i = 0; i < obj.length; i++) {
 
-        if (feed == 'homePage') {
+        if (feed === "homePage") {
 
             if (msg.clear_model && i == 0) {
                 model.append({"storiesFeedTray":true});
@@ -37,7 +37,7 @@ WorkerScript.onMessage = function(msg) {
                     suggestionsModel.sync();
                 }
 
-                model.append({"suggestions":true});
+                model.append({"suggestions":true, "storiesFeedTray":false});
 
             }
 
@@ -52,6 +52,7 @@ WorkerScript.onMessage = function(msg) {
                 }
 
                 obj[i].media_or_ad.suggestions = false;
+                obj[i].media_or_ad.storiesFeedTray = false;
 
                 model.append(obj[i].media_or_ad);
 
@@ -69,7 +70,7 @@ WorkerScript.onMessage = function(msg) {
             }
 
         } else {
-            if (feed != 'searchPage') {
+            if (feed !== "searchPage") {
                 obj[i].video_url = obj[i].video_versions ? obj[i].video_versions[0].url : ''
             }
 
@@ -80,6 +81,7 @@ WorkerScript.onMessage = function(msg) {
             }
 
             obj[i].suggestions = false;
+            obj[i].storiesFeedTray = false;
 
             model.append(obj[i]);
 

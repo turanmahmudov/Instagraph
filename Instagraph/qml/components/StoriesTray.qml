@@ -75,7 +75,7 @@ Item {
         model: storiesTrayModel
 
         delegate: ListItem {
-            width: units.gu(10)
+            width: storiesTray.width/5
             height: storyColumn.height
             divider.visible: false
 
