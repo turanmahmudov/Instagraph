@@ -101,7 +101,7 @@ Item {
                 Label {
                     text: user.username
                     color: "#000000"
-                    fontSize: "small"
+                    fontSize: "x-small"
                     anchors.horizontalCenter: parent.horizontalCenter
                     width: Math.min((parent.width+2), contentWidth)
                     clip: true
