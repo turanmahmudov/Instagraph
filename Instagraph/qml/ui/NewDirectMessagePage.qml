@@ -60,7 +60,9 @@ Page {
         }
         recip_string = recip_array.join(',');
 
-        instagram.directMessage(recip_string, text, "");
+        console.log(recip_string);
+
+        //instagram.directMessage(recip_string, text, "");
     }
 
     function sendLike()
@@ -110,9 +112,7 @@ Page {
                 instagram.getRankedRecipients(searchUsersField.text);
             }
             onTextChanged: {
-                if (text.length > 0) {
-                    instagram.getRankedRecipients(searchUsersField.text);
-                }
+                instagram.getRankedRecipients(searchUsersField.text);
             }
         }
 
@@ -171,9 +171,14 @@ Page {
                         SlotsLayout.position: SlotsLayout.Trailing
                         SlotsLayout.overrideVerticalPositioning: true
 
+                        checked: threadUsers.indexOf(user_obj.pk) > -1
+
                         onCheckedChanged: {
                             if (checked) {
-                                threadUsers.push(user_obj.pk)
+                                var index = threadUsers.indexOf(user_obj.pk);
+                                if (index == -1) {
+                                    threadUsers.push(user_obj.pk)
+                                }
                             } else {
                                 var index = threadUsers.indexOf(user_obj.pk);
                                 if (index > -1) {

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-02 19:34+0000\n"
+"POT-Creation-Date: 2018-01-02 19:44+0000\n"
 "PO-Revision-Date: 2017-11-15 10:44+0200\n"
 "Last-Translator: Ivo Xavier <ivofernandes12@gmail.com>\n"
 "Language: \n"
@@ -278,7 +278,7 @@ msgstr "Adicionar um comentário"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:306
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:455
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:245
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:249
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:315
 msgid "Send"
 msgstr "Enviar"
@@ -354,7 +354,7 @@ msgid "Tap the + icon to send a photo, video or message."
 msgstr "Toque no ícone + para enviar uma foto, vídeo ou mensagem."
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:429
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:219
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:223
 msgid "Write a message..."
 msgstr "Escreva uma mensagem..."
 
@@ -460,7 +460,7 @@ msgstr "Entrar"
 msgid "Don't have an account? <b>Sign Up</b>."
 msgstr "Não tem conta? <b>Registe-se</b>."
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:109
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:110
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchLocation.qml:30
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchLocation.qml:45
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:19
