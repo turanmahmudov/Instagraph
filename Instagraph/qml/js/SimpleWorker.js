@@ -23,6 +23,10 @@ WorkerScript.onMessage = function(msg) {
             }
         }
 
+        if (feed == 'ShareMediaPage') {
+            obj[i].user_obj = typeof obj[i].user != 'undefined' ? obj[i].user : obj[i].thread.users[0];
+        }
+
         model.append(obj[i]);
 
         model.sync();

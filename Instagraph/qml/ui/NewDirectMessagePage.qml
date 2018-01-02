@@ -13,6 +13,8 @@ Page {
 
     property bool list_loading: false
 
+    property var threadUsers: []
+
     header: PageHeader {
         title: i18n.tr("New Message")
     }
@@ -37,7 +39,6 @@ Page {
 
     Component.onCompleted: {
         getRankedRecipients();
-        //getRecentRecipients();
     }
 
     function getRankedRecipients()
@@ -48,6 +49,30 @@ Page {
     function getRecentRecipients()
     {
         instagram.getRecentRecipients();
+    }
+
+    function sendMessage(text)
+    {
+        var recip_array = [];
+        var recip_string = '';
+        for (var i in threadUsers) {
+            recip_array.push('"'+threadUsers[i]+'"');
+        }
+        recip_string = recip_array.join(',');
+
+        instagram.directMessage(recip_string, text, "");
+    }
+
+    function sendLike()
+    {
+        var recip_array = [];
+        var recip_string = '';
+        for (var i in threadUsers) {
+            recip_array.push('"'+threadUsers[i]+'"');
+        }
+        recip_string = recip_array.join(',');
+
+        instagram.directLike(recip_string, "");
     }
 
     BouncingProgressBar {
@@ -66,6 +91,7 @@ Page {
             top: newdirectmessagepage.header.bottom
             topMargin: units.gu(1)
             bottom: addMessageItem.top
+            bottomMargin: units.gu(1)
             left: parent.left
             right: parent.right
         }
@@ -81,7 +107,7 @@ Page {
             //width: parent.width
             placeholderText: i18n.tr("Search")
             onAccepted: {
-
+                instagram.getRankedRecipients(searchUsersField.text);
             }
             onTextChanged: {
                 if (text.length > 0) {
@@ -116,7 +142,7 @@ Page {
                         CircleImage {
                             width: units.gu(5)
                             height: width
-                            source: user.profile_pic_url
+                            source: user_obj.profile_pic_url
                         }
 
                         Column {
@@ -124,14 +150,14 @@ Page {
                             anchors.verticalCenter: parent.verticalCenter
 
                             Text {
-                                text: user.username
+                                text: user_obj.username
                                 wrapMode: Text.WordWrap
                                 font.weight: Font.DemiBold
                                 width: parent.width
                             }
 
                             Text {
-                                text: user.full_name
+                                text: user_obj.full_name
                                 wrapMode: Text.WordWrap
                                 width: parent.width
                                 textFormat: Text.RichText
@@ -144,6 +170,25 @@ Page {
                         anchors.verticalCenter: parent.verticalCenter
                         SlotsLayout.position: SlotsLayout.Trailing
                         SlotsLayout.overrideVerticalPositioning: true
+
+                        onCheckedChanged: {
+                            if (checked) {
+                                threadUsers.push(user_obj.pk)
+                            } else {
+                                var index = threadUsers.indexOf(user_obj.pk);
+                                if (index > -1) {
+                                    threadUsers.splice(index, 1);
+                                }
+                            }
+
+                            if (threadUsers.length > 0) {
+                                addMessageItem.visible = true;
+                                addMessageItem.height = units.gu(5)
+                            } else {
+                                addMessageItem.visible = false;
+                                addMessageItem.height = 0
+                            }
+                        }
                     }
                 }
             }
@@ -152,7 +197,8 @@ Page {
 
     Item {
         id: addMessageItem
-        height: units.gu(5)
+        visible: threadUsers.length > 0
+        height: threadUsers.length > 0 ? units.gu(5) : 0
         anchors {
             bottom: parent.bottom
             left: parent.left
@@ -206,14 +252,24 @@ Page {
     Connections{
         target: instagram
         onRankedRecipientsDataReady: {
-            //console.log(answer)
             var data = JSON.parse(answer);
             rankedRecipientsFinished(data);
         }
         onRecentRecipientsDataReady: {
-            //console.log(answer)
             var data = JSON.parse(answer);
             recentRecipientsFinished(data);
+        }
+        onDirectMessageReady: {
+            var data = JSON.parse(answer)
+            if (data.status == "ok") {
+                pageStack.push(Qt.resolvedUrl("DirectThreadPage.qml"), {threadId: data.threads[0].thread_id});
+            }
+        }
+        onDirectLikeReady: {
+            var data = JSON.parse(answer)
+            if (data.status == "ok") {
+                pageStack.push(Qt.resolvedUrl("DirectThreadPage.qml"), {threadId: data.threads[0].thread_id});
+            }
         }
     }
 }

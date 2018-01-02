@@ -323,12 +323,11 @@ Page {
     Connections{
         target: instagram
         onUserReelsMediaFeedDataReady: {
-            //console.log(answer);
             var data = JSON.parse(answer);
             userReelsMediaFeedDataFinished(data)
         }
         onMarkStoryMediaSeenDataReady: {
-            console.log(answer);
+
         }
     }
 }

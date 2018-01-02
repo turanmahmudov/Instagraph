@@ -1064,9 +1064,11 @@ void Instagram::directMessage(QString recipients, QString text, QString thread_i
     body += "Content-Disposition: form-data; name=\"client_context\"\r\n\r\n";
     body += uuid.createUuid().toString().replace("{","").replace("}","")+"\r\n";
 
-    body += "--"+boundary+"\r\n";
-    body += "Content-Disposition: form-data; name=\"thread_ids\"\r\n\r\n";
-    body += "[\""+thread_id+"\"]\r\n";
+    if (thread_id != "") {
+        body += "--"+boundary+"\r\n";
+        body += "Content-Disposition: form-data; name=\"thread_ids\"\r\n\r\n";
+        body += "[\""+thread_id+"\"]\r\n";
+    }
 
     body += "--"+boundary+"\r\n";
     body += "Content-Disposition: form-data; name=\"text\"\r\n\r\n";
@@ -1101,9 +1103,11 @@ void Instagram::directLike(QString recipients, QString thread_id)
     body += "Content-Disposition: form-data; name=\"client_context\"\r\n\r\n";
     body += uuid.createUuid().toString().replace("{","").replace("}","")+"\r\n";
 
-    body += "--"+boundary+"\r\n";
-    body += "Content-Disposition: form-data; name=\"thread_ids\"\r\n\r\n";
-    body += "[\""+thread_id+"\"]\r\n";
+    if (thread_id != "") {
+        body += "--"+boundary+"\r\n";
+        body += "Content-Disposition: form-data; name=\"thread_ids\"\r\n\r\n";
+        body += "[\""+thread_id+"\"]\r\n";
+    }
 
     body += "--"+boundary+"--";
 
@@ -1184,7 +1188,7 @@ void Instagram::suggestions()
 
 void Instagram::getRankedRecipients(QString query)
 {
-    QString target = "direct_v2/ranked_recipients/?mode=raven&show_threads=true&use_unified_inbox=true&";
+    QString target = "direct_v2/ranked_recipients/?mode=raven&show_threads=true&use_unified_inbox=false&";
 
     if(query.length() > 0)
     {
@@ -1192,7 +1196,7 @@ void Instagram::getRankedRecipients(QString query)
     }
     else
     {
-        target += "&query=nur";
+        target += "&";
     }
 
     InstagramRequest *getRankedRecipientsRequest = new InstagramRequest();
