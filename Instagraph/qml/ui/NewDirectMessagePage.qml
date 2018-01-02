@@ -60,9 +60,7 @@ Page {
         }
         recip_string = recip_array.join(',');
 
-        console.log(recip_string);
-
-        //instagram.directMessage(recip_string, text, "");
+        instagram.directMessage(recip_string, text, "");
     }
 
     function sendLike()
