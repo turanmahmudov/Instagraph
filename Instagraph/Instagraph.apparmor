@@ -10,8 +10,7 @@
         "webview",
         "audio",
         "microphone",
-        "video",
-        "debug"
+        "video"
     ],
     "policy_version": 1.3
 }

@@ -1292,6 +1292,25 @@ void Instagram::getUserReelsMediaFeed(QString user_id)
     emit busyChanged();
 }
 
+void Instagram::markStoryMediaSeen(QString reels)
+{
+    InstagramRequest *markStoryMediaSeenRequest = new InstagramRequest();
+    QJsonObject data;
+        data.insert("_uuid",        this->m_uuid);
+        data.insert("_uid",         this->m_username_id);
+        data.insert("_csrftoken",   "Set-Cookie: csrftoken="+this->m_token);
+
+        QJsonDocument jDoc = QJsonDocument::fromJson(reels.toLatin1());
+        data.insert("reels",        jDoc.object());
+
+        QJsonObject live_vods;
+        data.insert("live_vods",    live_vods);
+
+    QString signature = markStoryMediaSeenRequest->generateSignature(data);
+    markStoryMediaSeenRequest->request("media/seen/?reel=1&live_vod=0",signature.toUtf8(),true);
+    QObject::connect(markStoryMediaSeenRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(markStoryMediaSeenDataReady(QVariant)));
+}
+
 // Camera
 void Instagram::rotateImg(QString filename, qreal deg)
 {

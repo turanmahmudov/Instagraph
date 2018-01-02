@@ -103,6 +103,7 @@ public slots:
 
     void getReelsTrayFeed();
     void getUserReelsMediaFeed(QString user_id = "");
+    void markStoryMediaSeen(QString reels);
 
     void rotateImg(QString filename, qreal deg);
     void squareImg(QString filename);
@@ -221,6 +222,7 @@ signals:
 
     void reelsTrayFeedDataReady(QVariant answer);
     void userReelsMediaFeedDataReady(QVariant answer);
+    void markStoryMediaSeenDataReady(QVariant answer);
 
     void busyChanged();
     void errorChanged();

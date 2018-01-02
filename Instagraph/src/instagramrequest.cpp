@@ -64,13 +64,15 @@ void InstagramRequest::fileRquest(QString endpoint, QString boundary, QByteArray
     QObject::connect(this->m_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(saveCookie()));
 }
 
-void InstagramRequest::request(QString endpoint, QByteArray post)
+void InstagramRequest::request(QString endpoint, QByteArray post, bool apiV2)
 {
     QFile f(m_data_path.absolutePath()+"/cookies.dat");
     f.open(QIODevice::ReadOnly);
     QDataStream s(&f);
 
-    QUrl url(API_URL+endpoint);
+    QString api_url = apiV2 ? API_URL2 : API_URL;
+
+    QUrl url(api_url+endpoint);
     QNetworkRequest request(url);
 
     while(!s.atEnd()){

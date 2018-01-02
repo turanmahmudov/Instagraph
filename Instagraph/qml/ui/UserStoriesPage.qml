@@ -99,6 +99,7 @@ Page {
     property int progressTime: 0
 
     property var allUsers: []
+    property var allItems: []
 
     property bool getting: false
 
@@ -114,6 +115,36 @@ Page {
         timeAgo.text = Helper.milisecondsToString(data.items[0].taken_at, true)
 
         getting = false
+
+        // Mark Media Seen
+        var reels = {};
+
+        var myDate = new Date();
+        var time = myDate.getTime();
+        var seenAt = time - (3*data.items.length);
+
+        for (var i = 0; i < data.items.length; i++) {
+            var item = data.items[i];
+
+            var itemTakenAt = item.taken_at;
+            if (seenAt < itemTakenAt) {
+                seenAt = itemTakenAt + 2;
+            }
+
+            if (seenAt > time) {
+                seenAt = time;
+            }
+
+            var itemSourceId = item.user.pk;
+
+            var reelId = item.id + '_' + itemSourceId;
+
+            reels[reelId] = [itemTakenAt+'_'+seenAt];
+
+            seenAt += Math.floor(Math.random() * 3) + 1;
+        }
+
+        instagram.markStoryMediaSeen(JSON.stringify(reels));
     }
 
     WorkerScript {
@@ -292,8 +323,12 @@ Page {
     Connections{
         target: instagram
         onUserReelsMediaFeedDataReady: {
+            //console.log(answer);
             var data = JSON.parse(answer);
             userReelsMediaFeedDataFinished(data)
+        }
+        onMarkStoryMediaSeenDataReady: {
+            console.log(answer);
         }
     }
 }
