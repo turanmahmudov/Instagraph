@@ -101,28 +101,27 @@ Page {
             model: searchPlacesModel
             delegate: ListItem {
                 id: searchPlacesDelegate
+                height: layout.height
                 divider.visible: false
-                height: entry_column.height + units.gu(1)
+                onClicked: {
+                    locationSelected({"name":name.replace("&", "%26"), "address":address.replace("&", "%26"), "lat":lat.toFixed(4), "lng":lng.toFixed(4), "external_id":external_id, "external_id_source":external_id_source})
 
-                Column {
-                    id: entry_column
-                    spacing: units.gu(1)
-                    anchors {
-                        left: parent.left
-                        leftMargin: units.gu(1)
-                        right: parent.right
-                        rightMargin: units.gu(1)
-                    }
+                    pageStack.pop()
+                }
 
-                    Item {
-                        width: parent.width
-                        height: units.gu(0.1)
-                    }
+                SlotsLayout {
+                    id: layout
+                    anchors.centerIn: parent
 
-                    Row {
+                    padding.leading: 0
+                    padding.trailing: 0
+                    padding.top: units.gu(1)
+                    padding.bottom: units.gu(1)
+
+                    mainSlot: Row {
+                        id: label
                         spacing: units.gu(1)
-                        width: parent.width
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: parent.width - units.gu(5)
 
                         Item {
                             width: units.gu(5)
@@ -137,14 +136,12 @@ Page {
                         }
 
                         Column {
-                            width: parent.width - units.gu(6)
+                            width: parent.width
                             anchors.verticalCenter: parent.verticalCenter
 
                             Text {
                                 text: name
                                 wrapMode: Text.WordWrap
-                                elide: Text.ElideRight
-                                maximumLineCount: 1
                                 font.weight: Font.DemiBold
                                 width: parent.width
                             }
@@ -152,18 +149,11 @@ Page {
                             Text {
                                 text: address
                                 wrapMode: Text.WordWrap
-                                elide: Text.ElideRight
-                                maximumLineCount: 1
                                 width: parent.width
+                                textFormat: Text.RichText
                             }
                         }
                     }
-                }
-
-                onClicked: {
-                    locationSelected({"name":name.replace("&", "%26"), "address":address.replace("&", "%26"), "lat":lat.toFixed(4), "lng":lng.toFixed(4), "external_id":external_id, "external_id_source":external_id_source})
-
-                    pageStack.pop()
                 }
             }
         }

@@ -94,9 +94,7 @@ Page {
         id: mediaCommentsList
         anchors {
             left: parent.left
-            leftMargin: units.gu(1)
             right: parent.right
-            rightMargin: units.gu(1)
             bottom: addCommentItem.top
             top: commentspage.header.bottom
         }
@@ -109,7 +107,7 @@ Page {
         delegate: ListItem {
             id: mediaCommentsDelegate
             divider.visible: false
-            height: entry_column.height + units.gu(2)
+            height: layout.height
 
             property var removalAnimation
 
@@ -162,26 +160,28 @@ Page {
                 }
             }
 
-            Column {
-                id: entry_column
-                spacing: units.gu(1)
-                width: parent.width
-                y: units.gu(1)
+            SlotsLayout {
+                id: layout
+                anchors.centerIn: parent
 
-                Row {
+                padding.leading: 0
+                padding.trailing: 0
+                padding.top: units.gu(1)
+                padding.bottom: units.gu(1)
+
+                mainSlot: Row {
                     spacing: units.gu(1)
-                    width: parent.width
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: parent.width - comment_like_component.width
 
                     CircleImage {
                         id: feed_user_profile_image
                         width: units.gu(5)
                         height: width
-                        source: status == Image.Error ? "../images/not_found_user.jpg" : user.profile_pic_url
+                        source: typeof user.profile_pic_url !== 'undefined' ? user.profile_pic_url : "../images/not_found_user.jpg"
                     }
 
                     Column {
-                        width: parent.width - units.gu(11)
+                        width: parent.width - units.gu(6)
                         anchors.verticalCenter: parent.verticalCenter
                         spacing: units.gu(0.5)
 
@@ -236,28 +236,30 @@ Page {
                             }
                         }
                     }
+                }
 
-                    LikeComponent {
-                        id: comment_like_component
-                        visible: commentCaption.ctext != ctext
-                        width: commentCaption != ctext ? units.gu(4) : 0
-                        height: units.gu(5)
-                        commentId: pk
-                        has_liked: has_liked_c
-                        onLikedfinished: {
-                            if (likedCommentId == pk) {
-                                if (liked) {
-                                    comment_like_c = comment_like_c + 1
-                                    comment_likes_count.visible = true
-                                    comment_likes_count.text = comment_like_c + i18n.tr(" likes")
-                                } else {
-                                    comment_like_c = comment_like_c - 1
-                                    comment_likes_count.visible = comment_like_c == 0 ? false : true
-                                    comment_likes_count.text = comment_like_c == 0 ? "" : (comment_like_c + i18n.tr(" likes"))
-                                }
+                LikeComponent {
+                    id: comment_like_component
+                    visible: commentCaption.ctext != ctext
+                    width: commentCaption.ctext != ctext ? units.gu(4) : 0
+                    height: units.gu(5)
+                    commentId: pk
+                    has_liked: has_liked_c
+                    onLikedfinished: {
+                        if (likedCommentId == pk) {
+                            if (liked) {
+                                comment_like_c = comment_like_c + 1
+                                comment_likes_count.visible = true
+                                comment_likes_count.text = comment_like_c + i18n.tr(" likes")
+                            } else {
+                                comment_like_c = comment_like_c - 1
+                                comment_likes_count.visible = comment_like_c == 0 ? false : true
+                                comment_likes_count.text = comment_like_c == 0 ? "" : (comment_like_c + i18n.tr(" likes"))
                             }
                         }
                     }
+
+                    SlotsLayout.position: SlotsLayout.Trailing
                 }
             }
         }

@@ -110,6 +110,7 @@ Page {
 
            ListItem {
                height: privateAccountLayout.height
+               divider.visible: false
                ListItemLayout {
                    id: privateAccountLayout
 

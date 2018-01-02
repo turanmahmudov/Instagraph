@@ -52,10 +52,10 @@ ListView {
             }
 
             FollowComponent {
-                width: units.gu(5)
-                height: units.gu(3)
+                height: units.gu(3.5)
                 friendship_var: {"following": false, "outgoing_request": false}
                 userId: user.pk
+                just_icon: false
                 anchors.horizontalCenter: parent.horizontalCenter
             }
         }

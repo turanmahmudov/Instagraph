@@ -1,6 +1,5 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
-import Ubuntu.Components.ListItems 1.3 as ListItem
 
 Page {
     id: librariesPage
@@ -16,7 +15,6 @@ Page {
             right: parent.right
             bottom: parent.bottom
             top: librariesPage.header.bottom
-            topMargin: units.gu(1)
         }
         contentHeight: columnSuperior.height
 
@@ -24,119 +22,67 @@ Page {
            id: columnSuperior
            width: parent.width
 
-           ListItem.Header {
-               text: i18n.tr("Open Source")
+           ListItem {
+               height: opensourceHeaderLayout.height
+
+               ListItemLayout {
+                   id: opensourceHeaderLayout
+
+                   title.text: i18n.tr("Open Source")
+                   title.font.weight: Font.Normal
+               }
            }
 
-           ListItem.Base {
-               width: parent.width
-               progression: true
-               showDivider: true
+           ListItem {
+               height: src1Layout.height
+               ListItemLayout {
+                   id: src1Layout
+
+                   title.text: "mgp25/Instagram-API"
+                   subtitle.text: "Instagram's private API"
+               }
                onClicked: {
                    Qt.openUrlExternally("https://github.com/mgp25/Instagram-API")
                }
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
-                   Label {
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       text: "mgp25/Instagram-API"
-                   }
-
-                   Label {
-                       fontSize: "small"
-                       color: UbuntuColors.darkGrey
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       elide: Text.ElideRight
-                       text: "Instagram's private API"
-                   }
-               }
            }
 
-           ListItem.Base {
-               width: parent.width
-               progression: true
-               showDivider: true
+           ListItem {
+               height: src2Layout.height
+               ListItemLayout {
+                   id: src2Layout
+
+                   title.text: "InstantFX"
+                   subtitle.text: "A photo filter application for Ubuntu Devices"
+               }
                onClicked: {
                    Qt.openUrlExternally("http://launchpad.net/instantfx")
                }
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
-                   Label {
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       text: "InstantFX"
-                   }
-
-                   Label {
-                       fontSize: "small"
-                       color: UbuntuColors.darkGrey
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       elide: Text.ElideRight
-                       text: "A photo filter application for Ubuntu Devices"
-                   }
-               }
            }
 
-           ListItem.Base {
-               width: parent.width
-               progression: true
-               showDivider: true
+           ListItem {
+               height: src3Layout.height
+               ListItemLayout {
+                   id: src3Layout
+
+                   title.text: "neochapay/Prostogram"
+                   subtitle.text: "An unoffical Instagram client for Sailfish"
+               }
                onClicked: {
                    Qt.openUrlExternally("https://github.com/neochapay/Prostogram/")
                }
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
-                   Label {
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       text: "neochapay/Prostogram"
-                   }
-
-                   Label {
-                       fontSize: "small"
-                       color: UbuntuColors.darkGrey
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       elide: Text.ElideRight
-                       text: "An unoffical Instagram client for Sailfish"
-                   }
-               }
            }
 
-           ListItem.Base {
-               width: parent.width
-               progression: true
-               showDivider: false
+           ListItem {
+               height: src4Layout.height
+               divider.visible: false
+               ListItemLayout {
+                   id: src4Layout
+
+                   title.text: "mitmproxy/mitmproxy"
+                   subtitle.text: "An interactive SSL-capable intercepting HTTP proxy"
+               }
                onClicked: {
                    Qt.openUrlExternally("https://github.com/mitmproxy/mitmproxy")
-               }
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
-                   Label {
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       text: "mitmproxy/mitmproxy"
-                   }
-
-                   Label {
-                       fontSize: "small"
-                       color: UbuntuColors.darkGrey
-                       width: parent.width
-                       wrapMode: Text.WordWrap
-                       elide: Text.ElideRight
-                       text: "An interactive SSL-capable intercepting HTTP proxy"
-                   }
                }
            }
         }

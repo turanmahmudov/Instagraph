@@ -78,42 +78,41 @@ Page {
         cacheBuffer: parent.height*2
         model: userFollowersModel
         delegate: ListItem {
-            id: userFollowingsDelegate
+            id: userFollowersDelegate
+            height: layout.height
             divider.visible: false
-            height: entry_column.height + units.gu(2)
+            onClicked: {
+                pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk});
+            }
 
-            Column {
-                id: entry_column
-                spacing: units.gu(1)
-                width: parent.width
-                y: units.gu(1)
-                anchors {
-                    left: parent.left
-                    leftMargin: units.gu(1)
-                    right: parent.right
-                    rightMargin: units.gu(1)
-                }
+            SlotsLayout {
+                id: layout
+                anchors.centerIn: parent
 
-                Row {
+                padding.leading: 0
+                padding.trailing: 0
+                padding.top: units.gu(1)
+                padding.bottom: units.gu(1)
+
+                mainSlot: Row {
+                    id: label
                     spacing: units.gu(1)
                     width: parent.width
-                    anchors.horizontalCenter: parent.horizontalCenter
 
                     CircleImage {
-                        id: feed_user_profile_image
                         width: units.gu(5)
                         height: width
-                        source: status == Image.Error ? "../images/not_found_user.jpg" : profile_pic_url
+                        source: profile_pic_url
                     }
 
                     Column {
-                        width: parent.width - units.gu(6)
+                        width: parent.width
                         anchors.verticalCenter: parent.verticalCenter
 
                         Text {
                             text: username
-                            font.weight: Font.DemiBold
                             wrapMode: Text.WordWrap
+                            font.weight: Font.DemiBold
                             width: parent.width
                         }
 
@@ -125,10 +124,6 @@ Page {
                         }
                     }
                 }
-            }
-
-            onClicked: {
-                pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameString: username});
             }
         }
         PullToRefresh {

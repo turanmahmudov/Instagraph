@@ -92,41 +92,40 @@ Page {
         model: discoverPeopleModel
         delegate: ListItem {
             id: searchUsersDelegate
+            height: layout.height
             divider.visible: false
-            height: entry_column.height + units.gu(2)
+            onClicked: {
+                pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: media.user.pk});
+            }
 
-            Column {
-                id: entry_column
-                spacing: units.gu(1)
-                y: units.gu(1)
-                width: parent.width
-                anchors {
-                    left: parent.left
-                    leftMargin: units.gu(1)
-                    right: parent.right
-                    rightMargin: units.gu(1)
-                }
+            SlotsLayout {
+                id: layout
+                anchors.centerIn: parent
 
-                Row {
+                padding.leading: 0
+                padding.trailing: 0
+                padding.top: units.gu(1)
+                padding.bottom: units.gu(1)
+
+                mainSlot: Row {
+                    id: label
                     spacing: units.gu(1)
-                    width: parent.width
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: parent.width - followButton.width
 
                     CircleImage {
-                        id: feed_user_profile_image
                         width: units.gu(5)
                         height: width
-                        source: status == Image.Error ? "../images/not_found_user.jpg" : media.user.profile_pic_url
+                        source: media.user.profile_pic_url
                     }
 
                     Column {
-                        width: parent.width - units.gu(12)
+                        width: parent.width - units.gu(6)
                         anchors.verticalCenter: parent.verticalCenter
 
                         Text {
                             text: media.user.username
-                            font.weight: Font.DemiBold
                             wrapMode: Text.WordWrap
+                            font.weight: Font.DemiBold
                             width: parent.width
                         }
 
@@ -134,20 +133,22 @@ Page {
                             text: media.user.full_name
                             wrapMode: Text.WordWrap
                             width: parent.width
+                            textFormat: Text.RichText
                         }
                     }
-
-                    FollowComponent {
-                        width: units.gu(5)
-                        height: units.gu(3)
-                        friendship_var: media.user.friendship_status
-                        userId: media.user.pk
-                    }
                 }
-            }
 
-            onClicked: {
-                pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameString: media.user.username});
+                FollowComponent {
+                    id: followButton
+                    height: units.gu(3.5)
+                    friendship_var: media.user.friendship_status
+                    userId: media.user.pk
+                    just_icon: false
+
+                    anchors.verticalCenter: parent.verticalCenter
+                    SlotsLayout.position: SlotsLayout.Trailing
+                    SlotsLayout.overrideVerticalPositioning: true
+                }
             }
         }
         PullToRefresh {
@@ -162,7 +163,6 @@ Page {
     Connections{
         target: instagram
         onExploreDataReady: {
-            //console.log(answer)
             var data = JSON.parse(answer);
             discoverPeopleDataFinished(data);
         }

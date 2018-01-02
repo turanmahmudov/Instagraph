@@ -45,6 +45,7 @@ MainView {
 
     readonly property bool isLandscape: width > height
     readonly property bool isWideScreen: (width > units.gu(120)) && isLandscape
+    readonly property bool isPhone: width <= units.gu(50)
 
     // Main Actions
     actions: [

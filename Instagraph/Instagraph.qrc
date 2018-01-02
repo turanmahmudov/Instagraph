@@ -11,8 +11,6 @@
         <file>qml/ui/SearchPage.qml</file>
         <file>qml/ui/UserPage.qml</file>
         <file>qml/ui/CameraPage.qml</file>
-        <file>qml/components/ListFeedDelegate.qml</file>
-        <file>qml/components/UserListFeedDelegate.qml</file>
         <file>qml/js/Scripts.js</file>
         <file>qml/ui/TagFeedPage.qml</file>
         <file>qml/ui/DirectInboxPage.qml</file>
@@ -110,5 +108,10 @@
         <file>qml/ui/UserStoriesPage.qml</file>
         <file>qml/components/CircleImage.qml</file>
         <file>qml/images/circle.png</file>
+        <file>qml/components/FeedImage.qml</file>
+        <file>qml/components/SuggestionsPanel.qml</file>
+        <file>qml/components/MediaEntry.qml</file>
+        <file>qml/components/ListFeedDelegate.qml</file>
+        <file>qml/components/GridFeedDelegate.qml</file>
     </qresource>
 </RCC>

@@ -20,7 +20,7 @@ Page {
     property var last_like_id
 
     function mediaDataFinished(data) {
-        worker.sendMessage({'feed': 'singlePhotoPage', 'obj': data.items, 'model': singlePhotoModel, 'commentsModel': singlePhotoCommentsModel, 'clear_model': true})
+        worker.sendMessage({'feed': 'singlePhotoPage', 'obj': data.items, 'model': singlePhotoModel, 'clear_model': true})
     }
 
     WorkerScript {
@@ -43,10 +43,6 @@ Page {
     }
 
     ListModel {
-        id: singlePhotoCommentsModel
-    }
-
-    ListModel {
         id: singlePhotoModel
     }
 
@@ -54,9 +50,7 @@ Page {
         id: homePhotosList
         anchors {
             left: parent.left
-            leftMargin: units.gu(1)
             right: parent.right
-            rightMargin: units.gu(1)
             bottom: parent.bottom
             bottomMargin: bottomMenu.height
             top: singlephotopage.header.bottom
@@ -68,7 +62,6 @@ Page {
         delegate: ListFeedDelegate {
             id: homePhotosDelegate
             thismodel: singlePhotoModel
-            thiscommentsmodel: singlePhotoCommentsModel
         }
     }
 

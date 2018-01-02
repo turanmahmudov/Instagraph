@@ -34,7 +34,7 @@ Page {
             more_available = data.more_available ? data.more_available : false;
             next_coming = true;
 
-            worker.sendMessage({'feed': 'locationFeedPage', 'obj': data.items, 'model': locationFeedPhotosModel, 'commentsModel': locationFeedPhotosCommentsModel, 'clear_model': clear_models})
+            worker.sendMessage({'feed': 'locationFeedPage', 'obj': data.items, 'model': locationFeedPhotosModel, 'clear_model': clear_models})
 
             next_coming = false;
         }
@@ -72,10 +72,6 @@ Page {
     }
 
     ListModel {
-        id: locationFeedPhotosCommentsModel
-    }
-
-    ListModel {
         id: locationFeedPhotosModel
     }
 
@@ -102,7 +98,6 @@ Page {
         delegate: ListFeedDelegate {
             id: homePhotosDelegate
             thismodel: locationFeedPhotosModel
-            thiscommentsmodel: locationFeedPhotosCommentsModel
         }
         PullToRefresh {
             refreshing: list_loading && locationFeedPhotosModel.count == 0

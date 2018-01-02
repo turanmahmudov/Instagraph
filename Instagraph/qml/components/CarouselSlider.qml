@@ -34,18 +34,4 @@ ListView {
             smooth: false
         }
     }
-
-    // Go to next slide, if possible
-    function nextSlide() {
-        if (listViewCarousel.currentIndex < listViewCarousel.model.count-1) {
-            listViewCarousel.currentIndex++
-        }
-    }
-
-    // Go to previous slide, if possible
-    function previousSlide() {
-        if (listViewCarousel.currentIndex > 0) {
-            listViewCarousel.currentIndex--
-        }
-    }
 }

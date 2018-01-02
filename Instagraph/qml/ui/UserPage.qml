@@ -181,7 +181,7 @@ Page {
                         id: uzimage
                         width: units.gu(10)
                         height: width
-                        source: status == Image.Error ? "../images/not_found_user.jpg" : profile_pic_url
+                        source: typeof profile_pic_url !== 'undefined' ? profile_pic_url : "../images/not_found_user.jpg"
                     }
 
                     Column {
@@ -463,19 +463,14 @@ Page {
     Component {
         id: listviewComponent
 
-        Column {
-            spacing: units.gu(4)
-            x: units.gu(1)
-            y: units.gu(1)
+        ListView {
             width: viewLoader.width
-
-            Repeater {
-                model: userPhotosModel
-
-                UserListFeedDelegate {
-                    id: entry_column_photos
-                    thismodel: userPhotosModel
-                }
+            height: contentHeight
+            interactive: false
+            model: userPhotosModel
+            delegate: ListFeedDelegate {
+                id: userPhotosDelegate
+                thismodel: userPhotosModel
             }
         }
     }
@@ -490,72 +485,9 @@ Page {
             Repeater {
                 model: userPhotosModel
 
-                Item {
+                GridFeedDelegate {
                     width: (viewLoader.width-units.gu(0.1))/3
                     height: width
-
-                    Image {
-                        property var bestImage: carousel_media_obj.count > 0 ? Helper.getBestImage(carousel_media_obj.get(0).image_versions2.candidates, parent.width) : Helper.getBestImage(image_versions2.candidates, parent.width)
-
-                        id: feed_image
-                        width: parent.width
-                        height: width
-                        source: bestImage.url
-                        fillMode: Image.PreserveAspectCrop
-                        sourceSize: Qt.size(width,height)
-                        clip: true
-                        asynchronous: true
-                        cache: true
-                        smooth: true
-                    }
-                    Icon {
-                        visible: media_type == 8
-                        width: units.gu(3)
-                        height: width
-                        name: "browser-tabs"
-                        color: "#ffffff"
-                        anchors.right: parent.right
-                        anchors.rightMargin: units.gu(1)
-                        anchors.top: parent.top
-                        anchors.topMargin: units.gu(1)
-                    }
-                    Icon {
-                        visible: media_type == 2
-                        width: units.gu(3)
-                        height: width
-                        name: "camcorder"
-                        color: "#ffffff"
-                        anchors.right: parent.right
-                        anchors.rightMargin: units.gu(2)
-                        anchors.top: parent.top
-                        anchors.topMargin: units.gu(2)
-                    }
-
-                    Item {
-                        width: activity2.width
-                        height: width
-                        anchors.centerIn: parent
-                        opacity: feed_image.status == Image.Loading
-
-                        Behavior on opacity {
-                            UbuntuNumberAnimation {
-                                duration: UbuntuAnimation.SlowDuration
-                            }
-                        }
-
-                        ActivityIndicator {
-                            id: activity2
-                            running: true
-                        }
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-
-                        onClicked: {
-                            pageStack.push(Qt.resolvedUrl("SinglePhoto.qml"), {photoId: id});
-                        }
-                    }
                 }
             }
         }
@@ -571,72 +503,9 @@ Page {
             Repeater {
                 model: userTagPhotosModel
 
-                Item {
+                GridFeedDelegate {
                     width: (viewLoader.width-units.gu(0.1))/3
                     height: width
-
-                    Image {
-                        property var bestImage: carousel_media_obj.count > 0 ? Helper.getBestImage(carousel_media_obj.get(0).image_versions2.candidates, parent.width) : Helper.getBestImage(image_versions2.candidates, parent.width)
-
-                        id: feed_image
-                        width: parent.width
-                        height: width
-                        source: bestImage.url
-                        fillMode: Image.PreserveAspectCrop
-                        sourceSize: Qt.size(width,height)
-                        clip: true
-                        asynchronous: true
-                        cache: true
-                        smooth: true
-                    }
-                    Icon {
-                        visible: media_type == 8
-                        width: units.gu(3)
-                        height: width
-                        name: "browser-tabs"
-                        color: "#ffffff"
-                        anchors.right: parent.right
-                        anchors.rightMargin: units.gu(1)
-                        anchors.top: parent.top
-                        anchors.topMargin: units.gu(1)
-                    }
-                    Icon {
-                        visible: media_type == 2
-                        width: units.gu(3)
-                        height: width
-                        name: "camcorder"
-                        color: "#ffffff"
-                        anchors.right: parent.right
-                        anchors.rightMargin: units.gu(2)
-                        anchors.top: parent.top
-                        anchors.topMargin: units.gu(2)
-                    }
-
-                    Item {
-                        width: activity2.width
-                        height: width
-                        anchors.centerIn: parent
-                        opacity: feed_image.status == Image.Loading
-
-                        Behavior on opacity {
-                            UbuntuNumberAnimation {
-                                duration: UbuntuAnimation.SlowDuration
-                            }
-                        }
-
-                        ActivityIndicator {
-                            id: activity2
-                            running: true
-                        }
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-
-                        onClicked: {
-                            pageStack.push(Qt.resolvedUrl("SinglePhoto.qml"), {photoId: id});
-                        }
-                    }
                 }
             }
         }

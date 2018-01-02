@@ -1182,10 +1182,21 @@ void Instagram::suggestions()
     emit busyChanged();
 }
 
-void Instagram::getRankedRecipients()
+void Instagram::getRankedRecipients(QString query)
 {
+    QString target = "direct_v2/ranked_recipients/?mode=raven&show_threads=true&use_unified_inbox=true&";
+
+    if(query.length() > 0)
+    {
+        target += "&query="+query;
+    }
+    else
+    {
+        target += "&query=nur";
+    }
+
     InstagramRequest *getRankedRecipientsRequest = new InstagramRequest();
-    getRankedRecipientsRequest->request("direct_v2/ranked_recipients/?show_threads=true",NULL);
+    getRankedRecipientsRequest->request(target, NULL);
     QObject::connect(getRankedRecipientsRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(rankedRecipientsDataReady(QVariant)));
 }
 

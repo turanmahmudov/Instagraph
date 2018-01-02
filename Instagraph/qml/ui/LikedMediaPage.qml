@@ -99,66 +99,11 @@ Page {
             }
         }
         model: likedMediaModel
-        delegate: ListItem {
-            width: parent.width
-            height: gridView.cellHeight
-
-            Item {
-                width: gridView.cellWidth
-                height: gridView.cellHeight
-
-                Image {
-                    property var bestImage: Helper.getBestImage(image_versions2.candidates, parent.width)
-
-                    id: feed_image
-                    width: parent.width
-                    height: width
-                    source: bestImage.url
-                    fillMode: Image.PreserveAspectCrop
-                    sourceSize: Qt.size(width,height)
-                    asynchronous: true
-                    cache: true
-                    smooth: true
-                }
-                Icon {
-                    visible: media_type == 2
-                    width: units.gu(3)
-                    height: width
-                    name: "camcorder"
-                    color: "#ffffff"
-                    anchors.right: parent.right
-                    anchors.rightMargin: units.gu(2)
-                    anchors.top: parent.top
-                    anchors.topMargin: units.gu(2)
-                }
-
-                Item {
-                    width: activity2.width
-                    height: width
-                    anchors.centerIn: parent
-                    opacity: feed_image.status == Image.Loading
-
-                    Behavior on opacity {
-                        UbuntuNumberAnimation {
-                            duration: UbuntuAnimation.SlowDuration
-                        }
-                    }
-
-                    ActivityIndicator {
-                        id: activity2
-                        running: true
-                    }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-
-                    onClicked: {
-                        pageStack.push(Qt.resolvedUrl("SinglePhoto.qml"), {photoId: id});
-                    }
-                }
-            }
+        delegate: GridFeedDelegate {
+            width: gridView.cellWidth
+            height: width
         }
+
         PullToRefresh {
             id: pullToRefresh
             refreshing: list_loading && likedMediaModel.count == 0

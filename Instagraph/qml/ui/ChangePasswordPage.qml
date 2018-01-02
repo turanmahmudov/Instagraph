@@ -1,7 +1,6 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
 import QtQuick.LocalStorage 2.0
-import Ubuntu.Components.ListItems 1.3 as ListItem
 
 import "../components"
 
@@ -17,6 +16,7 @@ Page {
             actions: [
                 Action {
                     iconName: "tick"
+                    enabled: currentPasswordField.text.length > 0 && newPasswordField.text.length > 0 && newPasswordAgainField.text.length > 0
                     text: i18n.tr("Save")
                     onTriggered: {
                         if (newPasswordField.text == newPasswordAgainField.text) {
@@ -51,64 +51,104 @@ Page {
            id: columnSuperior
            width: parent.width
 
-           ListItem.Base {
-               width: parent.width
-               showDivider: true
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
+           ListItem {
+               height: currentPasswordLayout.height
 
-                   TextField {
+               SlotsLayout {
+                   id: currentPasswordLayout
+                   anchors.centerIn: parent
+
+                   padding.leading: 0
+                   padding.trailing: 0
+
+                   mainSlot: Column {
                        width: parent.width
-                       id: currentPasswordField
-                       echoMode: TextInput.Password
-                       placeholderText: i18n.tr("Current password")
-                       text: ""
-                       StyleHints {
-                           borderColor: "#ffffff"
+                       spacing: units.gu(1)
+
+                       Label {
+                           text: i18n.tr("Current")
+                           font.weight: Font.Normal
+                           width: parent.width
+                       }
+
+                       TextField {
+                           id: currentPasswordField
+                           width: parent.width + units.gu(2)
+                           anchors.horizontalCenter: parent.horizontalCenter
+                           echoMode: TextInput.Password
+                           placeholderText: i18n.tr("Current password")
+                           StyleHints {
+                               borderColor: "transparent"
+                           }
                        }
                    }
                }
            }
 
-           ListItem.Base {
-               width: parent.width
-               showDivider: true
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
+           ListItem {
+               height: newPasswordLayout.height
 
-                   TextField {
+               SlotsLayout {
+                   id: newPasswordLayout
+                   anchors.centerIn: parent
+
+                   padding.leading: 0
+                   padding.trailing: 0
+
+                   mainSlot: Column {
                        width: parent.width
-                       id: newPasswordField
-                       echoMode: TextInput.Password
-                       placeholderText: i18n.tr("New password")
-                       text: ""
-                       StyleHints {
-                           borderColor: "#ffffff"
+                       spacing: units.gu(1)
+
+                       Label {
+                           text: i18n.tr("New")
+                           font.weight: Font.Normal
+                           width: parent.width
+                       }
+
+                       TextField {
+                           id: newPasswordField
+                           width: parent.width + units.gu(2)
+                           anchors.horizontalCenter: parent.horizontalCenter
+                           echoMode: TextInput.Password
+                           placeholderText: i18n.tr("New password")
+                           StyleHints {
+                               borderColor: "transparent"
+                           }
                        }
                    }
                }
            }
 
-           ListItem.Base {
-               width: parent.width
-               showDivider: true
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
+           ListItem {
+               height: verifyLayout.height
+               divider.visible: false
 
-                   TextField {
+               SlotsLayout {
+                   id: verifyLayout
+                   anchors.centerIn: parent
+
+                   padding.leading: 0
+                   padding.trailing: 0
+
+                   mainSlot: Column {
                        width: parent.width
-                       id: newPasswordAgainField
-                       echoMode: TextInput.Password
-                       placeholderText: i18n.tr("New password, again")
-                       text: ""
-                       StyleHints {
-                           borderColor: "#ffffff"
+                       spacing: units.gu(1)
+
+                       Label {
+                           text: i18n.tr("Verify")
+                           font.weight: Font.Normal
+                           width: parent.width
+                       }
+
+                       TextField {
+                           id: newPasswordAgainField
+                           width: parent.width + units.gu(2)
+                           anchors.horizontalCenter: parent.horizontalCenter
+                           echoMode: TextInput.Password
+                           placeholderText: i18n.tr("New password, again")
+                           StyleHints {
+                               borderColor: "transparent"
+                           }
                        }
                    }
                }

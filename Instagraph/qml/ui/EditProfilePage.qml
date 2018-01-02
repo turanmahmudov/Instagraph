@@ -1,7 +1,6 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
 import QtQuick.LocalStorage 2.0
-import Ubuntu.Components.ListItems 1.3 as ListItem
 
 import "../components"
 
@@ -60,129 +59,211 @@ Page {
            id: columnSuperior
            width: parent.width
 
-           ListItem.Base {
-               width: parent.width
-               showDivider: true
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
+           ListItem {
+               height: nameLayout.height
 
-                   TextField {
+               SlotsLayout {
+                   id: nameLayout
+                   anchors.centerIn: parent
+
+                   padding.leading: 0
+                   padding.trailing: 0
+
+                   mainSlot: Column {
                        width: parent.width
-                       id: nameField
-                       placeholderText: i18n.tr("Name")
-                       text: ""
-                       StyleHints {
-                           borderColor: "#ffffff"
+                       spacing: units.gu(1)
+
+                       Label {
+                           text: i18n.tr("Name")
+                           font.weight: Font.Normal
+                           width: parent.width
+                       }
+
+                       TextField {
+                           id: nameField
+                           width: parent.width + units.gu(2)
+                           anchors.horizontalCenter: parent.horizontalCenter
+                           placeholderText: i18n.tr("Name")
+                           StyleHints {
+                               borderColor: "transparent"
+                           }
                        }
                    }
                }
            }
 
-           ListItem.Base {
-               width: parent.width
-               showDivider: true
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
+           ListItem {
+               height: webLayout.height
 
-                   TextField {
+               SlotsLayout {
+                   id: webLayout
+                   anchors.centerIn: parent
+
+                   padding.leading: 0
+                   padding.trailing: 0
+
+                   mainSlot: Column {
                        width: parent.width
-                       id: webField
-                       placeholderText: i18n.tr("Website")
-                       text: ""
-                       StyleHints {
-                           borderColor: "#ffffff"
+                       spacing: units.gu(1)
+
+                       Label {
+                           text: i18n.tr("Website")
+                           font.weight: Font.Normal
+                           width: parent.width
+                       }
+
+                       TextField {
+                           id: webField
+                           width: parent.width + units.gu(2)
+                           anchors.horizontalCenter: parent.horizontalCenter
+                           placeholderText: i18n.tr("Website")
+                           StyleHints {
+                               borderColor: "transparent"
+                           }
                        }
                    }
                }
            }
 
-           ListItem.Base {
-               width: parent.width
-               height: bioColumn.height + units.gu(2)
-               showDivider: true
-               Column {
-                   id: bioColumn
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
+           ListItem {
+               height: bioLayout.height
+               divider.visible: false
 
-                   TextArea {
+               SlotsLayout {
+                   id: bioLayout
+                   anchors.centerIn: parent
+
+                   padding.leading: 0
+                   padding.trailing: 0
+
+                   mainSlot: Column {
                        width: parent.width
-                       id: bioField
-                       placeholderText: i18n.tr("Bio")
-                       autoSize: true
-                       text: ""
-                       StyleHints {
-                           borderColor: "#ffffff"
+                       spacing: units.gu(1)
+
+                       Label {
+                           text: i18n.tr("Bio")
+                           font.weight: Font.Normal
+                           width: parent.width
+                       }
+
+                       TextArea {
+                           id: bioField
+                           width: parent.width + units.gu(2)
+                           anchors.horizontalCenter: parent.horizontalCenter
+                           placeholderText: i18n.tr("Bio")
+                           autoSize: true
+                           StyleHints {
+                               borderColor: "transparent"
+                           }
                        }
                    }
                }
            }
 
-           ListItem.Header {
-               text: i18n.tr("Private Information")
+           ListItem {
+               height: privateHeaderLayout.height
+
+               ListItemLayout {
+                   id: privateHeaderLayout
+
+                   title.text: i18n.tr("Private Information")
+                   title.font.weight: Font.Normal
+               }
            }
 
-           ListItem.Base {
-               width: parent.width
-               showDivider: true
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
+           ListItem {
+               height: emailLayout.height
 
-                   TextField {
+               SlotsLayout {
+                   id: emailLayout
+                   anchors.centerIn: parent
+
+                   padding.leading: 0
+                   padding.trailing: 0
+
+                   mainSlot: Column {
                        width: parent.width
-                       id: emailField
-                       inputMethodHints: Qt.ImhEmailCharactersOnly
-                       placeholderText: i18n.tr("Email")
-                       text: ""
-                       StyleHints {
-                           borderColor: "#ffffff"
+                       spacing: units.gu(1)
+
+                       Label {
+                           text: i18n.tr("Email")
+                           font.weight: Font.Normal
+                           width: parent.width
+                       }
+
+                       TextField {
+                           id: emailField
+                           width: parent.width + units.gu(2)
+                           anchors.horizontalCenter: parent.horizontalCenter
+                           placeholderText: i18n.tr("Email")
+                           inputMethodHints: Qt.ImhEmailCharactersOnly
+                           StyleHints {
+                               borderColor: "transparent"
+                           }
                        }
                    }
                }
            }
 
-           ListItem.Base {
-               width: parent.width
-               showDivider: true
-               Column {
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
+           ListItem {
+               height: phoneLayout.height
 
-                   TextField {
+               SlotsLayout {
+                   id: phoneLayout
+                   anchors.centerIn: parent
+
+                   padding.leading: 0
+                   padding.trailing: 0
+
+                   mainSlot: Column {
                        width: parent.width
-                       id: phoneField
-                       placeholderText: i18n.tr("Phone")
-                       text: ""
-                       StyleHints {
-                           borderColor: "#ffffff"
+                       spacing: units.gu(1)
+
+                       Label {
+                           text: i18n.tr("Phone")
+                           font.weight: Font.Normal
+                           width: parent.width
+                       }
+
+                       TextField {
+                           id: phoneField
+                           width: parent.width + units.gu(2)
+                           anchors.horizontalCenter: parent.horizontalCenter
+                           placeholderText: i18n.tr("Phone")
+                           StyleHints {
+                               borderColor: "transparent"
+                           }
                        }
                    }
                }
            }
 
-           ListItem.Base {
-               width: parent.width
-               height: genderColumn.height + units.gu(2)
-               showDivider: false
-               Column {
-                   id: genderColumn
-                   anchors.verticalCenter: parent.verticalCenter
-                   anchors.right: parent.right
-                   anchors.left: parent.left
+           ListItem {
+               height: genderLayout.height
 
-                   ListItem.ItemSelector {
-                       id: genderField
-                       model: [i18n.tr("Female"),
-                           i18n.tr("Male")]
-                       containerHeight: itemHeight * 2
+               SlotsLayout {
+                   id: genderLayout
+                   anchors.centerIn: parent
+
+                   padding.leading: 0
+                   padding.trailing: 0
+
+                   mainSlot: Column {
+                       width: parent.width
+                       spacing: units.gu(1)
+
+                       Label {
+                           text: i18n.tr("Phone")
+                           font.weight: Font.Normal
+                           width: parent.width
+                       }
+
+                       OptionSelector {
+                           id: genderField
+                           width: parent.width
+                           model: [i18n.tr("Female"),
+                               i18n.tr("Male")]
+                       }
                    }
                }
            }

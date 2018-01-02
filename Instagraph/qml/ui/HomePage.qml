@@ -44,7 +44,7 @@ Page {
             more_available = data.more_available;
             next_coming = true;
 
-            worker.sendMessage({'feed': 'homePage', 'obj': data.feed_items, 'model': homePhotosModel, 'commentsModel': homePhotosCommentsModel, 'suggestionsModel': homeSuggestionsModel, 'clear_model': clear_models})
+            worker.sendMessage({'feed': 'homePage', 'obj': data.feed_items, 'model': homePhotosModel, 'suggestionsModel': homeSuggestionsModel, 'clear_model': clear_models})
 
             next_coming = false;
         }
@@ -79,10 +79,6 @@ Page {
     }
 
     ListModel {
-        id: homePhotosCommentsModel
-    }
-
-    ListModel {
         id: homePhotosModel
         dynamicRoles: true
     }
@@ -111,8 +107,6 @@ Page {
         delegate: ListFeedDelegate {
             id: homePhotosDelegate
             thismodel: homePhotosModel
-            thiscommentsmodel: homePhotosCommentsModel
-            thissuggestionsmodel: homeSuggestionsModel
         }
         PullToRefresh {
             id: pullToRefresh
@@ -155,6 +149,7 @@ Page {
     Connections{
         target: instagram
         onTimeLineDataReady: {
+            //console.log(answer)
             var data = JSON.parse(answer);
             if (data.status == "ok") {
                 mediaDataFinished(data);

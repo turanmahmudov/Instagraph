@@ -160,7 +160,7 @@ Page {
         id: searchPlacesModel
     }
 
-    GridView {
+    Flickable {
         id: gridView
         visible: searchInput.text != '' || searchInput.activeFocus ? false : true
         anchors {
@@ -171,89 +171,32 @@ Page {
         }
         width: parent.width
         height: parent.height
-        cellWidth: gridView.width/3
-        cellHeight: cellWidth
+        clip: true
+        contentWidth: parent.width
+        contentHeight: gridChildren.height
         onMovementEnded: {
             if (atYEnd && more_available && !next_coming) {
                 getPopular(next_max_id);
             }
         }
-        model: popularFeedModel
-        delegate: ListItem {
-            width: parent.width
-            height: gridView.cellHeight
 
-            Item {
-                width: gridView.cellWidth
-                height: gridView.cellHeight
+        Grid {
+            id: gridChildren
+            columns: 3
+            spacing: units.gu(0.1)
 
-                Image {
-                    property var bestImage: typeof image_versions2.candidates != 'undefined' ?
-                                                Helper.getBestImage(image_versions2.candidates, parent.width) :
-                                                {"width":0, "height":0, "url":""}
+            Repeater {
+                model: popularFeedModel
 
-                    id: feed_image
-                    width: parent.width
+                GridFeedDelegate {
+                    width: (gridView.width-units.gu(0.1))/3
                     height: width
-                    source: bestImage.url
-                    fillMode: Image.PreserveAspectCrop
-                    sourceSize: Qt.size(width,height)
-                    asynchronous: true
-                    cache: true
-                    smooth: true
-                }
-                Icon {
-                    visible: media_type == 8
-                    width: units.gu(3)
-                    height: width
-                    name: "browser-tabs"
-                    color: "#ffffff"
-                    anchors.right: parent.right
-                    anchors.rightMargin: units.gu(1)
-                    anchors.top: parent.top
-                    anchors.topMargin: units.gu(1)
-                }
-                Icon {
-                    visible: media_type == 2
-                    width: units.gu(3)
-                    height: width
-                    name: "camcorder"
-                    color: "#ffffff"
-                    anchors.right: parent.right
-                    anchors.rightMargin: units.gu(2)
-                    anchors.top: parent.top
-                    anchors.topMargin: units.gu(2)
-                }
-
-                Item {
-                    width: activity2.width
-                    height: width
-                    anchors.centerIn: parent
-                    opacity: feed_image.status == Image.Loading
-
-                    Behavior on opacity {
-                        UbuntuNumberAnimation {
-                            duration: UbuntuAnimation.SlowDuration
-                        }
-                    }
-
-                    ActivityIndicator {
-                        id: activity2
-                        running: true
-                    }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-
-                    onClicked: {
-                        pageStack.push(Qt.resolvedUrl("SinglePhoto.qml"), {photoId: id});
-                    }
                 }
             }
         }
+
         PullToRefresh {
-            id: pullToRefresh
+            parent: gridView
             refreshing: list_loading && popularFeedModel.count == 0
             onRefresh: {
                 list_loading = true
@@ -288,45 +231,39 @@ Page {
             model: searchUsersModel
             delegate: ListItem {
                 id: searchUsersDelegate
+                height: layout.height
                 divider.visible: false
-                height: entry_column.height + units.gu(1)
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk});
+                }
 
-                Column {
-                    id: entry_column
-                    spacing: units.gu(1)
-                    anchors {
-                        left: parent.left
-                        leftMargin: units.gu(1)
-                        right: parent.right
-                        rightMargin: units.gu(1)
-                    }
+                SlotsLayout {
+                    id: layout
+                    anchors.centerIn: parent
 
-                    Item {
-                        width: parent.width
-                        height: units.gu(0.1)
-                    }
+                    padding.leading: 0
+                    padding.trailing: 0
+                    padding.top: units.gu(1)
+                    padding.bottom: units.gu(1)
 
-                    Row {
+                    mainSlot: Row {
+                        id: label
                         spacing: units.gu(1)
-                        width: parent.width
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: parent.width - followButton.width
 
                         CircleImage {
-                            id: feed_user_profile_image
                             width: units.gu(5)
                             height: width
-                            source: status == Image.Error ? "../images/not_found_user.jpg" : profile_pic_url
+                            source: profile_pic_url
                         }
 
                         Column {
-                            width: parent.width - units.gu(12)
+                            width: parent.width - units.gu(6)
                             anchors.verticalCenter: parent.verticalCenter
 
                             Text {
                                 text: username
                                 wrapMode: Text.WordWrap
-                                elide: Text.ElideRight
-                                maximumLineCount: 1
                                 font.weight: Font.DemiBold
                                 width: parent.width
                             }
@@ -334,23 +271,23 @@ Page {
                             Text {
                                 text: full_name
                                 wrapMode: Text.WordWrap
-                                elide: Text.ElideRight
-                                maximumLineCount: 1
                                 width: parent.width
+                                textFormat: Text.RichText
                             }
                         }
-
-                        FollowComponent {
-                            width: units.gu(5)
-                            height: units.gu(3)
-                            friendship_var: friendship_status
-                            userId: pk
-                        }
                     }
-                }
 
-                onClicked: {
-                    pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameString: username});
+                    FollowComponent {
+                        id: followButton
+                        height: units.gu(3.5)
+                        friendship_var: friendship_status
+                        userId: pk
+                        just_icon: false
+
+                        anchors.verticalCenter: parent.verticalCenter
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        SlotsLayout.overrideVerticalPositioning: true
+                    }
                 }
             }
         }
@@ -368,28 +305,25 @@ Page {
             model: searchTagsModel
             delegate: ListItem {
                 id: searchTagsDelegate
+                height: layout.height
                 divider.visible: false
-                height: entry_column.height + units.gu(1)
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("TagFeedPage.qml"), {tag: name});
+                }
 
-                Column {
-                    id: entry_column
-                    spacing: units.gu(1)
-                    anchors {
-                        left: parent.left
-                        leftMargin: units.gu(1)
-                        right: parent.right
-                        rightMargin: units.gu(1)
-                    }
+                SlotsLayout {
+                    id: layout
+                    anchors.centerIn: parent
 
-                    Item {
-                        width: parent.width
-                        height: units.gu(0.1)
-                    }
+                    padding.leading: 0
+                    padding.trailing: 0
+                    padding.top: units.gu(1)
+                    padding.bottom: units.gu(1)
 
-                    Row {
+                    mainSlot: Row {
+                        id: label
                         spacing: units.gu(1)
-                        width: parent.width
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: parent.width - units.gu(5)
 
                         Item {
                             width: units.gu(5)
@@ -404,14 +338,12 @@ Page {
                         }
 
                         Column {
-                            width: parent.width - units.gu(6)
+                            width: parent.width
                             anchors.verticalCenter: parent.verticalCenter
 
                             Text {
                                 text: "#" + name
                                 wrapMode: Text.WordWrap
-                                elide: Text.ElideRight
-                                maximumLineCount: 1
                                 font.weight: Font.DemiBold
                                 width: parent.width
                             }
@@ -419,16 +351,11 @@ Page {
                             Text {
                                 text: media_count + i18n.tr(" posts")
                                 wrapMode: Text.WordWrap
-                                maximumLineCount: 1
-                                elide: Text.ElideRight
                                 width: parent.width
+                                textFormat: Text.RichText
                             }
                         }
                     }
-                }
-
-                onClicked: {
-                    pageStack.push(Qt.resolvedUrl("TagFeedPage.qml"), {tag: name});
                 }
             }
         }
@@ -446,28 +373,25 @@ Page {
             model: searchPlacesModel
             delegate: ListItem {
                 id: searchPlacesDelegate
+                height: layout.height
                 divider.visible: false
-                height: entry_column.height + units.gu(1)
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("LocationFeedPage.qml"), {locationId: location.pk, locationName: title});
+                }
 
-                Column {
-                    id: entry_column
-                    spacing: units.gu(1)
-                    anchors {
-                        left: parent.left
-                        leftMargin: units.gu(1)
-                        right: parent.right
-                        rightMargin: units.gu(1)
-                    }
+                SlotsLayout {
+                    id: layout
+                    anchors.centerIn: parent
 
-                    Item {
-                        width: parent.width
-                        height: units.gu(0.1)
-                    }
+                    padding.leading: 0
+                    padding.trailing: 0
+                    padding.top: units.gu(1)
+                    padding.bottom: units.gu(1)
 
-                    Row {
+                    mainSlot: Row {
+                        id: label
                         spacing: units.gu(1)
-                        width: parent.width
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: parent.width - units.gu(5)
 
                         Item {
                             width: units.gu(5)
@@ -482,14 +406,12 @@ Page {
                         }
 
                         Column {
-                            width: parent.width - units.gu(6)
+                            width: parent.width
                             anchors.verticalCenter: parent.verticalCenter
 
                             Text {
                                 text: title
                                 wrapMode: Text.WordWrap
-                                elide: Text.ElideRight
-                                maximumLineCount: 1
                                 font.weight: Font.DemiBold
                                 width: parent.width
                             }
@@ -497,16 +419,11 @@ Page {
                             Text {
                                 text: subtitle
                                 wrapMode: Text.WordWrap
-                                elide: Text.ElideRight
-                                maximumLineCount: 1
                                 width: parent.width
+                                textFormat: Text.RichText
                             }
                         }
                     }
-                }
-
-                onClicked: {
-                    pageStack.push(Qt.resolvedUrl("LocationFeedPage.qml"), {locationId: location.pk, locationName: title});
                 }
             }
         }

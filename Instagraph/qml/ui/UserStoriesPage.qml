@@ -37,7 +37,7 @@ Page {
                         id: feed_user_profile_image
                         width: parent.width
                         height: width
-                        source: user.profile_pic_url
+                        source: typeof user !== 'undefined' ? user.profile_pic_url : "../images/not_found_user.jpg"
                     }
 
                     MouseArea {
@@ -45,7 +45,7 @@ Page {
                             fill: parent
                         }
                         onClicked: {
-                            pageStack.push(Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameString: user.username});
+                            pageStack.push(Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: user.pk});
                         }
                     }
                 }
@@ -54,7 +54,7 @@ Page {
                     anchors {
                         verticalCenter: parent.verticalCenter
                     }
-                    text: user.username
+                    text: typeof user !== 'undefined' ? user.username : ""
                     font.weight: Font.DemiBold
                     wrapMode: Text.WordWrap
                     color: "#ffffff"
@@ -70,7 +70,7 @@ Page {
                             fill: parent
                         }
                         onClicked: {
-                            pageStack.push(Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameString: user.username});
+                            pageStack.push(Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: user.pk});
                         }
                     }
                 }

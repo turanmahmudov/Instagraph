@@ -25,7 +25,11 @@ function getBestImage(imageObject, width) {
     return closest;
 }
 
-function milisecondsToString(miliseconds, short) {
+function milisecondsToString(miliseconds, short, timestamp) {
+    if (timestamp) {
+        miliseconds = miliseconds/1000000;
+    }
+
     try {
         //get different date time initials.
         var myDate = new Date();

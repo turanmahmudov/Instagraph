@@ -130,53 +130,30 @@ Page {
             model: recentActivityModel
             delegate: ListItem {
                 id: recentActivityDelegate
+                height: layout.height
                 divider.visible: false
-                height: entry_column.height + units.gu(2)
 
-                Column {
-                    id: entry_column
-                    spacing: units.gu(1)
-                    width: parent.width
-                    y: units.gu(1)
+                SlotsLayout {
+                    id: layout
+                    anchors.centerIn: parent
 
-                    Row {
+                    padding.leading: 0
+                    padding.trailing: 0
+                    padding.top: units.gu(1)
+                    padding.bottom: units.gu(1)
+
+                    mainSlot: Row {
+                        id: label
                         spacing: units.gu(1)
-                        width: parent.width
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: parent.width - (story.type == 3 ? followButton.width : feed_image.width)
 
-                        Item {
+                        CircleImage {
                             width: units.gu(5)
                             height: width
-
-                            CircleImage {
-                                id: feed_user_profile_image
-                                width: parent.width
-                                height: width
-                                source: story.type == 13 ? "image://theme/info" : (status == Image.Error ? "../images/not_found_user.jpg" : story.args.profile_image)
-                            }
-
-                            Item {
-                                width: activity.width
-                                height: width
-                                anchors.centerIn: parent
-                                opacity: feed_user_profile_image.status == Image.Loading
-
-                                Behavior on opacity {
-                                    UbuntuNumberAnimation {
-                                        duration: UbuntuAnimation.SlowDuration
-                                    }
-                                }
-
-                                ActivityIndicator {
-                                    id: activity
-                                    running: true
-                                }
-                            }
+                            source: story.type == 13 ? "image://theme/info" : (typeof story.args.profile_image !== 'undefined' ? story.args.profile_image : "../images/not_found_user.jpg")
 
                             MouseArea {
-                                anchors {
-                                    fill: parent
-                                }
+                                anchors.fill: parent
                                 onClicked: {
                                     pageStack.push(Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: story.args.profile_id});
                                 }
@@ -184,7 +161,7 @@ Page {
                         }
 
                         Column {
-                            width: story.type == 4 ? parent.width - units.gu(6): parent.width - units.gu(12)
+                            width: parent.width - units.gu(6)
                             anchors.verticalCenter: parent.verticalCenter
 
                             Text {
@@ -198,67 +175,48 @@ Page {
                                 }
                             }
 
-                            Text {
+                            Label {
                                 text: Helper.milisecondsToString(story.args.timestamp)
-                                wrapMode: Text.WordWrap
-                                width: parent.width
-                                textFormat: Text.RichText
+                                fontSize: "small"
+                                color: UbuntuColors.darkGrey
+                                font.weight: Font.Light
                                 font.capitalization: Font.AllLowercase
                             }
                         }
+                    }
 
-                        Item {
-                            visible: story.type == 1
-                            width: story.type == 1 ? units.gu(5) : 0
-                            height: width
+                    FollowComponent {
+                        id: followButton
+                        height: units.gu(3.5)
+                        visible: story.type == 3
+                        friendship_var: story.args.inline_follow
+                        userId: story.args.profile_id
+                        just_icon: isPhone ? true : false
 
-                            Image {
-                                id: feed_image
-                                width: parent.width
-                                height: width
-                                source: story.type == 1 ? story.args.media[0].image : ""
-                                fillMode: Image.PreserveAspectCrop
-                                sourceSize: Qt.size(width,height)
-                                asynchronous: true
-                                cache: true
-                                smooth: false
-                            }
+                        anchors.verticalCenter: parent.verticalCenter
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        SlotsLayout.overrideVerticalPositioning: true
+                    }
 
-                            Item {
-                                width: activity2.width
-                                height: width
-                                anchors.centerIn: parent
-                                opacity: feed_image.status == Image.Loading
+                    FeedImage {
+                        id: feed_image
+                        width: (story.type == 1 || story.type == 14) ? units.gu(5) : 0
+                        height: width
+                        visible: (story.type == 1 || story.type == 14)
+                        source: (story.type == 1 || story.type == 14) ? story.args.media[0].image : ""
 
-                                Behavior on opacity {
-                                    UbuntuNumberAnimation {
-                                        duration: UbuntuAnimation.SlowDuration
-                                    }
-                                }
+                        anchors.verticalCenter: parent.verticalCenter
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        SlotsLayout.overrideVerticalPositioning: true
 
-                                ActivityIndicator {
-                                    id: activity2
-                                    running: true
-                                }
-                            }
+                        MouseArea {
+                            anchors.fill: parent
 
-                            MouseArea {
-                                anchors.fill: parent
-
-                                onClicked: {
-                                    if (story.type == 1) {
-                                        pageStack.push(Qt.resolvedUrl("SinglePhoto.qml"), {photoId: story.args.media[0].id});
-                                    }
+                            onClicked: {
+                                if (story.type == 1 || story.type == 14) {
+                                    pageStack.push(Qt.resolvedUrl("SinglePhoto.qml"), {photoId: story.args.media[0].id});
                                 }
                             }
-                        }
-
-                        FollowComponent {
-                            visible: story.type == 3
-                            width: story.type == 3 ? units.gu(5) : 0
-                            height: units.gu(3)
-                            friendship_var: story.args.inline_follow
-                            userId: story.args.profile_id
                         }
                     }
                 }
@@ -286,53 +244,30 @@ Page {
             model: followingRecentActivityModel
             delegate: ListItem {
                 id: followingRecentActivityDelegate
+                height: layout.height
                 divider.visible: false
-                height: entry_column.height + units.gu(2)
 
-                Column {
-                    id: entry_column
-                    spacing: units.gu(1)
-                    width: parent.width
-                    y: units.gu(1)
+                SlotsLayout {
+                    id: layout
+                    anchors.centerIn: parent
 
-                    Row {
+                    padding.leading: 0
+                    padding.trailing: 0
+                    padding.top: units.gu(1)
+                    padding.bottom: units.gu(1)
+
+                    mainSlot: Row {
+                        id: label
                         spacing: units.gu(1)
-                        width: parent.width
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: parent.width - (story.type == 1 ? feed_image.width : 0)
 
-                        Item {
+                        CircleImage {
                             width: units.gu(5)
                             height: width
-
-                            CircleImage {
-                                id: feed_user_profile_image
-                                width: parent.width
-                                height: width
-                                source: status == Image.Error ? "../images/not_found_user.jpg" : story.args.profile_image
-                            }
-
-                            Item {
-                                width: activity.width
-                                height: width
-                                anchors.centerIn: parent
-                                opacity: feed_user_profile_image.status == Image.Loading
-
-                                Behavior on opacity {
-                                    UbuntuNumberAnimation {
-                                        duration: UbuntuAnimation.SlowDuration
-                                    }
-                                }
-
-                                ActivityIndicator {
-                                    id: activity
-                                    running: true
-                                }
-                            }
+                            source: typeof story.args.profile_image !== 'undefined' ? story.args.profile_image : "../images/not_found_user.jpg"
 
                             MouseArea {
-                                anchors {
-                                    fill: parent
-                                }
+                                anchors.fill: parent
                                 onClicked: {
                                     pageStack.push(Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: story.args.profile_id});
                                 }
@@ -340,7 +275,7 @@ Page {
                         }
 
                         Column {
-                            width: story.type == 2 || story.type == 4 ? parent.width - units.gu(6): parent.width - units.gu(12)
+                            width: parent.width - units.gu(6)
                             anchors.verticalCenter: parent.verticalCenter
 
                             Text {
@@ -348,101 +283,76 @@ Page {
                                 wrapMode: Text.WordWrap
                                 width: parent.width
                                 textFormat: Text.RichText
+                                font.weight: story.type == 13 ? Font.DemiBold : Font.Normal
                                 onLinkActivated: {
                                     Scripts.linkClick(link, story.type == 1 ? story.args.media[0].id : 0)
                                 }
                             }
 
-                            Text {
+                            Label {
                                 text: Helper.milisecondsToString(story.args.timestamp)
-                                wrapMode: Text.WordWrap
-                                width: parent.width
-                                textFormat: Text.RichText
+                                fontSize: "small"
+                                color: UbuntuColors.darkGrey
+                                font.weight: Font.Light
                                 font.capitalization: Font.AllLowercase
-                            }
-                        }
-
-                        Item {
-                            visible: story.type == 1
-                            width: story.type == 1 ? units.gu(5) : 0
-                            height: width
-
-                            Image {
-                                id: feed_image
-                                width: parent.width
-                                height: width
-                                source: story.type == 1 ? story.args.media[0].image : ""
-                                fillMode: Image.PreserveAspectCrop
-                                sourceSize: Qt.size(width,height)
-                                asynchronous: true
-                                cache: true
-                                smooth: false
                             }
 
                             Item {
-                                width: activity2.width
-                                height: width
-                                anchors.centerIn: parent
-                                opacity: feed_image.status == Image.Loading
-
-                                Behavior on opacity {
-                                    UbuntuNumberAnimation {
-                                        duration: UbuntuAnimation.SlowDuration
-                                    }
-                                }
-
-                                ActivityIndicator {
-                                    id: activity2
-                                    running: true
-                                }
+                                width: parent.width
+                                height: units.gu(1)
                             }
 
-                            MouseArea {
-                                anchors.fill: parent
+                            Grid {
+                                visible: story.type == 2
+                                width: parent.width
+                                columns: 6
+                                spacing: units.gu(0.2)
 
-                                onClicked: {
-                                    if (story.type == 1) {
-                                        pageStack.push(Qt.resolvedUrl("SinglePhoto.qml"), {photoId: story.args.media[0].id});
+                                Repeater {
+                                    model: Helper.objectLength(story.args.media) > 1 ? Helper.objectLength(story.args.media) : 0
+
+                                    Rectangle {
+                                        width: parent.width/7
+                                        height: width
+
+                                        FeedImage {
+                                            width: parent.width
+                                            height: width
+                                            source: story.args.media[index].image
+                                        }
+
+                                        MouseArea {
+                                            anchors.fill: parent
+
+                                            onClicked: {
+                                                if (story.type == 2) {
+                                                    pageStack.push(Qt.resolvedUrl("SinglePhoto.qml"), {photoId: story.args.media[index].id});
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
                     }
 
-                    Grid {
-                        visible: story.type == 2
-                        anchors.left: parent.left
-                        anchors.leftMargin: units.gu(6)
-                        width: parent.width - units.gu(6)
-                        columns: 6
-                        spacing: units.gu(0.2)
+                    FeedImage {
+                        id: feed_image
+                        width: (story.type == 1 || story.type == 14) ? units.gu(5) : 0
+                        height: width
+                        visible: (story.type == 1 || story.type == 14)
+                        source: (story.type == 1 || story.type == 14) ? story.args.media[0].image : ""
 
-                        Repeater {
-                            model: Helper.objectLength(story.args.media) > 1 ? Helper.objectLength(story.args.media) : 0
+                        anchors.verticalCenter: parent.verticalCenter
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        SlotsLayout.overrideVerticalPositioning: true
 
-                            Rectangle {
-                                width: parent.width/7
-                                height: width
+                        MouseArea {
+                            anchors.fill: parent
 
-                                Image {
-                                    width: parent.width
-                                    height: width
-                                    source: story.args.media[index].image
-                                    fillMode: Image.PreserveAspectCrop
-                                    sourceSize: Qt.size(width,height)
-                                    asynchronous: true
-                                    cache: true
-                                    smooth: false
-                                }
-
-                                MouseArea {
-                                    anchors.fill: parent
-
-                                    onClicked: {
-                                        if (story.type == 2) {
-                                            pageStack.push(Qt.resolvedUrl("SinglePhoto.qml"), {photoId: story.args.media[index].id});
-                                        }
-                                    }
+                            onClicked: {
+                                if (story.type == 1 || story.type == 14) {
+                                    pageStack.push(Qt.resolvedUrl("SinglePhoto.qml"), {photoId: story.args.media[0].id});
                                 }
                             }
                         }

@@ -44,7 +44,6 @@ Page {
 
             for (var i = 0; i < data.inbox.threads.length; i++) {
                 data.inbox.threads[i].user_profile_pic_url = typeof data.inbox.threads[i].users[0] != 'undefined' ? data.inbox.threads[i].users[0].profile_pic_url : data.inbox.threads[i].inviter.profile_pic_url;
-                data.inbox.threads[i].item_text = data.inbox.threads[i].items[0].text;
                 data.inbox.threads[i].item_timestamp = data.inbox.threads[i].items[0].timestamp;
                 v2InboxModel.append(data.inbox.threads[i]);
             }
@@ -103,30 +102,37 @@ Page {
         cacheBuffer: parent.height*2
         model: v2InboxModel
         delegate: ListItem {
-            id: v2InboxDelegate
+            id: userFollowersDelegate
+            height: layout.height
             divider.visible: false
-            height: entry_column.height + units.gu(2)
+            onClicked: {
+                pageStack.push(Qt.resolvedUrl("DirectThreadPage.qml"), {threadId: thread_id});
+            }
 
-            Column {
-                id: entry_column
-                spacing: units.gu(1)
-                width: parent.width
-                y: units.gu(1)
+            property bool unseen: last_permanent_item.timestamp > last_seen_at[Object.keys(last_seen_at)[0]].timestamp
 
-                Row {
+            SlotsLayout {
+                id: layout
+                anchors.centerIn: parent
+
+                padding.leading: 0
+                padding.trailing: 0
+                padding.top: units.gu(1)
+                padding.bottom: units.gu(1)
+
+                mainSlot: Row {
+                    id: label
                     spacing: units.gu(1)
-                    width: parent.width
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: parent.width - unseen_mark.width
 
                     CircleImage {
-                        id: feed_user_profile_image
                         width: units.gu(5)
                         height: width
-                        source: status == Image.Error ? "../images/not_found_user.jpg" : user_profile_pic_url
+                        source: user_profile_pic_url
                     }
 
                     Column {
-                        width: typeof image_versions2 != 'undefined' ? parent.width - units.gu(12): parent.width - units.gu(6)
+                        width: parent.width
                         anchors.verticalCenter: parent.verticalCenter
 
                         Text {
@@ -134,57 +140,48 @@ Page {
                             wrapMode: Text.WordWrap
                             font.weight: Font.DemiBold
                             width: parent.width
-                            textFormat: Text.RichText
-                            color: has_newer || last_seen_at[Object.keys(last_seen_at)[0]].timestamp < item_timestamp ? "#275A84" : "#000000"
                         }
 
                         Text {
-                            text: item_text ? item_text : ''
+                            property string item_text: last_permanent_item.item_type === 'media_share' ? (last_permanent_item.user_id == my_usernameId ? i18n.tr("You shared a post") : i18n.tr("Shared a post")) :
+                                                       last_permanent_item.item_type === 'media' ? (last_permanent_item.user_id == my_usernameId ? i18n.tr("You shared a media") : i18n.tr("Shared a media")) :
+                                                       last_permanent_item.item_type === 'like' ? last_permanent_item.like :
+                                                       last_permanent_item.item_type === 'action_log' ? last_permanent_item.action_log.description :
+                                                       last_permanent_item.item_type === 'reel_share' ?
+                                                            (last_permanent_item.reel_share.type == 'mention' ? (last_permanent_item.user_id == my_usernameId ? i18n.tr("You mentioned their in a story") : i18n.tr("Mentied you in a story")) :
+                                                            last_permanent_item.reel_share.type == 'reply' ? (last_permanent_item.user_id == my_usernameId ? i18n.tr("You replied to their story") : i18n.tr("Replied to your story")) : i18n.tr("UNKNOWN")) :
+                                                       last_permanent_item.text
+                            text: item_text
+                            font.weight: unseen ? Font.DemiBold : Font.ExtraLight
+                            width: parent.width
                             wrapMode: Text.WordWrap
-                            width: parent.width
-                            textFormat: Text.RichText
-                        }
-                    }
-
-                    Item {
-                        visible: typeof image_versions2 != 'undefined'
-                        width: typeof image_versions2 != 'undefined' ? units.gu(5) : 0
-                        height: width
-
-                        Image {
-                            id: feed_image
-                            width: parent.width
-                            height: width
-                            source: typeof image_versions2 != 'undefined' ? image_versions2.candidates[0].url : ""
-                            fillMode: Image.PreserveAspectCrop
-                            sourceSize: Qt.size(width,height)
-                            smooth: true
-                            clip: true
+                            maximumLineCount: 1
+                            elide: Text.ElideRight
                         }
 
-                        Item {
-                            width: activity2.width
-                            height: width
-                            anchors.centerIn: parent
-                            opacity: feed_image.status == Image.Loading
-
-                            Behavior on opacity {
-                                UbuntuNumberAnimation {
-                                    duration: UbuntuAnimation.SlowDuration
-                                }
-                            }
-
-                            ActivityIndicator {
-                                id: activity2
-                                running: true
-                            }
+                        Label {
+                            id: item_time
+                            text: Helper.milisecondsToString(last_permanent_item.timestamp, false, true)
+                            fontSize: "small"
+                            color: UbuntuColors.darkGrey
+                            font.weight: Font.Light
+                            font.capitalization: Font.AllLowercase
                         }
                     }
                 }
-            }
 
-            onClicked: {
-                pageStack.push(Qt.resolvedUrl("../ui/DirectThreadPage.qml"), {threadId: thread_id});
+                Rectangle {
+                    id: unseen_mark
+                    width: unseen ? units.gu(1) : 0
+                    height: width
+                    visible: unseen
+                    radius: width/2
+                    color: UbuntuColors.blue
+
+                    anchors.verticalCenter: parent.verticalCenter
+                    SlotsLayout.position: SlotsLayout.Trailing
+                    SlotsLayout.overrideVerticalPositioning: true
+                }
             }
         }
         PullToRefresh {
