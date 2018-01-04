@@ -85,6 +85,7 @@ public slots:
 
     void getv2Inbox(QString cursor_id = "");
     void directThread(QString threadId, QString cursor_id = "");
+    void markDirectThreadItemSeen(QString threadId, QString threadItemId);
     void directMessage(QString recipients, QString text, QString thread_id = "0");
     void directLike(QString recipients, QString thread_id = "0");
     void directShare(QString mediaId, QString recipients, QString text = "");
@@ -204,6 +205,7 @@ signals:
 
     void v2InboxDataReady(QVariant answer);
     void directThreadReady(QVariant answer);
+    void markDirectThreadItemSeenReady(QVariant answer);
     void directMessageReady(QVariant answer);
     void directLikeReady(QVariant answer);
     void directShareReady(QVariant answer);

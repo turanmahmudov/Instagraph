@@ -1020,6 +1020,29 @@ void Instagram::directThread(QString threadId, QString cursor_id)
     QObject::connect(directThreadRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(directThreadReady(QVariant)));
 }
 
+void Instagram::markDirectThreadItemSeen(QString threadId, QString threadItemId)
+{
+    m_busy = true;
+    emit busyChanged();
+
+    InstagramRequest *markDirectThreadItemSeenRequest = new InstagramRequest();
+
+    QJsonObject data;
+        data.insert("_uuid",        this->m_uuid);
+        data.insert("_csrftoken",   "Set-Cookie: csrftoken="+this->m_token);
+        data.insert("use_unified_inbox", "true");
+        data.insert("action",       "mark_seen");
+        data.insert("thread_id",    threadId);
+        data.insert("item_id",      threadItemId);
+
+    QString signature = markDirectThreadItemSeenRequest->generateSignature(data);
+    markDirectThreadItemSeenRequest->request("direct_v2/threads/"+threadId+"/items/"+threadItemId+"/seen/",signature.toUtf8());
+    QObject::connect(markDirectThreadItemSeenRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(markDirectThreadItemSeenReady(QVariant)));
+
+    m_busy = false;
+    emit busyChanged();
+}
+
 void Instagram::directShare(QString mediaId, QString recipients, QString text)
 {
     m_busy = true;

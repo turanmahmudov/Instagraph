@@ -35,6 +35,11 @@ Page {
             for (var j = 0; j < data.thread.users.length; j++) {
                 threadUsers[data.thread.users[j].pk] = data.thread.users[j];
             }
+
+            // Mark Direct Thread Item Seen
+            var thId = data.thread.thread_id;
+            var thItemId = data.thread.items[0].item_id;
+            instagram.markDirectThreadItemSeen(thId, thItemId);
         }
 
         if (next_oldest_cursor_id == data.thread.oldest_cursor) {
@@ -473,6 +478,9 @@ Page {
         onDirectLikeReady: {
             var data = JSON.parse(answer);
             likePostedFinished(data);
+        }
+        onMarkDirectThreadItemSeenReady: {
+            console.log(answer)
         }
     }
 }
