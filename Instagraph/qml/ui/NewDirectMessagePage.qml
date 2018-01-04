@@ -15,6 +15,8 @@ Page {
 
     property var threadUsers: []
 
+    signal refreshList()
+
     header: PageHeader {
         title: i18n.tr("New Message")
     }
@@ -86,31 +88,112 @@ Page {
         id: rankedRecipientsModel
     }
 
+    ListModel {
+        id: selectedUsersModel
+        onCountChanged: {
+            selectedUsersList.positionViewAtEnd()
+        }
+    }
+
     Column {
         anchors {
             top: newdirectmessagepage.header.bottom
             topMargin: units.gu(1)
             bottom: addMessageItem.top
-            bottomMargin: units.gu(1)
+            bottomMargin: 0
             left: parent.left
             right: parent.right
         }
 
-        TextField {
-            id: searchUsersField
+        Row {
+            id: selectedUsersFlow
             anchors {
                 left: parent.left
                 leftMargin: units.gu(1)
                 right: parent.right
                 rightMargin: units.gu(1)
             }
-            //width: parent.width
-            placeholderText: i18n.tr("Search")
-            onAccepted: {
-                instagram.getRankedRecipients(searchUsersField.text);
+            spacing: units.gu(1)
+
+            Label {
+                id: toLabel
+                text: i18n.tr("To")
+                font.weight: Font.DemiBold
+                anchors.verticalCenter: parent.verticalCenter
             }
-            onTextChanged: {
-                instagram.getRankedRecipients(searchUsersField.text);
+
+            ListView {
+                id: selectedUsersList
+                width: parent.width - toLabel.width - units.gu(1)
+                height: units.gu(4)
+                orientation: Qt.Horizontal
+                clip: true
+                spacing: units.gu(0.5)
+                model: selectedUsersModel
+                anchors.verticalCenter: parent.verticalCenter
+
+                delegate: Item {
+                    width: username_rect.width
+                    height: username_rect.height
+                    clip: true
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    Rectangle {
+                        id: username_rect
+                        height: username_label.height + units.gu(1.5)
+                        width: username_label.width + units.gu(2.5)
+                        color: UbuntuColors.blue
+                        radius: units.gu(0.3)
+                        Label {
+                            anchors.centerIn: parent
+                            id: username_label
+                            text: username
+                            color: "#ffffff"
+                            fontSize: "small"
+                            font.weight: Font.DemiBold
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                var userId = selectedUsersModel.get(index).userId
+                                selectedUsersModel.remove(index)
+
+                                var ind = threadUsers.indexOf(userId);
+                                if (ind > -1) {
+                                    threadUsers.splice(ind, 1);
+                                }
+
+                                refreshList()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        ListItem {
+            height: searchUsersField.height
+            anchors {
+                left: parent.left
+                leftMargin: units.gu(1)
+                right: parent.right
+                rightMargin: units.gu(1)
+            }
+            y: units.gu(2)
+
+            TextField {
+                id: searchUsersField
+                width: parent.width
+                StyleHints {
+                    borderColor: "transparent"
+                }
+                placeholderText: i18n.tr("Search")
+                onAccepted: {
+                    instagram.getRankedRecipients(searchUsersField.text);
+                }
+                onTextChanged: {
+                    instagram.getRankedRecipients(searchUsersField.text);
+                }
             }
         }
 
@@ -118,7 +201,7 @@ Page {
             id: recipientsList
 
             width: parent.width
-            height: parent.height - searchUsersField.height
+            height: parent.height - searchUsersField.height - selectedUsersFlow.height
             clip: true
             model: rankedRecipientsModel
             delegate: ListItem {
@@ -176,11 +259,18 @@ Page {
                                 var index = threadUsers.indexOf(user_obj.pk);
                                 if (index == -1) {
                                     threadUsers.push(user_obj.pk)
+                                    selectedUsersModel.append({"userId":user_obj.pk, "username":user_obj.username})
                                 }
                             } else {
                                 var index = threadUsers.indexOf(user_obj.pk);
                                 if (index > -1) {
                                     threadUsers.splice(index, 1);
+
+                                    for(var i = 0; i < selectedUsersModel.count; i++) {
+                                           if (user_obj.pk === selectedUsersModel.get(i).userId) {
+                                               selectedUsersModel.remove(i)
+                                           }
+                                       }
                                 }
                             }
 
@@ -192,6 +282,18 @@ Page {
                                 addMessageItem.height = 0
                             }
                         }
+
+                        Connections {
+                            target: newdirectmessagepage
+                            onRefreshList: {
+                                var index = threadUsers.indexOf(user_obj.pk);
+                                if (index == -1) {
+                                    selectUserCheckBox.checked = false
+                                } else {
+                                    selectUserCheckBox.checked = true
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -201,7 +303,7 @@ Page {
     Item {
         id: addMessageItem
         visible: threadUsers.length > 0
-        height: threadUsers.length > 0 ? units.gu(5) : 0
+        height: threadUsers.length > 0 ? units.gu(6) : 0
         anchors {
             bottom: parent.bottom
             left: parent.left
