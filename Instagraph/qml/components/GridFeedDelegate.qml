@@ -15,6 +15,10 @@ ListItem {
 
     property var thismodel
 
+    property var bestImage: typeof carousel_media_obj !== 'undefined' && carousel_media_obj.count > 0 ?
+                                Helper.getBestImage(carousel_media_obj.get(0).image_versions2.candidates, parent.width) :
+                                Helper.getBestImage(images_obj.candidates, parent.width)
+
     divider.visible: false
 
     Item {
@@ -22,8 +26,6 @@ ListItem {
         height: parent.height
 
         FeedImage {
-            property var bestImage: carousel_media_obj.count > 0 ? Helper.getBestImage(carousel_media_obj.get(0).image_versions2.candidates, parent.width) : Helper.getBestImage(image_versions2.candidates, parent.width)
-
             id: feed_image
             width: parent.width
             height: width

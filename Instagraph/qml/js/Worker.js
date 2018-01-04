@@ -50,6 +50,10 @@ WorkerScript.onMessage = function(msg) {
                 // Carousel media
                 obj[i].media_or_ad.carousel_media_obj = typeof obj[i].media_or_ad.carousel_media != 'undefined' ? obj[i].media_or_ad.carousel_media : []
 
+                // Images
+                obj[i].media_or_ad.images_obj = typeof obj[i].media_or_ad.image_versions2 != 'undefined' ? obj[i].media_or_ad.image_versions2 : {}
+
+                // Video
                 obj[i].media_or_ad.video_url = typeof obj[i].media_or_ad.video_versions != 'undefined' ? obj[i].media_or_ad.video_versions[0].url : ''
 
                 list_obj = obj[i].media_or_ad;
@@ -77,6 +81,10 @@ WorkerScript.onMessage = function(msg) {
             // Carousel media
             obj[i].carousel_media_obj = typeof obj[i].carousel_media != 'undefined' ? obj[i].carousel_media : []
 
+            // Images
+            obj[i].images_obj = typeof obj[i].image_versions2 != 'undefined' ? obj[i].image_versions2 : {}
+
+            // Video
             if (feed !== 'searchPage') {
                 obj[i].video_url = obj[i].video_versions ? obj[i].video_versions[0].url : ''
             }
