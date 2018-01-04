@@ -231,7 +231,7 @@ Column {
         property var bestImage: typeof carousel_media_obj !== 'undefined' && carousel_media_obj.count > 0 ?
                                     Helper.getBestImage(carousel_media_obj.get(0).image_versions2.candidates, parent.width) :
                                     media_type == 1 || media_type == 2 ?
-                                        Helper.getBestImage(image_versions2.candidates, parent.width) :
+                                        Helper.getBestImage(images_obj.candidates, parent.width) :
                                         {"width":0, "height":0, "url":""}
 
 

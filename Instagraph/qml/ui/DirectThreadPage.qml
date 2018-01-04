@@ -480,7 +480,7 @@ Page {
             likePostedFinished(data);
         }
         onMarkDirectThreadItemSeenReady: {
-            console.log(answer)
+
         }
     }
 }
