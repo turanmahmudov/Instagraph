@@ -253,7 +253,7 @@ Page {
                        spacing: units.gu(1)
 
                        Label {
-                           text: i18n.tr("Phone")
+                           text: i18n.tr("Gender")
                            font.weight: Font.Normal
                            width: parent.width
                        }

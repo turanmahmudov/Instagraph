@@ -377,7 +377,6 @@ Page {
                             visible: false
                             width: parent.width - units.gu(2)
                             anchors.horizontalCenter: parent.horizontalCenter
-                            color: UbuntuColors.green
                             text: i18n.tr("Following")
                             onTriggered: {
                                 latest_follow_request = usernameId
@@ -390,6 +389,7 @@ Page {
                             visible: false
                             width: parent.width - units.gu(2)
                             anchors.horizontalCenter: parent.horizontalCenter
+                            color: UbuntuColors.green
                             text: i18n.tr("Follow")
                             onTriggered: {
                                 latest_follow_request = usernameId
@@ -402,6 +402,7 @@ Page {
                             visible: false
                             width: parent.width - units.gu(2)
                             anchors.horizontalCenter: parent.horizontalCenter
+                            color: "#666666"
                             text: i18n.tr("Requested")
                             onTriggered: {
                                 latest_follow_request = usernameId

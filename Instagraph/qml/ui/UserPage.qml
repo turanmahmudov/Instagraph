@@ -283,7 +283,7 @@ Page {
                             width: parent.width - units.gu(2)
                             anchors.horizontalCenter: parent.horizontalCenter
                             color: UbuntuColors.green
-                            text: i18n.tr("Edit your profile")
+                            text: i18n.tr("Edit Profile")
                             onClicked: {
                                 pageStack.push(Qt.resolvedUrl("EditProfilePage.qml"));
                             }
