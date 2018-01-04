@@ -38,6 +38,11 @@ Page {
         }
     }
 
+    property string next_max_id: ""
+    property bool more_available: true
+    property bool next_coming: true
+    property bool clear_models: true
+
     property int current_notifs_section: 1
 
     property bool list_loading: false
@@ -63,7 +68,17 @@ Page {
             isEmptyFollowing = false;
         }
 
-        worker.sendMessage({'obj': data.stories, 'model': followingRecentActivityModel, 'clear_model': true})
+        if (next_max_id == data.next_max_id) {
+            return false;
+        } else {
+            next_max_id = data.auto_load_more_enabled == true ? data.next_max_id : "";
+            more_available = data.auto_load_more_enabled;
+            next_coming = true;
+
+            worker.sendMessage({'obj': data.stories, 'model': followingRecentActivityModel, 'clear_model': clear_models})
+
+            next_coming = false;
+        }
 
         list_loading_following = false
     }
@@ -82,10 +97,15 @@ Page {
         instagram.getRecentActivity();
     }
 
-    function getFollowingRecentActivity()
+    function getFollowingRecentActivity(next_id)
     {
-        followingRecentActivityModel.clear()
-        instagram.getFollowingRecentActivity();
+        clear_models = false
+        if (!next_id) {
+            followingRecentActivityModel.clear()
+            next_max_id = 0
+            clear_models = true
+        }
+        instagram.getFollowingRecentActivity(next_id);
     }
 
     BouncingProgressBar {
@@ -242,6 +262,11 @@ Page {
             clip: true
             cacheBuffer: notifspage.height*2
             model: followingRecentActivityModel
+            onMovementEnded: {
+                if (atYEnd && more_available && !next_coming) {
+                    getFollowingRecentActivity(next_max_id)
+                }
+            }
             delegate: ListItem {
                 id: followingRecentActivityDelegate
                 height: layout.height

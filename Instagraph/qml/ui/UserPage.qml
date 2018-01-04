@@ -76,7 +76,7 @@ Page {
             more_available = data.more_available;
             next_coming = true;
 
-            worker.sendMessage({'feed': 'userPage', 'obj': data.items, 'model': userPhotosModel, 'commentsModel': userPhotosCommentsModel, 'clear_model': clear_models})
+            worker.sendMessage({'feed': 'userPage', 'obj': data.items, 'model': userPhotosModel, 'clear_model': clear_models})
 
             next_coming = false;
         }
@@ -118,7 +118,6 @@ Page {
         clear_models = false
         if (!next_id) {
             userPhotosModel.clear();
-            userPhotosCommentsModel.clear();
             next_max_id = 0
             clear_models = true
         }
@@ -130,10 +129,6 @@ Page {
         z: 10
         anchors.top: userpage.header.bottom
         visible: instagram.busy || list_loading
-    }
-
-    ListModel {
-        id: userPhotosCommentsModel
     }
 
     ListModel {

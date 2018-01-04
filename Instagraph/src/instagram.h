@@ -50,7 +50,7 @@ public slots:
     void getUsernameInfo(QString usernameId);
 
     void getRecentActivity();
-    void getFollowingRecentActivity();
+    void getFollowingRecentActivity(QString max_id = "");
 
     void getUserTags(QString usernameId);
     void getGeoMedia(QString usernameId);

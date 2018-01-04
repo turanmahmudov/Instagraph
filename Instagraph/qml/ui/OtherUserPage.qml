@@ -75,7 +75,6 @@ Page {
     }
 
     function userTimeLineDataFinished(data) {
-        //console.log(JSON.stringify(data))
         if (data.num_results == 0) {
             isEmpty = true;
         } else {

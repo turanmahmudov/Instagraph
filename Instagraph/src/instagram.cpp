@@ -624,11 +624,24 @@ void Instagram::getRecentActivity()
     QObject::connect(getRecentActivityRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(recentActivityDataReady(QVariant)));
 }
 
-void Instagram::getFollowingRecentActivity()
+void Instagram::getFollowingRecentActivity(QString max_id)
 {
+    m_busy = true;
+    emit busyChanged();
+
+    QString target ="news/";
+
+    if(max_id.length() > 0)
+    {
+        target += "?max_id="+max_id+"&";
+    }
+
     InstagramRequest *getFollowingRecentRequest = new InstagramRequest();
-    getFollowingRecentRequest->request("news/?",NULL);
+    getFollowingRecentRequest->request(target,NULL);
     QObject::connect(getFollowingRecentRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(followingRecentDataReady(QVariant)));
+
+    m_busy = false;
+    emit busyChanged();
 }
 
 void Instagram::getUserTags(QString usernameId)
