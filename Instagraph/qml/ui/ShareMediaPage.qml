@@ -18,68 +18,10 @@ Page {
 
     property var threadUsers: []
 
-    property bool clear_models: true
+    signal refreshList()
 
     header: PageHeader {
-        title: i18n.tr("Send To")
-        leadingActionBar.actions: [
-            Action {
-                id: closePageAction
-                text: i18n.tr("Close")
-                iconName: "close"
-                onTriggered: {
-                    pageStack.pop();
-                }
-            }
-        ]
-        /*trailingActionBar {
-            numberOfSlots: 1
-            actions: [
-                Action {
-                    id: searchUsersAction
-                    text: i18n.tr("Search")
-                    iconName: "find"
-                    onTriggered: {
-                        sharemediapage.header = searchHeader
-                    }
-                }
-            ]
-        }*/
-    }
-
-    PageHeader {
-        id: searchHeader
-        visible: sharemediapage.header === searchHeader
-        title: i18n.tr("Search")
-        leadingActionBar.actions: [
-            Action {
-                id: closePageAction2
-                text: i18n.tr("Close")
-                iconName: "close"
-                onTriggered: {
-                    pageStack.pop();
-                }
-            }
-        ]
-        contents: TextField {
-            id: searchInput
-            anchors {
-                left: parent.left
-                right: parent.right
-                verticalCenter: parent.verticalCenter
-            }
-            primaryItem: Icon {
-                anchors.leftMargin: units.gu(0.2)
-                height: parent.height*0.5
-                width: height
-                name: "find"
-            }
-            hasClearButton: true
-            placeholderText: i18n.tr("Search")
-            onAccepted: {
-
-            }
-        }
+        title: i18n.tr("Send to")
     }
 
     function rankedRecipientsFinished(data)
@@ -92,12 +34,6 @@ Page {
         worker.sendMessage({'feed': 'ShareMediaPage', 'obj': data.ranked_recipients, 'model': rankedRecipientsModel, 'clear_model': true})
     }
 
-    function userFollowingsDataFinished(data) {
-        userFollowingsModel.clear()
-
-        worker.sendMessage({'feed': 'UserFollowingsPage', 'obj': data.users, 'model': userFollowingsModel, 'clear_model': clear_models})
-    }
-
     WorkerScript {
         id: worker
         source: "../js/SimpleWorker.js"
@@ -107,9 +43,7 @@ Page {
     }
 
     Component.onCompleted: {
-        //getRankedRecipients();
-        //getRecentRecipients();
-        getUserFollowings();
+        getRankedRecipients();
     }
 
     function getRankedRecipients()
@@ -122,24 +56,12 @@ Page {
         instagram.getRecentRecipients();
     }
 
-    function getUserFollowings(next_id)
-    {
-        clear_models = false
-        if (!next_id) {
-            userFollowingsModel.clear()
-            clear_models = true
-        }
-        instagram.getUserFollowings(my_usernameId);
-    }
-
     function sendMessage(text)
     {
         var recip_array = [];
         var recip_string = '';
         for (var i in threadUsers) {
-            if (threadUsers[i] != 0) {
-                recip_array.push('"'+threadUsers[i]+'"');
-            }
+            recip_array.push('"'+threadUsers[i]+'"');
         }
         recip_string = recip_array.join(',');
 
@@ -158,20 +80,21 @@ Page {
     }
 
     ListModel {
-        id: userFollowingsModel
+        id: selectedUsersModel
+        onCountChanged: {
+            selectedUsersList.positionViewAtEnd()
+        }
     }
 
     Column {
-        id: entryColumn
         anchors {
-            left: parent.left
-            leftMargin: units.gu(1)
-            right: parent.right
-            rightMargin: units.gu(1)
             top: sharemediapage.header.bottom
-            topMargin: units.gu(2)
+            topMargin: units.gu(1)
+            bottom: addMessageItem.top
+            bottomMargin: 0
+            left: parent.left
+            right: parent.right
         }
-        spacing: units.gu(2)
 
         Column {
             id: privateUserWarning
@@ -195,127 +118,234 @@ Page {
             }
         }
 
-        ListView {
-            width: parent.width
-            height: units.gu(15)
+        Row {
+            id: selectedUsersFlow
+            anchors {
+                left: parent.left
+                leftMargin: units.gu(1)
+                right: parent.right
+                rightMargin: units.gu(1)
+            }
+            spacing: units.gu(1)
 
-            clip: true
+            Label {
+                id: toLabel
+                text: i18n.tr("To")
+                font.weight: Font.DemiBold
+                anchors.verticalCenter: parent.verticalCenter
+            }
 
-            snapMode: ListView.SnapToItem
-            orientation: Qt.Horizontal
-            highlightMoveDuration: UbuntuAnimation.FastDuration
-            highlightRangeMode: ListView.ApplyRange
-            highlightFollowsCurrentItem: true
+            ListView {
+                id: selectedUsersList
+                width: parent.width - toLabel.width - units.gu(1)
+                height: units.gu(4)
+                orientation: Qt.Horizontal
+                clip: true
+                spacing: units.gu(0.5)
+                model: selectedUsersModel
+                anchors.verticalCenter: parent.verticalCenter
 
-            model: userFollowingsModel
+                delegate: Item {
+                    width: username_rect.width
+                    height: username_rect.height
+                    clip: true
+                    anchors.verticalCenter: parent.verticalCenter
 
-            delegate: ListItem {
-                width: units.gu(10)
-                height: storyColumn.height
-                divider.visible: false
-
-                property bool selected: false
-
-                Column {
-                    id: storyColumn
-                    width: parent.width - units.gu(2)
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    spacing: units.gu(1)
-
-                    CircleImage {
-                        width: parent.width
-                        height: width
-                        source: typeof profile_pic_url != 'undefined' ? profile_pic_url : "../images/not_found_user.jpg"
-
+                    Rectangle {
+                        id: username_rect
+                        height: username_label.height + units.gu(1.5)
+                        width: username_label.width + units.gu(2.5)
+                        color: UbuntuColors.blue
+                        radius: units.gu(0.3)
+                        Label {
+                            anchors.centerIn: parent
+                            id: username_label
+                            text: username
+                            color: "#ffffff"
+                            fontSize: "small"
+                            font.weight: Font.DemiBold
+                        }
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                if (!selected) {
-                                    selected = true
-                                    threadUsers.push(pk)
-                                } else {
-                                    selected = false
+                                var userId = selectedUsersModel.get(index).userId
+                                selectedUsersModel.remove(index)
 
-                                    var index = threadUsers.indexOf(pk);
-                                    if (index > -1) {
-                                        threadUsers.splice(index, 1);
-                                    }
+                                var ind = threadUsers.indexOf(userId);
+                                if (ind > -1) {
+                                    threadUsers.splice(ind, 1);
                                 }
 
-                                if (threadUsers.length > 0) {
-                                    addMessageItem.visible = true;
-                                } else {
-                                    addMessageItem.visible = false;
-                                }
+                                refreshList()
                             }
-                        }
-                    }
-
-                    Column {
-                        width: parent.width
-
-                        Label {
-                            text: username
-                            color: "#000000"
-                            fontSize: "small"
-                            font.weight: Font.DemiBold
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            width: Math.min((parent.width+2), contentWidth)
-                            clip: true
-                        }
-
-                        Label {
-                            text: full_name
-                            fontSize: "small"
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            width: Math.min((parent.width+2), contentWidth)
-                            clip: true
-                        }
-
-                        Item {
-                            width: parent.width
-                            height: units.gu(1)
-                        }
-
-                        Rectangle {
-                            visible: selected
-                            width: parent.width
-                            height: units.gu(0.3)
-                            color: "#275A84"
                         }
                     }
                 }
             }
         }
 
-        Item {
-            id: addMessageItem
-            height: units.gu(5)
-            width: parent.width
-            visible: false
+        ListItem {
+            height: searchUsersField.height
+            anchors {
+                left: parent.left
+                leftMargin: units.gu(1)
+                right: parent.right
+                rightMargin: units.gu(1)
+            }
+            y: units.gu(2)
 
-            Row {
+            TextField {
+                id: searchUsersField
                 width: parent.width
-                spacing: units.gu(1)
+                StyleHints {
+                    borderColor: "transparent"
+                }
+                placeholderText: i18n.tr("Search")
+                onAccepted: {
+                    instagram.getRankedRecipients(searchUsersField.text);
+                }
+                onTextChanged: {
+                    instagram.getRankedRecipients(searchUsersField.text);
+                }
+            }
+        }
 
-                TextField {
-                    id: addMessageField
-                    width: parent.width - addMessageButton.width - units.gu(1)
-                    anchors.verticalCenter: parent.verticalCenter
-                    placeholderText: i18n.tr("Add a message...")
-                    onAccepted: {
-                        sendMessage(addMessageField.text)
-                    }
+        ListView {
+            id: recipientsList
+
+            width: parent.width
+            height: parent.height - searchUsersField.height - selectedUsersFlow.height
+            clip: true
+            model: rankedRecipientsModel
+            delegate: ListItem {
+                height: layout.height - units.gu(2)
+                divider.visible: false
+                onClicked: {
+                    selectUserCheckBox.checked = !selectUserCheckBox.checked
                 }
 
-                Button {
-                    id: addMessageButton
-                    anchors.verticalCenter: parent.verticalCenter
-                    color: UbuntuColors.green
-                    text: i18n.tr("Send")
-                    onClicked: {
-                        sendMessage(addMessageField.text)
+                SlotsLayout {
+                    id: layout
+                    anchors.centerIn: parent
+
+                    mainSlot: Row {
+                        id: label
+                        spacing: units.gu(1)
+                        width: parent.width - units.gu(5)
+
+                        CircleImage {
+                            width: units.gu(5)
+                            height: width
+                            source: user_obj.profile_pic_url
+                        }
+
+                        Column {
+                            width: parent.width - units.gu(6)
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            Text {
+                                text: user_obj.username
+                                wrapMode: Text.WordWrap
+                                font.weight: Font.DemiBold
+                                width: parent.width
+                            }
+
+                            Text {
+                                text: user_obj.full_name
+                                wrapMode: Text.WordWrap
+                                width: parent.width
+                                textFormat: Text.RichText
+                            }
+                        }
                     }
+
+                    CheckBox {
+                        id: selectUserCheckBox
+                        anchors.verticalCenter: parent.verticalCenter
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        SlotsLayout.overrideVerticalPositioning: true
+
+                        checked: threadUsers.indexOf(user_obj.pk) > -1
+
+                        onCheckedChanged: {
+                            if (checked) {
+                                var index = threadUsers.indexOf(user_obj.pk);
+                                if (index == -1) {
+                                    threadUsers.push(user_obj.pk)
+                                    selectedUsersModel.append({"userId":user_obj.pk, "username":user_obj.username})
+                                }
+                            } else {
+                                var index = threadUsers.indexOf(user_obj.pk);
+                                if (index > -1) {
+                                    threadUsers.splice(index, 1);
+
+                                    for(var i = 0; i < selectedUsersModel.count; i++) {
+                                           if (user_obj.pk === selectedUsersModel.get(i).userId) {
+                                               selectedUsersModel.remove(i)
+                                           }
+                                       }
+                                }
+                            }
+
+                            if (threadUsers.length > 0) {
+                                addMessageItem.visible = true;
+                                addMessageItem.height = units.gu(5)
+                            } else {
+                                addMessageItem.visible = false;
+                                addMessageItem.height = 0
+                            }
+                        }
+
+                        Connections {
+                            target: sharemediapage
+                            onRefreshList: {
+                                var index = threadUsers.indexOf(user_obj.pk);
+                                if (index == -1) {
+                                    selectUserCheckBox.checked = false
+                                } else {
+                                    selectUserCheckBox.checked = true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    Item {
+        id: addMessageItem
+        visible: threadUsers.length > 0
+        height: threadUsers.length > 0 ? units.gu(6) : 0
+        anchors {
+            bottom: parent.bottom
+            left: parent.left
+            leftMargin: units.gu(1)
+            right: parent.right
+            rightMargin: units.gu(1)
+        }
+
+        Row {
+            width: parent.width
+            spacing: units.gu(1)
+
+            TextField {
+                id: addMessageField
+                width: parent.width - addMessageButton.width - units.gu(1)
+                anchors.verticalCenter: parent.verticalCenter
+                placeholderText: i18n.tr("Write a message...")
+                onAccepted: {
+                    sendMessage(addMessageField.text)
+                }
+            }
+
+            Button {
+                id: addMessageButton
+                anchors.verticalCenter: parent.verticalCenter
+                color: UbuntuColors.green
+                text: i18n.tr("Send")
+                onClicked: {
+                    sendMessage(addMessageField.text)
                 }
             }
         }
@@ -324,21 +354,14 @@ Page {
     Connections{
         target: instagram
         onRankedRecipientsDataReady: {
-            //console.log(answer)
             var data = JSON.parse(answer);
             rankedRecipientsFinished(data);
         }
         onRecentRecipientsDataReady: {
-            //console.log(answer)
             var data = JSON.parse(answer);
             recentRecipientsFinished(data);
         }
-        onUserFollowingsDataReady: {
-            var data = JSON.parse(answer);
-            userFollowingsDataFinished(data);
-        }
         onDirectShareReady: {
-            //console.log(answer)
             var data = JSON.parse(answer);
             pageStack.pop();
         }
