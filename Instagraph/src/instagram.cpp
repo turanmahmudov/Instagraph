@@ -879,6 +879,13 @@ void Instagram::userFriendship(QString userId)
     QObject::connect(userFriendshipRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(userFriendshipDataReady(QVariant)));
 }
 
+void Instagram::pendingFriendships()
+{
+    InstagramRequest *pendingFriendshipsRequest = new InstagramRequest();
+    pendingFriendshipsRequest->request("friendships/pending/",NULL);
+    QObject::connect(pendingFriendshipsRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(pendingFriendshipsDataReady(QVariant)));
+}
+
 void Instagram::getLikedMedia(QString max_id)
 {
     QString target ="feed/liked/";

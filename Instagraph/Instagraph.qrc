@@ -113,5 +113,6 @@
         <file>qml/components/MediaEntry.qml</file>
         <file>qml/components/ListFeedDelegate.qml</file>
         <file>qml/components/GridFeedDelegate.qml</file>
+        <file>qml/ui/FollowRequestsPage.qml</file>
     </qresource>
 </RCC>

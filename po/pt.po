@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-04 12:53+0000\n"
+"POT-Creation-Date: 2018-01-04 18:34+0000\n"
 "PO-Revision-Date: 2017-11-15 10:44+0200\n"
 "Last-Translator: Ivo Xavier <ivofernandes12@gmail.com>\n"
 "Language: \n"
@@ -62,6 +62,7 @@ msgid "Edit"
 msgstr "Editar"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:67
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/FollowRequestsPage.qml:136
 msgid "Delete"
 msgstr "Eliminar"
 
@@ -407,9 +408,12 @@ msgstr "Email"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:223
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:232
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:256
 msgid "Phone"
 msgstr "Telefone"
+
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:256
+msgid "Gender"
+msgstr ""
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:264
 msgid "Female"
@@ -418,6 +422,15 @@ msgstr "Mulher"
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:265
 msgid "Male"
 msgstr "Homem"
+
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/FollowRequestsPage.qml:15
+#, fuzzy
+msgid "Follow Requests"
+msgstr "Seguidores"
+
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/FollowRequestsPage.qml:123
+msgid "Confirm"
+msgstr ""
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/HomePage.qml:16
 msgid "Instagraph"
@@ -487,6 +500,7 @@ msgid "Search"
 msgstr "Procurar"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NotifsPage.qml:15
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NotifsPage.qml:245
 msgid "Activity"
 msgstr "Atividade"
 
@@ -494,11 +508,19 @@ msgstr "Atividade"
 msgid "You"
 msgstr "Tu"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NotifsPage.qml:407
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NotifsPage.qml:218
+msgid "<span style='color:"
+msgstr ""
+
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NotifsPage.qml:226
+msgid "Approve or ignore requests"
+msgstr ""
+
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NotifsPage.qml:513
 msgid "Activity from people you follow"
 msgstr "Atividade de pessoas que segue"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NotifsPage.qml:408
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NotifsPage.qml:514
 msgid ""
 "When someone you follow comments on or likes a post, you'll see it here."
 msgstr ""

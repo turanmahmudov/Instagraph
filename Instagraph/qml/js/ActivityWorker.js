@@ -7,6 +7,10 @@ WorkerScript.onMessage = function(msg) {
         model.clear();
     }
 
+    if (msg.hasFollowRequests) {
+        model.append({"list_type":"follow_requests"});
+    }
+
     // Object loop
     for (var i = 0; i < obj.length; i++) {
         var story = obj[i];
@@ -18,7 +22,7 @@ WorkerScript.onMessage = function(msg) {
 
             act_text = story.args.text;
 
-            model.append({"activity_text":act_text, "story":story});
+            model.append({"activity_text":act_text, "story":story, "list_type":"recent_activity"});
 
         } else if (story.args && typeof story.args.links != 'undefined' && story.args.links.length > 0) {
 
@@ -43,7 +47,7 @@ WorkerScript.onMessage = function(msg) {
                 }
             }
 
-            model.append({"activity_text":act_text, "story":story});
+            model.append({"activity_text":act_text, "story":story, "list_type":"recent_activity"});
 
         }
 
