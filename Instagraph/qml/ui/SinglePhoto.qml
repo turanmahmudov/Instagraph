@@ -19,8 +19,12 @@ Page {
 
     property var last_like_id
 
+    property bool list_loading: false
+
     function mediaDataFinished(data) {
         worker.sendMessage({'feed': 'singlePhotoPage', 'obj': data.items, 'model': singlePhotoModel, 'clear_model': true})
+
+        list_loading = false
     }
 
     WorkerScript {
@@ -32,6 +36,12 @@ Page {
     }
 
     Component.onCompleted: {
+        instagram.infoMedia(photoId);
+    }
+
+    function getMedia()
+    {
+        singlePhotoModel.clear()
         instagram.infoMedia(photoId);
     }
 
@@ -62,6 +72,14 @@ Page {
         delegate: ListFeedDelegate {
             id: homePhotosDelegate
             thismodel: singlePhotoModel
+        }
+        PullToRefresh {
+            id: pullToRefresh
+            refreshing: list_loading && singlePhotoModel.count == 0
+            onRefresh: {
+                list_loading = true
+                getMedia()
+            }
         }
     }
 
