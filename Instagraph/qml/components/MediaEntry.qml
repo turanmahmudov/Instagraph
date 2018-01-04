@@ -75,6 +75,7 @@ Column {
         }
 
         Icon {
+            id: openPopupButton
             anchors {
                 verticalCenter: parent.verticalCenter
             }
@@ -87,9 +88,7 @@ Column {
                     fill: parent
                 }
                 onClicked: {
-                    if (my_usernameId == user.pk || photo_of_you || (!user.is_private && code)) {
-                        PopupUtils.open(popoverComponent)
-                    }
+                    PopupUtils.open(popoverComponent, openPopupButton)
                 }
             }
         }
@@ -291,13 +290,15 @@ Column {
                 width: units.gu(3)
                 height: width
                 name: "message"
-                color: "#000000"
+                color: typeof comments_disabled != 'undefined' && comments_disabled == true ? UbuntuColors.lightGrey : "#000000"
             }
 
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    pageStack.push(Qt.resolvedUrl("../ui/CommentsPage.qml"), {photoId: id, mediaUserId: user.pk});
+                    if (typeof comments_disabled == 'undefined' || (typeof comments_disabled != 'undefined' && comments_disabled == false)) {
+                        pageStack.push(Qt.resolvedUrl("../ui/CommentsPage.qml"), {photoId: id, mediaUserId: user.pk});
+                    }
                 }
             }
         }
@@ -310,7 +311,7 @@ Column {
                 anchors.verticalCenter: parent.verticalCenter
                 width: units.gu(3)
                 height: width
-                name: "share"
+                name: "send"
                 color: "#000000"
             }
 
@@ -321,60 +322,21 @@ Column {
                 }
             }
         }
-
-        Item {
-            width: units.gu(4)
-            height: width
-
-            Icon {
-                anchors.verticalCenter: parent.verticalCenter
-                width: units.gu(3)
-                height: width
-                name: "save"
-                color: "#000000"
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    var singleDownload = downloadComponent.createObject(mainView)
-                    singleDownload.contentType = ContentType.Pictures
-                    singleDownload.download(image_versions2.candidates[0].url)
-                }
-            }
-        }
     }
 
-    Flow {
+    Label {
         x: units.gu(1)
         width: parent.width - units.gu(2)
         visible: typeof like_count !== 'undefined' && like_count !== 0 ? true : false
         anchors.horizontalCenter: parent.horizontalCenter
-        spacing: units.gu(1)
+        text: like_count + i18n.tr(" likes")
+        font.weight: Font.DemiBold
+        wrapMode: Text.WordWrap
 
-        Icon {
-            width: units.gu(2)
-            height: width
-            name: "like"
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    pageStack.push(Qt.resolvedUrl("../ui/MediaLikersPage.qml"), {photoId: id});
-                }
-            }
-        }
-
-        Label {
-            text: like_count + i18n.tr(" likes")
-            font.weight: Font.DemiBold
-            wrapMode: Text.WordWrap
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    pageStack.push(Qt.resolvedUrl("../ui/MediaLikersPage.qml"), {photoId: id});
-                }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                pageStack.push(Qt.resolvedUrl("../ui/MediaLikersPage.qml"), {photoId: id});
             }
         }
     }
@@ -400,11 +362,13 @@ Column {
         }
 
         Label {
-            visible: has_more_comments === true ? true : false
-            text: i18n.tr("View all %1 comments").arg(comment_count)
-            color: UbuntuColors.darkGrey
+            visible: typeof has_more_comments != 'undefined' && has_more_comments === true ? true : false
+            text: i18n.tr("View all %1 comments").arg(typeof comment_count != 'undefined' ? comment_count : 0)
             wrapMode: Text.WordWrap
             width: parent.width
+            fontSize: "medium"
+            color: UbuntuColors.darkGrey
+            font.weight: Font.Normal
 
             MouseArea {
                 anchors.fill: parent
@@ -415,7 +379,8 @@ Column {
         }
 
         Repeater {
-            model: preview_comments
+            enabled: typeof preview_comments != 'undefined'
+            model: typeof preview_comments != 'undefined' ? preview_comments : []
 
             Text {
                 width: parent.width

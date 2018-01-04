@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-04 09:01+0000\n"
+"POT-Creation-Date: 2018-01-04 10:41+0000\n"
 "PO-Revision-Date: 2017-07-05 10:44+0200\n"
 "Last-Translator: Jujuyeh <paul.98.zgz@gmail.com>\n"
 "Language-Team: Español; Castellano <paul.98.zgz@gmail.com>\n"
@@ -69,21 +69,33 @@ msgid "Delete"
 msgstr "Borrar"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:76
+msgid "Turn On Commenting"
+msgstr ""
+
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:84
+msgid "Turn Off Commenting"
+msgstr ""
+
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:92
 msgid "Remove Tag"
 msgstr "Quitar etiqueta"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:85
-msgid "Copy Share URL"
-msgstr "Copiar Compartir URL"
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:101
+msgid "Copy Link"
+msgstr ""
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/MediaEntry.qml:369
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:111
+msgid "Download Media"
+msgstr ""
+
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/MediaEntry.qml:332
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:214
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:253
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:257
 msgid " likes"
 msgstr " me gusta"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/MediaEntry.qml:404
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/MediaEntry.qml:366
 #, qt-format
 msgid "View all %1 comments"
 msgstr "Ver todos %1 los comentarios"
@@ -701,3 +713,6 @@ msgid "%1 SECOND AGO"
 msgid_plural "%1 SECONDS AGO"
 msgstr[0] "HACE %1 SEGUNDOS"
 msgstr[1] "HACE %1 SEGUNDO"
+
+#~ msgid "Copy Share URL"
+#~ msgstr "Copiar Compartir URL"

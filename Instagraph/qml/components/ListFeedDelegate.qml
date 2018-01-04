@@ -71,6 +71,22 @@ ListItem {
                       }
                   }
                   Action {
+                      visible: my_usernameId == user.pk && (typeof comments_disabled != 'undefined' && comments_disabled == true)
+                      enabled: my_usernameId == user.pk && (typeof comments_disabled != 'undefined' && comments_disabled == true)
+                      text: i18n.tr("Turn On Commenting")
+                      onTriggered: {
+                            instagram.enableMediaComments(id)
+                      }
+                  }
+                  Action {
+                      visible: my_usernameId == user.pk && (typeof comments_disabled == 'undefined' || (typeof comments_disabled != 'undefined' && comments_disabled == false))
+                      enabled: my_usernameId == user.pk && (typeof comments_disabled == 'undefined' || (typeof comments_disabled != 'undefined' && comments_disabled == false))
+                      text: i18n.tr("Turn Off Commenting")
+                      onTriggered: {
+                          instagram.disableMediaComments(id)
+                      }
+                  }
+                  Action {
                       visible: photo_of_you
                       enabled: photo_of_you
                       text: i18n.tr("Remove Tag")
@@ -82,10 +98,21 @@ ListItem {
                   Action {
                       visible: !user.is_private && code
                       enabled: !user.is_private && code
-                      text: i18n.tr("Copy Share URL")
+                      text: i18n.tr("Copy Link")
                       onTriggered: {
                           var share_url = "https://instagram.com/p/"+code;
                           Clipboard.push(share_url);
+                          PopupUtils.close(popoverElement);
+                      }
+                  }
+                  Action {
+                      visible: true
+                      enabled: true
+                      text: i18n.tr("Download Media")
+                      onTriggered: {
+                          var singleDownload = downloadComponent.createObject(mainView)
+                          singleDownload.contentType = ContentType.Pictures
+                          singleDownload.download(images_obj.candidates[0].url)
                           PopupUtils.close(popoverElement);
                       }
                   }
@@ -113,6 +140,20 @@ ListItem {
                                 pageStack.pop();
                             }
                         }
+                    }
+                }
+                onEnableMediaCommentsReady: {
+                    var data = JSON.parse(answer)
+                    if (data.status == "ok") {
+                        thismodel.get(index).comments_disabled = false
+                        PopupUtils.close(popoverElement);
+                    }
+                }
+                onDisableMediaCommentsReady: {
+                    var data = JSON.parse(answer)
+                    if (data.status == "ok") {
+                        thismodel.get(index).comments_disabled = true
+                        PopupUtils.close(popoverElement);
                     }
                 }
             }

@@ -444,6 +444,30 @@ void Instagram::removeSelftag(QString mediaId)
     QObject::connect(removeSelftagRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(removeSelftagDone(QVariant)));
 }
 
+void Instagram::enableMediaComments(QString mediaId)
+{
+    InstagramRequest *enableMediaCommentsRequest = new InstagramRequest();
+    QJsonObject data;
+        data.insert("_uuid",        this->m_uuid);
+        data.insert("_csrftoken",   "Set-Cookie: csrftoken="+this->m_token);
+
+    QString signature = enableMediaCommentsRequest->generateSignature(data);
+    enableMediaCommentsRequest->request("media/"+mediaId+"/enable_comments/",signature.toUtf8());
+    QObject::connect(enableMediaCommentsRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(enableMediaCommentsReady(QVariant)));
+}
+
+void Instagram::disableMediaComments(QString mediaId)
+{
+    InstagramRequest *enableMediaCommentsRequest = new InstagramRequest();
+    QJsonObject data;
+        data.insert("_uuid",        this->m_uuid);
+        data.insert("_csrftoken",   "Set-Cookie: csrftoken="+this->m_token);
+
+    QString signature = enableMediaCommentsRequest->generateSignature(data);
+    enableMediaCommentsRequest->request("media/"+mediaId+"/disable_comments/",signature.toUtf8());
+    QObject::connect(enableMediaCommentsRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(disableMediaCommentsReady(QVariant)));
+}
+
 void Instagram::postComment(QString mediaId, QString commentText)
 {
     m_busy = true;

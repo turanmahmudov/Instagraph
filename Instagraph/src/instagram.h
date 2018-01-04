@@ -36,6 +36,9 @@ public slots:
     void deleteMedia(QString mediaId);
     void removeSelftag(QString mediaId);
 
+    void enableMediaComments(QString mediaId);
+    void disableMediaComments(QString mediaId);
+
     void postComment(QString mediaId, QString commentText);
     void deleteComment(QString mediaId, QString commentId);
     void likeComment(QString commentId);
@@ -150,6 +153,9 @@ signals:
     void mediaInfoReady(QVariant answer);
     void mediaEdited(QVariant answer);
     void mediaDeleted(QVariant answer);
+
+    void enableMediaCommentsReady(QVariant answer);
+    void disableMediaCommentsReady(QVariant answer);
 
     void imageConfigureDataReady(QVariant answer);
 
