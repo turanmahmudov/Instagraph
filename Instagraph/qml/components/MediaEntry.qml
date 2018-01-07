@@ -106,6 +106,58 @@ Column {
             }
 
             Icon {
+                id: animatingLikeIcon
+                width: 0
+                height: width
+                anchors.centerIn: feed_image
+                name: "like"
+                color: "#ffffff"
+                opacity: 0
+
+                NumberAnimation on width {
+                    id: sizeAnimation
+                    from: 0
+                    to: units.gu(6)
+                    duration: 750
+                    easing.type: Easing.InOutQuad
+                    running: false
+                }
+
+                NumberAnimation on opacity {
+                    id: opacityAnimation
+                    from: 0
+                    to: 1
+                    duration: 750
+                    easing.type: Easing.InOutQuad
+                    running: false
+
+                        onRunningChanged: {
+                        if (!running) {
+                            destroyTimer.start()
+                        }
+                    }
+                }
+
+                Timer {
+                    id: destroyTimer
+                    interval: 500
+                    running: false
+                    repeat: false
+                    onTriggered: {
+                        animatingLikeIcon.opacity = 0
+                    }
+                }
+
+                function sizeAnimation() {
+                    sizeAnimation.start()
+                }
+
+                function opacityAnimation() {
+                    opacityAnimation.start()
+                }
+            }
+
+            Icon {
                 id: is_video_icon
                 width: units.gu(3)
                 height: width
@@ -163,6 +215,9 @@ Column {
                     }
                 }
                 onDoubleClicked: {
+                    animatingLikeIcon.sizeAnimation()
+                    animatingLikeIcon.opacityAnimation()
+
                     last_like_id = id;
                     instagram.like(id);
                 }
