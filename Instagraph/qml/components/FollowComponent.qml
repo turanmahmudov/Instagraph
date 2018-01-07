@@ -44,6 +44,10 @@ Item {
     property string rectangleBorderColor: ""
 
     Component.onCompleted: {
+        init()
+    }
+
+    function init() {
         if (friendship_var) {
             if (friendship_var.following) {
                 firstIconName = followingIcon

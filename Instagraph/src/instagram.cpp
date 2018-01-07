@@ -886,6 +886,36 @@ void Instagram::pendingFriendships()
     QObject::connect(pendingFriendshipsRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(pendingFriendshipsDataReady(QVariant)));
 }
 
+void Instagram::approveFriendship(QString userId)
+{
+    InstagramRequest *approveFriendshipRequest = new InstagramRequest();
+    QJsonObject data;
+        data.insert("_uuid",        this->m_uuid);
+        data.insert("_uid",         this->m_username_id);
+        data.insert("_csrftoken",   "Set-Cookie: csrftoken="+this->m_token);
+        data.insert("user_id",      userId);
+        data.insert("radio_type",   "wifi-none");
+
+    QString signature = approveFriendshipRequest->generateSignature(data);
+    approveFriendshipRequest->request("friendships/approve/"+userId+"/",signature.toUtf8());
+    QObject::connect(approveFriendshipRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(approveFriendshipDataReady(QVariant)));
+}
+
+void Instagram::rejectFriendship(QString userId)
+{
+    InstagramRequest *rejectFriendshipRequest = new InstagramRequest();
+    QJsonObject data;
+        data.insert("_uuid",        this->m_uuid);
+        data.insert("_uid",         this->m_username_id);
+        data.insert("_csrftoken",   "Set-Cookie: csrftoken="+this->m_token);
+        data.insert("user_id",      userId);
+        data.insert("radio_type",   "wifi-none");
+
+    QString signature = rejectFriendshipRequest->generateSignature(data);
+    rejectFriendshipRequest->request("friendships/ignore/"+userId+"/",signature.toUtf8());
+    QObject::connect(rejectFriendshipRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(rejectFriendshipDataReady(QVariant)));
+}
+
 void Instagram::getLikedMedia(QString max_id)
 {
     QString target ="feed/liked/";

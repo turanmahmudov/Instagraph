@@ -74,6 +74,8 @@ public slots:
     void unBlock(QString userId);
     void userFriendship(QString userId);
     void pendingFriendships();
+    void approveFriendship(QString userId);
+    void rejectFriendship(QString userId);
 
     void getLikedMedia(QString max_id = "");
 
@@ -195,6 +197,8 @@ signals:
     void unBlockDataReady(QVariant answer);
     void userFriendshipDataReady(QVariant answer);
     void pendingFriendshipsDataReady(QVariant answer);
+    void approveFriendshipDataReady(QVariant answer);
+    void rejectFriendshipDataReady(QVariant answer);
 
     void likedMediaDataReady(QVariant answer);
 

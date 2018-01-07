@@ -17,6 +17,8 @@ Page {
 
     property bool list_loading: false
 
+    property var last_friendship_action_done
+
     function pendingFriendshipsDataFinished(data) {
         worker.sendMessage({'feed': 'FollowRequestsPage', 'obj': data.users, 'model': followrequestsModel, 'clear_model': true})
 
@@ -74,6 +76,8 @@ Page {
                 pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk});
             }
 
+            property bool is_friendship_approved: false
+
             SlotsLayout {
                 id: layout
                 anchors.centerIn: parent
@@ -86,7 +90,7 @@ Page {
                 mainSlot: Row {
                     id: label
                     spacing: units.gu(1)
-                    width: parent.width - buttons.width
+                    width: parent.width - (is_friendship_approved ? followButton.width : buttons.width)
 
                     CircleImage {
                         width: units.gu(5)
@@ -127,7 +131,8 @@ Page {
                         SlotsLayout.overrideVerticalPositioning: true
 
                         onClicked: {
-
+                            last_friendship_action_done = pk
+                            instagram.approveFriendship(pk)
                         }
                     }
 
@@ -140,9 +145,50 @@ Page {
                         SlotsLayout.overrideVerticalPositioning: true
 
                         onClicked: {
-
+                            last_friendship_action_done = pk
+                            instagram.rejectFriendship(pk)
                         }
                     }
+
+                    anchors.verticalCenter: parent.verticalCenter
+                    SlotsLayout.position: SlotsLayout.Trailing
+                    SlotsLayout.overrideVerticalPositioning: true
+                }
+
+                Connections {
+                    target: instagram
+                    onApproveFriendshipDataReady: {
+                        var data = JSON.parse(answer)
+                        if (data.status === "ok" && last_friendship_action_done === pk) {
+                            is_friendship_approved = true
+
+                            buttons.width = 0
+                            buttons.visible = false
+
+                            followButton.friendship_var = data.friendship_status
+                            followButton.init()
+                            followButton.visible = true
+                        }
+                    }
+                    onRejectFriendshipDataReady: {
+                        var data = JSON.parse(answer)
+                        if (data.status === "ok" && last_friendship_action_done === pk) {
+                            followrequestsModel.remove(index)
+                        }
+                    }
+                }
+
+                FollowComponent {
+                    id: followButton
+                    visible: false
+                    height: units.gu(3.5)
+                    friendship_var: {"following": false, "outgoing_request": false}
+                    userId: pk
+                    just_icon: false
+
+                    anchors.verticalCenter: parent.verticalCenter
+                    SlotsLayout.position: SlotsLayout.Trailing
+                    SlotsLayout.overrideVerticalPositioning: true
                 }
             }
         }
@@ -151,7 +197,6 @@ Page {
     Connections{
         target: instagram
         onPendingFriendshipsDataReady: {
-            console.log(answer)
             var data = JSON.parse(answer);
             pendingFriendshipsDataFinished(data);
         }
