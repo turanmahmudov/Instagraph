@@ -325,10 +325,10 @@ Column {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    if (imagelikeicon.name === "unlike") {
+                    if (imagelikeicon.name == "unlike") {
                         last_like_id = id;
                         instagram.like(id);
-                    } else if (imagelikeicon.name === "like") {
+                    } else if (imagelikeicon.name == "like") {
                         last_like_id = id;
                         instagram.unLike(id);
                     }
