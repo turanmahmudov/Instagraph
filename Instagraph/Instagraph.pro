@@ -58,12 +58,9 @@ desktop_file.CONFIG += no_check_exist
 INSTALLS+=desktop_file
 
 # Default rules for deployment.
-#target.path = /opt/$${TARGET}/bin
-target.path = $${UBUNTU_CLICK_BINARY_PATH}
-INSTALLS+=target
-
+target.path = /opt/$${TARGET}/bin
 #target.path = $${UBUNTU_CLICK_BINARY_PATH}
-#INSTALLS+=target
+INSTALLS+=target
 
 DISTFILES += \
     qml/js/Storage.js \
