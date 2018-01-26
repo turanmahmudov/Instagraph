@@ -152,7 +152,7 @@ Page {
                                                             last_permanent_item.reel_share.type == 'reply' ? (last_permanent_item.user_id == my_usernameId ? i18n.tr("You replied to their story") : i18n.tr("Replied to your story")) : i18n.tr("UNKNOWN")) :
                                                        last_permanent_item.text
                             text: item_text
-                            font.weight: unseen ? Font.DemiBold : Font.ExtraLight
+                            font.weight: typeof unseen != 'undefined' && unseen ? Font.DemiBold : Font.ExtraLight
                             width: parent.width
                             wrapMode: Text.WordWrap
                             maximumLineCount: 1
