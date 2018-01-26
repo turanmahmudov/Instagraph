@@ -7,9 +7,10 @@ Unofficial Native Instagram Client
 
 ## Installation
 
-### Click
+### Click for Ubuntu Phones
 
-Search "Instagraph" on OpenStore and install the app
+- Search "Instagraph" in the OpenStore and install the app
+- Direct download ".click" package from the [OpenStore](https://open.uappexplorer.com/app/instagraph-devs.turan-mahmudov-l)
 
 ### Snap
 
@@ -49,4 +50,4 @@ Reach out to me at one of the following places!
 - Twitter at <a href="http://twitter.com/turanmahmudov" target="_blank">`@turanmahmudov`</a>
 
 ## Donations
-Contact with me at [turan.mahmudov@gmail.com](mailto:turan.mahmudov@gmail.com)
+Donate me on [Librepay](https://liberapay.com/turanmahmudov)
