@@ -145,6 +145,7 @@ Page {
                         Text {
                             property string item_text: last_permanent_item.item_type === 'media_share' ? (last_permanent_item.user_id == my_usernameId ? i18n.tr("You shared a post") : i18n.tr("Shared a post")) :
                                                        last_permanent_item.item_type === 'media' ? (last_permanent_item.user_id == my_usernameId ? i18n.tr("You shared a media") : i18n.tr("Shared a media")) :
+                                                       last_permanent_item.item_type === 'story_share' ? (last_permanent_item.user_id == my_usernameId ? i18n.tr("You sent a story") : i18n.tr("Sent a story")) :
                                                        last_permanent_item.item_type === 'like' ? last_permanent_item.like :
                                                        last_permanent_item.item_type === 'action_log' ? last_permanent_item.action_log.description :
                                                        last_permanent_item.item_type === 'reel_share' ?
@@ -211,6 +212,7 @@ Page {
     Connections{
         target: instagram
         onV2InboxDataReady: {
+            console.log(answer)
             var data = JSON.parse(answer);
             v2InboxDataFinished(data);
         }
