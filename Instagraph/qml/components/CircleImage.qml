@@ -1,4 +1,5 @@
 import QtQuick 2.3
+import Ubuntu.Components 1.3
 import QtGraphicalEffects 1.0
 
 Item {
@@ -9,6 +10,14 @@ Item {
 
     width: image.implicitWidth
     height: image.implicitHeight
+
+    Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        border.width: units.gu(0.1)
+        border.color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
+        radius: width/2
+    }
 
     Image {
         id: image
