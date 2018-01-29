@@ -15,6 +15,11 @@ function formatUser(string)
     return '<a href="user://'+string+'" style="text-decoration:none;font-weight:500;color:rgb(0,0,0);">'+string+'</a>';
 }
 
+function makeLink(string)
+{
+    return '<a href="'+string+'" style="text-decoration:none;font-weight:500;color:rgb(0,0,0);">'+string+'</a>';
+}
+
 function getBestImage(imageObject, width) {
     var closest = typeof imageObject[0] != 'undefined' ? imageObject[0] : {"width":0, "height":0, "url":""};
 
