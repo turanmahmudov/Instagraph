@@ -149,6 +149,7 @@ Page {
                                                        last_permanent_item.item_type === 'link' ? (last_permanent_item.user_id == my_usernameId ? i18n.tr("You shared a link") : i18n.tr("Shared a link")) :
                                                        last_permanent_item.item_type === 'like' ? last_permanent_item.like :
                                                        last_permanent_item.item_type === 'action_log' ? last_permanent_item.action_log.description :
+                                                       last_permanent_item.item_type === 'placeholder' ? last_permanent_item.placeholder.title :
                                                        last_permanent_item.item_type === 'reel_share' ?
                                                             (last_permanent_item.reel_share.type == 'mention' ? (last_permanent_item.user_id == my_usernameId ? i18n.tr("You mentioned their in a story") : i18n.tr("Mentied you in a story")) :
                                                             last_permanent_item.reel_share.type == 'reply' ? (last_permanent_item.user_id == my_usernameId ? i18n.tr("You replied to their story") : i18n.tr("Replied to your story")) : i18n.tr("UNKNOWN")) :
