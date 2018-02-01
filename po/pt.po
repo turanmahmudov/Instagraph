@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-01 20:45+0000\n"
+"POT-Creation-Date: 2018-02-01 21:04+0000\n"
 "PO-Revision-Date: 2017-11-15 10:44+0200\n"
 "Last-Translator: Ivo Xavier <ivofernandes12@gmail.com>\n"
 "Language: \n"
@@ -496,7 +496,6 @@ msgstr "Gostos"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/LikedMediaPage.qml:128
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:590
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SavedMediaPage.qml:128
 msgid "No photos or videos yet!"
 msgstr "Ainda sem fotos ou vídeos!"
 

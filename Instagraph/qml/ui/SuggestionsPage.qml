@@ -25,9 +25,9 @@ Page {
         more_available = data.more_available
         next_coming = true
 
-        for (var i = 0; i < data.groups[0].items.length; i++) {
+        for (var i = 0; i < data.suggested_users.suggestions.length; i++) {
 
-            suggestionsModel.append(data.groups[0].items[i]);
+            suggestionsModel.append(data.suggested_users.suggestions[i]);
         }
 
         next_coming = false;
@@ -145,7 +145,6 @@ Page {
     Connections{
         target: instagram
         onSuggestionsDataReady: {
-            //console.log(answer)
             var data = JSON.parse(answer);
             suggestionsDataFinished(data);
         }
