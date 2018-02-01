@@ -18,6 +18,7 @@ Page {
     property var photoId
 
     property var last_like_id
+    property var last_save_id
 
     property bool list_loading: false
 

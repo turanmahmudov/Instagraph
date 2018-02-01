@@ -64,6 +64,38 @@ WorkerScript.onMessage = function(msg) {
                 model.sync();
             }
 
+        } else if (feed === "savedMediaPage") {
+
+            var list_obj = {};
+
+            // Preview Comments
+            for (var j = 0; j < obj[i].media.max_num_visible_preview_comments; j++) {
+                if (typeof obj[i].media.preview_comments[j] !== 'undefined') {
+                    obj[i].media.preview_comments[j].ctext = obj[i].media.preview_comments[j].text;
+                }
+            }
+
+            // Photo Id
+            obj[i].media.photo_id = obj[i].media.id;
+
+            // Carousel media
+            obj[i].media.carousel_media_obj = typeof obj[i].media.carousel_media != 'undefined' ? obj[i].media.carousel_media : []
+
+            // Images
+            obj[i].media.images_obj = typeof obj[i].media.image_versions2 != 'undefined' ? obj[i].media.image_versions2 : {}
+
+            // Video
+            if (feed !== 'searchPage') {
+                obj[i].media.video_url = obj[i].media.video_versions ? obj[i].media.video_versions[0].url : ''
+            }
+
+            list_obj = obj[i].media;
+            list_obj.list_type = 'media_entry';
+
+            // Append to model & sync
+            model.append(list_obj);
+            model.sync();
+
         } else {
 
             var list_obj = {};

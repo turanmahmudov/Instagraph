@@ -9,32 +9,36 @@ import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
 Page {
-    id: tagfeedpage
-
-    property var tag
+    id: savedmediapage
 
     header: PageHeader {
-        title: "#" + tag
+        title: i18n.tr("Saved")
     }
 
     property string next_max_id: ""
     property bool more_available: true
     property bool next_coming: true
-    property var last_like_id
-    property var last_save_id
     property bool clear_models: true
 
     property bool list_loading: false
 
-    function mediaDataFinished(data) {
+    property bool isEmpty: false
+
+    function savedMediaDataFinished(data) {
+        if (data.num_results == 0) {
+            isEmpty = true;
+        } else {
+            isEmpty = false;
+        }
+
         if (next_max_id == data.next_max_id) {
             return false;
         } else {
-            next_max_id = data.next_max_id ? data.next_max_id : "";
-            more_available = data.more_available ? data.more_available : false;
+            next_max_id = data.more_available ? data.next_max_id : "";
+            more_available = data.more_available;
             next_coming = true;
 
-            worker.sendMessage({'feed': 'tagFeedPage', 'obj': data.items, 'model': tagFeedPhotosModel, 'clear_model': clear_models})
+            worker.sendMessage({'feed': 'savedMediaPage', 'obj': data.items, 'model': savedMediaModel, 'clear_model': clear_models})
 
             next_coming = false;
         }
@@ -51,73 +55,69 @@ Page {
     }
 
     Component.onCompleted: {
-        getMedia(tag);
+        getSavedMedia();
     }
 
-    function getMedia(tag, next_id)
+    function getSavedMedia(next_id)
     {
+        clear_models = false
         if (!next_id) {
-            tagFeedPhotosModel.clear()
-            next_max_id = 0
+            savedMediaModel.clear()
+            next_max_id = ""
             clear_models = true
         }
-        instagram.tagFeed(tag, next_id);
+        instagram.getSavedFeed(next_id);
     }
 
     BouncingProgressBar {
         id: bouncingProgress
         z: 10
-        anchors.top: tagfeedpage.header.bottom
+        anchors.top: savedmediapage.header.bottom
         visible: instagram.busy || list_loading
     }
 
     ListModel {
-        id: tagFeedPhotosModel
+        id: savedMediaModel
     }
 
-    ListView {
-        id: homePhotosList
+    GridView {
+        id: gridView
         anchors {
             left: parent.left
-            leftMargin: units.gu(1)
             right: parent.right
-            rightMargin: units.gu(1)
             bottom: parent.bottom
-            bottomMargin: bottomMenu.height
-            top: tagfeedpage.header.bottom
+            top: savedmediapage.header.bottom
         }
+        width: parent.width
+        height: parent.height
+        cellWidth: gridView.width/3
+        cellHeight: cellWidth
         onMovementEnded: {
             if (atYEnd && more_available && !next_coming) {
-                getMedia(tag, next_max_id);
+                getSavedMedia(next_max_id);
             }
         }
-
-        clip: true
-        cacheBuffer: parent.height*2
-        model: tagFeedPhotosModel
-        delegate: ListFeedDelegate {
-            id: homePhotosDelegate
-            thismodel: tagFeedPhotosModel
+        model: savedMediaModel
+        delegate: GridFeedDelegate {
+            width: gridView.cellWidth
+            height: width
         }
+
         PullToRefresh {
-            refreshing: list_loading && tagFeedPhotosModel.count == 0
+            id: pullToRefresh
+            refreshing: list_loading && savedMediaModel.count == 0
             onRefresh: {
                 list_loading = true
-                getMedia(tag)
+                getSavedMedia()
             }
         }
     }
 
     Connections{
         target: instagram
-        onTagFeedDataReady: {
+        onGetSavedFeedDataReady: {
             var data = JSON.parse(answer);
-            mediaDataFinished(data);
+            savedMediaDataFinished(data);
         }
-    }
-
-    BottomMenu {
-        id: bottomMenu
-        width: parent.width
     }
 }

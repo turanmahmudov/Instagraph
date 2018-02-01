@@ -527,6 +527,52 @@ void Instagram::unLikeComment(QString commentId)
     QObject::connect(unLikeCommentRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(commentUnLiked(QVariant)));
 }
 
+void Instagram::saveMedia(QString mediaId)
+{
+    InstagramRequest *saveMediaRequest = new InstagramRequest();
+    QJsonObject data;
+        data.insert("_uuid",        this->m_uuid);
+        data.insert("_uid",         this->m_username_id);
+        data.insert("_csrftoken",   "Set-Cookie: csrftoken="+this->m_token);
+
+    QString signature = saveMediaRequest->generateSignature(data);
+    saveMediaRequest->request("media/"+mediaId+"/save/",signature.toUtf8());
+    QObject::connect(saveMediaRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(saveMediaDataReady(QVariant)));
+}
+
+void Instagram::unsaveMedia(QString mediaId)
+{
+    InstagramRequest *unsaveMediaRequest = new InstagramRequest();
+    QJsonObject data;
+        data.insert("_uuid",        this->m_uuid);
+        data.insert("_uid",         this->m_username_id);
+        data.insert("_csrftoken",   "Set-Cookie: csrftoken="+this->m_token);
+
+    QString signature = unsaveMediaRequest->generateSignature(data);
+    unsaveMediaRequest->request("media/"+mediaId+"/unsave/",signature.toUtf8());
+    QObject::connect(unsaveMediaRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(unsaveMediaDataReady(QVariant)));
+}
+
+void Instagram::getSavedFeed(QString max_id)
+{
+    QString target ="feed/saved/";
+
+    if(max_id.length() > 0)
+    {
+        target += "?max_id="+max_id;
+    }
+
+    InstagramRequest *getSavedFeedRequest = new InstagramRequest();
+    QJsonObject data;
+        data.insert("_uuid",        this->m_uuid);
+        data.insert("_uid",         this->m_username_id);
+        data.insert("_csrftoken",   "Set-Cookie: csrftoken="+this->m_token);
+
+    QString signature = getSavedFeedRequest->generateSignature(data);
+    getSavedFeedRequest->request(target,signature.toUtf8());
+    QObject::connect(getSavedFeedRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(getSavedFeedDataReady(QVariant)));
+}
+
 //FIXME changeProfilePicture is not public yeat. Give me few weeks to optimize code
 void Instagram::changeProfilePicture(QFile *photo)
 {

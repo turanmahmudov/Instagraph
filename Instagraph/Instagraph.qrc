@@ -114,5 +114,9 @@
         <file>qml/components/ListFeedDelegate.qml</file>
         <file>qml/components/GridFeedDelegate.qml</file>
         <file>qml/ui/FollowRequestsPage.qml</file>
+        <file>qml/images/media_save_bold.png</file>
+        <file>qml/images/media_save.png</file>
+        <file>qml/images/media_save_profile.svg</file>
+        <file>qml/ui/SavedMediaPage.qml</file>
     </qresource>
 </RCC>

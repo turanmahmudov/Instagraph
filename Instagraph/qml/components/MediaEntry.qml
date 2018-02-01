@@ -222,22 +222,6 @@ Column {
                     instagram.like(id);
                 }
             }
-
-            Connections {
-                target: instagram
-                onLikeDataReady: {
-                    if (JSON.parse(answer).status === "ok" && last_like_id === id) {
-                        imagelikeicon.color = UbuntuColors.red;
-                        imagelikeicon.name = "like";
-                    }
-                }
-                onUnLikeDataReady: {
-                    if (JSON.parse(answer).status === "ok" && last_like_id === id) {
-                        imagelikeicon.color = "";
-                        imagelikeicon.name = "unlike";
-                    }
-                }
-            }
         }
     }
 
@@ -281,6 +265,22 @@ Column {
         }
     }
 
+    Connections {
+        target: instagram
+        onLikeDataReady: {
+            if (JSON.parse(answer).status === "ok" && last_like_id === id) {
+                imagelikeicon.color = UbuntuColors.red;
+                imagelikeicon.name = "like";
+            }
+        }
+        onUnLikeDataReady: {
+            if (JSON.parse(answer).status === "ok" && last_like_id === id) {
+                imagelikeicon.color = "";
+                imagelikeicon.name = "unlike";
+            }
+        }
+    }
+
     Loader {
         property var bestImage: typeof carousel_media_obj !== 'undefined' && carousel_media_obj.count > 0 ?
                                     Helper.getBestImage(carousel_media_obj.get(0).image_versions2.candidates, parent.width) :
@@ -306,7 +306,7 @@ Column {
     Row {
         x: units.gu(1)
         width: parent.width - units.gu(2)
-        spacing: units.gu(2.3)
+        spacing: units.gu(2)
         anchors.horizontalCenter: parent.horizontalCenter
 
         Item {
@@ -374,6 +374,55 @@ Column {
                 anchors.fill: parent
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("../ui/ShareMediaPage.qml"), {mediaId: id, mediaUser: user});
+                }
+            }
+        }
+
+        Item {
+            width: parent.width - units.gu(24)
+            height: units.gu(1)
+        }
+
+        Item {
+            width: units.gu(4)
+            height: width
+
+            Icon {
+                id: imagesaveicon
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                width: units.gu(3)
+                height: width
+                source: typeof has_viewer_saved != 'undefined' && has_viewer_saved === true ? "../images/media_save.png" : "../images/media_save_bold.png"
+                property var iname: typeof has_viewer_saved != 'undefined' && has_viewer_saved === true ? "save" : "unsave"
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    if (imagesaveicon.iname == "unsave") {
+                        last_save_id = id;
+                        instagram.saveMedia(id)
+                    } else if (imagesaveicon.iname == "save") {
+                        last_save_id = id;
+                        instagram.unsaveMedia(id)
+                    }
+                }
+            }
+
+            Connections {
+                target: instagram
+                onSaveMediaDataReady: {
+                    if (JSON.parse(answer).status === "ok" && last_save_id === id) {
+                        imagesaveicon.source = "../images/media_save.png";
+                        imagesaveicon.iname = "save"
+                    }
+                }
+                onUnsaveMediaDataReady: {
+                    if (JSON.parse(answer).status === "ok" && last_save_id === id) {
+                        imagesaveicon.source = "../images/media_save_bold.png";
+                        imagesaveicon.iname = "unsave"
+                    }
                 }
             }
         }

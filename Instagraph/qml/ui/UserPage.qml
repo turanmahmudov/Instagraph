@@ -43,6 +43,7 @@ Page {
     property bool more_available: true
     property bool next_coming: true
     property var last_like_id
+    property var last_save_id
     property bool clear_models: true
 
     property int current_user_section: 0
@@ -344,7 +345,7 @@ Page {
                     anchors {
                         horizontalCenter: parent.horizontalCenter
                     }
-                    spacing: (parent.width-units.gu(15))/3
+                    spacing: (parent.width-units.gu(20))/4
 
                     Item {
                         width: units.gu(5)
@@ -407,6 +408,26 @@ Page {
                                 instagram.getUserTags(my_usernameId)
                                 current_user_section = 3
                                 viewLoader.sourceComponent = tagviewComponent
+                            }
+                        }
+                    }
+
+                    Item {
+                        width: units.gu(5)
+                        height: width
+
+                        Icon {
+                            anchors.centerIn: parent
+                            width: units.gu(3)
+                            height: width
+                            name: "save-to"
+                            color: UbuntuColors.darkGrey
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                pageStack.push(Qt.resolvedUrl("SavedMediaPage.qml"))
                             }
                         }
                     }

@@ -44,6 +44,10 @@ public slots:
     void likeComment(QString commentId);
     void unLikeComment(QString commentId);
 
+    void saveMedia(QString mediaId);
+    void unsaveMedia(QString mediaId);
+    void getSavedFeed(QString max_id = "");
+
     void setPrivateAccount();
     void setPublicAccount();
     void changeProfilePicture(QFile *photo);
@@ -231,6 +235,10 @@ signals:
 
     void rankedRecipientsDataReady(QVariant answer);
     void recentRecipientsDataReady(QVariant answer);
+
+    void saveMediaDataReady(QVariant answer);
+    void unsaveMediaDataReady(QVariant answer);
+    void getSavedFeedDataReady(QVariant answer);
 
     void userFollowingsDataReady(QVariant answer);
     void userFollowersDataReady(QVariant answer);

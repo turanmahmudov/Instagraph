@@ -55,6 +55,7 @@ Page {
     property bool more_available: true
     property bool next_coming: true
     property var last_like_id
+    property var last_save_id
     property bool clear_models: true
 
     property int current_user_section: 0

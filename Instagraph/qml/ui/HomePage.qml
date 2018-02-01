@@ -24,6 +24,7 @@ Page {
     property bool more_available: true
     property bool next_coming: true
     property var last_like_id
+    property var last_save_id
     property bool clear_models: true
 
     property bool list_loading: false
@@ -149,7 +150,6 @@ Page {
     Connections{
         target: instagram
         onTimeLineDataReady: {
-            //console.log(answer)
             var data = JSON.parse(answer);
             if (data.status == "ok") {
                 mediaDataFinished(data);
