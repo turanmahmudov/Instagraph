@@ -573,10 +573,40 @@ void Instagram::getSavedFeed(QString max_id)
     QObject::connect(getSavedFeedRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(getSavedFeedDataReady(QVariant)));
 }
 
-//FIXME changeProfilePicture is not public yeat. Give me few weeks to optimize code
-void Instagram::changeProfilePicture(QFile *photo)
+void Instagram::changeProfilePicture(QString path)
 {
+    QFile image(path);
+    image.open(QIODevice::ReadOnly);
+    QByteArray dataStream = image.readAll();
 
+    QString boundary = this->m_uuid;
+
+    /*Body build*/
+    QByteArray body = "";
+
+    body += "--"+boundary+"\r\n";
+    body += "Content-Disposition: form-data; name=\"_uuid\"\r\n\r\n";
+    body += this->m_uuid.replace("{","").replace("}","")+"\r\n";
+
+    body += "--"+boundary+"\r\n";
+    body += "Content-Disposition: form-data; name=\"_csrftoken\"\r\n\r\n";
+    body += this->m_token+"\r\n";
+
+    body += "--"+boundary+"\r\n";
+    body += "Content-Disposition: form-data; name=\"_uid\"\r\n\r\n";
+    body += this->m_username_id+"\r\n";
+
+    body += "--"+boundary+"\r\n";
+    body += "Content-Disposition: form-data; name=\"profile_pic\"; filename=\"profile_pic\"\r\n";
+    body += "Content-Transfer-Encoding: binary\r\n";
+    body += "Content-Type: application/octet-stream\r\n\r\n";
+
+    body += dataStream+"\r\n";
+    body += "--"+boundary+"--";
+
+    InstagramRequest *putPhotoReqest = new InstagramRequest();
+    putPhotoReqest->fileRquest("accounts/change_profile_picture/",boundary, body);
+    QObject::connect(putPhotoReqest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(profilePictureChanged(QVariant)));
 }
 
 void Instagram::removeProfilePicture()

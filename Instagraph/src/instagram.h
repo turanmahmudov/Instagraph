@@ -50,7 +50,7 @@ public slots:
 
     void setPrivateAccount();
     void setPublicAccount();
-    void changeProfilePicture(QFile *photo);
+    void changeProfilePicture(QString path);
     void removeProfilePicture();
     void getProfileData();
     void editProfile(QString url, QString phone, QString first_name, QString biography, QString email, bool gender);
@@ -173,6 +173,7 @@ signals:
     void commentLiked(QVariant answer);
     void commentUnLiked(QVariant answer);
 
+    void profilePictureChanged(QVariant answer);
     void profilePictureDeleted(QVariant answer);
     void setProfilePrivate(QVariant answer);
     void setProfilePublic(QVariant answer);

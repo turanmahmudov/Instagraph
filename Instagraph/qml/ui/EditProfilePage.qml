@@ -32,6 +32,16 @@ Page {
         phoneField.text = data.user.phone_number;
         emailField.text = data.user.email;
         genderField.selectedIndex = data.user.gender;
+        profilePhoto.source = data.user.profile_pic_url;
+    }
+
+    function changePhotoClicked() {
+        var importPage = pageStack.push(Qt.resolvedUrl("ImportPhotoPage.qml"))
+
+        importPage.imported.connect(function(fileUrl) {
+            var pth = String(fileUrl).replace('file://', '')
+            instagram.changeProfilePicture(pth)
+        })
     }
 
     Component.onCompleted: {
@@ -58,6 +68,49 @@ Page {
         Column {
            id: columnSuperior
            width: parent.width
+
+           ListItem {
+               height: changeProfilePictureLayout.height
+               divider.visible: false
+
+               SlotsLayout {
+                   id: changeProfilePictureLayout
+                   anchors.centerIn: parent
+
+                   padding.leading: 0
+                   padding.trailing: 0
+
+                   mainSlot: Column {
+                       width: parent.width
+                       spacing: units.gu(1)
+
+                       CircleImage {
+                           id: profilePhoto
+                           width: units.gu(12)
+                           height: width
+                           source: "../images/not_found_user.jpg"
+                           anchors.horizontalCenter: parent.horizontalCenter
+
+                           MouseArea {
+                               anchors.fill: parent
+                               onClicked: changePhotoClicked()
+                           }
+                       }
+
+                       Label {
+                           text: i18n.tr("Change Photo")
+                           font.weight: Font.Normal
+                           color: UbuntuColors.blue
+                           anchors.horizontalCenter: parent.horizontalCenter
+
+                           MouseArea {
+                               anchors.fill: parent
+                               onClicked: changePhotoClicked()
+                           }
+                       }
+                   }
+               }
+           }
 
            ListItem {
                height: nameLayout.height
@@ -281,6 +334,14 @@ Page {
             if (data.status == 'ok') {
                 pageStack.pop();
             }
+        }
+        onProfilePictureChanged: {
+            pageStack.clear();
+            pageStack.push(tabs);
+            tabs.selectedTabIndex = 3
+
+            userPage.getUsernameInfo();
+            //userPage.getUsernameFeed();
         }
     }
 }
