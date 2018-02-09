@@ -575,6 +575,9 @@ void Instagram::getSavedFeed(QString max_id)
 
 void Instagram::changeProfilePicture(QString path)
 {
+    m_busy = true;
+    emit busyChanged();
+
     QFile image(path);
     image.open(QIODevice::ReadOnly);
     QByteArray dataStream = image.readAll();
@@ -607,10 +610,16 @@ void Instagram::changeProfilePicture(QString path)
     InstagramRequest *putPhotoReqest = new InstagramRequest();
     putPhotoReqest->fileRquest("accounts/change_profile_picture/",boundary, body);
     QObject::connect(putPhotoReqest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(profilePictureChanged(QVariant)));
+
+    m_busy = false;
+    emit busyChanged();
 }
 
 void Instagram::removeProfilePicture()
 {
+    m_busy = true;
+    emit busyChanged();
+
     InstagramRequest *removeProfilePictureRequest = new InstagramRequest();
     QJsonObject data;
         data.insert("_uuid",        this->m_uuid);
@@ -618,12 +627,18 @@ void Instagram::removeProfilePicture()
         data.insert("_csrftoken",   "Set-Cookie: csrftoken="+this->m_token);
 
     QString signature = removeProfilePictureRequest->generateSignature(data);
-    removeProfilePictureRequest->request("maccounts/remove_profile_picture/",signature.toUtf8());
+    removeProfilePictureRequest->request("accounts/remove_profile_picture/",signature.toUtf8());
     QObject::connect(removeProfilePictureRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(profilePictureDeleted(QVariant)));
+
+    m_busy = false;
+    emit busyChanged();
 }
 
 void Instagram::setPrivateAccount()
 {
+    m_busy = true;
+    emit busyChanged();
+
     InstagramRequest *setPrivateRequest = new InstagramRequest();
     QJsonObject data;
         data.insert("_uuid",        this->m_uuid);
@@ -633,6 +648,9 @@ void Instagram::setPrivateAccount()
     QString signature = setPrivateRequest->generateSignature(data);
     setPrivateRequest->request("accounts/set_private/",signature.toUtf8());
     QObject::connect(setPrivateRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(setProfilePrivate(QVariant)));
+
+    m_busy = false;
+    emit busyChanged();
 }
 
 void Instagram::setPublicAccount()

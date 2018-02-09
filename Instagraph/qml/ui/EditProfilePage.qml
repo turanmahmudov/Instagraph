@@ -1,6 +1,7 @@
 import QtQuick 2.4
 import Ubuntu.Components 1.3
 import QtQuick.LocalStorage 2.0
+import Ubuntu.Components.Popups 1.3
 
 import "../components"
 
@@ -25,6 +26,73 @@ Page {
         }
     }
 
+    Component {
+        id: popoverComponent
+
+        Popover {
+            id: popoverElement
+
+            Column {
+                width: parent.width
+
+                ListItem {
+                    height: opensourceHeaderLayout.height
+
+                    ListItemLayout {
+                        id: opensourceHeaderLayout
+
+                        title.text: i18n.tr("Set a Profile Photo")
+                        title.font.weight: Font.Normal
+                    }
+                }
+
+                ListItem {
+                    height: src1Layout.height
+                    ListItemLayout {
+                        id: src1Layout
+
+                        title.text: i18n.tr("New Profile Photo")
+                    }
+                    onClicked: {
+                        changePhotoClicked()
+                    }
+                }
+
+                ListItem {
+                    height: src2Layout.height
+                    ListItemLayout {
+                        id: src2Layout
+
+                        title.text: i18n.tr("Remove Profile Photo")
+                    }
+                    onClicked: {
+                        instagram.removeProfilePicture()
+                    }
+                }
+            }
+
+            Connections {
+                target: instagram
+                onProfilePictureChanged: {
+                    PopupUtils.close(popoverElement);
+                    pageStack.clear();
+                    pageStack.push(tabs);
+                    tabs.selectedTabIndex = 3
+
+                    userPage.getUsernameInfo();
+                }
+                onProfilePictureDeleted: {
+                    PopupUtils.close(popoverElement);
+                    pageStack.clear();
+                    pageStack.push(tabs);
+                    tabs.selectedTabIndex = 3
+
+                    userPage.getUsernameInfo();
+                }
+            }
+        }
+    }
+
     function profileDataFinished(data) {
         nameField.text = data.user.full_name;
         webField.text = data.user.external_url;
@@ -41,6 +109,7 @@ Page {
         importPage.imported.connect(function(fileUrl) {
             var pth = String(fileUrl).replace('file://', '')
             instagram.changeProfilePicture(pth)
+            pageStack.pop()
         })
     }
 
@@ -105,7 +174,9 @@ Page {
 
                            MouseArea {
                                anchors.fill: parent
-                               onClicked: changePhotoClicked()
+                               onClicked: {
+                                   PopupUtils.open(popoverComponent)
+                               }
                            }
                        }
                    }
@@ -334,14 +405,6 @@ Page {
             if (data.status == 'ok') {
                 pageStack.pop();
             }
-        }
-        onProfilePictureChanged: {
-            pageStack.clear();
-            pageStack.push(tabs);
-            tabs.selectedTabIndex = 3
-
-            userPage.getUsernameInfo();
-            //userPage.getUsernameFeed();
         }
     }
 }
