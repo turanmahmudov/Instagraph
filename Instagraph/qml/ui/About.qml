@@ -6,6 +6,19 @@ Page {
 
     header: PageHeader {
         title: i18n.tr("About")
+        trailingActionBar {
+            numberOfSlots: 1
+            actions: [
+                Action {
+                    id: donateAction
+                    text: i18n.tr("Donate")
+                    iconName: "like"
+                    onTriggered: {
+                        Qt.openUrlExternally("https://liberapay.com/turanmahmudov")
+                    }
+                }
+            ]
+        }
     }
 
     Column {

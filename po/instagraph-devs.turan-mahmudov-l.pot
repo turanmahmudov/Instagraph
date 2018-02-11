@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-08 23:50+0000\n"
+"POT-Creation-Date: 2018-02-11 19:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,6 +34,23 @@ msgstr ""
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/Main.qml:78
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:21
 msgid "New Message"
+msgstr ""
+
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/Main.qml:273
+msgid "Donate me"
+msgstr ""
+
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/Main.qml:274
+msgid "Donate to support me continue developing for Ubuntu."
+msgstr ""
+
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/Main.qml:280
+msgid "Ignore"
+msgstr ""
+
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/Main.qml:286
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/About.qml:14
+msgid "Donate"
 msgstr ""
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/FollowComponent.qml:56
@@ -149,15 +166,15 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/About.qml:46
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/About.qml:60
 msgid "Unofficial Instagram Client"
 msgstr ""
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/About.qml:74
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/About.qml:88
 msgid "Released under the terms of the GNU GPL v3"
 msgstr ""
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/About.qml:83
+#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/About.qml:97
 #, qt-format
 msgid "Source code available on %1"
 msgstr ""

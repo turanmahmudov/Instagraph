@@ -139,6 +139,13 @@ MainView {
 
             cacheImage.clean();
             cacheImage.init();
+
+            // Donate me dialog
+            var donateMeShowed = Storage.get("donateMe");
+            if (donateMeShowed === "" || typeof donateMeShowed == 'undefined') {
+                PopupUtils.open(donateMeComponent);
+                Storage.set("donateMe", "showed");
+            }
         }
     }
 
@@ -256,6 +263,35 @@ MainView {
     Component {
         id: downloadDialog
         ContentDownloadDialog { }
+    }
+
+    Component {
+        id: donateMeComponent
+
+        Dialog {
+            id: donateMeDialog
+            title: i18n.tr("Donate me")
+            text: i18n.tr("Donate to support me continue developing for Ubuntu.")
+
+            Row {
+                spacing: units.gu(1)
+                Button {
+                    width: parent.width/2 - units.gu(0.5)
+                    text: i18n.tr("Ignore")
+                    onClicked: PopupUtils.close(donateMeDialog)
+                }
+
+                Button {
+                    width: parent.width/2 - units.gu(0.5)
+                    text: i18n.tr("Donate")
+                    color: UbuntuColors.blue
+                    onClicked: {
+                        Qt.openUrlExternally("https://liberapay.com/turanmahmudov")
+                        PopupUtils.close(donateMeDialog)
+                    }
+                }
+            }
+        }
     }
 
     Connections{
