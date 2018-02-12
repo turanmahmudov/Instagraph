@@ -10,6 +10,8 @@ import "../js/Storage.js" as Storage
 Page {
     id: editprofilepage
 
+    property bool changeProfilePictureLoading: false
+
     header: PageHeader {
         title: i18n.tr("Edit Profile")
         trailingActionBar {
@@ -55,6 +57,7 @@ Page {
                     }
                     onClicked: {
                         changePhotoClicked()
+                        PopupUtils.close(popoverElement);
                     }
                 }
 
@@ -66,28 +69,10 @@ Page {
                         title.text: i18n.tr("Remove Profile Photo")
                     }
                     onClicked: {
+                        changeProfilePictureLoading = true
                         instagram.removeProfilePicture()
+                        PopupUtils.close(popoverElement);
                     }
-                }
-            }
-
-            Connections {
-                target: instagram
-                onProfilePictureChanged: {
-                    PopupUtils.close(popoverElement);
-                    pageStack.clear();
-                    pageStack.push(tabs);
-                    tabs.selectedTabIndex = 3
-
-                    userPage.getUsernameInfo();
-                }
-                onProfilePictureDeleted: {
-                    PopupUtils.close(popoverElement);
-                    pageStack.clear();
-                    pageStack.push(tabs);
-                    tabs.selectedTabIndex = 3
-
-                    userPage.getUsernameInfo();
                 }
             }
         }
@@ -107,6 +92,7 @@ Page {
         var importPage = pageStack.push(Qt.resolvedUrl("ImportPhotoPage.qml"))
 
         importPage.imported.connect(function(fileUrl) {
+            changeProfilePictureLoading = true
             var pth = String(fileUrl).replace('file://', '')
             instagram.changeProfilePicture(pth)
             pageStack.pop()
@@ -121,7 +107,7 @@ Page {
         id: bouncingProgress
         z: 10
         anchors.top: editprofilepage.header.bottom
-        visible: instagram.busy
+        visible: instagram.busy || changeProfilePictureLoading
     }
 
     Flickable {
@@ -162,7 +148,11 @@ Page {
 
                            MouseArea {
                                anchors.fill: parent
-                               onClicked: changePhotoClicked()
+                               onClicked: {
+                                   if (!changeProfilePictureLoading) {
+                                    PopupUtils.open(popoverComponent)
+                                   }
+                               }
                            }
                        }
 
@@ -175,7 +165,9 @@ Page {
                            MouseArea {
                                anchors.fill: parent
                                onClicked: {
-                                   PopupUtils.open(popoverComponent)
+                                   if (!changeProfilePictureLoading) {
+                                    PopupUtils.open(popoverComponent)
+                                   }
                                }
                            }
                        }
@@ -405,6 +397,22 @@ Page {
             if (data.status == 'ok') {
                 pageStack.pop();
             }
+        }
+        onProfilePictureChanged: {
+            changeProfilePictureLoading = false
+            pageStack.clear();
+            pageStack.push(tabs);
+            tabs.selectedTabIndex = 3
+
+            userPage.getUsernameInfo();
+        }
+        onProfilePictureDeleted: {
+            changeProfilePictureLoading = false
+            pageStack.clear();
+            pageStack.push(tabs);
+            tabs.selectedTabIndex = 3
+
+            userPage.getUsernameInfo();
         }
     }
 }
