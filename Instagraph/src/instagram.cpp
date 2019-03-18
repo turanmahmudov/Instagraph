@@ -406,14 +406,7 @@ void Instagram::editMedia(QString mediaId, QString captionText)
 void Instagram::infoMedia(QString mediaId)
 {
     InstagramRequest *infoMediaRequest = new InstagramRequest();
-    QJsonObject data;
-        data.insert("_uuid",        this->m_uuid);
-        data.insert("_uid",         this->m_username_id);
-        data.insert("_csrftoken",   "Set-Cookie: csrftoken="+this->m_token);
-        data.insert("media_id", mediaId);
-
-    QString signature = infoMediaRequest->generateSignature(data);
-    infoMediaRequest->request("media/"+mediaId+"/info/",signature.toUtf8());
+    infoMediaRequest->request("media/"+mediaId+"/info/?",NULL,false,true);
     QObject::connect(infoMediaRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(mediaInfoReady(QVariant)));
 }
 
@@ -1477,10 +1470,10 @@ void Instagram::getUserReelsMediaFeed(QString user_id)
     m_busy = true;
     emit busyChanged();
 
-    QString target = "feed/user/"+user_id+"/reel_media/";
+    QString target = "feed/user/"+user_id+"/reel_media/?";
 
     InstagramRequest *getUserReelsMediaFeedRequest = new InstagramRequest();
-    getUserReelsMediaFeedRequest->request(target,NULL);
+    getUserReelsMediaFeedRequest->request(target,NULL,false,true);
     QObject::connect(getUserReelsMediaFeedRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(userReelsMediaFeedDataReady(QVariant)));
 
     m_busy = false;

@@ -11,7 +11,7 @@ class InstagramRequest : public QObject
 public:
     explicit InstagramRequest(QObject *parent = 0);
 
-    void request(QString endpoint, QByteArray post, bool apiV2 = false);
+    void request(QString endpoint, QByteArray post, bool apiV2 = false, bool isGet = false);
     void fileRquest(QString endpoint, QString boundary, QByteArray data);
     void directRquest(QString endpoint, QString boundary, QByteArray data);
     QString generateSignature(QJsonObject data);

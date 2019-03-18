@@ -64,7 +64,7 @@ void InstagramRequest::fileRquest(QString endpoint, QString boundary, QByteArray
     QObject::connect(this->m_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(saveCookie()));
 }
 
-void InstagramRequest::request(QString endpoint, QByteArray post, bool apiV2)
+void InstagramRequest::request(QString endpoint, QByteArray post, bool apiV2, bool isGet)
 {
     QFile f(m_data_path.absolutePath()+"/cookies.dat");
     f.open(QIODevice::ReadOnly);
@@ -95,7 +95,12 @@ void InstagramRequest::request(QString endpoint, QByteArray post, bool apiV2)
     request.setRawHeader("X-IG-Connection-Type","WIFI");
 
     this->m_manager->setCookieJar(this->m_jar);
-    this->m_reply = this->m_manager->post(request,post);
+
+    if (isGet) {
+        this->m_reply = this->m_manager->get(request);
+    } else {
+        this->m_reply = this->m_manager->post(request,post);
+    }
 
     QObject::connect(this->m_reply, SIGNAL(finished()), this, SLOT(finishGetUrl()));
     QObject::connect(this->m_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(saveCookie()));
