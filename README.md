@@ -50,7 +50,7 @@ Reach out to me at one of the following places!
 - Twitter at <a href="http://twitter.com/turanmahmudov" target="_blank">`@turanmahmudov`</a>
 
 ## Donations
-Donate me on [Librepay](https://liberapay.com/turanmahmudov)
+Donate me on [PayPal](https://www.paypal.me/gturanmahmudov)
 
 ## License
 The app is open source and licensed under GNU General Public License v3.0 (http://www.gnu.org/licenses/gpl-3.0.en.html).
