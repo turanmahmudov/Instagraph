@@ -54,3 +54,8 @@ Donate me on [PayPal](https://www.paypal.me/gturanmahmudov)
 
 ## License
 The app is open source and licensed under GNU General Public License v3.0 (http://www.gnu.org/licenses/gpl-3.0.en.html).
+
+## Support on Beerpay
+Hey dude! Help me out for a couple of :beers:!
+
+[![Beerpay](https://beerpay.io/turanmahmudov/Instagraph/badge.svg?style=beer-square)](https://beerpay.io/turanmahmudov/Instagraph)  [![Beerpay](https://beerpay.io/turanmahmudov/Instagraph/make-wish.svg?style=flat-square)](https://beerpay.io/turanmahmudov/Instagraph?focus=wish)
