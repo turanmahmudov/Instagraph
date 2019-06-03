@@ -101,7 +101,7 @@ msgstr "Copiar link"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:111
 msgid "Download Media"
-msgstr "Transferir media"
+msgstr "Transferir multimédia"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/MediaEntry.qml:436
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:214
@@ -145,7 +145,7 @@ msgstr "Temperatura"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/effects/EffectsList.qml:78
 msgid "Highlights"
-msgstr "Destaque"
+msgstr "Destaques"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/effects/EffectsList.qml:89
 msgid "Shadows"
@@ -251,7 +251,7 @@ msgstr "Fechar"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraPage.qml:192
 msgid "Library"
-msgstr "Libraria"
+msgstr "Biblioteca"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:13
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:80
@@ -266,7 +266,7 @@ msgstr "Guardar"
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:69
 #, fuzzy
 msgid "Current"
-msgstr "Palavra-passe atual"
+msgstr "Atual"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:79
 msgid "Current password"
@@ -330,7 +330,7 @@ msgstr "Ícones"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/Credits.qml:106
 msgid "Special Thanks"
-msgstr "Agradecimentos"
+msgstr "Agradecimentos Especiais"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:24
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:28
@@ -343,7 +343,7 @@ msgstr "Você partilhou uma publicação"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:146
 msgid "Shared a post"
-msgstr "Partilhar uma publicação"
+msgstr "Partilhou uma publicação"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:147
 msgid "You shared a media"
@@ -351,7 +351,7 @@ msgstr "Você partilhou multimédia"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:147
 msgid "Shared a media"
-msgstr "Partilhar muultimédia"
+msgstr "Partilhou muultimédia"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:148
 msgid "You sent a story"
@@ -359,7 +359,7 @@ msgstr "Você enviou uma história"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:148
 msgid "Sent a story"
-msgstr "Enviar uma história"
+msgstr "Enviou uma história"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:149
 msgid "You shared a link"
@@ -368,7 +368,7 @@ msgstr "Você partilhou um link"
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:149
 #, fuzzy
 msgid "Shared a link"
-msgstr "Aguçado"
+msgstr "Partilhou um link"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:154
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:393
@@ -378,7 +378,7 @@ msgstr "Você mencionou-os numa história"
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:154
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:393
 msgid "Mentied you in a story"
-msgstr "Mencionou-o numa história"
+msgstr "Mencionou te numa história"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:155
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:394
@@ -397,7 +397,7 @@ msgstr "DESCONHECIDO"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:210
 msgid "Welcome to Instagraph Direct!"
-msgstr "Bem-vindo ao Instagraph Diret!"
+msgstr "Bem-vindo ao Instagraph Direct!"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:211
 msgid "Tap the + icon to send a photo, video or message."
@@ -406,12 +406,12 @@ msgstr "Toque no ícone + para enviar uma foto, vídeo ou mensagem."
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:507
 #, qt-format
 msgid "You sent %1's story."
-msgstr "Você enviou %1's histórias."
+msgstr "Você enviou a história de %1."
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:507
 #, qt-format
 msgid "Sent %1's story."
-msgstr "Enviou %1's história"
+msgstr "Enviou a história de %1."
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:829
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:323
@@ -445,7 +445,7 @@ msgstr "Remover fotografia de perfil"
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:160
 #, fuzzy
 msgid "Change Photo"
-msgstr "Modificar a palavra-passe"
+msgstr "Modificar Foto"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:193
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:202
@@ -492,7 +492,7 @@ msgstr "Homem"
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/FollowRequestsPage.qml:15
 #, fuzzy
 msgid "Follow Requests"
-msgstr "Seguidores"
+msgstr "Pedidos para seguir"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/FollowRequestsPage.qml:127
 msgid "Confirm"
@@ -517,7 +517,7 @@ msgstr "Escolher de"
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/Libraries.qml:8
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:187
 msgid "Libraries"
-msgstr "Librarias"
+msgstr "Bibliotecas"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/Libraries.qml:31
 msgid "Open Source"
@@ -584,7 +584,7 @@ msgstr "Aprovar ou ignorar pedidos"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NotifsPage.qml:513
 msgid "Activity from people you follow"
-msgstr "Atividade de pessoas que segue"
+msgstr "Atividade de pessoas que segues"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NotifsPage.qml:514
 msgid ""
@@ -604,7 +604,7 @@ msgstr "Conta"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:92
 msgid "Posts You've Liked"
-msgstr "Publicações que gostou"
+msgstr "Publicações que gostaste"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:117
 msgid "Private Account"
@@ -674,7 +674,7 @@ msgstr "Já tens uma conta? <b>Entra</b>."
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SavedMediaPage.qml:15
 #, fuzzy
 msgid "Saved"
-msgstr "Guardar"
+msgstr "Guardado"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:57
 msgid "People"
