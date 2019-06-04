@@ -704,7 +704,7 @@ msgstr "%1 tem uma conta privada."
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:113
 msgid "Only their followers will be able to see this photo."
-msgstr "Apenas os seus seguidores conseguem ver esta foto."
+msgstr "Apenas os seus seguidores conseguirão ver esta foto."
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SuggestionsPage.qml:15
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/UserPage.qml:20
@@ -725,7 +725,7 @@ msgstr "Utilizador"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/UserPage.qml:465
 msgid "Photos you're tagged in will appear here."
-msgstr "As foto em que foi marcado vão aparecer aqui."
+msgstr "As fotos em que foi marcado vão aparecer aqui."
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/UserPage.qml:465
 msgid "Start capturing and sharing your moments"
@@ -789,7 +789,7 @@ msgstr "%1m"
 msgid "%1 MINUTE AGO"
 msgid_plural "%1 MINUTES AGO"
 msgstr[0] "HÁ %1 MINUTO"
-msgstr[1] "HACE %1 MINUTOS"
+msgstr[1] "HÁ %1 MINUTOS"
 
 #: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:75
 #, c-format, qt-format
