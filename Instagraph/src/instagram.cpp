@@ -724,7 +724,7 @@ void Instagram::editProfile(QString url, QString phone, QString first_name, QStr
 void Instagram::getUsernameInfo(QString usernameId)
 {
     InstagramRequest *getUsernameRequest = new InstagramRequest();
-    getUsernameRequest->request("users/"+usernameId+"/info/",NULL);
+    getUsernameRequest->request("users/"+usernameId+"/info/",NULL,false,true);
     QObject::connect(getUsernameRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(usernameDataReady(QVariant)));
 }
 

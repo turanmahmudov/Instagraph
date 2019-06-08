@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-01 12:58+0000\n"
+"POT-Creation-Date: 2019-06-08 16:20+0000\n"
 "PO-Revision-Date: 2018-07-03 09:45+0000\n"
 "Last-Translator: advocatux <advocatux@airpost.net>\n"
 "Language-Team: UBports Spanish Team\n"
@@ -18,781 +18,782 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/Main.qml:54
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:54
 msgid "Refresh"
 msgstr "Recargar"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/Main.qml:62
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:62
 msgid "Inbox"
 msgstr "Bandeja de entrada"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/Main.qml:70
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DiscoverPeoplePage.qml:15
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:70
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DiscoverPeoplePage.qml:15
 msgid "Discover People"
 msgstr "Descubrir gente"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/Main.qml:78
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:21
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:78
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:21
 msgid "New Message"
 msgstr "Nuevo mensaje"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/Main.qml:273
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:273
 msgid "Donate me"
 msgstr "Donar"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/Main.qml:274
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:274
 msgid "Donate to support me continue developing for Ubuntu."
 msgstr "Donar para que pueda continuar desarrollando para Ubuntu."
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/Main.qml:280
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:280
 msgid "Ignore"
 msgstr "Ignorar"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/Main.qml:286
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/About.qml:14
+#: /home/turan/Apps/Instagraph/Instagraph/Main.qml:286
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/About.qml:14
 msgid "Donate"
 msgstr "Donar"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/FollowComponent.qml:56
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/FollowComponent.qml:123
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NotifsPage.qml:23
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:381
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/FollowComponent.qml:56
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/FollowComponent.qml:123
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:23
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:381
 msgid "Following"
 msgstr "Siguiendo"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/FollowComponent.qml:64
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/FollowComponent.qml:99
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:407
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/FollowComponent.qml:64
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/FollowComponent.qml:99
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:407
 msgid "Requested"
 msgstr "Solicitado"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/FollowComponent.qml:72
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/FollowComponent.qml:81
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/FollowComponent.qml:111
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:394
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/FollowComponent.qml:72
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/FollowComponent.qml:81
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/FollowComponent.qml:111
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:394
 msgid "Follow"
 msgstr "Seguir"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:58
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:25
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:19
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:58
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:25
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:19
 msgid "Edit"
 msgstr "Editar"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:67
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/FollowRequestsPage.qml:141
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:67
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/FollowRequestsPage.qml:141
 msgid "Delete"
 msgstr "Borrar"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:76
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:76
 msgid "Turn On Commenting"
 msgstr "Activar los comentarios"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:84
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:84
 msgid "Turn Off Commenting"
 msgstr "Desactivar los comentarios"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:92
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:92
 msgid "Remove Tag"
 msgstr "Eliminar la etiqueta"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:101
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:101
 msgid "Copy Link"
 msgstr "Copiar el enlace"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:111
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:111
 msgid "Download Media"
 msgstr "Descargar medio"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/MediaEntry.qml:436
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:214
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:253
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:257
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/MediaEntry.qml:436
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:214
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:253
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:257
 msgid " likes"
 msgstr " megusta"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/MediaEntry.qml:470
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/MediaEntry.qml:470
 #, qt-format
 msgid "View all %1 comments"
 msgstr "Ver todos los %1 comentarios"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/SuggestionsPanel.qml:39
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/SuggestionsPanel.qml:39
 msgid "Suggestions for You"
 msgstr "Sugerencias"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/components/SuggestionsPanel.qml:48
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/SuggestionsPanel.qml:48
 msgid "See All"
 msgstr "Ver todo"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/effects/EffectsList.qml:23
+#: /home/turan/Apps/Instagraph/Instagraph/qml/effects/EffectsList.qml:23
 msgid "Adjust"
 msgstr "Ajustar"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/effects/EffectsList.qml:34
+#: /home/turan/Apps/Instagraph/Instagraph/qml/effects/EffectsList.qml:34
 msgid "Brightness"
 msgstr "Brillo"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/effects/EffectsList.qml:45
+#: /home/turan/Apps/Instagraph/Instagraph/qml/effects/EffectsList.qml:45
 msgid "Contrast"
 msgstr "Contraste"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/effects/EffectsList.qml:56
+#: /home/turan/Apps/Instagraph/Instagraph/qml/effects/EffectsList.qml:56
 msgid "Saturation"
 msgstr "Saturación"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/effects/EffectsList.qml:67
+#: /home/turan/Apps/Instagraph/Instagraph/qml/effects/EffectsList.qml:67
 msgid "Temperature"
 msgstr "Temperatura"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/effects/EffectsList.qml:78
+#: /home/turan/Apps/Instagraph/Instagraph/qml/effects/EffectsList.qml:78
 msgid "Highlights"
 msgstr "Realce"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/effects/EffectsList.qml:89
+#: /home/turan/Apps/Instagraph/Instagraph/qml/effects/EffectsList.qml:89
 msgid "Shadows"
 msgstr "Sombras"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/effects/EffectsList.qml:100
+#: /home/turan/Apps/Instagraph/Instagraph/qml/effects/EffectsList.qml:100
 msgid "Vignette"
 msgstr "Viñeta"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/effects/EffectsList.qml:111
+#: /home/turan/Apps/Instagraph/Instagraph/qml/effects/EffectsList.qml:111
 msgid "Sharpen"
 msgstr "Afilar"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/About.qml:8
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:152
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:162
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/About.qml:8
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:152
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:162
 msgid "About"
 msgstr "Acerca de"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/About.qml:59
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/About.qml:59
 msgid "Unofficial Instagram Client"
 msgstr "Cliente no oficial de Instagram"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/About.qml:87
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/About.qml:87
 msgid "Released under the terms of the GNU GPL v3"
 msgstr "Publicada según los términos de la GNU GPL v3"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/About.qml:96
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/About.qml:96
 #, qt-format
 msgid "Source code available on %1"
 msgstr "Código fuente disponible en %1"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/BlockedUsers.qml:22
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:104
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/BlockedUsers.qml:22
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:104
 msgid "Blocked Users"
 msgstr "Usuarios bloqueados"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:24
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:24
 msgid "Publish"
 msgstr "Publicar"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:28
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCropPage.qml:26
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:29
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:23
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/RegisterPage.qml:39
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:28
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCropPage.qml:26
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:29
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:23
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:39
 msgid "Back"
 msgstr "Atrás"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:38
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:38
 msgid "Share"
 msgstr "Compartir"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:71
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:71
 msgid "Saving"
 msgstr "Guardando"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:71
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:71
 msgid "Posting"
 msgstr "Publicando"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:118
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:95
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:118
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:95
 msgid "Write a caption..."
 msgstr "Escriba un pie de foto..."
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:174
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:174
 msgid "Add Location"
 msgstr "Añadir ubicación"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCropPage.qml:22
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCropPage.qml:22
 msgid "Crop"
 msgstr "Recortar"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCropPage.qml:37
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:40
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraCropPage.qml:37
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:40
 msgid "Next"
 msgstr "Siguiente"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:188
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:188
 msgid "Filters"
 msgstr "Filtros"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:188
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:188
 msgid "Tools"
 msgstr "Herramientas"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraPage.qml:21
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraPage.qml:192
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SinglePhoto.qml:15
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraPage.qml:21
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraPage.qml:192
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SinglePhoto.qml:15
 msgid "Photo"
 msgstr "Foto"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraPage.qml:21
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraPage.qml:192
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraPage.qml:21
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraPage.qml:192
 msgid "Video"
 msgstr "Vídeo"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraPage.qml:25
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/LoginPage.qml:37
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraPage.qml:25
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:37
 msgid "Close"
 msgstr "Cerrar"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CameraPage.qml:192
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CameraPage.qml:192
 msgid "Library"
 msgstr "Biblioteca"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:13
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:80
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:13
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:80
 msgid "Change Password"
 msgstr "Cambiar contraseña"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:20
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:22
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:20
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:22
 msgid "Save"
 msgstr "Guardar"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:69
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:69
 msgid "Current"
 msgstr "Actual"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:79
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:79
 msgid "Current password"
 msgstr "Contraseña actual"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:103
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:103
 msgid "New"
 msgstr "Nueva"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:113
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:113
 msgid "New password"
 msgstr "Nueva contraseña"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:138
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:138
 msgid "Verify"
 msgstr "Verificar"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:148
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ChangePasswordPage.qml:148
 msgid "New password, again"
 msgstr "Nueva contraseña, otra vez"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:27
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:27
 msgid "Comments"
 msgstr "Comentarios"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:119
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:119
 msgid "Remove"
 msgstr "Eliminar"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:223
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:223
 msgid "Reply"
 msgstr "Contestar"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:294
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:294
 msgid "Add a comment"
 msgstr "Añadir un comentario"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:306
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:855
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:349
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:346
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/CommentsPage.qml:306
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:855
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:349
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:346
 msgid "Send"
 msgstr "Enviar"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/Credits.qml:8
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:174
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:8
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:174
 msgid "Credits"
 msgstr "Créditos"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/Credits.qml:31
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:31
 msgid "Creator"
 msgstr "Creador"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/Credits.qml:56
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:56
 msgid "Developers"
 msgstr "Desarrolladores"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/Credits.qml:81
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:81
 msgid "Icons"
 msgstr "Iconos"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/Credits.qml:106
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Credits.qml:106
 msgid "Special Thanks"
 msgstr "Agradecimiento especial"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:24
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:28
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:24
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:28
 msgid "Direct"
 msgstr "Directo"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:146
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:146
 msgid "You shared a post"
 msgstr "Ha compartido una publicación"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:146
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:146
 msgid "Shared a post"
 msgstr "Compartió una publicación"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:147
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:147
 msgid "You shared a media"
 msgstr "Ha compartido un medio"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:147
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:147
 msgid "Shared a media"
 msgstr "Compartió un medio"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:148
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:148
 msgid "You sent a story"
 msgstr "Ha enviado una historia"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:148
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:148
 msgid "Sent a story"
 msgstr "Envió una historia"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:149
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:149
 msgid "You shared a link"
 msgstr "Ha compartido un enlace"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:149
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:149
 msgid "Shared a link"
 msgstr "Compartió un enlace"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:154
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:393
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:154
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:393
 msgid "You mentioned their in a story"
 msgstr "Los ha mencionado en una historia"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:154
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:393
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:154
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:393
 msgid "Mentied you in a story"
 msgstr "Ha sido mencionado en una historia"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:155
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:394
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:155
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:394
 msgid "You replied to their story"
 msgstr "Ha contestado a su historia"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:155
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:394
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:155
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:394
 msgid "Replied to your story"
 msgstr "Contestó a su historia"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:155
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:394
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:155
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:394
 msgid "UNKNOWN"
 msgstr "DESCONOCIDO"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:210
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:210
 msgid "Welcome to Instagraph Direct!"
 msgstr "¡Bienvenido/a a Instagraph Direct!"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:211
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:211
 msgid "Tap the + icon to send a photo, video or message."
 msgstr "Pulse el icono + para enviar una foto, vídeo o mensaje"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:507
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:507
 #, qt-format
 msgid "You sent %1's story."
 msgstr "Ha enviado la historia de %1."
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:507
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:507
 #, qt-format
 msgid "Sent %1's story."
 msgstr "Envió la historia de %1."
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:829
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:323
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:336
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:829
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:323
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:336
 msgid "Write a message..."
 msgstr "Escriba un mensaje..."
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:33
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:33
 msgid "Done"
 msgstr "Hecho"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:16
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:68
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:431
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/UserPage.qml:287
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:16
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:68
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:431
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:287
 msgid "Edit Profile"
 msgstr "Editar el perfil"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:46
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:46
 msgid "Set a Profile Photo"
 msgstr "Poner una foto del perfil"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:56
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:56
 msgid "New Profile Photo"
 msgstr "Nueva foto del perfil"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:69
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:69
 msgid "Remove Profile Photo"
 msgstr "Eliminar la foto del perfil"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:160
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:160
 msgid "Change Photo"
 msgstr "Cambiar la foto"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:193
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:202
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:193
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:202
 msgid "Name"
 msgstr "Nombre"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:226
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:235
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:226
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:235
 msgid "Website"
 msgstr "Sitio web"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:260
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:269
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:260
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:269
 msgid "Bio"
 msgstr "Biografía"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:285
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:285
 msgid "Private Information"
 msgstr "Información privada"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:305
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:314
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/RegisterPage.qml:101
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:305
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:314
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:101
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:339
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:348
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:339
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:348
 msgid "Phone"
 msgstr "Teléfono"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:372
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:372
 msgid "Gender"
 msgstr "Género"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:380
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:380
 msgid "Female"
 msgstr "Femenino"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:381
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:381
 msgid "Male"
 msgstr "Masculino"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/FollowRequestsPage.qml:15
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/FollowRequestsPage.qml:15
 msgid "Follow Requests"
 msgstr "Seguir las solicitudes"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/FollowRequestsPage.qml:127
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/FollowRequestsPage.qml:127
 msgid "Confirm"
 msgstr "Confirmar"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/HomePage.qml:16
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:16
 msgid "Instagraph"
 msgstr "Instagraph"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/HomePage.qml:130
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:130
 msgid "Welcome to Instagraph!"
 msgstr "¡Bienvenido/a a Instagraph!"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/HomePage.qml:131
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:131
 msgid "Follow accounts to see photos and videos here in your feed."
 msgstr "Seguir cuentas para ver fotos y vídeos aquí en su «feed»"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ImportPhotoPage.qml:28
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ImportPhotoPage.qml:28
 msgid "Choose from"
 msgstr "Elegir desde"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/Libraries.qml:8
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:187
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Libraries.qml:8
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:187
 msgid "Libraries"
 msgstr "Bibliotecas"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/Libraries.qml:31
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/Libraries.qml:31
 msgid "Open Source"
 msgstr "Código abierto"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/LikedMediaPage.qml:15
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/MediaLikersPage.qml:22
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LikedMediaPage.qml:15
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/MediaLikersPage.qml:22
 msgid "Likes"
 msgstr "Megusta"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/LikedMediaPage.qml:128
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:590
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LikedMediaPage.qml:128
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:590
 msgid "No photos or videos yet!"
 msgstr "¡No hay ninguna foto o vídeo aún!"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/LoginPage.qml:99
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/RegisterPage.qml:118
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:99
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:118
 msgid "Username"
 msgstr "Nombre de usuario"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/LoginPage.qml:117
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/RegisterPage.qml:131
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:117
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:131
 msgid "Password"
 msgstr "Contraseña"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/LoginPage.qml:129
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:129
 msgid "Log In"
 msgstr "Iniciar sesión"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/LoginPage.qml:169
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/LoginPage.qml:169
 msgid "Don't have an account? <b>Sign Up</b>."
 msgstr "¿No tiene una cuenta? <b>Regístrese</b>."
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:120
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:133
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:120
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:133
 msgid "To"
 msgstr "Para"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:190
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchLocation.qml:30
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchLocation.qml:45
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:19
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:41
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:203
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:190
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchLocation.qml:30
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchLocation.qml:45
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:19
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:41
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:203
 msgid "Search"
 msgstr "Buscar"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NotifsPage.qml:15
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NotifsPage.qml:245
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:15
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:245
 msgid "Activity"
 msgstr "Actividad"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NotifsPage.qml:32
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:32
 msgid "You"
 msgstr "Tú"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NotifsPage.qml:218
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:218
 msgid "<span style='color:"
 msgstr "<span style='color:"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NotifsPage.qml:226
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:226
 msgid "Approve or ignore requests"
 msgstr "Aceptar o ignorar las solicitudes"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NotifsPage.qml:513
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:513
 msgid "Activity from people you follow"
 msgstr "Actividad de la gente que sigue"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/NotifsPage.qml:514
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/NotifsPage.qml:514
 msgid ""
 "When someone you follow comments on or likes a post, you'll see it here."
 msgstr ""
-"Cuando alguien a quien sigue comente o le guste una publicación, lo verá aquí."
+"Cuando alguien a quien sigue comente o le guste una publicación, lo verá "
+"aquí."
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:15
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:23
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:15
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:23
 msgid "Options"
 msgstr "Opciones"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:58
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:58
 msgid "Account"
 msgstr "Cuenta"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:92
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:92
 msgid "Posts You've Liked"
 msgstr "Publicaciones que le gustan"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:117
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:117
 msgid "Private Account"
 msgstr "Cuenta privada"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:140
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:140
 msgid ""
 "When your account is private, only people you approve can see your photos "
 "and videos. Your existing followers won't be affected."
 msgstr ""
-"Cuando su cuenta es privada, solo la gente que acepte puede ver sus fotos "
-"y vídeos. Sus seguidores actuales no se verán afectados."
+"Cuando su cuenta es privada, solo la gente que acepte puede ver sus fotos y "
+"vídeos. Sus seguidores actuales no se verán afectados."
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:200
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OptionsPage.qml:200
 msgid "Log Out"
 msgstr "Cerrar sesión"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:36
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/UserPage.qml:32
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:36
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:32
 msgid "Settings"
 msgstr "Configuración"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:196
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:196
 msgid "Block"
 msgstr "Bloquear"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:297
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/UserPage.qml:204
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:297
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:204
 msgid "posts"
 msgstr "publicaciones"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:324
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/UserPage.qml:231
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:324
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:231
 msgid "followers"
 msgstr "seguidores"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:359
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/UserPage.qml:266
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:359
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:266
 msgid "following"
 msgstr "siguiendo"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:419
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:419
 msgid "Unblock"
 msgstr "Desbloquear"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:588
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/UserPage.qml:463
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:588
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:463
 msgid "No Photos Yet"
 msgstr "No hay fotos aún"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:609
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:609
 msgid "This account is private."
 msgstr "Esta cuenta es privada."
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:610
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:610
 msgid "Follow to see their photos and videos."
 msgstr "Seguir para ver sus fotos y vídeos."
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/RegisterPage.qml:143
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:143
 msgid "Sign Up"
 msgstr "Registrarse"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/RegisterPage.qml:169
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/RegisterPage.qml:169
 msgid "Already have an account? <b>Log In</b>."
 msgstr "¿Ya tiene una cuenta? <b>Iniciar sesión</b>"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SavedMediaPage.qml:15
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SavedMediaPage.qml:15
 msgid "Saved"
 msgstr "Guardado"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:57
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:57
 msgid "People"
 msgstr "Gente"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:63
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:63
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:69
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:69
 msgid "Places"
 msgstr "Lugares"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:352
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SearchPage.qml:352
 msgid " posts"
 msgstr " publicaciones"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:24
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:24
 msgid "Send to"
 msgstr "Enviar a"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:105
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:105
 #, qt-format
 msgid "%1 has a private account."
 msgstr "%1 tiene una cuenta privada."
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:113
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:113
 msgid "Only their followers will be able to see this photo."
 msgstr "Solo sus seguidores podrán ver esta foto."
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/SuggestionsPage.qml:15
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/UserPage.qml:20
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/SuggestionsPage.qml:15
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:20
 msgid "Suggestions"
 msgstr "Sugerencias"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/UserFollowers.qml:22
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserFollowers.qml:22
 msgid "Followers"
 msgstr "Seguidores"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/UserFollowings.qml:22
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserFollowings.qml:22
 msgid "Followings"
 msgstr "Siguiendo"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/UserPage.qml:16
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:16
 msgid "User"
 msgstr "Usuario"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/UserPage.qml:465
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:465
 msgid "Photos you're tagged in will appear here."
 msgstr "Las fotos en las que sea etiquetado aparecerán aquí."
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/ui/UserPage.qml:465
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/UserPage.qml:465
 msgid "Start capturing and sharing your moments"
 msgstr "Comience a capturar y compartir sus momentos"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:65
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:65
 #, qt-format
 msgid "%1M"
 msgstr "%1M"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:65
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:65
 #, qt-format
 msgid "%1 MONTH AGO"
 msgid_plural "%1 MONTHS AGO"
 msgstr[0] "HACE %1 MES"
 msgstr[1] "HACE %1 MESES"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:67
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:67
 #, qt-format
 msgid "%1w"
 msgstr "%1w"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:67
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:67
 #, qt-format
 msgid "%1 WEEK AGO"
 msgid_plural "%1 WEEKS AGO"
 msgstr[0] "HACE %1 SEMANA"
 msgstr[1] "HACE %1 SEMANAS"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:69
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:69
 #, c-format, qt-format
 msgid "%1d"
 msgstr "%1d"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:69
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:69
 #, qt-format
 msgid "%1 DAY AGO"
 msgid_plural "%1 DAYS AGO"
 msgstr[0] "HACE %1 DÍA"
 msgstr[1] "HACE %1 DÍAS"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:71
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:71
 #, qt-format
 msgid "%1h"
 msgstr "%1h"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:71
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:71
 #, qt-format
 msgid "%1 HOUR AGO"
 msgid_plural "%1 HOURS AGO"
 msgstr[0] "HACE %1 HORA"
 msgstr[1] "HACE %1 HORAS"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:73
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:73
 #, c-format, qt-format
 msgid "%1m"
 msgstr "%1m"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:73
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:73
 #, qt-format
 msgid "%1 MINUTE AGO"
 msgid_plural "%1 MINUTES AGO"
 msgstr[0] "HACE %1 MINUTO"
 msgstr[1] "HACE %1 MINUTOS"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:75
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:75
 #, c-format, qt-format
 msgid "%1s"
 msgstr "%1s"
 
-#: /home/turan/Apps/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:75
+#: /home/turan/Apps/Instagraph/Instagraph/qml/js/Helper.js:75
 #, qt-format
 msgid "%1 SECOND AGO"
 msgid_plural "%1 SECONDS AGO"
 msgstr[0] "HACE %1 SEGUNDO"
-msgstr[1] "HACE %1 SEGUNDOS" 
+msgstr[1] "HACE %1 SEGUNDOS"
