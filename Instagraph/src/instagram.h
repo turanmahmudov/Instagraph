@@ -62,7 +62,7 @@ public slots:
     void getUserTags(QString usernameId);
     void getGeoMedia(QString usernameId);
     void tagFeed(QString tag, QString max_id = "");
-    void getTimeLine(QString max_id = "", QString seen_posts = "", QString unseen_posts = "");
+    void getTimeLine(QString max_id = "", QString seen_posts = "", bool pullToRefresh = false);
     void getUsernameFeed(QString usernameID, QString maxid = "", QString minTimestamp = "");
     void getPopularFeed(QString max_id = "");
 

@@ -790,7 +790,7 @@ void Instagram::tagFeed(QString tag, QString max_id)
     emit busyChanged();
 }
 
-void Instagram::getTimeLine(QString max_id, QString seen_posts, QString unseen_posts)
+void Instagram::getTimeLine(QString max_id, QString seen_posts, bool pullToRefresh)
 {
     m_busy = true;
     emit busyChanged();
@@ -826,6 +826,9 @@ void Instagram::getTimeLine(QString max_id, QString seen_posts, QString unseen_p
             data.addQueryItem("reason", "pagination");
             data.addQueryItem("max_id", max_id);
             data.addQueryItem("is_pull_to_refresh", "0");
+        } else if (pullToRefresh == true) {
+            data.addQueryItem("reason", "pull_to_refresh");
+            data.addQueryItem("is_pull_to_refresh", "1");
         } else {
             data.addQueryItem("reason", "cold_start_fetch");
             data.addQueryItem("is_pull_to_refresh", "0");
@@ -839,9 +842,7 @@ void Instagram::getTimeLine(QString max_id, QString seen_posts, QString unseen_p
             data.addQueryItem("seen_posts", "");
         }
 
-        if (unseen_posts.length() > 0) {
-            data.addQueryItem("unseen_posts", unseen_posts);
-        } else if (max_id.length() == 0) {
+        if (max_id.length() == 0) {
             data.addQueryItem("unseen_posts", "");
         }
 

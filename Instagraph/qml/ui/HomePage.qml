@@ -33,7 +33,11 @@ Page {
 
     property bool isEmpty: false
 
+    property bool isPullToRefresh: false
+
     function mediaDataFinished(data) {
+        isPullToRefresh = false
+
         if (data.num_results == 0) {
             isEmpty = true;
         } else {
@@ -76,10 +80,10 @@ Page {
         clear_models = false
         if (!next_id) {
             homePhotosModel.clear()
-            next_max_id = 0
+            next_max_id = ""
             clear_models = true
         }
-        instagram.getTimeLine(next_id, seen_posts.join(','));
+        instagram.getTimeLine(next_id, seen_posts.join(','), isPullToRefresh);
     }
 
     BouncingProgressBar {
@@ -124,6 +128,7 @@ Page {
             refreshing: list_loading && homePhotosModel.count == 0
             onRefresh: {
                 list_loading = true
+                isPullToRefresh = true
                 getMedia()
             }
         }

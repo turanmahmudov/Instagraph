@@ -259,7 +259,7 @@ Page {
                     active: list_type === 'recent_activity'
 
                     sourceComponent: SlotsLayout {
-                        id: layout
+                        id: layoutRecent
                         anchors.centerIn: parent
 
                         padding.leading: 0
@@ -268,9 +268,9 @@ Page {
                         padding.bottom: units.gu(1)
 
                         mainSlot: Row {
-                            id: label
+                            id: labelRecent
                             spacing: units.gu(1)
-                            width: parent.width - (story.type == 3 ? followButton.width : feed_image.width)
+                            width: parent.width - (story.type == 3 ? (followButton.width+units.gu(4)) : (feed_image.width+units.gu(4)))
 
                             CircleImage {
                                 width: units.gu(5)

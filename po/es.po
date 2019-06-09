@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-09 10:47+0000\n"
+"POT-Creation-Date: 2019-06-09 11:36+0000\n"
 "PO-Revision-Date: 2018-07-03 09:45+0000\n"
 "Last-Translator: advocatux <advocatux@airpost.net>\n"
 "Language-Team: UBports Spanish Team\n"
@@ -100,7 +100,7 @@ msgstr "Eliminar la etiqueta"
 msgid "Copy Link"
 msgstr "Copiar el enlace"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:111
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:113
 msgid "Download Media"
 msgstr "Descargar medio"
 
@@ -499,11 +499,11 @@ msgstr "Confirmar"
 msgid "Instagraph"
 msgstr "Instagraph"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:140
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:130
 msgid "Welcome to Instagraph!"
 msgstr "¡Bienvenido/a a Instagraph!"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:141
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:131
 msgid "Follow accounts to see photos and videos here in your feed."
 msgstr "Seguir cuentas para ver fotos y vídeos aquí en su «feed»"
 

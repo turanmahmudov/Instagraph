@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Instagraph\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-09 10:47+0000\n"
+"POT-Creation-Date: 2019-06-09 11:36+0000\n"
 "Language: az\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -92,7 +92,7 @@ msgstr ""
 msgid "Copy Link"
 msgstr ""
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:111
+#: /home/turan/Apps/Instagraph/Instagraph/qml/components/ListFeedDelegate.qml:113
 msgid "Download Media"
 msgstr ""
 
@@ -493,11 +493,11 @@ msgstr ""
 msgid "Instagraph"
 msgstr "Instagraph"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:140
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:130
 msgid "Welcome to Instagraph!"
 msgstr "Instagraph -a Xoş Gəlmisiniz!"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:141
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:131
 msgid "Follow accounts to see photos and videos here in your feed."
 msgstr ""
 
