@@ -134,8 +134,8 @@ MainView {
         } else {
             instagram.setUsername(username);
             instagram.setPassword(password);
-            instagram.login(true);
-            pageStack.push(tabs);
+
+            instagram.login(false, username, password, true);
 
             cacheImage.clean();
             cacheImage.init();
@@ -297,6 +297,8 @@ MainView {
     Connections{
         target: instagram
         onProfileConnected: {
+            pageStack.push(tabs);
+
             logged_in = true
             my_usernameId = instagram.getUsernameId()
 
@@ -322,9 +324,9 @@ MainView {
         target: instagram
         onProfileConnectedFail: {
             if (!loginPageIsActive) {
-                loginPageIsActive = true;
-                pageStack.clear();
-                pageStack.push(Qt.resolvedUrl("qml/ui/LoginPage.qml"));
+                loginPageIsActive = true
+                pageStack.clear()
+                pageStack.push(Qt.resolvedUrl("qml/ui/LoginPage.qml"))
             }
         }
     }

@@ -38,8 +38,6 @@ Instagram::Instagram(QObject *parent)
     this->m_uuid = uuid.createUuid().toString();
 
     this->m_device_id = this->generateDeviceId();
-
-    this->setUser();
 }
 
 bool Instagram::busy() const
@@ -76,7 +74,7 @@ QString Instagram::generateDeviceId()
 }
 
 
-void Instagram::setUser()
+void Instagram::setUser(bool force)
 {
     if(this->m_username.length() == 0 or this->m_password.length() == 0)
     {
@@ -84,27 +82,47 @@ void Instagram::setUser()
     }
     else
     {
+
         QFile f_cookie(m_data_path.absolutePath()+"/cookies.dat");
         QFile f_userId(m_data_path.absolutePath()+"/userId.dat");
         QFile f_token(m_data_path.absolutePath()+"/token.dat");
 
         if(f_cookie.exists() && f_userId.exists() && f_token.exists())
         {
-            this->m_isLoggedIn = true;
-            this->m_username_id = f_userId.readAll().trimmed();
-            this->m_rank_token = this->m_username_id+"_"+this->m_uuid;
-            this->m_token = f_token.readAll().trimmed();
+            f_userId.open(QFile::ReadOnly);
+            QTextStream f_userId_d(&f_userId);
 
-            this->doLogin();
+            f_token.open(QFile::ReadOnly);
+            QTextStream f_token_d(&f_token);
+
+            this->m_isLoggedIn = true;
+            this->m_username_id = f_userId_d.readAll().trimmed();
+            this->m_rank_token = this->m_username_id+"_"+this->m_uuid;
+            this->m_token = f_token_d.readAll().trimmed();
+
+            if (force == true) {
+                this->doLogin();
+            } else {
+                QVariant a;
+                emit profileConnected(a);
+            }
+        } else {
+            emit profileConnectedFail();
         }
     }
 }
 
-void Instagram::login(bool forse)
+void Instagram::login(bool forse, QString username, QString password, bool set)
 {
-    if(!this->m_isLoggedIn or forse)
-    {
-        this->setUser();
+    if (set == true) {
+        this->m_username = username;
+        this->m_password = password;
+    }
+
+    if (forse == false) {
+        this->setUser(false);
+    } else if(!this->m_isLoggedIn or forse) {
+        this->setUser(true);
 
         Instagram::syncFeatures(true);
 
@@ -171,17 +189,45 @@ void Instagram::doLogin()
     QObject::connect(request,SIGNAL(replySrtingReady(QVariant)),this,SLOT(profileConnect(QVariant)));
 }
 
+void Instagram::confirm2Factor(QString code, QString identifier, QString method)
+{
+    m_busy = true;
+    emit busyChanged();
+
+    InstagramRequest *request = new InstagramRequest();
+
+    QJsonObject data;
+        data.insert("verification_method",    method);
+        data.insert("verification_code",    code);
+        data.insert("two_factor_identifier",    identifier);
+        data.insert("_csrftoken",   "Set-Cookie: csrftoken="+this->m_token);
+        data.insert("username",     this->m_username);
+        data.insert("password",     this->m_password);
+        data.insert("guid",         this->m_uuid);
+        data.insert("device_id",    this->m_device_id);
+
+    QString signature = request->generateSignature(data);
+    request->request("accounts/two_factor_login/",signature.toUtf8());
+
+    QObject::connect(request,SIGNAL(replySrtingReady(QVariant)),this,SLOT(profileConnect(QVariant)));
+
+    m_busy = false;
+    emit busyChanged();
+}
+
 void Instagram::profileConnect(QVariant profile)
 {
     QJsonDocument profile_doc = QJsonDocument::fromJson(profile.toString().toUtf8());
     QJsonObject profile_obj = profile_doc.object();
 
-    //qDebug() << "Reply: " << profile_obj;
-
     if(profile_obj["status"].toString().toUtf8() == "fail")
     {
-        emit error(profile_obj["message"].toString().toUtf8());
-        emit profileConnectedFail();
+        if (profile_obj.contains("two_factor_required") && profile_obj["two_factor_required"] == true) {
+            emit twoFactorRequired(profile_obj);
+        } else {
+            emit error(profile_obj["message"].toString().toUtf8());
+            emit profileConnectedFail();
+        }
     }
     else
     {
@@ -191,6 +237,20 @@ void Instagram::profileConnect(QVariant profile)
         this->m_isLoggedIn = true;
         this->m_username_id = QString::number(user["pk"].toDouble(),'g', 10);
         this->m_rank_token = this->m_username_id+"_"+this->m_uuid;
+
+        // save username_id
+        QFile fu(m_data_path.absolutePath()+"/userId.dat");
+        fu.open(QIODevice::ReadWrite);
+        QTextStream su(&fu);
+        su << this->m_username_id << endl;
+        fu.close();
+
+        // save token
+        QFile ft(m_data_path.absolutePath()+"/token.dat");
+        ft.open(QIODevice::ReadWrite);
+        QTextStream st(&ft);
+        st << this->m_token << endl;
+        ft.close();
 
         this->syncFeatures();
         this->autoCompleteUserList();

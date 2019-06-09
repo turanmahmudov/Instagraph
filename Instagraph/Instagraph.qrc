@@ -118,5 +118,6 @@
         <file>qml/images/media_save.png</file>
         <file>qml/images/media_save_profile.svg</file>
         <file>qml/ui/SavedMediaPage.qml</file>
+        <file>qml/ui/2FactorLoginPage.qml</file>
     </qresource>
 </RCC>

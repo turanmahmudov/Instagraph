@@ -20,8 +20,9 @@ public:
     QString photos_path() const;
 
 public slots:
-    void login(bool forse = false);
+    void login(bool forse = false, QString username = "", QString password = "", bool set = false);
     void logout();
+    void confirm2Factor(QString code, QString identifier, QString method);
 
     void setUsername(QString username){this->m_username = username;}
     void setPassword(QString password){this->m_password = password;}
@@ -156,6 +157,8 @@ signals:
     void profileConnected(QVariant answer);
     void profileConnectedFail();
 
+    void twoFactorRequired(QVariant answer);
+
     void autoCompleteUserListReady(QVariant answer);
 
     void mediaInfoReady(QVariant answer);
@@ -261,7 +264,7 @@ signals:
     void imageUploadProgressDataReady(double answer);
 
 private slots:
-    void setUser();
+    void setUser(bool force = true);
     void doLogin();
     void syncFeatures(bool prelogin = false);
     void autoCompleteUserList();

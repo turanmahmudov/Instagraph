@@ -13,7 +13,6 @@ Page {
 
     header: PageHeader {
         StyleHints {
-            backgroundColor: "transparent"
             dividerColor: "transparent"
         }
         trailingActionBar {
@@ -54,20 +53,6 @@ Page {
         visible: instagram.busy
     }
 
-    Rectangle {
-        anchors.fill: parent
-
-        LinearGradient {
-            anchors.fill: parent
-            start: Qt.point(0, 0)
-            end: Qt.point(parent.width, 0)
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "#7451A9" }
-                GradientStop { position: 1.0; color: "#2270C0" }
-            }
-        }
-    }
-
     Column {
         anchors {
             top: loginpage.header.bottom
@@ -81,9 +66,8 @@ Page {
             text: "Instagraph"
             wrapMode: Text.WordWrap
             font.weight: Font.Bold
-            fontSize: "large"
+            fontSize: "x-large"
             textFormat: Text.RichText
-            color: "#ffffff"
         }
 
         Item {
@@ -102,10 +86,6 @@ Page {
                     forceActiveFocus()
                 }
             }
-            StyleHints {
-                backgroundColor: "#EAE9E7"
-                borderColor: "transparent"
-            }
         }
 
         TextField {
@@ -115,17 +95,13 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             echoMode: TextInput.Password
             placeholderText: i18n.tr("Password")
-            StyleHints {
-                backgroundColor: "#EAE9E7"
-                borderColor: "transparent"
-            }
         }
 
         Button {
             width: parent.width*0.8
             height: units.gu(5)
             anchors.horizontalCenter: parent.horizontalCenter
-            color: "#EAE9E7"
+            color: UbuntuColors.green
             text: i18n.tr("Log In")
             onTriggered: {
                 if(usernameField.text && passwordField.text) {
@@ -145,7 +121,6 @@ Page {
             id: errorTextLabel
             anchors.horizontalCenter: parent.horizontalCenter
             wrapMode: Text.WordWrap
-            color: "#ffffff"
         }
     }
 
@@ -157,7 +132,7 @@ Page {
         Rectangle {
             width: parent.width
             height: units.gu(0.08)
-            color: Qt.rgba(234,233,231,0.2)
+            color: UbuntuColors.ash
         }
 
         Item {
@@ -169,7 +144,6 @@ Page {
                 text: i18n.tr("Don't have an account? <b>Sign Up</b>.")
                 wrapMode: Text.WordWrap
                 textFormat: Text.RichText
-                color: "#EAE9E7"
 
                 MouseArea {
                     anchors.fill: parent
@@ -191,6 +165,13 @@ Page {
             pageStack.push(tabs);
             anchorToKeyboard = true
             loginPageIsActive = true
+        }
+        onTwoFactorRequired:{
+            Storage.set("password", passwordField.text);
+            Storage.set("username",usernameField.text)
+            pageStack.push(Qt.resolvedUrl("2FactorLoginPage.qml"), {answer: answer});
+            anchorToKeyboard = true
+            loginPageIsActive = false
         }
     }
 
