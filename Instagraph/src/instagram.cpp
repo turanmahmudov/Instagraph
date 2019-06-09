@@ -13,6 +13,7 @@
 #include <QImage>
 #include <QDataStream>
 #include <QUrl>
+#include <QUrlQuery>
 
 #include <QDebug>
 
@@ -789,20 +790,62 @@ void Instagram::tagFeed(QString tag, QString max_id)
     emit busyChanged();
 }
 
-void Instagram::getTimeLine(QString max_id)
+void Instagram::getTimeLine(QString max_id, QString seen_posts, QString unseen_posts)
 {
     m_busy = true;
     emit busyChanged();
 
-    QString target ="feed/timeline/?rank_token="+this->m_rank_token+"&ranked_content=true&";
-
-    if(max_id.length() > 0)
-    {
-        target += "&max_id="+max_id;
-    }
-
     InstagramRequest *getTimeLineRequest = new InstagramRequest();
-    getTimeLineRequest->request(target,NULL);
+
+    QUuid s_uuid;
+    QString s_uuid_id = s_uuid.createUuid().toString();
+    s_uuid_id.remove('{').remove('}');
+
+    QString uuid = this->m_uuid;
+    uuid.remove('{').remove('}');
+
+    QUrlQuery data;
+        data.addQueryItem("_uuid",        uuid);
+        data.addQueryItem("_csrftoken",   this->m_token);
+        data.addQueryItem("is_prefetch", "0");
+        data.addQueryItem("phone_id", this->m_device_id);
+        data.addQueryItem("device_id", uuid);
+        data.addQueryItem("client_session_id", s_uuid_id);
+        data.addQueryItem("battery_level", "25");
+        data.addQueryItem("is_charging", "0");
+        data.addQueryItem("will_sound_on", "1");
+        data.addQueryItem("is_on_screen", "true");
+        data.addQueryItem("timezone_offset", "0");
+
+        data.addQueryItem("is_async_ads_in_headload_enabled", "0");
+        data.addQueryItem("is_async_ads_double_request", "0");
+        data.addQueryItem("is_async_ads_rti", "0");
+        data.addQueryItem("rti_delivery_backend", "0");
+
+        if (max_id.length() > 0) {
+            data.addQueryItem("reason", "pagination");
+            data.addQueryItem("max_id", max_id);
+            data.addQueryItem("is_pull_to_refresh", "0");
+        } else {
+            data.addQueryItem("reason", "cold_start_fetch");
+            data.addQueryItem("is_pull_to_refresh", "0");
+
+            data.addQueryItem("feed_view_info", "");
+        }
+
+        if (seen_posts.length() > 0) {
+            data.addQueryItem("seen_posts", seen_posts);
+        } else if (max_id.length() == 0) {
+            data.addQueryItem("seen_posts", "");
+        }
+
+        if (unseen_posts.length() > 0) {
+            data.addQueryItem("unseen_posts", unseen_posts);
+        } else if (max_id.length() == 0) {
+            data.addQueryItem("unseen_posts", "");
+        }
+
+    getTimeLineRequest->timelineRequest("feed/timeline/?", data.toString().toUtf8(), this->m_uuid);
     QObject::connect(getTimeLineRequest,SIGNAL(replySrtingReady(QVariant)),this,SIGNAL(timeLineDataReady(QVariant)));
 
     m_busy = false;

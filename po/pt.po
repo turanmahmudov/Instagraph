@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-08 16:20+0000\n"
+"POT-Creation-Date: 2019-06-09 10:47+0000\n"
 "PO-Revision-Date: 2017-11-15 10:44+0200\n"
 "Last-Translator: Ivo Xavier <ivofernandes12@gmail.com>\n"
 "Language: \n"
@@ -502,11 +502,11 @@ msgstr "Confirmar"
 msgid "Instagraph"
 msgstr "Instagraph"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:130
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:140
 msgid "Welcome to Instagraph!"
 msgstr "Bem-vindo ao Instagraph!"
 
-#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:131
+#: /home/turan/Apps/Instagraph/Instagraph/qml/ui/HomePage.qml:141
 msgid "Follow accounts to see photos and videos here in your feed."
 msgstr "Segue contas para veres fotos e vídeos aqui no teu feed."
 

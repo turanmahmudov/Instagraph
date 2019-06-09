@@ -29,8 +29,8 @@ WorkerScript.onMessage = function(msg) {
 
             if (typeof obj[i].suggested_users !== 'undefined') {
                 // Suggestions
-                for (var k = 0; k < obj[i].suggested_users.suggestions.length; k++) {
-                    suggestionsModel.append(obj[i].suggested_users.suggestions[k]);
+                for (var k = 0; k < obj[i].suggested_users.suggestion_cards.length; k++) {
+                    suggestionsModel.append(obj[i].suggested_users.suggestion_cards[k].user_card);
                     suggestionsModel.sync();
                 }
 

@@ -9,6 +9,7 @@
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QStandardPaths>
+#include <QUuid>
 
 InstagramRequest::InstagramRequest(QObject *parent) : QObject(parent)
 {
@@ -87,6 +88,54 @@ void InstagramRequest::request(QString endpoint, QByteArray post, bool apiV2, bo
 
     request.setRawHeader("Connection","close");
     request.setRawHeader("Accept","*/*");
+    request.setRawHeader("Content-type","application/x-www-form-urlencoded; charset=UTF-8");
+    request.setRawHeader("Cookie2","$Version=1");
+    request.setRawHeader("Accept-Language","en-US");
+    request.setRawHeader("User-Agent",USER_AGENT.toUtf8());
+    request.setRawHeader("X-IG-Capabilities",X_IG_CAPABILITIES.toUtf8());
+    request.setRawHeader("X-IG-Connection-Type","WIFI");
+
+    this->m_manager->setCookieJar(this->m_jar);
+
+    if (isGet) {
+        this->m_reply = this->m_manager->get(request);
+    } else {
+        this->m_reply = this->m_manager->post(request,post);
+    }
+
+    QObject::connect(this->m_reply, SIGNAL(finished()), this, SLOT(finishGetUrl()));
+    QObject::connect(this->m_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(saveCookie()));
+}
+
+void InstagramRequest::timelineRequest(QString endpoint, QByteArray post, QString uuid, bool apiV2, bool isGet)
+{
+    QFile f(m_data_path.absolutePath()+"/cookies.dat");
+    f.open(QIODevice::ReadOnly);
+    QDataStream s(&f);
+
+    QString api_url = apiV2 ? API_URL2 : API_URL;
+
+    QUrl url(api_url+endpoint);
+    QNetworkRequest request(url);
+
+    while(!s.atEnd()){
+        QByteArray c;
+        s >> c;
+        QList<QNetworkCookie> list = QNetworkCookie::parseCookies(c);
+        if(list.count() > 0)
+        {
+            this->m_jar->insertCookie(list.at(0));
+        }
+    }
+
+    QUuid a_uuid;
+    QString a_uuid_id = a_uuid.createUuid().toString();
+
+    request.setRawHeader("Connection","close");
+    request.setRawHeader("Accept","*/*");
+    request.setRawHeader("X-Ads-Opt-Out","0");
+    request.setRawHeader("X-Google-AD-ID",a_uuid_id.toUtf8());
+    request.setRawHeader("X-DEVICE-ID",uuid.toUtf8());
     request.setRawHeader("Content-type","application/x-www-form-urlencoded; charset=UTF-8");
     request.setRawHeader("Cookie2","$Version=1");
     request.setRawHeader("Accept-Language","en-US");

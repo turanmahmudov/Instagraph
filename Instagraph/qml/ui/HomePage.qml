@@ -27,6 +27,8 @@ Page {
     property var last_save_id
     property bool clear_models: true
 
+    property var seen_posts: []
+
     property bool list_loading: false
 
     property bool isEmpty: false
@@ -46,6 +48,14 @@ Page {
             next_coming = true;
 
             worker.sendMessage({'feed': 'homePage', 'obj': data.feed_items, 'model': homePhotosModel, 'suggestionsModel': homeSuggestionsModel, 'clear_model': clear_models})
+
+            for (var i = 0; i < data.feed_items.length; i++) {
+                var obj = data.feed_items[i];
+
+                if (typeof obj.media_or_ad !== 'undefined' && typeof obj.media_or_ad.media_type !== 'undefined') {
+                    seen_posts.push(obj.media_or_ad.id);
+                }
+            }
 
             next_coming = false;
         }
@@ -69,7 +79,7 @@ Page {
             next_max_id = 0
             clear_models = true
         }
-        instagram.getTimeLine(next_id);
+        instagram.getTimeLine(next_id, seen_posts.join(','));
     }
 
     BouncingProgressBar {
