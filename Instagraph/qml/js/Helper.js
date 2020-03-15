@@ -1,23 +1,36 @@
-function formatString(string)
+function color_from_qml(qml_color)
+{
+    var color = {
+        "r": Math.round(qml_color.r * 100),
+        "g": Math.round(qml_color.g * 100),
+        "b": Math.round(qml_color.b * 100),
+    };
+    return color;
+}
+
+function formatString(string, qml_color)
 {
     //var user_reg = "/@(\w*)/g";
     var user_reg = "/@([a-zA-Z0-9._]*)/g"
     var tag_reg = "/#(\S*)/g"
+    var color = color_from_qml(qml_color);
 
-    string = string.replace(/@([a-zA-Z0-9._]*)/g,'<a href="user://$1" style="text-decoration:none;color:rgb(0,53,105);">@$1</a>');
-    string = string.replace(/#(\S*)/g,'<a href="tag://$1" style="text-decoration:none;color:rgb(0,53,105);">#$1</a>');
+    string = string.replace(/@([a-zA-Z0-9._]*)/g,'<a href="user://$1" style="text-decoration:none;color:rgb('+color.r+','+color.g+','+color.b+');">@$1</a>');
+    string = string.replace(/#(\S*)/g,'<a href="tag://$1" style="text-decoration:none;color:rgb('+color.r+','+color.g+','+color.b+');">#$1</a>');
 
     return string;
 }
 
-function formatUser(string)
+function formatUser(string, qml_color)
 {
-    return '<a href="user://'+string+'" style="text-decoration:none;font-weight:500;color:rgb(0,0,0);">'+string+'</a>';
+    var color = color_from_qml(qml_color);
+    return '<a href="user://'+string+'" style="text-decoration:none;font-weight:500;color:rgb('+color.r+','+color.g+','+color.b+');">'+string+'</a>';
 }
 
-function makeLink(string)
+function makeLink(string, qml_color)
 {
-    return '<a href="'+string+'" style="text-decoration:none;font-weight:500;color:rgb(0,0,0);">'+string+'</a>';
+    var color = color_from_qml(qml_color);
+    return '<a href="'+string+'" style="text-decoration:none;font-weight:500;color:rgb('+color.r+','+color.g+','+color.b+');">'+string+'</a>';
 }
 
 function getBestImage(imageObject, width) {

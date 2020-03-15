@@ -77,7 +77,7 @@ Page {
             more_available = data.more_available;
             next_coming = true;
 
-            worker.sendMessage({'feed': 'userPage', 'obj': data.items, 'model': userPhotosModel, 'clear_model': clear_models})
+            worker.sendMessage({'feed': 'userPage', 'obj': data.items, 'model': userPhotosModel, 'clear_model': clear_models, 'color': theme.palette.normal.baseText})
 
             next_coming = false;
         }
@@ -93,7 +93,7 @@ Page {
             more_available = data.more_available;
             next_coming = true;
 
-            worker.sendMessage({'feed': 'userPage', 'obj': data.items, 'model': userTagPhotosModel, 'clear_model': clear_models})
+            worker.sendMessage({'feed': 'userPage', 'obj': data.items, 'model': userTagPhotosModel, 'clear_model': clear_models, 'color': theme.palette.normal.baseText})
 
             next_coming = false;
         }
@@ -338,7 +338,7 @@ Page {
                 Rectangle {
                     width: parent.width
                     height: units.gu(0.17)
-                    color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
+                    color: theme.palette.normal.base
                 }
 
                 Row {
@@ -356,7 +356,7 @@ Page {
                             width: units.gu(3)
                             height: width
                             name: "view-grid-symbolic"
-                            color: current_user_section == 0 ? "#003569" : UbuntuColors.darkGrey
+                            color: current_user_section == 0 ? theme.palette.highlighted.baseText : theme.palette.normal.baseText
                         }
 
                         MouseArea {
@@ -377,7 +377,7 @@ Page {
                             width: units.gu(3)
                             height: width
                             name: "view-list-symbolic"
-                            color: current_user_section == 1 ? "#003569" : UbuntuColors.darkGrey
+                            color: current_user_section == 1 ? theme.palette.highlighted.baseText : theme.palette.normal.baseText
                         }
 
                         MouseArea {
@@ -398,7 +398,7 @@ Page {
                             width: units.gu(3)
                             height: width
                             name: "contact"
-                            color: current_user_section == 3 ? "#003569" : UbuntuColors.darkGrey
+                            color: current_user_section == 3 ? theme.palette.highlighted.baseText : theme.palette.normal.baseText
                         }
 
                         MouseArea {
@@ -421,7 +421,7 @@ Page {
                             width: units.gu(3)
                             height: width
                             name: "save-to"
-                            color: UbuntuColors.darkGrey
+                            color: theme.palette.normal.baseText
                         }
 
                         MouseArea {
@@ -436,7 +436,7 @@ Page {
                 Rectangle {
                     width: parent.width
                     height: units.gu(0.17)
-                    color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
+                    color: theme.palette.normal.base
                 }
             }
 

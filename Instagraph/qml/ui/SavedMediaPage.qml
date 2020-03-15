@@ -38,7 +38,7 @@ Page {
             more_available = data.more_available;
             next_coming = true;
 
-            worker.sendMessage({'feed': 'savedMediaPage', 'obj': data.items, 'model': savedMediaModel, 'clear_model': clear_models})
+            worker.sendMessage({'feed': 'savedMediaPage', 'obj': data.items, 'model': savedMediaModel, 'clear_model': clear_models, 'color': theme.palette.normal.baseText})
 
             next_coming = false;
         }

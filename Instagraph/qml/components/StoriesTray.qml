@@ -28,7 +28,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: "#fbfbfb"
+        color: theme.palette.normal.background
         opacity: storiesTrayModel.count != 0
 
         Behavior on opacity {
@@ -101,7 +101,7 @@ Item {
 
                 Label {
                     text: user.username
-                    color: "#000000"
+                    color: theme.palette.normal.baseText
                     fontSize: "x-small"
                     anchors.horizontalCenter: parent.horizontalCenter
                     width: Math.min((parent.width+2), contentWidth)
@@ -123,7 +123,7 @@ Item {
         onReelsTrayFeedDataReady:{
             var data = JSON.parse(answer);
 
-            worker.sendMessage({'feed': 'StoriesTray', 'obj': data.tray, 'model': storiesTrayModel, 'clear_model': true})
+            worker.sendMessage({'feed': 'StoriesTray', 'obj': data.tray, 'model': storiesTrayModel, 'clear_model': true, 'color': theme.palette.normal.baseText})
 
             for (var i=0; i<data.tray.length; i++) {
                 allUsers.push(data.tray[i].user.pk)

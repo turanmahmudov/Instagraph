@@ -197,10 +197,10 @@ Page {
                         Rectangle {
                             width: myText.width + units.gu(3)
                             height: myText.height + units.gu(2.5)
-                            color: outgoing_message ? Qt.lighter(UbuntuColors.lightGrey, 1.2) : "#ffffff"
+                            color: outgoing_message ? theme.palette.highlighted.baseText : theme.palette.normal.baseText
                             radius: units.gu(2)
                             border.width: units.gu(0.1)
-                            border.color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
+                            border.color: theme.palette.normal.base
 
                             Label {
                                 id: myText
@@ -249,10 +249,10 @@ Page {
                             Rectangle {
                                 width: label.width*3/4
                                 height: mediShareColumn.height + units.gu(2.5)
-                                color: outgoing_message ? Qt.lighter(UbuntuColors.lightGrey, 1.2) : "#ffffff"
+                                color: outgoing_message ? theme.palette.highlighted.baseText : theme.palette.normal.baseText
                                 radius: units.gu(2)
                                 border.width: units.gu(0.1)
-                                border.color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
+                                border.color: theme.palette.normal.base
 
                                 Column {
                                     id: mediShareColumn
@@ -341,10 +341,10 @@ Page {
                                 visible: typeof media_share.text != 'undefined'
                                 width: typeof media_share.text != 'undefined' ? myMediaShareText.width + units.gu(3) : 0
                                 height: typeof media_share.text != 'undefined' ? myMediaShareText.height + units.gu(2.5) : 0
-                                color: outgoing_message ? Qt.lighter(UbuntuColors.lightGrey, 1.2) : "#ffffff"
+                                color: outgoing_message ? theme.palette.highlighted.baseText : theme.palette.normal.baseText
                                 radius: units.gu(2)
                                 border.width: units.gu(0.1)
-                                border.color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
+                                border.color: theme.palette.normal.base
 
                                 Label {
                                     id: myMediaShareText
@@ -377,7 +377,7 @@ Page {
                                     visible: outgoing_message == false
                                     width: outgoing_message == false ? units.gu(0.1) : 0
                                     height: Math.max(parent.height, units.gu(5))
-                                    color: UbuntuColors.lightGrey
+                                    color: theme.palette.normal.base
                                 }
                                 Item {
                                     visible: outgoing_message == false
@@ -393,7 +393,7 @@ Page {
                                         text: reel_share.type == 'mention' ? (outgoing_message ? i18n.tr("You mentioned their in a story") : i18n.tr("Mentied you in a story")) :
                                                                              reel_share.type == 'reply' ? (outgoing_message ? i18n.tr("You replied to their story") : i18n.tr("Replied to your story")) : i18n.tr("UNKNOWN")
                                         fontSize: "small"
-                                        color: UbuntuColors.darkGrey
+                                        color: theme.palette.highlighted.baseText
                                         font.weight: Font.Light
                                         wrapMode: Text.WordWrap
                                         width: contentWidth
@@ -430,7 +430,7 @@ Page {
                                     visible: outgoing_message
                                     width: outgoing_message ? units.gu(0.1) : 0
                                     height: Math.max(parent.height, units.gu(5))
-                                    color: UbuntuColors.lightGrey
+                                    color: theme.palette.normal.baseText
                                 }
 
                                 Component.onCompleted: {
@@ -444,11 +444,10 @@ Page {
                                 visible: typeof reel_share.text != 'undefined' && reel_share.text != ''
                                 width: typeof reel_share.text != 'undefined' && reel_share.text != '' ? myReelText.width + units.gu(3) : 0
                                 height: typeof reel_share.text != 'undefined' && reel_share.text != '' ? myReelText.height + units.gu(2.5) : 0
-                                color: outgoing_message ? Qt.lighter(UbuntuColors.lightGrey, 1.2) : "#ffffff"
+                                color: outgoing_message ? theme.palette.highlighted.baseText : theme.palette.normal.baseText
                                 radius: units.gu(2)
                                 border.width: units.gu(0.1)
-                                border.color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
-
+                                border.color: theme.palette.normal.baseText
                                 Label {
                                     id: myReelText
                                     wrapMode: Text.WordWrap
@@ -491,7 +490,7 @@ Page {
                                         visible: outgoing_message == false
                                         width: outgoing_message == false ? units.gu(0.1) : 0
                                         height: Math.max(parent.height, units.gu(5))
-                                        color: UbuntuColors.lightGrey
+                                        color: theme.palette.normal.base
                                     }
                                     Item {
                                         visible: outgoing_message == false
@@ -506,7 +505,7 @@ Page {
                                         Label {
                                             text: outgoing_message ? i18n.tr("You sent %1's story.").arg(story_share.media.user.username) : i18n.tr("Sent %1's story.").arg(story_share.media.user.username)
                                             fontSize: "small"
-                                            color: UbuntuColors.darkGrey
+                                            color: theme.palette.highlighted.baseText
                                             font.weight: Font.Light
                                             wrapMode: Text.WordWrap
                                             width: contentWidth
@@ -540,7 +539,7 @@ Page {
                                         visible: outgoing_message
                                         width: outgoing_message ? units.gu(0.1) : 0
                                         height: Math.max(parent.height, units.gu(5))
-                                        color: UbuntuColors.lightGrey
+                                        color: theme.palette.normal.baseText
                                     }
 
                                     Component.onCompleted: {
@@ -559,7 +558,7 @@ Page {
                                         visible: outgoing_message == false
                                         width: outgoing_message == false ? units.gu(0.1) : 0
                                         height: Math.max(parent.height, units.gu(5))
-                                        color: UbuntuColors.lightGrey
+                                        color: theme.palette.normal.base
                                     }
                                     Item {
                                         visible: outgoing_message == false
@@ -572,9 +571,9 @@ Page {
                                         anchors.verticalCenter: parent.verticalCenter
 
                                         Label {
-                                            text: Helper.formatString(story_share.title)
+                                            text: Helper.formatString(story_share.title, theme.palette.normal.baseText)
                                             fontSize: "small"
-                                            color: UbuntuColors.darkGrey
+                                            color: theme.palette.highlighted.baseText
                                             font.weight: Font.Light
                                             wrapMode: Text.WordWrap
                                             textFormat: Text.RichText
@@ -588,7 +587,7 @@ Page {
                                         Label {
                                             text: story_share.message
                                             fontSize: "small"
-                                            color: UbuntuColors.darkGrey
+                                            color: theme.palette.highlighted.baseText
                                             font.weight: Font.Light
                                             wrapMode: Text.WordWrap
 
@@ -605,7 +604,7 @@ Page {
                                         visible: outgoing_message
                                         width: outgoing_message ? units.gu(0.1) : 0
                                         height: Math.max(parent.height, units.gu(5))
-                                        color: UbuntuColors.lightGrey
+                                        color: theme.palette.normal.base
                                     }
 
                                     Component.onCompleted: {
@@ -620,10 +619,10 @@ Page {
                                 visible: typeof story_share.text != 'undefined' && story_share.text != ''
                                 width: typeof story_share.text != 'undefined' && story_share.text != '' ? myStoryText.width + units.gu(3) : 0
                                 height: typeof story_share.text != 'undefined' && story_share.text != '' ? myStoryText.height + units.gu(2.5) : 0
-                                color: outgoing_message ? Qt.lighter(UbuntuColors.lightGrey, 1.2) : "#ffffff"
+                                color: outgoing_message ? theme.palette.highlighted.baseText : theme.palette.normal.baseText
                                 radius: units.gu(2)
                                 border.width: units.gu(0.1)
-                                border.color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
+                                border.color: theme.palette.normal.base
 
                                 Label {
                                     id: myStoryText
@@ -675,10 +674,10 @@ Page {
                         Rectangle {
                             width: label.width*3/4
                             height: linkColumn.height + units.gu(2.5)
-                            color: outgoing_message ? Qt.lighter(UbuntuColors.lightGrey, 1.2) : "#ffffff"
+                            color: outgoing_message ? theme.palette.highlighted.baseText : theme.palette.normal.baseText
                             radius: units.gu(2)
                             border.width: units.gu(0.1)
-                            border.color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
+                            border.color: theme.palette.normal.base
 
                             Column {
                                 id: linkColumn
@@ -700,7 +699,7 @@ Page {
                                     }
                                     width: parent.width - units.gu(2)
                                     text: Helper.makeLink(link.text)
-                                    color: UbuntuColors.darkGrey
+                                    color: theme.palette.highlighted.baseText
                                     wrapMode: Text.WordWrap
                                     textFormat: Text.RichText
                                     font.weight: Font.DemiBold
@@ -712,7 +711,7 @@ Page {
                                 Rectangle {
                                     width: parent.width
                                     height: units.gu(0.1)
-                                    color: UbuntuColors.lightGrey
+                                    color: theme.palette.normal.base
                                 }
 
                                 Label {
@@ -724,7 +723,7 @@ Page {
                                     }
                                     width: parent.width - units.gu(2)
                                     text: link.link_context.link_title
-                                    color: UbuntuColors.darkGrey
+                                    color: theme.palette.highlighted.baseText
                                     wrapMode: Text.WordWrap
                                 }
 
@@ -738,7 +737,7 @@ Page {
                                     width: parent.width - units.gu(2)
                                     text: link.link_context.link_summary
                                     fontSize: "small"
-                                    color: UbuntuColors.darkGrey
+                                    color: theme.palette.highlighted.basetext
                                     font.weight: Font.Light
                                     wrapMode: Text.WordWrap
                                 }
@@ -753,10 +752,10 @@ Page {
                         Rectangle {
                             width: placeholderColumn.width + units.gu(3)
                             height: placeholderColumn.height + units.gu(2.5)
-                            color: outgoing_message ? Qt.lighter(UbuntuColors.lightGrey, 1.2) : "#ffffff"
+                            color: outgoing_message ? theme.palette.highlighted.basetext : theme.palette.normal.baseText
                             radius: units.gu(2)
                             border.width: units.gu(0.1)
-                            border.color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
+                            border.color: theme.palette.normal.base
 
                             Column {
                                 id: placeholderColumn
@@ -767,7 +766,7 @@ Page {
                                     text: placeholder.title
                                     fontSize: "small"
                                     font.weight: Font.DemiBold
-                                    color: UbuntuColors.darkGrey
+                                    color: theme.palette.highlighted.basetext
                                     wrapMode: Text.WordWrap
                                     width: Math.min(contentWidth, label.width*3/4)
                                 }
@@ -775,7 +774,7 @@ Page {
                                 Label {
                                     text: placeholder.message
                                     fontSize: "small"
-                                    color: UbuntuColors.darkGrey
+                                    color: theme.palette.highlighted.basetext
                                     font.weight: Font.Light
                                     wrapMode: Text.WordWrap
                                     width: Math.min(contentWidth, label.width*3/4)

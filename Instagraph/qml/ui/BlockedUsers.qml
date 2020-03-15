@@ -25,7 +25,7 @@ Page {
     function userBlockedListDataFinished(data) {
         blockedUsersModel.clear()
 
-        worker.sendMessage({'feed': 'BlockedUsersPage', 'obj': data.blocked_list, 'model': blockedUsersModel, 'clear_model': true})
+        worker.sendMessage({'feed': 'BlockedUsersPage', 'obj': data.blocked_list, 'model': blockedUsersModel, 'clear_model': true, 'color': theme.palette.normal.baseText})
 
         list_loading = false
     }

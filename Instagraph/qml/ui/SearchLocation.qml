@@ -55,7 +55,7 @@ Page {
     function searchLocationDataFinished(data) {
         searchPlacesModel.clear();
 
-        worker.sendMessage({'feed': 'searchPage', 'obj': data.venues, 'model': searchPlacesModel, 'clear_model': true})
+        worker.sendMessage({'feed': 'searchPage', 'obj': data.venues, 'model': searchPlacesModel, 'clear_model': true, 'color': theme.palette.normal.baseText})
     }
 
     WorkerScript {

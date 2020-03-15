@@ -166,7 +166,7 @@ Page {
                             id: item_time
                             text: Helper.milisecondsToString(last_permanent_item.timestamp, false, true)
                             fontSize: "small"
-                            color: UbuntuColors.darkGrey
+                            color: theme.palette.normal.baseText
                             font.weight: Font.Light
                             font.capitalization: Font.AllLowercase
                         }

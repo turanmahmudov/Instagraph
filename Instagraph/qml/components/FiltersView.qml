@@ -125,7 +125,7 @@ ListView {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: previewImg.width
                 height: units.dp(3)
-                color: "#275A84"
+                color: theme.palette.normal.background
                 visible: isSelected
             }
         }
@@ -174,7 +174,7 @@ ListView {
                         Icon {
                             anchors.centerIn: parent
                             height: parent.height*0.4
-                            color: "#000000"
+                            color: theme.palette.normal.baseText
                             name: "close"
                         }
                     }
@@ -194,7 +194,7 @@ ListView {
                         Icon {
                             anchors.centerIn: parent
                             height: parent.height*0.4
-                            color: "#000000"
+                            color: theme.palette.normal.baseText
                             name: "tick"
                         }
                     }

@@ -37,7 +37,7 @@ ListView {
             height: width
             anchors.centerIn: feed_image
             name: "like"
-            color: "#ffffff"
+            color: theme.palette.highlighted.baseText
             opacity: 0
 
             NumberAnimation on width {
@@ -95,7 +95,7 @@ ListView {
             }
             visible: false
             name: "camcorder"
-            color: "#ffffff"
+            color: theme.palette.highlighted.baseText
         }
         DropShadow {
             anchors.fill: is_video_icon
@@ -104,7 +104,7 @@ ListView {
             verticalOffset: 2
             radius: 8.0
             samples: 15
-            color: "#80000000"
+            color: theme.palette.normal.base
             visible: media_type === 2
         }
 

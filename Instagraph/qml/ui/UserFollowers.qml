@@ -25,7 +25,7 @@ Page {
     function userFollowersDataFinished(data) {
         userFollowersModel.clear()
 
-        worker.sendMessage({'feed': 'UserFollowersPage', 'obj': data.users, 'model': userFollowersModel, 'clear_model': clear_models})
+        worker.sendMessage({'feed': 'UserFollowersPage', 'obj': data.users, 'model': userFollowersModel, 'clear_model': clear_models, 'color': theme.palette.normal.baseText})
 
         list_loading = false
     }

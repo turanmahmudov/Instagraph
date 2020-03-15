@@ -11,6 +11,7 @@ Rectangle {
     z: 100000
     width: parent.width
     height: units.gu(6)
+    color: theme.palette.normal.overlay
     anchors {
         bottom: parent.bottom
     }
@@ -18,7 +19,7 @@ Rectangle {
     Rectangle {
         width: parent.width
         height: units.gu(0.1)
-        color: UbuntuColors.lightGrey
+        color: theme.palette.normal.overlay
     }
 
     Row {
@@ -38,7 +39,7 @@ Rectangle {
                 width: units.gu(3.2)
                 height: width
                 name: "navigation-menu"
-                color: tabs.selectedTabIndex == 0 ? "#000000" : "#999999"
+                color: tabs.selectedTabIndex == 0 ? theme.palette.highlighted.baseText : theme.palette.normal.baseText
             }
 
             MouseArea {
@@ -60,7 +61,7 @@ Rectangle {
                 width: units.gu(3.2)
                 height: width
                 name: "find"
-                color: tabs.selectedTabIndex == 1 ? "#000000" : "#999999"
+                color: tabs.selectedTabIndex == 1 ? theme.palette.highlighted.baseText : theme.palette.normal.baseText
             }
 
             MouseArea {
@@ -87,7 +88,7 @@ Rectangle {
                 width: units.gu(3.2)
                 height: width
                 name: "add"
-                color: "#999999"
+                color: theme.palette.normal.baseText
             }
 
             MouseArea {
@@ -111,7 +112,7 @@ Rectangle {
                 width: units.gu(3.2)
                 height: width
                 name: "unlike"
-                color: tabs.selectedTabIndex == 2 ? "#000000" : "#999999"
+                color: tabs.selectedTabIndex == 2 ? theme.palette.highlighted.baseText : theme.palette.normal.baseText
             }
 
             Rectangle {
@@ -145,7 +146,7 @@ Rectangle {
                 width: units.gu(3.2)
                 height: width
                 name: "account"
-                color: tabs.selectedTabIndex == 3 ? "#000000" : "#999999"
+                color: tabs.selectedTabIndex == 3 ? theme.palette.highlighted.baseText : theme.palette.normal.baseText
             }
 
             MouseArea {

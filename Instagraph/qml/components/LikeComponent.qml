@@ -51,7 +51,7 @@ Item {
         width: units.gu(2)
         height: width
         name: has_liked == true ? "like" : "unlike"
-        color: has_liked == true ? UbuntuColors.red : "#000000"
+        color: has_liked == true ? UbuntuColors.red : theme.palette.disabled.baseText
     }
 
     MouseArea {

@@ -5,7 +5,7 @@ Rectangle {
     property var suggestionsModel
 
     height: suggestions_column.height + units.gu(6)
-    color: "#fbfbfb"
+    color: theme.palette.normal.background
 
     Column {
         id: suggestions_column
@@ -46,7 +46,7 @@ Rectangle {
                 Label {
                     id: seeAllSuggestionsLink
                     text: i18n.tr("See All")
-                    color: "#275A84"
+                    color: theme.palette.normal.baseText
                     wrapMode: Text.WordWrap
                     font.weight: Font.DemiBold
                     anchors.verticalCenter: parent.verticalCenter

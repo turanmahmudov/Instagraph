@@ -38,7 +38,7 @@ Page {
             more_available = data.more_available;
             next_coming = true;
 
-            worker.sendMessage({'feed': 'searchPage', 'obj': data.items, 'model': likedMediaModel, 'clear_model': clear_models})
+            worker.sendMessage({'feed': 'searchPage', 'obj': data.items, 'model': likedMediaModel, 'clear_model': clear_models, 'color': theme.palette.normal.baseText})
 
             next_coming = false;
         }

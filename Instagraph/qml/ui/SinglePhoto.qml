@@ -23,7 +23,7 @@ Page {
     property bool list_loading: false
 
     function mediaDataFinished(data) {
-        worker.sendMessage({'feed': 'singlePhotoPage', 'obj': data.items, 'model': singlePhotoModel, 'clear_model': true})
+        worker.sendMessage({'feed': 'singlePhotoPage', 'obj': data.items, 'model': singlePhotoModel, 'clear_model': true, 'color': theme.palette.normal.baseText})
 
         list_loading = false
     }
