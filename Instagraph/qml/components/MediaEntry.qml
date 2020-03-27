@@ -111,7 +111,7 @@ Column {
                 height: width
                 anchors.centerIn: feed_image
                 name: "like"
-                color: "#ffffff"
+                color: theme.palette.normal.baseText
                 opacity: 0
 
                 NumberAnimation on width {
@@ -169,7 +169,7 @@ Column {
                 }
                 visible: false
                 name: "camcorder"
-                color: "#ffffff"
+                color: theme.palette.normal.baseText
             }
             DropShadow {
                 anchors.fill: is_video_icon
@@ -178,7 +178,7 @@ Column {
                 verticalOffset: 2
                 radius: 8.0
                 samples: 15
-                color: "#80000000"
+                color: theme.palette.normal.base
                 visible: media_type === 2
             }
 
@@ -253,7 +253,7 @@ Column {
                         radius: width/2
                         antialiasing: true
                         anchors.verticalCenter: parent.verticalCenter
-                        color: carouselSlider.currentIndex == index ? UbuntuColors.blue : "black"
+                        color: carouselSlider.currentIndex == index ? UbuntuColors.blue : theme.palette.normal.baseText
                         Behavior on color {
                             ColorAnimation {
                                 duration: UbuntuAnimation.FastDuration
@@ -319,7 +319,7 @@ Column {
                 width: units.gu(3)
                 height: width
                 name: has_liked === true ? "like" : "unlike"
-                color: has_liked === true ? UbuntuColors.red : "#000000"
+                color: has_liked === true ? UbuntuColors.red : theme.palette.normal.baseText
             }
 
             MouseArea {
@@ -345,7 +345,7 @@ Column {
                 width: units.gu(3)
                 height: width
                 name: "message"
-                color: typeof comments_disabled != 'undefined' && comments_disabled == true ? UbuntuColors.lightGrey : "#000000"
+                color: typeof comments_disabled != 'undefined' && comments_disabled == true ? theme.palette.highlighted.baseText : theme.palette.normal.baseText
             }
 
             MouseArea {
@@ -367,7 +367,7 @@ Column {
                 width: units.gu(3)
                 height: width
                 name: "send"
-                color: "#000000"
+                color: theme.palette.normal.baseText
             }
 
             MouseArea {
@@ -455,10 +455,11 @@ Column {
                          (typeof caption.text !== 'undefined' ? true : false) :
                          false
             text: typeof caption !== 'undefined' && caption !== null ?
-                      (typeof caption.text !== 'undefined' ? Helper.formatUser(caption.user.username) + ' ' + Helper.formatString(caption.text) : "") :
+                (typeof caption.text !== 'undefined' ? Helper.formatUser(caption.user.username, theme.palette.normal.baseText) + ' ' + Helper.formatString(caption.text, theme.palette.normal.baseText) : "") :
                       ""
             wrapMode: Text.WordWrap
             width: parent.width
+            color: theme.palette.normal.baseText
             textFormat: Text.RichText
             onLinkActivated: {
                 Scripts.linkClick(link)
@@ -471,7 +472,7 @@ Column {
             wrapMode: Text.WordWrap
             width: parent.width
             fontSize: "medium"
-            color: UbuntuColors.darkGrey
+            color: theme.palette.normal.baseText
             font.weight: Font.Normal
 
             MouseArea {
@@ -488,7 +489,8 @@ Column {
 
             Text {
                 width: parent.width
-                text: Helper.formatUser(user.username) + ' ' + Helper.formatString(ctext)
+                text: Helper.formatUser(user.username, theme.palette.normal.baseText) + ' ' + Helper.formatString(ctext, theme.palette.normal.baseText)
+                color: theme.palette.normal.baseText
                 wrapMode: Text.WordWrap
                 textFormat: Text.RichText
                 onLinkActivated: {
@@ -504,7 +506,7 @@ Column {
             Label {
                 text: Helper.milisecondsToString(taken_at)
                 fontSize: "small"
-                color: UbuntuColors.darkGrey
+                color: theme.palette.normal.baseText
                 font.weight: Font.Light
                 wrapMode: Text.WordWrap
                 font.capitalization: Font.AllLowercase

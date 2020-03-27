@@ -31,16 +31,16 @@ Page {
         if (typeof data.caption != 'undefined' && data.caption) {
             data.caption.ctext = typeof data.caption != 'undefined' && data.caption ? data.caption.text : ""
 
-            worker.sendMessage({'feed': 'CommentsPage', 'obj': [data.caption], 'model': mediaCommentsModel, 'clear_model': clear_models})
+            worker.sendMessage({'feed': 'CommentsPage', 'obj': [data.caption], 'model': mediaCommentsModel, 'clear_model': clear_models, 'color': theme.palette.normal.baseText})
         } else {
             data.caption = '';
 
-            worker.sendMessage({'feed': 'CommentsPage', 'obj': [], 'model': mediaCommentsModel, 'clear_model': clear_models})
+            worker.sendMessage({'feed': 'CommentsPage', 'obj': [], 'model': mediaCommentsModel, 'clear_model': clear_models, 'color': theme.palette.normal.baseText})
         }
 
         commentCaption = data.caption;
 
-        worker.sendMessage({'feed': 'CommentsPage', 'obj': data.comments, 'model': mediaCommentsModel})
+        worker.sendMessage({'feed': 'CommentsPage', 'obj': data.comments, 'model': mediaCommentsModel, 'color': theme.palette.normal.baseText})
 
         list_loading = false
     }
@@ -186,7 +186,8 @@ Page {
                         spacing: units.gu(0.5)
 
                         Text {
-                            text: Helper.formatUser(user.username) + ' ' + Helper.formatString(ctext)
+                            text: Helper.formatUser(user.username, theme.palette.normal.baseText) + ' ' + Helper.formatString(ctext, theme.palette.normal.baseText)
+                            color: theme.palette.normal.baseText
                             wrapMode: Text.WordWrap
                             width: parent.width
                             textFormat: Text.RichText
@@ -202,7 +203,7 @@ Page {
                             Label {
                                 text: Helper.milisecondsToString(created_at)
                                 fontSize: "small"
-                                color: UbuntuColors.darkGrey
+                                color: theme.palette.normal.baseText
                                 font.weight: Font.Light
                                 wrapMode: Text.WordWrap
                                 anchors.verticalCenter: parent.verticalCenter
@@ -212,6 +213,7 @@ Page {
                                 id: comment_likes_count
                                 visible: comment_like_c != 0
                                 text: comment_like_c == 0 ? "" : (comment_like_c + i18n.tr(" likes"))
+                                color: theme.palette.normal.baseText
                                 fontSize: "small"
                                 font.weight: Font.Normal
                                 wrapMode: Text.WordWrap

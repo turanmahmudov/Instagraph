@@ -35,7 +35,7 @@ Page {
             more_available = data.more_available ? data.more_available : false;
             next_coming = true;
 
-            worker.sendMessage({'feed': 'locationFeedPage', 'obj': data.items, 'model': locationFeedPhotosModel, 'clear_model': clear_models})
+            worker.sendMessage({'feed': 'locationFeedPage', 'obj': data.items, 'model': locationFeedPhotosModel, 'clear_model': clear_models, 'color': theme.palette.normal.baseText})
 
             next_coming = false;
         }

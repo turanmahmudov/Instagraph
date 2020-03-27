@@ -15,7 +15,7 @@ Item {
         anchors.fill: parent
         color: "transparent"
         border.width: units.gu(0.1)
-        border.color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
+        border.color: theme.palette.normal.background
         radius: width/2
     }
 

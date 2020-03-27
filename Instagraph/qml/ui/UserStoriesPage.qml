@@ -57,7 +57,7 @@ Page {
                     text: typeof user !== 'undefined' ? user.username : ""
                     font.weight: Font.DemiBold
                     wrapMode: Text.WordWrap
-                    color: "#ffffff"
+                    color: theme.palette.highlighted.baseText
                     layer.enabled: true
                     layer.effect: DropShadow {
                         verticalOffset: 2
@@ -82,7 +82,7 @@ Page {
                     }
                     font.weight: Font.DemiBold
                     wrapMode: Text.WordWrap
-                    color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
+                    color: theme.palette.normal.baseText
                     layer.enabled: true
                     layer.effect: DropShadow {
                         verticalOffset: 2
@@ -108,7 +108,7 @@ Page {
     }
 
     function userReelsMediaFeedDataFinished(data) {
-        worker.sendMessage({'feed': 'userStoriesPage', 'obj': data.items, 'model': userStoriesModel, 'clear_model': true})
+        worker.sendMessage({'feed': 'userStoriesPage', 'obj': data.items, 'model': userStoriesModel, 'clear_model': true, 'color': theme.palette.normal.baseText})
 
         user = data.user
 

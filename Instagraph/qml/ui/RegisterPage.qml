@@ -30,7 +30,7 @@ Page {
                     width: units.gu(2)
                     height: width
                     name: iconName
-                    color: "#ffffff"
+                    color: theme.palette.normal.baseText
                 }
             }
             actions: [
@@ -85,7 +85,7 @@ Page {
             font.weight: Font.Bold
             fontSize: "large"
             textFormat: Text.RichText
-            color: "#ffffff"
+            color: theme.palette.highlighted.basetext
         }
 
         Item {

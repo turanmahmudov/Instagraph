@@ -20,7 +20,7 @@ Page {
     property var last_friendship_action_done
 
     function pendingFriendshipsDataFinished(data) {
-        worker.sendMessage({'feed': 'FollowRequestsPage', 'obj': data.users, 'model': followrequestsModel, 'clear_model': true})
+        worker.sendMessage({'feed': 'FollowRequestsPage', 'obj': data.users, 'model': followrequestsModel, 'clear_model': true, 'color': theme.palette.normal.baseText})
 
         list_loading = false
     }
@@ -137,7 +137,7 @@ Page {
                     }
 
                     Button {
-                        color: UbuntuColors.lightGrey
+                        color: theme.palette.normal.baseText
                         text: i18n.tr("Delete")
 
                         anchors.verticalCenter: parent.verticalCenter

@@ -34,7 +34,7 @@ Page {
             more_available = data.more_available ? data.more_available : false;
             next_coming = true;
 
-            worker.sendMessage({'feed': 'tagFeedPage', 'obj': data.items, 'model': tagFeedPhotosModel, 'clear_model': clear_models})
+            worker.sendMessage({'feed': 'tagFeedPage', 'obj': data.items, 'model': tagFeedPhotosModel, 'clear_model': clear_models, 'color': theme.palette.normal.baseText})
 
             next_coming = false;
         }

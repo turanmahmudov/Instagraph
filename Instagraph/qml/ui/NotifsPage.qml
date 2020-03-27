@@ -72,8 +72,8 @@ Page {
             new_notifs = true
         }
 
-        worker.sendMessage({'obj': data.new_stories, 'model': recentActivityModel, 'clear_model': true, 'hasFollowRequests': hasFollowRequests})
-        worker.sendMessage({'obj': data.old_stories, 'model': recentActivityModel, 'clear_model': false, 'hasFollowRequests': false})
+        worker.sendMessage({'obj': data.new_stories, 'model': recentActivityModel, 'clear_model': true, 'hasFollowRequests': hasFollowRequests, 'color': theme.palette.normal.baseText})
+        worker.sendMessage({'obj': data.old_stories, 'model': recentActivityModel, 'clear_model': false, 'hasFollowRequests': false, 'color': theme.palette.normal.baseText})
 
         list_loading = false
     }
@@ -92,7 +92,7 @@ Page {
             more_available = data.auto_load_more_enabled;
             next_coming = true;
 
-            worker.sendMessage({'obj': data.stories, 'model': followingRecentActivityModel, 'clear_model': clear_models})
+            worker.sendMessage({'obj': data.stories, 'model': followingRecentActivityModel, 'clear_model': clear_models, 'color': theme.palette.normal.baseText})
 
             next_coming = false;
         }
@@ -290,7 +290,7 @@ Page {
                                 anchors.verticalCenter: parent.verticalCenter
 
                                 Text {
-                                    text: Helper.formatString(activity_text)
+                                    text: Helper.formatString(activity_text, theme.palette.normal.baseText)
                                     wrapMode: Text.WordWrap
                                     width: parent.width
                                     textFormat: Text.RichText
@@ -303,7 +303,7 @@ Page {
                                 Label {
                                     text: Helper.milisecondsToString(story.args.timestamp)
                                     fontSize: "small"
-                                    color: UbuntuColors.darkGrey
+                                    color: theme.palette.highlighted.baseText
                                     font.weight: Font.Light
                                     font.capitalization: Font.AllLowercase
                                 }
@@ -410,7 +410,7 @@ Page {
                             anchors.verticalCenter: parent.verticalCenter
 
                             Text {
-                                text: Helper.formatString(activity_text)
+                                text: Helper.formatString(activity_text, theme.palette.normal.baseText)
                                 wrapMode: Text.WordWrap
                                 width: parent.width
                                 textFormat: Text.RichText
@@ -423,7 +423,7 @@ Page {
                             Label {
                                 text: Helper.milisecondsToString(story.args.timestamp)
                                 fontSize: "small"
-                                color: UbuntuColors.darkGrey
+                                color: theme.palette.highlighted.baseText
                                 font.weight: Font.Light
                                 font.capitalization: Font.AllLowercase
                             }

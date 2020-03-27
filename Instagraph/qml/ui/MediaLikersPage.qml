@@ -25,7 +25,7 @@ Page {
     function mediaLikersDataFinished(data) {
         mediaLikersModel.clear()
 
-        worker.sendMessage({'feed': 'MediaLikersPage', 'obj': data.users, 'model': mediaLikersModel, 'clear_model': clear_models})
+        worker.sendMessage({'feed': 'MediaLikersPage', 'obj': data.users, 'model': mediaLikersModel, 'clear_model': clear_models, 'color': theme.palette.normal.baseText})
 
         list_loading = false
     }

@@ -47,7 +47,7 @@ PageHeader {
                     //font.capitalization: Font.AllUppercase
                     font.weight: Font.DemiBold
                     //fontSize: "small"
-                    color: button.isSelected ? "#000000" : UbuntuColors.darkGrey
+                    color: button.isSelected ? theme.palette.highlighted.baseText : theme.palette.normal.baseText
                 }
 
                 Rectangle {
@@ -57,7 +57,7 @@ PageHeader {
                     }
                     width: button.width
                     height: units.dp(2)
-                    color: "#000000"
+                    color: theme.palette.normal.background
                     visible: button.isSelected
                 }
             }

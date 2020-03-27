@@ -89,7 +89,7 @@ Page {
             more_available = data.more_available;
             next_coming = true;
 
-            worker.sendMessage({'feed': 'userPage', 'obj': data.items, 'model': userPhotosModel, 'clear_model': clear_models})
+            worker.sendMessage({'feed': 'userPage', 'obj': data.items, 'model': userPhotosModel, 'clear_model': clear_models, 'color': theme.palette.normal.baseText})
 
             next_coming = false;
         }
@@ -105,7 +105,7 @@ Page {
             more_available = data.more_available;
             next_coming = true;
 
-            worker.sendMessage({'feed': 'userPage', 'obj': data.items, 'model': userTagPhotosModel, 'clear_model': clear_models})
+            worker.sendMessage({'feed': 'userPage', 'obj': data.items, 'model': userTagPhotosModel, 'clear_model': clear_models, 'color': theme.palette.normal.baseText})
 
             next_coming = false;
         }
@@ -561,7 +561,7 @@ Page {
                 Rectangle {
                     width: parent.width
                     height: units.gu(0.17)
-                    color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
+                    color: theme.palette.normal.base
                 }
             }
 
@@ -594,7 +594,7 @@ Page {
                 visible: isPrivate ? true : false
                 width: isPrivate ? parent.width : 0
                 height: isPrivate ? units.gu(0.17) : 0
-                color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
+                color: theme.palette.normal.base
             }
 
             EmptyBox {

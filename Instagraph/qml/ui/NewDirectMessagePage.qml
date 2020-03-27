@@ -23,12 +23,12 @@ Page {
 
     function rankedRecipientsFinished(data)
     {
-        worker.sendMessage({'feed': 'ShareMediaPage', 'obj': data.ranked_recipients, 'model': rankedRecipientsModel, 'clear_model': true})
+        worker.sendMessage({'feed': 'ShareMediaPage', 'obj': data.ranked_recipients, 'model': rankedRecipientsModel, 'clear_model': true, 'color': theme.palette.normal.baseText})
     }
 
     function recentRecipientsFinished(data)
     {
-        worker.sendMessage({'feed': 'ShareMediaPage', 'obj': data.ranked_recipients, 'model': rankedRecipientsModel, 'clear_model': true})
+        worker.sendMessage({'feed': 'ShareMediaPage', 'obj': data.ranked_recipients, 'model': rankedRecipientsModel, 'clear_model': true, 'color': theme.palette.normal.baseText})
     }
 
     WorkerScript {
@@ -148,7 +148,7 @@ Page {
                             anchors.centerIn: parent
                             id: username_label
                             text: username
-                            color: "#ffffff"
+                            color: theme.palette.highlighted.baseText
                             fontSize: "small"
                             font.weight: Font.DemiBold
                         }

@@ -45,7 +45,7 @@ ListItem {
             }
             visible: false
             name: "camcorder"
-            color: "#ffffff"
+            color: theme.palette.normal.baseText
         }
         DropShadow {
             anchors.fill: is_video_icon
@@ -54,7 +54,7 @@ ListItem {
             verticalOffset: 2
             radius: 8.0
             samples: 15
-            color: "#80000000"
+            color: theme.palette.normal.base
             visible: media_type === 2
         }
 
@@ -70,7 +70,7 @@ ListItem {
             }
             visible: false
             name: "browser-tabs"
-            color: "#ffffff"
+            color: theme.palette.normal.baseText
         }
         DropShadow {
             anchors.fill: is_carousel_icon
@@ -79,7 +79,7 @@ ListItem {
             verticalOffset: 2
             radius: 8.0
             samples: 15
-            color: "#80000000"
+            color: theme.palette.normal.base
             visible: media_type === 8
         }
     }

@@ -92,7 +92,7 @@ Page {
             more_available = data.more_available;
             next_coming = true;
 
-            worker.sendMessage({'feed': 'searchPage', 'obj': data.items, 'model': popularFeedModel, 'clear_model': clear_models})
+            worker.sendMessage({'feed': 'searchPage', 'obj': data.items, 'model': popularFeedModel, 'clear_model': clear_models, 'color': theme.palette.normal.baseText})
 
             next_coming = false;
         }
@@ -103,19 +103,19 @@ Page {
     function searchUsersDataFinished(data) {
         searchUsersModel.clear();
 
-        worker.sendMessage({'feed': 'searchPage', 'obj': data.users, 'model': searchUsersModel, 'clear_model': true})
+        worker.sendMessage({'feed': 'searchPage', 'obj': data.users, 'model': searchUsersModel, 'clear_model': true, 'color': theme.palette.normal.baseText})
     }
 
     function searchTagsDataFinished(data) {
         searchTagsModel.clear();
 
-        worker.sendMessage({'feed': 'searchPage', 'obj': data.results, 'model': searchTagsModel, 'clear_model': true})
+        worker.sendMessage({'feed': 'searchPage', 'obj': data.results, 'model': searchTagsModel, 'clear_model': true, 'color': theme.palette.normal.baseText})
     }
 
     function searchLocationDataFinished(data) {
         searchPlacesModel.clear();
 
-        worker.sendMessage({'feed': 'searchPage', 'obj': data.items, 'model': searchPlacesModel, 'clear_model': true})
+        worker.sendMessage({'feed': 'searchPage', 'obj': data.items, 'model': searchPlacesModel, 'clear_model': true, 'color': theme.palette.normal.baseText})
     }
 
     WorkerScript {

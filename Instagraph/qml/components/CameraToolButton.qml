@@ -26,7 +26,7 @@ AbstractButton {
                 anchors.centerIn: parent
                 width: units.gu(3)
                 height: width
-                color: "#ffffff"
+                color: theme.palette.normal.baseText
                 source: "image://theme/%1".arg(iconName)
             }
         }

@@ -38,7 +38,7 @@ ListView {
 
             Label {
                 text: user.full_name ? user.full_name : user.username
-                color: "#000000"
+                color: theme.palette.normal.baseText
                 fontSize: "small"
                 font.weight: Font.DemiBold
                 anchors.horizontalCenter: parent.horizontalCenter

@@ -27,7 +27,7 @@ Page {
                     width: units.gu(2)
                     height: width
                     name: iconName
-                    color: "#ffffff"
+                    color: theme.palette.normal.baseText
                 }
             }
             actions: [

@@ -25,7 +25,7 @@ Button {
         }
         Icon {
             name: imageName
-            color: "#ffffff"
+            color: theme.palette.normal.baseText
             width: units.gu(3)
             height: width
             anchors.centerIn: parent

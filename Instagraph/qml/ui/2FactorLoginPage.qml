@@ -95,7 +95,7 @@ Page {
             id: errorTextLabel
             anchors.horizontalCenter: parent.horizontalCenter
             wrapMode: Text.WordWrap
-            color: "#ffffff"
+            color: theme.palette.normal.baseText
         }
     }
 

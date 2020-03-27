@@ -107,7 +107,7 @@ Page {
 
             Rectangle {
                 anchors.fill: parent
-                color: "#ffffff"
+                color: theme.palette.normal.base
             }
 
             Loader {

@@ -30,7 +30,7 @@ Page {
             more_available = data.more_available;
             next_coming = true;
 
-            worker.sendMessage({'feed': 'discoverPeoplePage', 'obj': data.items, 'model': discoverPeopleModel, 'clear_model': clear_models})
+            worker.sendMessage({'feed': 'discoverPeoplePage', 'obj': data.items, 'model': discoverPeopleModel, 'clear_model': clear_models, 'color': theme.palette.normal.baseText})
 
             next_coming = false;
         }

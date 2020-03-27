@@ -55,7 +55,7 @@ MouseArea {
                 Icon {
                     anchors.centerIn: parent
                     height: parent.height*0.4
-                    color: "#000000"
+                    color: theme.palette.normal.baseText
                     name: "close"
                 }
             }
@@ -75,7 +75,7 @@ MouseArea {
                 Icon {
                     anchors.centerIn: parent
                     height: parent.height*0.4
-                    color: "#000000"
+                    color: theme.palette.normal.baseText
                     name: "tick"
                 }
             }
