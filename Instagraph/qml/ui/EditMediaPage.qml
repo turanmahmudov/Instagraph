@@ -1,8 +1,8 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 import Ubuntu.Content 1.1
-import QtMultimedia 5.4
+import QtMultimedia 5.12
 
 import "../components"
 
@@ -10,28 +10,18 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+PageItem {
     id: editpagepage
 
     property var mediaId
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: i18n.tr("Edit")
-        leadingActionBar.actions: [
-            Action {
-                id: closePageAction
-                text: i18n.tr("Back")
-                iconName: "back"
-                onTriggered: {
-                    pageStack.pop();
-                }
-            }
-        ]
-        trailingActionBar.actions: [
+        trailingActions: [
             Action {
                 id: nextPageAction
                 text: i18n.tr("Done")
-                iconName: "tick"
+                iconName: "\uea55"
                 onTriggered: {
                     instagram.editMedia(mediaId, mediaCaption.text)
                 }
@@ -48,19 +38,12 @@ Page {
     function mediaEditFinished(data) {
         if (data.status == 'ok') {
             pageStack.pop();
-            Scripts.pushSingleImage(mediaId)
+            Scripts.pushSingleImage(editpagepage, mediaId)
         }
     }
 
     Component.onCompleted: {
         instagram.infoMedia(mediaId);
-    }
-
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: editpagepage.header.bottom
-        visible: instagram.busy
     }
 
     Column {

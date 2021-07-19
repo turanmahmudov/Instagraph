@@ -1,9 +1,14 @@
-import QtQuick 2.4
-import Ubuntu.Components 1.3
+import QtQuick 2.9
+import QtSystemInfo 5.0
+import Qt.labs.settings 1.0
 import QtQuick.LocalStorage 2.0
+import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
 import Ubuntu.Content 1.3
 import Ubuntu.DownloadManager 1.2
+import Ubuntu.Connectivity 1.0
+import Ubuntu.Layouts 1.0
+import QtQml.Models 2.2
 
 import "qml/js/Storage.js" as Storage
 import "qml/js/Helper.js" as Helper
@@ -13,7 +18,6 @@ import "qml/ui"
 import "qml/components"
 
 import Instagram 1.0
-import InstagramCheckPoint 1.0
 import ImageProcessor 1.0
 import CacheImage 1.0
 
@@ -26,71 +30,88 @@ MainView {
 
     width: units.gu(50)
     height: units.gu(75)
+    backgroundColor: theme.name == 'Ubuntu.Components.Themes.SuruDark' ? "#030303" : "#FFFFFF"
+
+    // Settings
+    Settings {
+        id: settings
+
+        property string activeUsername: ""
+        property string activeUserProfilePic: ""
+    }
+
+    // Variables
+    property alias activeUsername: settings.activeUsername
+    property alias activeUserProfilePic: settings.activeUserProfilePic
 
     property bool new_notifs: false
     property bool logged_in: false
 
     property bool loginPageIsActive: false
 
-    property var my_usernameId
-
     property bool searchPageOpenFirstTime: true
 
     property var uri: undefined
 
-    property string current_version: "Alpha"
+    property string current_version: "0.1"
 
     property alias appStore: appStore
     property var activeTransfer
 
     readonly property bool isLandscape: width > height
-    readonly property bool isWideScreen: (width > units.gu(120)) && isLandscape
+    readonly property bool isWideScreen: (width > units.gu(100)) && isLandscape
     readonly property bool isPhone: width <= units.gu(50)
 
-    // Main Actions
+    // Signals
+    signal networkerroroccured()
+
+    // Connectivity
+    Connections {
+        target: Connectivity
+    }
+
+    Connections {
+        target: mainView
+        onNetworkerroroccured: {
+
+        }
+    }
+
+    // Actions
     actions: [
         Action {
             id: refreshAction
             text: i18n.tr("Refresh")
-            iconName: "reload"
+            iconName: "\ueb6d"
             onTriggered: {
 
-            }
-        },
-        Action {
-            id: inboxAction
-            text: i18n.tr("Inbox")
-            iconName: "inbox"
-            onTriggered: {
-                pageStack.push(Qt.resolvedUrl("qml/ui/DirectInboxPage.qml"))
-            }
-        },
-        Action {
-            id: addPeopleAction
-            text: i18n.tr("Discover People")
-            iconName: "contact-new"
-            onTriggered: {
-                pageStack.push(Qt.resolvedUrl("qml/ui/DiscoverPeoplePage.qml"))
             }
         },
         Action {
             id: newDirectMessageAction
             text: i18n.tr("New Message")
-            iconName: "add"
+            iconName: "\ueb48"
             onTriggered: {
-                pageStack.push(Qt.resolvedUrl("qml/ui/NewDirectMessagePage.qml"))
+                pageLayout.push(Qt.resolvedUrl("qml/ui/NewDirectMessagePage.qml"))
+            }
+        },
+        Action {
+            id: backAction
+            text: i18n.tr("Back")
+            iconName: "\uea5a"
+            onTriggered: {
+                pageLayout.pop()
             }
         }
     ]
 
+
+    // API
     Instagram {
         id: instagram
     }
 
-    InstagramCheckPoint {
-        id: instagramCheckPoint
-    }
-
+    // Image Filters
     ImageProcessor {
         id: imageproc
 
@@ -121,7 +142,6 @@ MainView {
     }
 
     function start() {
-        pageStack.clear();
         init();
     }
 
@@ -130,7 +150,7 @@ MainView {
         var password = Storage.get("password");
         if (username === "" ||  password === "" || username === undefined || password === undefined || username === null || password === null ) {
             loginPageIsActive = true;
-            pageStack.push(Qt.resolvedUrl("qml/ui/LoginPage.qml"));
+            pageLayout.replacePageSource(Qt.resolvedUrl("qml/ui/LoginPage.qml"));
         } else {
             instagram.setUsername(username);
             instagram.setPassword(password);
@@ -139,13 +159,6 @@ MainView {
 
             cacheImage.clean();
             cacheImage.init();
-
-            // Donate me dialog
-            var donateMeShowed = Storage.get("donateMe");
-            if (donateMeShowed === "" || typeof donateMeShowed == 'undefined') {
-                PopupUtils.open(donateMeComponent);
-                Storage.set("donateMe", "showed");
-            }
         }
     }
 
@@ -170,13 +183,13 @@ MainView {
                 if (commands[3] == "") return;
 
                 if (commands[2] == "tags") {
-                    pageStack.push(Qt.resolvedUrl("qml/ui/TagFeedPage.qml"), {tag: commands[3]});
+                    //pageStack.push(Qt.resolvedUrl("qml/ui/TagFeedPage.qml"), {tag: commands[3]});
                 } else if (commands[2] == "locations") {
                     // location
                     return;
                 }
             } else {
-                pageStack.push(Qt.resolvedUrl("qml/ui/OtherUserPage.qml"), {usernameString: commands[1]});
+                //pageStack.push(Qt.resolvedUrl("qml/ui/OtherUserPage.qml"), {usernameString: commands[1]});
             }
 
             console.log(uri)
@@ -188,44 +201,57 @@ MainView {
         }
     }
 
-    PageStack {
-        id: pageStack
-    }
+    AdaptivePageLayout {
+        id: pageLayout
+        anchors.fill: parent
 
-    Tabs {
-        id: tabs
-        visible: false
+        primaryPage: homePage
 
-        Tab {
-            id: homeTab
-
-            HomePage {
-                id: homePage
+        layouts: [
+            PageColumnsLayout {
+                when: isWideScreen
+                PageColumn {
+                    minimumWidth: units.gu(50)
+                    maximumWidth: units.gu(70)
+                    preferredWidth: units.gu(60)
+                }
+                PageColumn {
+                    fillWidth: true
+                }
             }
+        ]
+
+        // Pages
+        HomePage {
+            id: homePage
+        }
+        SearchPage {
+            id: searchPage
+        }
+        NotifsPage {
+            id: notifsPage
+        }
+        UserPage {
+            id: userPage
         }
 
-        Tab {
-            id: searchTab
-
-            SearchPage {
-                id: searchPage
-            }
+        // Functions
+        function replacePageSource(pageSource) {
+            pageLayout.removePages(pageLayout.primaryPage)
+            pageLayout.primaryPageSource = pageSource
         }
 
-        Tab {
-            id: notifsTab
-
-            NotifsPage {
-                id: notifsPage
-            }
+        function replacePage(pageId) {
+            pageLayout.removePages(pageLayout.primaryPage)
+            pageLayout.primaryPage = pageId
         }
 
-        Tab {
-            id: userTab
+        function pop() {
+            pageLayout.removePages(pageLayout.primaryPage)
+        }
 
-            UserPage {
-                id: userPage
-            }
+        function push(pageSource, args) {
+            pageLayout.addPageToNextColumn(pageLayout.primaryPage, pageSource, args)
         }
     }
 
@@ -265,55 +291,24 @@ MainView {
         ContentDownloadDialog { }
     }
 
-    Component {
-        id: donateMeComponent
-
-        Dialog {
-            id: donateMeDialog
-            title: i18n.tr("Donate me")
-            text: i18n.tr("Donate to support me continue developing for Ubuntu.")
-
-            Row {
-                spacing: units.gu(1)
-                Button {
-                    width: parent.width/2 - units.gu(0.5)
-                    text: i18n.tr("Ignore")
-                    onClicked: PopupUtils.close(donateMeDialog)
-                }
-
-                Button {
-                    width: parent.width/2 - units.gu(0.5)
-                    text: i18n.tr("Donate")
-                    color: UbuntuColors.blue
-                    onClicked: {
-                        Qt.openUrlExternally("https://liberapay.com/turanmahmudov")
-                        PopupUtils.close(donateMeDialog)
-                    }
-                }
-            }
-        }
-    }
-
     Connections{
         target: instagram
         onProfileConnected: {
-            pageStack.push(tabs);
-
             logged_in = true
-            my_usernameId = instagram.getUsernameId()
+            activeUsername = instagram.getUsernameId()
 
             // Home feed
             homePage.getMedia();
 
             // Search page
-            searchPage.getPopular();
+            //searchPage.getPopular();
 
             // Activity page
             notifsPage.getRecentActivity();
 
             // User page
             userPage.getUsernameInfo();
-            userPage.getUsernameFeed();
+            //userPage.getUsernameFeed();
 
             // Open requested url after login
             processUri();
@@ -325,10 +320,8 @@ MainView {
         onProfileConnectedFail: {
             if (!loginPageIsActive) {
                 loginPageIsActive = true
-                pageStack.clear()
-                pageStack.push(Qt.resolvedUrl("qml/ui/LoginPage.qml"))
+                pageLayout.replacePageSource(Qt.resolvedUrl("qml/ui/LoginPage.qml"))
             }
         }
     }
 }
-

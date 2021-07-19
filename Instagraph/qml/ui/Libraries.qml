@@ -1,10 +1,12 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
 
-Page {
+import "../components"
+
+PageItem {
     id: librariesPage
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: i18n.tr("Libraries")
     }
 

@@ -1,4 +1,4 @@
-import QtQuick 2.4
+import QtQuick 2.12
 
 // fragmentShader from Webkit:
 // https://github.com/WebKit/webkit/blob/master/Source/WebCore/platform/graphics/texmap/TextureMapperShaderProgram.cpp

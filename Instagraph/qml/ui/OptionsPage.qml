@@ -1,6 +1,6 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 
 import "../components"
 
@@ -8,10 +8,10 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+PageItem {
     id: optionspage
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: i18n.tr("Options")
     }
 
@@ -24,14 +24,7 @@ Page {
     }
 
     Component.onCompleted: {
-        instagram.getProfileData()
-    }
-
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: optionspage.header.bottom
-        visible: instagram.busy
+        instagram.getCurrentUser()
     }
 
     Flickable {
@@ -68,7 +61,7 @@ Page {
                    title.text: i18n.tr("Edit Profile")
                }
                onClicked: {
-                   pageStack.push(Qt.resolvedUrl("EditProfilePage.qml"))
+                   pageLayout.pushToCurrent(optionspage, Qt.resolvedUrl("EditProfilePage.qml"))
                }
            }
 
@@ -80,7 +73,7 @@ Page {
                    title.text: i18n.tr("Change Password")
                }
                onClicked: {
-                   pageStack.push(Qt.resolvedUrl("ChangePasswordPage.qml"))
+                   pageLayout.pushToCurrent(optionspage, Qt.resolvedUrl("ChangePasswordPage.qml"))
                }
            }
 
@@ -92,7 +85,7 @@ Page {
                    title.text: i18n.tr("Posts You've Liked")
                }
                onClicked: {
-                   pageStack.push(Qt.resolvedUrl("LikedMediaPage.qml"))
+                   pageLayout.pushToCurrent(optionspage, Qt.resolvedUrl("LikedMediaPage.qml"))
                }
            }
 
@@ -104,7 +97,7 @@ Page {
                    title.text: i18n.tr("Blocked Users")
                }
                onClicked: {
-                   pageStack.push(Qt.resolvedUrl("BlockedUsers.qml"))
+                   pageLayout.pushToCurrent(optionspage, Qt.resolvedUrl("BlockedUsers.qml"))
                }
            }
 
@@ -162,7 +155,7 @@ Page {
                    title.text: i18n.tr("About")
                }
                onClicked: {
-                   pageStack.push(Qt.resolvedUrl("About.qml"))
+                   pageLayout.pushToCurrent(optionspage, Qt.resolvedUrl("About.qml"))
                }
            }
 
@@ -174,7 +167,7 @@ Page {
                    title.text: i18n.tr("Credits")
                }
                onClicked: {
-                   pageStack.push(Qt.resolvedUrl("Credits.qml"))
+                   pageLayout.pushToCurrent(optionspage, Qt.resolvedUrl("Credits.qml"))
                }
            }
 
@@ -187,7 +180,7 @@ Page {
                    title.text: i18n.tr("Libraries")
                }
                onClicked: {
-                   pageStack.push(Qt.resolvedUrl("Libraries.qml"))
+                   pageLayout.pushToCurrent(optionspage, Qt.resolvedUrl("Libraries.qml"))
                }
            }
 
@@ -213,7 +206,7 @@ Page {
 
     Connections{
         target: instagram
-        onProfileDataReady: {
+        onCurrentUserDataReady: {
             var data = JSON.parse(answer);
             profileDataFinished(data);
         }

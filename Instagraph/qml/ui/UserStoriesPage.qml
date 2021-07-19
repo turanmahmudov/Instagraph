@@ -1,7 +1,8 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 import QtGraphicalEffects 1.0
+import QtMultimedia 5.12
 
 import "../components"
 
@@ -9,10 +10,11 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+PageItem {
     id: userstoriespage
 
-    header: PageHeader {
+    header: PageHeaderItem {
+        whiteIcons: true
         StyleHints {
             backgroundColor: "transparent"
             foregroundColor: "#ffffff"
@@ -45,7 +47,7 @@ Page {
                             fill: parent
                         }
                         onClicked: {
-                            pageStack.push(Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: user.pk});
+                            pageLayout.pushToCurrent(userstoriespage, Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: user.pk});
                         }
                     }
                 }
@@ -70,7 +72,7 @@ Page {
                             fill: parent
                         }
                         onClicked: {
-                            pageStack.push(Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: user.pk});
+                            pageLayout.pushToCurrent(userstoriespage, Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: user.pk});
                         }
                     }
                 }
@@ -99,7 +101,6 @@ Page {
     property int progressTime: 0
 
     property var allUsers: []
-    property var allItems: []
 
     property bool getting: false
 
@@ -149,7 +150,7 @@ Page {
 
     WorkerScript {
         id: worker
-        source: "../js/Worker.js"
+        source: "../js/TimelineWorker.js"
         onMessage: {
             console.log(msg)
         }
@@ -207,10 +208,12 @@ Page {
             model: userStoriesModel.count
 
             ProgressBar {
+                property real maxValue: typeof userStoriesModel.get(index).video_duration != 'undefined' && userStoriesModel.get(index).video_duration != 0 ? userStoriesModel.get(index).video_duration*1000 : 4000
+
                 width: (parent.width - (userStoriesModel.count-1)*units.gu(0.5))/userStoriesModel.count
-                value: index == userStoriesList.currentIndex ? (getting ? 4000 : progressTime) : (index < userStoriesList.currentIndex ? 4000 : 0)
+                value: index == userStoriesList.currentIndex ? (getting ? maxValue : progressTime) : (index < userStoriesList.currentIndex ? maxValue : 0)
                 minimumValue: 0
-                maximumValue: 4000
+                maximumValue: maxValue
             }
         }
     }
@@ -238,35 +241,68 @@ Page {
 
         model: userStoriesModel
         delegate: Item {
+            id: storyDelegate
             width: userstoriespage.width
             height: width/image_versions2.candidates[0].width*image_versions2.candidates[0].height
 
-            Image {
-                id: feed_image
-                width: parent.width
-                height:parent.height
-                fillMode: Image.PreserveAspectCrop
-                source: image_versions2.candidates[0].url
-                sourceSize: Qt.size(width,height)
-                asynchronous: true
-                cache: true // maybe false
-                smooth: false
+            Loader {
+                id: mediaLoader
+                anchors.fill: parent
+                asynchronous: false
+                active: userStoriesList.currentIndex == index
+                sourceComponent: media_type == 2 ? storyVideo : storyImage
+            }
 
-                onStatusChanged: {
-                    if (status == Image.Ready) {
-                        if (userStoriesList.currentIndex == 0) {
-                            timer.start()
-                        }
+            Component {
+                id: storyImage
+
+                Item {
+                    anchors.fill: parent
+                    Image {
+                        width: parent.width
+                        height:parent.height
+                        fillMode: Image.PreserveAspectCrop
+                        source: image_versions2.candidates[0].url
+                        sourceSize: Qt.size(width,height)
+                        smooth: false
+                    }
+
+                    Component.onCompleted: {
+                        timer.stop()
+                        timer.interval = 4000
+                        timer.start()
                     }
                 }
+            }
 
-                Connections {
-                    target: userStoriesList
-                    onCurrentIndexChanged: {
-                        if (feed_image.status == Image.Ready) {
-                            timer.stop()
-                            timer.start()
-                        }
+            Component {
+                id: storyVideo
+
+                Item {
+                    anchors.fill: parent
+                    MediaPlayer {
+                        id: player
+                        source: video_url
+                        autoLoad: true
+                        autoPlay: true
+                    }
+                    VideoOutput {
+                        id: videoOutput
+                        source: player
+                        fillMode: VideoOutput.PreserveAspectCrop
+                        width: 800
+                        height: 600
+                        anchors.fill: parent
+                    }
+
+                    Component.onCompleted: {
+                        timer.stop()
+                        timer.interval = video_duration*1000
+                        timer.start()
+                    }
+
+                    Component.onDestruction: {
+                        player.stop()
                     }
                 }
             }
@@ -323,6 +359,8 @@ Page {
     Connections{
         target: instagram
         onUserReelsMediaFeedDataReady: {
+            // TODO fix video playing time and destroying
+            //console.log(answer)
             var data = JSON.parse(answer);
             userReelsMediaFeedDataFinished(data)
         }

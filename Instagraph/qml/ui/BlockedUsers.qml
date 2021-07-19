@@ -1,8 +1,8 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 import Ubuntu.Content 1.1
-import QtMultimedia 5.4
+import QtMultimedia 5.12
 
 import "../components"
 
@@ -10,7 +10,7 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+PageItem {
     id: blockeduserspage
 
     property var userId
@@ -18,7 +18,7 @@ Page {
     property bool list_loading: false
     property bool clear_models: true
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: i18n.tr("Blocked Users")
     }
 
@@ -44,14 +44,7 @@ Page {
 
     function getUserBlockedList()
     {
-        instagram.getUserBlockedList();
-    }
-
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: blockeduserspage.header.bottom
-        visible: instagram.busy || list_loading
+        instagram.getBlockedUserList();
     }
 
     ListModel {
@@ -70,14 +63,14 @@ Page {
         }
 
         clip: true
-        cacheBuffer: parent.height*2
+        cacheBuffer: parent.height
         model: blockedUsersModel
         delegate: ListItem {
             id: blockedUsersDelegate
             height: layout.height
             divider.visible: false
             onClicked: {
-                pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: user_id});
+                pageLayout.pushToCurrent(blockeduserspage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: user_id});
             }
 
             SlotsLayout {
@@ -89,35 +82,9 @@ Page {
                 padding.top: units.gu(1)
                 padding.bottom: units.gu(1)
 
-                mainSlot: Row {
+                mainSlot: UserRowSlot {
                     id: label
-                    spacing: units.gu(1)
                     width: parent.width - units.gu(5)
-
-                    CircleImage {
-                        width: units.gu(5)
-                        height: width
-                        source: profile_pic_url
-                    }
-
-                    Column {
-                        width: parent.width
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        Text {
-                            text: username
-                            wrapMode: Text.WordWrap
-                            font.weight: Font.DemiBold
-                            width: parent.width
-                        }
-
-                        Text {
-                            text: full_name
-                            wrapMode: Text.WordWrap
-                            width: parent.width
-                            textFormat: Text.RichText
-                        }
-                    }
                 }
             }
 
@@ -133,7 +100,7 @@ Page {
 
     Connections{
         target: instagram
-        onUserBlockedListDataReady: {
+        onBlockedUserListDataReady: {
             var data = JSON.parse(answer);
             userBlockedListDataFinished(data);
         }

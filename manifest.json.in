@@ -10,7 +10,7 @@
             "urls": "Instagraph/Instagraph.dispatcher"
         }
     },
-    "version": "0.0.3",
+    "version": "0.1",
     "maintainer": "Turan Mahmudov <turan.mahmudov@gmail.com>",
-    "framework": "ubuntu-sdk-15.04.6"
+    "framework" : "@CLICK_FRAMEWORK@"
 }

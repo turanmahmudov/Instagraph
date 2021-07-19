@@ -1,8 +1,8 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 import Ubuntu.Content 1.1
-import QtMultimedia 5.4
+import QtMultimedia 5.12
 
 import "../components"
 
@@ -10,7 +10,7 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+PageItem {
     id: userfollowerspage
 
     property var userId
@@ -18,14 +18,26 @@ Page {
     property bool list_loading: false
     property bool clear_models: true
 
-    header: PageHeader {
+    property string next_max_id: ""
+    property bool more_available: true
+    property bool next_coming: true
+
+    header: PageHeaderItem {
         title: i18n.tr("Followers")
     }
 
     function userFollowersDataFinished(data) {
-        userFollowersModel.clear()
+        if (next_max_id == data.next_max_id) {
+            return false;
+        } else {
+            next_max_id = typeof data.next_max_id != 'undefined' ? data.next_max_id : ""
+            more_available = typeof data.next_max_id != 'undefined'
+            next_coming = true;
 
-        worker.sendMessage({'feed': 'UserFollowersPage', 'obj': data.users, 'model': userFollowersModel, 'clear_model': clear_models})
+            worker.sendMessage({'feed': 'UserFollowersPage', 'obj': data.users, 'model': userFollowersModel, 'clear_model': clear_models})
+
+            next_coming = false;
+        }
 
         list_loading = false
     }
@@ -47,16 +59,10 @@ Page {
         clear_models = false
         if (!next_id) {
             userFollowersModel.clear()
+            next_max_id = ""
             clear_models = true
         }
-        instagram.getUserFollowers(userId);
-    }
-
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: userfollowerspage.header.bottom
-        visible: instagram.busy || list_loading
+        instagram.getFollowers(userId, next_id);
     }
 
     ListModel {
@@ -72,6 +78,9 @@ Page {
             top: userfollowerspage.header.bottom
         }
         onMovementEnded: {
+            if (atYEnd && more_available && !next_coming) {
+                getUserFollowers(next_max_id)
+            }
         }
 
         clip: true
@@ -82,7 +91,7 @@ Page {
             height: layout.height
             divider.visible: false
             onClicked: {
-                pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk});
+                pageLayout.pushToCurrent(userfollowerspage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk});
             }
 
             SlotsLayout {
@@ -94,35 +103,9 @@ Page {
                 padding.top: units.gu(1)
                 padding.bottom: units.gu(1)
 
-                mainSlot: Row {
+                mainSlot: UserRowSlot {
                     id: label
-                    spacing: units.gu(1)
                     width: parent.width
-
-                    CircleImage {
-                        width: units.gu(5)
-                        height: width
-                        source: profile_pic_url
-                    }
-
-                    Column {
-                        width: parent.width
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        Text {
-                            text: username
-                            wrapMode: Text.WordWrap
-                            font.weight: Font.DemiBold
-                            width: parent.width
-                        }
-
-                        Text {
-                            text: full_name
-                            wrapMode: Text.WordWrap
-                            width: parent.width
-                            textFormat: Text.RichText
-                        }
-                    }
                 }
             }
         }
@@ -137,7 +120,7 @@ Page {
 
     Connections{
         target: instagram
-        onUserFollowersDataReady: {
+        onFollowersDataReady: {
             var data = JSON.parse(answer);
             userFollowersDataFinished(data);
         }

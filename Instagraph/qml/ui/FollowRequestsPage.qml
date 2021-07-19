@@ -1,6 +1,6 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 
 import "../components"
 
@@ -8,10 +8,10 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+PageItem {
     id: followrequestspage
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: i18n.tr("Follow Requests")
     }
 
@@ -44,13 +44,6 @@ Page {
         instagram.pendingFriendships();
     }
 
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: followrequestspage.header.bottom
-        visible: instagram.busy
-    }
-
     ListModel {
         id: followrequestsModel
     }
@@ -73,7 +66,7 @@ Page {
             height: layout.height
             divider.visible: false
             onClicked: {
-                pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk});
+                pageLayout.pushToCurrent(followrequestspage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk});
             }
 
             property bool is_friendship_approved: false
@@ -87,35 +80,9 @@ Page {
                 padding.top: units.gu(1)
                 padding.bottom: units.gu(1)
 
-                mainSlot: Row {
+                mainSlot: UserRowSlot {
                     id: label
-                    spacing: units.gu(1)
                     width: parent.width - (is_friendship_approved ? followButton.width : buttons.width)
-
-                    CircleImage {
-                        width: units.gu(5)
-                        height: width
-                        source: profile_pic_url
-                    }
-
-                    Column {
-                        width: parent.width - units.gu(6)
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        Text {
-                            text: username
-                            wrapMode: Text.WordWrap
-                            font.weight: Font.DemiBold
-                            width: parent.width
-                        }
-
-                        Text {
-                            text: full_name
-                            wrapMode: Text.WordWrap
-                            width: parent.width
-                            textFormat: Text.RichText
-                        }
-                    }
                 }
 
                 Row {

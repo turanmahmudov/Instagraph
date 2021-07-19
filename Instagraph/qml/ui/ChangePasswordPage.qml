@@ -1,40 +1,30 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 
 import "../components"
 
 import "../js/Storage.js" as Storage
 
-Page {
+PageItem {
     id: changepasswordpage
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: i18n.tr("Change Password")
-        trailingActionBar {
-            numberOfSlots: 1
-            actions: [
-                Action {
-                    iconName: "tick"
-                    enabled: currentPasswordField.text.length > 0 && newPasswordField.text.length > 0 && newPasswordAgainField.text.length > 0
-                    text: i18n.tr("Save")
-                    onTriggered: {
-                        if (newPasswordField.text == newPasswordAgainField.text) {
-                            instagram.changePassword(currentPasswordField.text, newPasswordField.text)
-                        } else {
-                            // must be same error
-                        }
+        trailingActions: [
+            Action {
+                text: i18n.tr("Save")
+                iconName: "\uea55"
+                enabled: currentPasswordField.text.length > 0 && newPasswordField.text.length > 0 && newPasswordAgainField.text.length > 0
+                onTriggered: {
+                    if (newPasswordField.text == newPasswordAgainField.text) {
+                        instagram.changePassword(currentPasswordField.text, newPasswordField.text)
+                    } else {
+                        // must be same error
                     }
                 }
-            ]
-        }
-    }
-
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: changepasswordpage.header.bottom
-        visible: instagram.busy
+            }
+        ]
     }
 
     Flickable {

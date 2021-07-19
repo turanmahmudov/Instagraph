@@ -1,6 +1,6 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 import QtGraphicalEffects 1.0
 import Ubuntu.Components.Styles 1.3
 
@@ -8,7 +8,7 @@ import "../components"
 
 import "../js/Storage.js" as Storage
 
-Page {
+PageItem {
     id: twoFactorLoginPage
 
     property var answer
@@ -18,7 +18,7 @@ Page {
 
     property string phoneEnding: ""
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: i18n.tr("Enter Security Code")
     }
 
@@ -31,13 +31,6 @@ Page {
         if (answer.two_factor_info.totp_two_factor_on == true) {
             has_totp = true
         }
-    }
-
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: parent.top
-        visible: instagram.busy
     }
 
     Column {
@@ -79,7 +72,7 @@ Page {
             width: parent.width*0.8
             height: units.gu(5)
             anchors.horizontalCenter: parent.horizontalCenter
-            color: UbuntuColors.green
+            color: UbuntuColors.blue
             text: i18n.tr("Confirm")
             onTriggered: {
                 instagram.confirm2Factor(codeField.text, answer.two_factor_info.two_factor_identifier, has_totp ? "3" : "1");
@@ -104,10 +97,6 @@ Page {
         onProfileConnected:{
 
         }
-    }
-
-    Connections{
-        target: instagram
         onProfileConnectedFail:{
             console.log('login failed')
         }

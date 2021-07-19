@@ -6,7 +6,6 @@
         <file>qml/ui/LoginPage.qml</file>
         <file>qml/ui/HomePage.qml</file>
         <file>qml/js/Helper.js</file>
-        <file>qml/ui/NotifsPage.qml</file>
         <file>qml/images/not_found_user.jpg</file>
         <file>qml/ui/SearchPage.qml</file>
         <file>qml/ui/UserPage.qml</file>
@@ -31,7 +30,6 @@
         <file>qml/ui/ChangePasswordPage.qml</file>
         <file>qml/ui/DiscoverPeoplePage.qml</file>
         <file>qml/ui/RegisterPage.qml</file>
-        <file>qml/js/Worker.js</file>
         <file>qml/js/ActivityWorker.js</file>
         <file>qml/js/SimpleWorker.js</file>
         <file>qml/ui/UserFollowings.qml</file>
@@ -119,5 +117,29 @@
         <file>qml/images/media_save_profile.svg</file>
         <file>qml/ui/SavedMediaPage.qml</file>
         <file>qml/ui/2FactorLoginPage.qml</file>
+        <file>instagraph_title.png</file>
+        <file>qml/components/LineIcon.qml</file>
+        <file>qml/fonts/Fonts.qml</file>
+        <file>qml/fonts/LineIcons.ttf</file>
+        <file>qml/fonts/qmldir</file>
+        <file>qml/components/ActionLineIconDelegate.qml</file>
+        <file>qml/components/MediaItem.qml</file>
+        <file>Main2.qml</file>
+        <file>qml/components/Helpers/UriHandlerHelper.qml</file>
+        <file>qml/components/PageHeaderItem.qml</file>
+        <file>qml/components/LoadingSpinner.qml</file>
+        <file>qml/js/TimelineWorker.js</file>
+        <file>qml/ui/ActivityPage.qml</file>
+        <file>qml/components/ErrorPopup.qml</file>
+        <file>qml/components/UserHighlightsTray.qml</file>
+        <file>qml/ui/HighlightStoriesPage.qml</file>
+        <file>qml/components/Style/Style.qml</file>
+        <file>qml/components/Style/StyleDark.qml</file>
+        <file>qml/components/Style/StyleLight.qml</file>
+        <file>qml/components/UserRowSlot.qml</file>
+        <file>qml/components/UserDataColumn.qml</file>
+        <file>qml/components/PageItem.qml</file>
+        <file>qml/components/MultiUserSelector.qml</file>
+        <file>qml/components/MultipleAccountsSwitcher.qml</file>
     </qresource>
 </RCC>

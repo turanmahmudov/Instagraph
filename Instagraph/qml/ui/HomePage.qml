@@ -1,7 +1,10 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
-import QtMultimedia 5.6
+import Ubuntu.Components.Styles 1.3
+import QtQuick.LocalStorage 2.12
+import QtMultimedia 5.12
+import QtQml.Models 2.12
+import QtGraphicalEffects 1.0
 
 import "../components"
 
@@ -9,22 +12,52 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+import "../js/TimelineWorker.js" as JsModel
+
+PageItem {
     id: homepage
 
-    header: PageHeader {
-        title: i18n.tr("Instagraph")
-        trailingActionBar {
-            numberOfSlots: 1
-            actions: [inboxAction]
+    header: PageHeaderItem {
+        noBackAction: true
+        contents: Rectangle {
+            anchors.fill: parent
+            color: styleApp.pageHeader.backgroundColor
+            Image {
+                id: logo
+                anchors.verticalCenter: parent.verticalCenter
+                fillMode: Image.PreserveAspectFit
+                width: units.gu(12)
+                height: units.gu(4)
+                sourceSize: Qt.size(width,height)
+                source: Qt.resolvedUrl("../../instagraph_title.png")
+                smooth: true
+                cache: true
+            }
+            ColorOverlay {
+                anchors.fill: logo
+                source: logo
+                color: styleApp.common.textColor
+            }
         }
+        trailingActions: [
+            Action {
+                id: inboxAction
+                text: i18n.tr("Inbox")
+                iconName: "\ueaec"
+                onTriggered: {
+                    pageLayout.pushToNext(pageLayout.primaryPage, Qt.resolvedUrl("DirectInboxPage.qml"))
+                }
+            }
+        ]
     }
 
     property string next_max_id: ""
     property bool more_available: true
     property bool next_coming: true
+
     property var last_like_id
     property var last_save_id
+
     property bool clear_models: true
 
     property var seen_posts: []
@@ -33,7 +66,7 @@ Page {
 
     property bool isEmpty: false
 
-    property bool isPullToRefresh: false
+    property bool isPullToRefresh: true
 
     function mediaDataFinished(data) {
         isPullToRefresh = false
@@ -69,13 +102,13 @@ Page {
 
     WorkerScript {
         id: worker
-        source: "../js/Worker.js"
+        source: "../js/TimelineWorker.js"
         onMessage: {
 
         }
     }
 
-    function getMedia(next_id)
+    function getTimelineFeed(next_id)
     {
         clear_models = false
         if (!next_id) {
@@ -83,19 +116,12 @@ Page {
             next_max_id = ""
             clear_models = true
         }
-        instagram.getTimeLine(next_id, seen_posts.join(','), isPullToRefresh);
-    }
-
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: homepage.header.bottom
-        visible: instagram.busy || list_loading
+        instagram.getTimelineFeed(next_id, seen_posts.join(','), isPullToRefresh);
+        //instagram.getTimelineFeed(next_id);
     }
 
     ListModel {
         id: homePhotosModel
-        dynamicRoles: true
     }
 
     ListModel {
@@ -113,14 +139,14 @@ Page {
         }
         onMovementEnded: {
             if (atYEnd && more_available && !next_coming) {
-                getMedia(next_max_id);
+                getTimelineFeed(next_max_id);
             }
         }
 
-        cacheBuffer: parent.height*2
         model: homePhotosModel
         delegate: ListFeedDelegate {
             id: homePhotosDelegate
+            currentDelegatePage: homepage
             thismodel: homePhotosModel
         }
         PullToRefresh {
@@ -129,7 +155,7 @@ Page {
             onRefresh: {
                 list_loading = true
                 isPullToRefresh = true
-                getMedia()
+                getTimelineFeed()
             }
         }
     }
@@ -146,25 +172,9 @@ Page {
         description: i18n.tr("Follow accounts to see photos and videos here in your feed.")
     }
 
-    FloatingActionButton {
-        z: 1
-        visible: homePhotosList.contentY > units.gu(150)
-        anchors {
-            right: parent.right
-            bottom: parent.bottom
-            margins: units.gu(1)
-            bottomMargin: units.gu(7)
-        }
-        imageName: "go-up"
-        backgroundColor: "#2B2B2B"
-        onClicked: {
-            homePhotosList.positionViewAtBeginning();
-        }
-    }
-
     Connections{
         target: instagram
-        onTimeLineDataReady: {
+        onTimelineFeedDataReady: {
             var data = JSON.parse(answer);
             if (data.status == "ok") {
                 mediaDataFinished(data);

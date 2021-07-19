@@ -1,7 +1,7 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
-import QtMultimedia 5.6
+import QtQuick.LocalStorage 2.12
+import QtMultimedia 5.12
 import Ubuntu.Components.Popups 1.3
 import Ubuntu.Content 1.3
 import Ubuntu.DownloadManager 1.2
@@ -11,7 +11,6 @@ import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
 ListItem {
-
     height: list_type === 'suggested_users' ?
                 suggestionsPanelLoader.height + units.gu(4) :
                 list_type === 'media_entry' ?
@@ -22,6 +21,7 @@ ListItem {
 
     divider.visible: false
 
+    property var currentDelegatePage: pageLayout.primaryPage
     property var last_deleted_media
     property var thismodel
 
@@ -29,8 +29,10 @@ ListItem {
         id: popoverComponent
         ActionSelectionPopover {
             id: popoverElement
+            width: parent.width
             delegate: ListItem {
                 visible: action.visible
+                width: parent.width
                 height: action.visible ? entry_column.height + units.gu(4) : 0
 
                 Column {
@@ -44,6 +46,7 @@ ListItem {
                     width: parent.width - units.gu(4)
 
                     Label {
+                        width: parent.width
                         text: action.text
                         font.weight: Font.DemiBold
                         wrapMode: Text.WordWrap
@@ -53,17 +56,17 @@ ListItem {
             }
             actions: ActionList {
                   Action {
-                      visible: my_usernameId == user.pk
-                      enabled: my_usernameId == user.pk
+                      visible: activeUsernameId == user.pk
+                      enabled: activeUsernameId == user.pk
                       text: i18n.tr("Edit")
                       onTriggered: {
                           PopupUtils.close(popoverElement);
-                          pageStack.push(Qt.resolvedUrl("../ui/EditMediaPage.qml"), {mediaId: id});
+                          pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../ui/EditMediaPage.qml"), {mediaId: id});
                       }
                   }
                   Action {
-                      visible: my_usernameId == user.pk
-                      enabled: my_usernameId == user.pk
+                      visible: activeUsernameId == user.pk
+                      enabled: activeUsernameId == user.pk
                       text: i18n.tr("Delete")
                       onTriggered: {
                           last_deleted_media = index
@@ -71,16 +74,16 @@ ListItem {
                       }
                   }
                   Action {
-                      visible: my_usernameId == user.pk && (typeof comments_disabled != 'undefined' && comments_disabled == true)
-                      enabled: my_usernameId == user.pk && (typeof comments_disabled != 'undefined' && comments_disabled == true)
+                      visible: activeUsernameId == user.pk && (typeof comments_disabled != 'undefined' && comments_disabled == true)
+                      enabled: activeUsernameId == user.pk && (typeof comments_disabled != 'undefined' && comments_disabled == true)
                       text: i18n.tr("Turn On Commenting")
                       onTriggered: {
                             instagram.enableMediaComments(id)
                       }
                   }
                   Action {
-                      visible: my_usernameId == user.pk && (typeof comments_disabled == 'undefined' || (typeof comments_disabled != 'undefined' && comments_disabled == false))
-                      enabled: my_usernameId == user.pk && (typeof comments_disabled == 'undefined' || (typeof comments_disabled != 'undefined' && comments_disabled == false))
+                      visible: activeUsernameId == user.pk && (typeof comments_disabled == 'undefined' || (typeof comments_disabled != 'undefined' && comments_disabled == false))
+                      enabled: activeUsernameId == user.pk && (typeof comments_disabled == 'undefined' || (typeof comments_disabled != 'undefined' && comments_disabled == false))
                       text: i18n.tr("Turn Off Commenting")
                       onTriggered: {
                           instagram.disableMediaComments(id)
@@ -126,7 +129,7 @@ ListItem {
                         if (data.did_delete) {
                             thismodel.remove(index)
                             if (thismodel.count == 0) {
-                                pageStack.pop();
+                                pageLayout.pop();
                             }
                         }
                     }
@@ -137,19 +140,19 @@ ListItem {
                         if (data.status == "ok") {
                             thismodel.remove(index)
                             if (thismodel.count == 0) {
-                                pageStack.pop();
+                                pageLayout.pop();
                             }
                         }
                     }
                 }
-                onEnableMediaCommentsReady: {
+                onEnableMediaCommentsDataReady: {
                     var data = JSON.parse(answer)
                     if (data.status == "ok") {
                         thismodel.get(index).comments_disabled = false
                         PopupUtils.close(popoverElement);
                     }
                 }
-                onDisableMediaCommentsReady: {
+                onDisableMediaCommentsDataReady: {
                     var data = JSON.parse(answer)
                     if (data.status == "ok") {
                         thismodel.get(index).comments_disabled = true
@@ -184,6 +187,7 @@ ListItem {
         }
         visible: list_type === 'suggested_users'
         active: list_type === 'suggested_users'
+        asynchronous: true
 
         sourceComponent: SuggestionsPanel {
             suggestionsModel: homeSuggestionsModel
@@ -194,15 +198,17 @@ ListItem {
     Loader {
         id: storiesFeedTrayLoader
         width: parent.width
-        height: width/5 + units.gu(3)
+        height: list_type === 'stories_feed' && storiesFeedTrayLoader.item.checkVisible() ? (width/5 + units.gu(3)) : 0
         anchors {
             left: parent.left
             right: parent.right
         }
         visible: list_type === 'stories_feed'
         active: list_type === 'stories_feed'
+        asynchronous: true
 
         sourceComponent: StoriesTray {
+            id: storiesFeedTray
             anchors {
                 fill: parent
             }

@@ -1,6 +1,8 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
+
+import "../fonts/"
 
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
@@ -11,6 +13,7 @@ Rectangle {
     z: 100000
     width: parent.width
     height: units.gu(6)
+    color: styleApp.bottomMenu.backgroundColor
     anchors {
         bottom: parent.bottom
     }
@@ -18,7 +21,7 @@ Rectangle {
     Rectangle {
         width: parent.width
         height: units.gu(0.1)
-        color: UbuntuColors.lightGrey
+        color: styleApp.bottomMenu.dividerColor
     }
 
     Row {
@@ -33,20 +36,17 @@ Rectangle {
             width: parent.width/5
             height: parent.height
 
-            Icon {
+            LineIcon {
                 anchors.centerIn: parent
-                width: units.gu(3.2)
-                height: width
-                name: "navigation-menu"
-                color: tabs.selectedTabIndex == 0 ? "#000000" : "#999999"
+                name: "\ueae7"
+                active: pageLayout.primaryPage == homePage
+                iconSize: units.gu(2.4)
             }
 
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    pageStack.pop();
-                    pageStack.push(tabs);
-                    tabs.selectedTabIndex = 0
+                    pageLayout.primaryPage = homePage
                 }
             }
         }
@@ -55,24 +55,22 @@ Rectangle {
             width: parent.width/5
             height: parent.height
 
-            Icon {
+            LineIcon {
                 anchors.centerIn: parent
-                width: units.gu(3.2)
-                height: width
-                name: "find"
-                color: tabs.selectedTabIndex == 1 ? "#000000" : "#999999"
+                name: "\ueb7b"
+                active: pageLayout.primaryPage == searchPage
+                iconSize: units.gu(2.4)
+                font.weight: Font.DemiBold
             }
 
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    pageStack.pop();
-                    pageStack.push(tabs);
-                    tabs.selectedTabIndex = 1
+                    pageLayout.primaryPage = searchPage
 
-                    if (searchPageOpenFirstTime) {
+                    if (searchPage.firstOpen) {
                         searchPage.getPopular();
-                        searchPageOpenFirstTime = false
+                        searchPage.firstOpen = false
                     }
                 }
             }
@@ -82,22 +80,17 @@ Rectangle {
             width: parent.width/5
             height: parent.height
 
-            Icon {
+            LineIcon {
                 anchors.centerIn: parent
-                width: units.gu(3.2)
-                height: width
-                name: "add"
-                color: "#999999"
+                name: "\ueb53"
+                color: styleApp.common.iconColor
+                iconSize: units.gu(2.4)
             }
 
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    if (pageStack.depth == 2) {
-                        pageStack.clear();
-                        pageStack.push(tabs);
-                    }
-                    pageStack.push(Qt.resolvedUrl("../ui/CameraPage.qml"))
+                    pageLayout.addPageToCurrentColumn(pageLayout.primaryPage, Qt.resolvedUrl("../ui/CameraPage.qml"))
                 }
             }
         }
@@ -106,16 +99,15 @@ Rectangle {
             width: parent.width/5
             height: parent.height
 
-            Icon {
+            LineIcon {
                 anchors.centerIn: parent
-                width: units.gu(3.2)
-                height: width
-                name: "unlike"
-                color: tabs.selectedTabIndex == 2 ? "#000000" : "#999999"
+                name: pageLayout.primaryPage == activityPage ? "\ueadf" : "\ueae1"
+                active: pageLayout.primaryPage == activityPage
+                iconSize: units.gu(2.4)
             }
 
             Rectangle {
-                visible: new_notifs
+                visible: activityPage.new_notifs
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
                 width: units.gu(0.8)
@@ -127,11 +119,9 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    pageStack.pop();
-                    pageStack.push(tabs);
-                    tabs.selectedTabIndex = 2
+                    pageLayout.primaryPage = activityPage
 
-                    new_notifs = false
+                    activityPage.new_notifs = false
                 }
             }
         }
@@ -140,21 +130,18 @@ Rectangle {
             width: parent.width/5
             height: parent.height
 
-            Icon {
+            CircleImage {
                 anchors.centerIn: parent
                 width: units.gu(3.2)
                 height: width
-                name: "account"
-                color: tabs.selectedTabIndex == 3 ? "#000000" : "#999999"
+                source: activeUserProfilePic != "" ? activeUserProfilePic : "../images/not_found_user.jpg"
             }
 
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    if (logged_in) {
-                        pageStack.pop();
-                        pageStack.push(tabs);
-                        tabs.selectedTabIndex = 3
+                    if (loggedIn) {
+                        pageLayout.primaryPage = userPage
 
                         userPage.getUsernameInfo();
                         userPage.getUsernameFeed();
@@ -164,4 +151,3 @@ Rectangle {
         }
     }
 }
-

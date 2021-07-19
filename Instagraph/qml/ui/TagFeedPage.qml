@@ -1,6 +1,6 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 
 import "../components"
 
@@ -8,12 +8,12 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+PageItem {
     id: tagfeedpage
 
     property var tag
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: "#" + tag
     }
 
@@ -44,7 +44,7 @@ Page {
 
     WorkerScript {
         id: worker
-        source: "../js/Worker.js"
+        source: "../js/TimelineWorker.js"
         onMessage: {
             console.log(msg)
         }
@@ -61,14 +61,7 @@ Page {
             next_max_id = 0
             clear_models = true
         }
-        instagram.tagFeed(tag, next_id);
-    }
-
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: tagfeedpage.header.bottom
-        visible: instagram.busy || list_loading
+        instagram.getTagFeed(tag, next_id);
     }
 
     ListModel {
@@ -79,9 +72,7 @@ Page {
         id: homePhotosList
         anchors {
             left: parent.left
-            leftMargin: units.gu(1)
             right: parent.right
-            rightMargin: units.gu(1)
             bottom: parent.bottom
             bottomMargin: bottomMenu.height
             top: tagfeedpage.header.bottom
@@ -97,6 +88,7 @@ Page {
         model: tagFeedPhotosModel
         delegate: ListFeedDelegate {
             id: homePhotosDelegate
+            currentDelegatePage: tagfeedpage
             thismodel: tagFeedPhotosModel
         }
         PullToRefresh {

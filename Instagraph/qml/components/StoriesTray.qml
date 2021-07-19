@@ -1,4 +1,4 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
 import QtGraphicalEffects 1.0
 
@@ -9,6 +9,15 @@ Item {
     height: parent.height
 
     property var allUsers: []
+    property bool finishedLoading: false
+
+    function checkVisible() {
+        if (finishedLoading && storiesTrayModel.count == 0) {
+            return false;
+        }
+
+        return true;
+    }
 
     WorkerScript {
         id: worker
@@ -19,6 +28,7 @@ Item {
     }
 
     Component.onCompleted: {
+        finishedLoading = false
         instagram.getReelsTrayFeed();
     }
 
@@ -26,23 +36,11 @@ Item {
         id: storiesTrayModel
     }
 
-    Rectangle {
-        anchors.fill: parent
-        color: "#fbfbfb"
-        opacity: storiesTrayModel.count != 0
-
-        Behavior on opacity {
-            UbuntuNumberAnimation {
-                duration: UbuntuAnimation.SlowDuration
-            }
-        }
-    }
-
     Item {
         width: activity.width
         height: width
         anchors.centerIn: parent
-        opacity: storiesTrayModel.count == 0
+        opacity: !finishedLoading
 
         Behavior on opacity {
             UbuntuNumberAnimation {
@@ -76,7 +74,7 @@ Item {
         model: storiesTrayModel
 
         delegate: ListItem {
-            width: storiesTray.width/5
+            width: storiesTray.width/5 + units.gu(1)
             height: storyColumn.height
             divider.visible: false
 
@@ -94,14 +92,14 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            pageStack.push(Qt.resolvedUrl("../ui/UserStoriesPage.qml"), {userId: user.pk, allUsers: allUsers});
+                            pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../ui/UserStoriesPage.qml"), {userId: user.pk, allUsers: allUsers});
                         }
                     }
                 }
 
                 Label {
                     text: user.username
-                    color: "#000000"
+                    color: styleApp.common.textColor
                     fontSize: "x-small"
                     anchors.horizontalCenter: parent.horizontalCenter
                     width: Math.min((parent.width+2), contentWidth)
@@ -110,7 +108,7 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            pageStack.push(Qt.resolvedUrl("../ui/UserStoriesPage.qml"), {userId: user.pk, allUsers: allUsers});
+                            pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../ui/UserStoriesPage.qml"), {userId: user.pk, allUsers: allUsers});
                         }
                     }
                 }
@@ -124,6 +122,7 @@ Item {
             var data = JSON.parse(answer);
 
             worker.sendMessage({'feed': 'StoriesTray', 'obj': data.tray, 'model': storiesTrayModel, 'clear_model': true})
+            finishedLoading = true
 
             for (var i=0; i<data.tray.length; i++) {
                 allUsers.push(data.tray[i].user.pk)

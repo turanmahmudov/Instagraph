@@ -1,13 +1,11 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
 
 Column {
     width: parent.width
     spacing: 0
 
-    property bool icon: false
     property string iconName: ""
-    property string iconSource
     property string iconColor
 
     property string title
@@ -20,24 +18,22 @@ Column {
     }
 
     Item {
-        visible: icon
+        visible: iconName.length > 0
         width: parent.width
-        height: icon ? units.gu(6) : 0
+        height: visible > 0 ? units.gu(6) : 0
 
-        Icon {
-            width: units.gu(6)
-            height: width
-            name: iconName.length > 0 ? iconName : ""
-            color: iconColor.length > 0 ? iconColor : "#003569"
-            source: iconName.length > 0 ? "image://theme/%1".arg(iconName) : iconSource
+        LineIcon {
             anchors.centerIn: parent
+            name: iconName
+            color: iconColor.length > 0 ? iconColor : styleApp.common.iconColor
+            iconSize: units.gu(4)
         }
     }
 
     Item {
-        visible: icon
+        visible: iconName.length > 0
         width: parent.width
-        height: icon ? units.gu(2) : 0
+        height: visible ? units.gu(2) : 0
     }
 
     Item {

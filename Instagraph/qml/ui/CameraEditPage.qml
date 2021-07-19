@@ -1,8 +1,8 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 import Ubuntu.Content 1.1
-import QtMultimedia 5.6
+import QtMultimedia 5.12
 
 import "../components"
 import "../filters"
@@ -14,7 +14,7 @@ import "../js/Scripts.js" as Scripts
 
 import ImageProcessor 1.0
 
-Page {
+PageItem {
     id: cameraeditpage
 
     property int editPhotoMode: functionSelector.selectedIndex
@@ -30,7 +30,7 @@ Page {
                 iconName: "back"
                 onTriggered: {
                     pageStack.clear();
-                    pageStack.push(tabs);
+                    pageLayout.push(tabs);
                 }
             }
         ]

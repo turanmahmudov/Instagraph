@@ -6,7 +6,6 @@
 #include <QtQml/QQmlContext>
 
 #include <src/instagram.h>
-#include <src/instagramcheckpoint.h>
 #include <src/imageprocessor.h>
 #include <src/offscreenrenderer.h>
 #include <src/cropimageprovider.h>
@@ -19,7 +18,6 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     qmlRegisterType<Instagram>("Instagram",1,0,"Instagram");
-    qmlRegisterType<InstagramCheckPoint>("InstagramCheckPoint",1,0,"InstagramCheckPoint");
     qmlRegisterType<ImageProcessor>("ImageProcessor",1,0,"ImageProcessor");
     qmlRegisterType<OffscreenRenderer>("OffscreenRenderer",1,0,"OffscreenRenderer");
     qmlRegisterType<CacheImage>("CacheImage",1,0,"CacheImage");
@@ -29,9 +27,10 @@ int main(int argc, char *argv[])
     QQmlEngine *engine = view.engine();
     engine->addImageProvider(QLatin1String("photo"), new CropImageProvider);
 
-    view.setSource(QUrl(QStringLiteral("qrc:///Main.qml")));
+    QObject::connect(engine, SIGNAL(quit()), QGuiApplication::instance(), SLOT(quit()));
+
+    view.setSource(QUrl(QStringLiteral("qrc:///Main2.qml")));
     view.setResizeMode(QQuickView::SizeRootObjectToView);
     view.show();
     return app.exec();
 }
-

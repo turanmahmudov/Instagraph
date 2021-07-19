@@ -1,6 +1,6 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 
 import "../components"
 
@@ -8,10 +8,10 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+PageItem {
     id: savedmediapage
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: i18n.tr("Saved")
     }
 
@@ -48,7 +48,7 @@ Page {
 
     WorkerScript {
         id: worker
-        source: "../js/Worker.js"
+        source: "../js/TimelineWorker.js"
         onMessage: {
             console.log(msg)
         }
@@ -60,6 +60,7 @@ Page {
 
     function getSavedMedia(next_id)
     {
+        console.log('START HERE')
         clear_models = false
         if (!next_id) {
             savedMediaModel.clear()
@@ -67,13 +68,6 @@ Page {
             clear_models = true
         }
         instagram.getSavedFeed(next_id);
-    }
-
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: savedmediapage.header.bottom
-        visible: instagram.busy || list_loading
     }
 
     ListModel {
@@ -99,6 +93,7 @@ Page {
         }
         model: savedMediaModel
         delegate: GridFeedDelegate {
+            currentDelegatePage: savedmediapage
             width: gridView.cellWidth
             height: width
         }
@@ -115,7 +110,7 @@ Page {
 
     Connections{
         target: instagram
-        onGetSavedFeedDataReady: {
+        onSavedFeedDataReady: {
             var data = JSON.parse(answer);
             savedMediaDataFinished(data);
         }

@@ -1,6 +1,6 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 
 import "../components"
 
@@ -8,27 +8,28 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+PageItem {
     id: searchpage
 
-    header: searchHeader
-
-    PageHeader {
-        id: searchHeader
-        visible: searchpage.header === searchHeader
+    header: PageHeaderItem {
+        noBackAction: true
         title: i18n.tr("Search")
-        StyleHints {
-            backgroundColor: "#ffffff"
-        }
-        trailingActionBar {
-            numberOfSlots: 1
-            actions: [addPeopleAction]
-        }
+        trailingActions: [
+            Action {
+                id: addPeopleAction
+                text: i18n.tr("Discover People")
+                iconName: "\uebdf"
+                onTriggered: {
+                    pageLayout.pushToCurrent(searchpage, Qt.resolvedUrl("DiscoverPeoplePage.qml"))
+                }
+            }
+        ]
         contents: TextField {
             id: searchInput
             anchors {
                 left: parent.left
                 right: parent.right
+                rightMargin: units.gu(1)
                 verticalCenter: parent.verticalCenter
             }
             primaryItem: Icon {
@@ -40,7 +41,7 @@ Page {
             hasClearButton: true
             placeholderText: i18n.tr("Search")
             onAccepted: {
-                instagram.searchUsers(text)
+                instagram.searchUser(text)
                 instagram.searchTags(text)
                 instagram.searchFBLocation(text)
             }
@@ -74,6 +75,8 @@ Page {
             ]
         }
     }
+
+    property bool firstOpen: true
 
     property int current_search_section: 0
 
@@ -120,7 +123,7 @@ Page {
 
     WorkerScript {
         id: worker
-        source: "../js/Worker.js"
+        source: "../js/TimelineWorker.js"
         onMessage: {
             console.log(msg)
         }
@@ -135,13 +138,6 @@ Page {
             clear_models = true;
         }
         instagram.getPopularFeed(next_id);
-    }
-
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: searchpage.header.bottom
-        visible: instagram.busy || list_loading
     }
 
     ListModel {
@@ -188,9 +184,15 @@ Page {
             Repeater {
                 model: popularFeedModel
 
-                GridFeedDelegate {
+                Loader {
+                    asynchronous: true
                     width: (gridView.width-units.gu(0.1))/3
                     height: width
+                    sourceComponent: GridFeedDelegate {
+                        currentDelegatePage: searchpage
+                        width: parent.width
+                        height: parent.height
+                    }
                 }
             }
         }
@@ -234,7 +236,7 @@ Page {
                 height: layout.height
                 divider.visible: false
                 onClicked: {
-                    pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk});
+                    pageLayout.pushToCurrent(searchpage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk});
                 }
 
                 SlotsLayout {
@@ -246,35 +248,9 @@ Page {
                     padding.top: units.gu(1)
                     padding.bottom: units.gu(1)
 
-                    mainSlot: Row {
+                    mainSlot: UserRowSlot {
                         id: label
-                        spacing: units.gu(1)
                         width: parent.width - followButton.width
-
-                        CircleImage {
-                            width: units.gu(5)
-                            height: width
-                            source: profile_pic_url
-                        }
-
-                        Column {
-                            width: parent.width - units.gu(6)
-                            anchors.verticalCenter: parent.verticalCenter
-
-                            Text {
-                                text: username
-                                wrapMode: Text.WordWrap
-                                font.weight: Font.DemiBold
-                                width: parent.width
-                            }
-
-                            Text {
-                                text: full_name
-                                wrapMode: Text.WordWrap
-                                width: parent.width
-                                textFormat: Text.RichText
-                            }
-                        }
                     }
 
                     FollowComponent {
@@ -308,7 +284,7 @@ Page {
                 height: layout.height
                 divider.visible: false
                 onClicked: {
-                    pageStack.push(Qt.resolvedUrl("TagFeedPage.qml"), {tag: name});
+                    pageLayout.pushToCurrent(searchpage, Qt.resolvedUrl("TagFeedPage.qml"), {tag: name});
                 }
 
                 SlotsLayout {
@@ -346,6 +322,7 @@ Page {
                                 wrapMode: Text.WordWrap
                                 font.weight: Font.DemiBold
                                 width: parent.width
+                                color: styleApp.common.textColor
                             }
 
                             Text {
@@ -353,6 +330,7 @@ Page {
                                 wrapMode: Text.WordWrap
                                 width: parent.width
                                 textFormat: Text.RichText
+                                color: styleApp.common.textColor
                             }
                         }
                     }
@@ -376,7 +354,7 @@ Page {
                 height: layout.height
                 divider.visible: false
                 onClicked: {
-                    pageStack.push(Qt.resolvedUrl("LocationFeedPage.qml"), {locationId: location.pk, locationName: title});
+                    pageLayout.pushToCurrent(searchpage, Qt.resolvedUrl("LocationFeedPage.qml"), {locationId: location.pk, locationName: title});
                 }
 
                 SlotsLayout {
@@ -414,6 +392,7 @@ Page {
                                 wrapMode: Text.WordWrap
                                 font.weight: Font.DemiBold
                                 width: parent.width
+                                color: styleApp.common.textColor
                             }
 
                             Text {
@@ -421,6 +400,7 @@ Page {
                                 wrapMode: Text.WordWrap
                                 width: parent.width
                                 textFormat: Text.RichText
+                                color: styleApp.common.textColor
                             }
                         }
                     }
@@ -435,7 +415,7 @@ Page {
             var data = JSON.parse(answer);
             popularFeedDataFinished(data);
         }
-        onSearchUsersDataReady: {
+        onSearchUserDataReady: {
             var data = JSON.parse(answer);
             searchUsersDataFinished(data);
         }

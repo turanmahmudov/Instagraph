@@ -1,11 +1,10 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
 
-Rectangle {
+Item {
     property var suggestionsModel
 
     height: suggestions_column.height + units.gu(6)
-    color: "#fbfbfb"
 
     Column {
         id: suggestions_column
@@ -54,7 +53,7 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            pageStack.push(Qt.resolvedUrl("../ui/SuggestionsPage.qml"));
+                            pageLayout.pushToNext(currentDelegatePage, Qt.resolvedUrl("../ui/SuggestionsPage.qml"));
                         }
                     }
                 }

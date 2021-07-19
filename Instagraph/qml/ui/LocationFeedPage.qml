@@ -1,6 +1,6 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 
 import "../components"
 
@@ -8,13 +8,13 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+PageItem {
     id: locationfeedpage
 
     property var locationId
     property string locationName: ""
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: locationName
     }
 
@@ -45,7 +45,7 @@ Page {
 
     WorkerScript {
         id: worker
-        source: "../js/Worker.js"
+        source: "../js/TimelineWorker.js"
         onMessage: {
             console.log(msg)
         }
@@ -63,13 +63,6 @@ Page {
             clear_models = true
         }
         instagram.getLocationFeed(location_id, next_id);
-    }
-
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: locationfeedpage.header.bottom
-        visible: instagram.busy || list_loading
     }
 
     ListModel {
@@ -98,6 +91,7 @@ Page {
         model: locationFeedPhotosModel
         delegate: ListFeedDelegate {
             id: homePhotosDelegate
+            currentDelegatePage: locationfeedpage
             thismodel: locationFeedPhotosModel
         }
         PullToRefresh {

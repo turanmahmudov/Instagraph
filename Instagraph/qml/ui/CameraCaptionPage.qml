@@ -1,8 +1,8 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 import Ubuntu.Content 1.1
-import QtMultimedia 5.4
+import QtMultimedia 5.12
 import Ubuntu.Components.ListItems 1.3 as ListItem
 
 import "../components"
@@ -11,7 +11,7 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+PageItem {
     id: cameracaptionpage
 
     property var imagePath
@@ -28,7 +28,7 @@ Page {
                 text: i18n.tr("Back")
                 iconName: "back"
                 onTriggered: {
-                    pageStack.pop();
+                    pageLayout.pop();
                 }
             }
         ]
@@ -44,13 +44,6 @@ Page {
             }
 
         ]
-    }
-
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: cameracaptionpage.header.bottom
-        visible: false
     }
 
     Column {
@@ -135,7 +128,7 @@ Page {
             width: parent.width
             showDivider: true
             onClicked: {
-                var searchLocationPage = pageStack.push(Qt.resolvedUrl("SearchLocation.qml"));
+                var searchLocationPage = pageLayout.push(Qt.resolvedUrl("SearchLocation.qml"));
 
                 searchLocationPage.locationSelected.connect(function(location) {
                     locationVar = location;
@@ -216,11 +209,11 @@ Page {
             pageStack.pop();
             pageStack.pop();
             pageStack.pop();
-            pageStack.push(tabs);
+            pageLayout.push(tabs);
 
             var data = JSON.parse(answer);
 
-            pageStack.push(Qt.resolvedUrl("SinglePhoto.qml"), {photoId: data.media.id});
+            pageLayout.push(Qt.resolvedUrl("SinglePhoto.qml"), {photoId: data.media.id});
         }
         onImageUploadProgressDataReady: {
             //console.log(answer);

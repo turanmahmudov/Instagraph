@@ -21,6 +21,13 @@ WorkerScript.onMessage = function(msg) {
             if (typeof obj[i].media == 'undefined') {
                 continue;
             }
+
+            obj[i].pk = obj[i].media.user.pk
+            obj[i].user_id = obj[i].media.user.pk
+            obj[i].username = obj[i].media.user.username
+            obj[i].full_name = obj[i].media.user.full_name
+            obj[i].profile_pic_url = obj[i].media.user.profile_pic_url
+            obj[i].friendship_status = obj[i].media.user.friendship_status
         }
 
         if (feed == 'ShareMediaPage') {

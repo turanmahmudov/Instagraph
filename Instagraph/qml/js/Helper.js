@@ -1,18 +1,21 @@
 function formatString(string)
 {
+    var textColor = hexToRgb(styleApp.common.linkColor)
+
     //var user_reg = "/@(\w*)/g";
     var user_reg = "/@([a-zA-Z0-9._]*)/g"
     var tag_reg = "/#(\S*)/g"
 
-    string = string.replace(/@([a-zA-Z0-9._]*)/g,'<a href="user://$1" style="text-decoration:none;color:rgb(0,53,105);">@$1</a>');
-    string = string.replace(/#(\S*)/g,'<a href="tag://$1" style="text-decoration:none;color:rgb(0,53,105);">#$1</a>');
+    string = string.replace(/@([a-zA-Z0-9._]*)/g,'<a href="user://$1" style="text-decoration:none;color:'+textColor+';">@$1</a>');
+    string = string.replace(/#(\S*)/g,'<a href="tag://$1" style="text-decoration:none;color:'+textColor+';">#$1</a>');
 
     return string;
 }
 
 function formatUser(string)
 {
-    return '<a href="user://'+string+'" style="text-decoration:none;font-weight:500;color:rgb(0,0,0);">'+string+'</a>';
+    var textColor = styleApp.common.textColor
+    return '<a href="user://'+string+'" style="text-decoration:none;font-weight:500;color:'+textColor+';">'+string+'</a>';
 }
 
 function makeLink(string)
@@ -79,6 +82,26 @@ function milisecondsToString(miliseconds, short, timestamp) {
     }
 }
 
+function numFormatter(num, digits) {
+  var si = [
+    { value: 1, symbol: "" },
+    { value: 1E3, symbol: "K" },
+    { value: 1E6, symbol: "M" },
+    { value: 1E9, symbol: "G" },
+    { value: 1E12, symbol: "T" },
+    { value: 1E15, symbol: "P" },
+    { value: 1E18, symbol: "E" }
+  ];
+  var rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+  var i;
+  for (i = si.length - 1; i > 0; i--) {
+    if (num >= si[i].value) {
+      break;
+    }
+  }
+  return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
+}
+
 function toObject(arr) {
     var rv = {};
     for (var i = 0; i < arr.length; ++i)
@@ -94,4 +117,9 @@ function objectLength(obj) {
     }
   }
   return result;
+}
+
+function hexToRgb(hex) {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? "rgb("+parseInt(result[1], 16)+","+parseInt(result[2], 16)+","+parseInt(result[3], 16)+")" : null;
 }

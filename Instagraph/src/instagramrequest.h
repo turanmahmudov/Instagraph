@@ -22,11 +22,9 @@ private:
     QString API_URL             = "https://i.instagram.com/api/v1/";
     QString API_URL2            = "https://i.instagram.com/api/v2/";
 
-    QString C_USER_AGENT        = "Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_3 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13G34 Instagram 8.5.2 (iPhone5,2; iPhone OS 9_3_3; es_ES; es-ES; scale=2.00; 640x1136)";
-
     // New
-    QString USER_AGENT          = "Instagram 85.0.0.21.100 Android (24/7.0; 640dpi; 1440x2560; HUAWEI; LON-L29; HWLON; hi3660)";
-    QString IG_SIG_KEY          = "937463b5272b5d60e9d20f0f8d7d192193dd95095a3ad43725d494300a5ea5fc";
+    QString USER_AGENT          = "Instagram 24.0.0.12.201 Android (10/29; 560dpi; 2759x1440; SM-N975F; samsung; samsung; d2s; en_US)";
+    QString IG_SIG_KEY          = "109513c04303341a7daf27bb41b268e633b30dcc65a3fe14503f743176113869";
 
     QString SIG_KEY_VERSION     = "4";
     QString X_IG_CAPABILITIES   = "3brTvw==";

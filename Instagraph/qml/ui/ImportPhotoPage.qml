@@ -14,17 +14,19 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
 import Ubuntu.Content 1.3
 
-Page {
+import "../components"
+
+PageItem {
     id: picker
 
     signal cancel()
     signal imported(var fileUrl)
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: i18n.tr("Choose from")
     }
 

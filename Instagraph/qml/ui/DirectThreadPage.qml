@@ -1,6 +1,6 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 
 import "../components"
 
@@ -8,7 +8,7 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+PageItem {
     id: directthreadpage
 
     property bool list_loading: false
@@ -24,7 +24,7 @@ Page {
 
     property bool firstLoad: true
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: i18n.tr("Direct")
     }
 
@@ -39,7 +39,7 @@ Page {
             // Mark Direct Thread Item Seen
             var thId = data.thread.thread_id;
             var thItemId = data.thread.items[0].item_id;
-            instagram.markDirectThreadItemSeen(thId, thItemId);
+            instagram.markThreadSeen(thId, thItemId);
         }
 
         if (next_oldest_cursor_id == data.thread.oldest_cursor) {
@@ -97,7 +97,7 @@ Page {
             clear_models = true
         }
         list_loading = true
-        instagram.directThread(threadId, oldest_cursor_id);
+        instagram.getDirectThread(threadId, oldest_cursor_id);
     }
 
     function sendMessage(text)
@@ -124,13 +124,6 @@ Page {
         instagram.directLike(recip_string, threadId);
     }
 
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: directthreadpage.header.bottom
-        visible: instagram.busy || list_loading
-    }
-
     ListModel {
         id: directThreadModel
         dynamicRoles: true
@@ -152,15 +145,15 @@ Page {
         }
         verticalLayoutDirection: ListView.BottomToTop
         clip: true
-        cacheBuffer: parent.height*2
+        cacheBuffer: parent.height
         model: directThreadModel
         delegate: ListItem {
             id: directThreadDelegate
             divider.visible: false
             height: layout.height
 
-            property bool outgoing_message: user_id == my_usernameId || (user_id != my_usernameId && item_type == "action_log")
-            property bool show_user_image: (user_id != my_usernameId && index == 0) || (user_id != my_usernameId && index != 0 && directThreadModel.get(index-1).user_id != user_id)
+            property bool outgoing_message: user_id == activeUsernameId || (user_id != activeUsernameId && item_type == "action_log")
+            property bool show_user_image: (user_id != activeUsernameId && index == 0) || (user_id != activeUsernameId && index != 0 && directThreadModel.get(index-1).user_id != user_id)
 
             SlotsLayout {
                 id: layout
@@ -179,10 +172,12 @@ Page {
 
                     Loader {
                         id: messageLoader
+                        asynchronous: true
                         sourceComponent: item_type == "text" ? textMessageComponent :
                                                             item_type == "like" ? likeMessageComponent :
                                                             item_type == "media" ? mediaMessageComponent :
                                                             item_type == "media_share" ? mediaShareMessageComponent :
+                                                            item_type == "raven_media" ? ravenMediaMessageComponent :
                                                             item_type == "reel_share" ? reelShareMessageComponent :
                                                             item_type == "story_share" ? storyShareMessageComponent :
                                                             item_type == "action_log" ? actionLogMessageComponent :
@@ -197,17 +192,16 @@ Page {
                         Rectangle {
                             width: myText.width + units.gu(3)
                             height: myText.height + units.gu(2.5)
-                            color: outgoing_message ? Qt.lighter(UbuntuColors.lightGrey, 1.2) : "#ffffff"
+                            color: outgoing_message ? styleApp.directInbox.outgoingMessageBackgroundColor : styleApp.directInbox.incomingMessageBackgroundColor
                             radius: units.gu(2)
-                            border.width: units.gu(0.1)
-                            border.color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
 
                             Label {
                                 id: myText
                                 wrapMode: Text.WordWrap
-                                width: Math.min(contentWidth, label.width*3/4)
+                                width: Math.min(myText.implicitWidth, label.width*3/4)
                                 anchors.centerIn: parent
                                 text: ctext
+                                color: outgoing_message ? styleApp.directInbox.outgoingMessageTextColor : styleApp.directInbox.incomingMessageTextColor
                             }
                         }
                     }
@@ -238,6 +232,49 @@ Page {
                             clip: true
                         }
                     }
+
+                    // Raven Media
+                    Component {
+                        id: ravenMediaMessageComponent
+
+                        Loader {
+                            active: true
+                            sourceComponent: typeof visual_media != 'undefined' ? ravenMediaImageComponent : ravenMediaNoVisualComponent
+                        }
+                    }
+                    Component {
+                        id: ravenMediaImageComponent
+
+                        Image {
+                            width: label.width*3/4
+                            height: width/visual_media.media.image_versions2.candidates[0].width*visual_media.media.image_versions2.candidates[0].height
+                            source: visual_media.media.image_versions2.candidates[0].url
+                            fillMode: Image.PreserveAspectCrop
+                            sourceSize: Qt.size(width,height)
+                            smooth: true
+                            clip: true
+                        }
+                    }
+                    Component {
+                        id: ravenMediaNoVisualComponent
+
+                        Rectangle {
+                            width: myText.width + units.gu(3)
+                            height: myText.height + units.gu(2.5)
+                            color: outgoing_message ? styleApp.directInbox.outgoingMessageBackgroundColor : styleApp.directInbox.incomingMessageBackgroundColor
+                            radius: units.gu(2)
+
+                            Label {
+                                id: myText
+                                wrapMode: Text.WordWrap
+                                width: Math.min(myText.implicitWidth, label.width*3/4)
+                                anchors.centerIn: parent
+                                text: raven_media.media_type == 2 ? i18n.tr("Video") : i18n.tr("Image")
+                                color: outgoing_message ? styleApp.directInbox.outgoingMessageTextColor : styleApp.directInbox.incomingMessageTextColor
+                            }
+                        }
+                    }
+
 
                     // Media Share
                     Component {
@@ -282,7 +319,7 @@ Page {
                                                     fill: parent
                                                 }
                                                 onClicked: {
-                                                    pageStack.push(Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: media_share.user.pk});
+                                                    pageLayout.pushToCurrent(directthreadpage, Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: media_share.user.pk});
                                                 }
                                             }
                                         }
@@ -304,7 +341,7 @@ Page {
                                                         fill: parent
                                                     }
                                                     onClicked: {
-                                                        pageStack.push(Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: media_share.user.pk});
+                                                        pageLayout.pushToCurrent(directthreadpage, Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: media_share.user.pk});
                                                     }
                                                 }
                                             }
@@ -349,7 +386,7 @@ Page {
                                 Label {
                                     id: myMediaShareText
                                     wrapMode: Text.WordWrap
-                                    width: Math.min(contentWidth, label.width*3/4)
+                                    width: Math.min(myMediaShareText.implicitWidth, label.width*3/4)
                                     anchors.centerIn: parent
                                     text: typeof media_share.text != 'undefined' ? media_share.text : ''
                                 }
@@ -452,7 +489,7 @@ Page {
                                 Label {
                                     id: myReelText
                                     wrapMode: Text.WordWrap
-                                    width: Math.min(contentWidth, label.width*3/4)
+                                    width: Math.min(myReelText.implicitWidth, label.width*3/4)
                                     anchors.centerIn: parent
                                     text: typeof reel_share.text != 'undefined' && reel_share.text != '' ? reel_share.text : ''
                                 }
@@ -579,7 +616,7 @@ Page {
                                             wrapMode: Text.WordWrap
                                             textFormat: Text.RichText
                                             onLinkActivated: {
-                                                Scripts.linkClick(link)
+                                                Scripts.linkClick(directthreadpage, link)
                                             }
 
                                             horizontalAlignment: Text.AlignRight
@@ -628,7 +665,7 @@ Page {
                                 Label {
                                     id: myStoryText
                                     wrapMode: Text.WordWrap
-                                    width: Math.min(contentWidth, label.width*3/4)
+                                    width: Math.min(myStoryText.implicitWidth, label.width*3/4)
                                     anchors.centerIn: parent
                                     text: typeof story_share.text != 'undefined' && story_share.text != '' ? story_share.text : ''
                                 }
@@ -663,7 +700,7 @@ Page {
                                 anchors.verticalCenter: parent.verticalCenter
                                 width: units.gu(2)
                                 height: width
-                                source: user_id != my_usernameId ? threadUsers[user_id].profile_pic_url : ''
+                                source: user_id != activeUsernameId ? threadUsers[user_id].profile_pic_url : ''
                             }
                         }
                     }
@@ -705,7 +742,7 @@ Page {
                                     textFormat: Text.RichText
                                     font.weight: Font.DemiBold
                                     onLinkActivated: {
-                                        Scripts.linkClick(link)
+                                        Scripts.linkClick(directthreadpage, link)
                                     }
                                 }
 
@@ -764,21 +801,23 @@ Page {
                                 anchors.centerIn: parent
 
                                 Label {
+                                    id: placeholderText
                                     text: placeholder.title
                                     fontSize: "small"
                                     font.weight: Font.DemiBold
                                     color: UbuntuColors.darkGrey
                                     wrapMode: Text.WordWrap
-                                    width: Math.min(contentWidth, label.width*3/4)
+                                    width: Math.min(placeholderText.implicitWidth, label.width*3/4)
                                 }
 
                                 Label {
+                                    id: placeholderMessage
                                     text: placeholder.message
                                     fontSize: "small"
                                     color: UbuntuColors.darkGrey
                                     font.weight: Font.Light
                                     wrapMode: Text.WordWrap
-                                    width: Math.min(contentWidth, label.width*3/4)
+                                    width: Math.min(placeholderMessage.implicitWidth, label.width*3/4)
                                 }
                             }
                         }
@@ -796,10 +835,11 @@ Page {
                         visible: show_user_image
                         width: parent.width
                         height: width
-                        source: user_id != my_usernameId ? threadUsers[user_id].profile_pic_url : ''
+                        source: user_id != activeUsernameId ? threadUsers[user_id].profile_pic_url : ''
                     }
 
                     anchors.bottom: parent.bottom
+
                     SlotsLayout.position: SlotsLayout.Leading
                     SlotsLayout.overrideVerticalPositioning: true
                 }
@@ -862,19 +902,22 @@ Page {
 
     Connections{
         target: instagram
-        onDirectThreadReady: {
+        onDirectThreadDataReady: {
+            console.log(answer)
             var data = JSON.parse(answer);
             directThreadFinished(data);
         }
-        onDirectMessageReady: {
+        onDirectMessageDataReady: {
             var data = JSON.parse(answer);
             messagePostedFinished(data);
         }
-        onDirectLikeReady: {
+        onDirectLikeDataReady: {
+            console.log(answer);
+
             var data = JSON.parse(answer);
             likePostedFinished(data);
         }
-        onMarkDirectThreadItemSeenReady: {
+        onMarkThreadSeenDataReady: {
 
         }
     }

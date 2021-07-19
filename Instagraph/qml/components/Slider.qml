@@ -16,7 +16,7 @@
 
 // FIXME(loicm) Add support for keyboard shortcuts (basically left/right).
 
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3 as Toolkit
 
 // [InstantFX] Custom Slider, which implements single steps on click, instead of positioning

@@ -1,6 +1,6 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 import QtPositioning 5.2
 
 import "../components"
@@ -9,7 +9,7 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+PageItem {
     id: searchlocationpage
 
     property var coord: {'latitude':positionSource.position.coordinate.latitude, 'longitude':positionSource.position.coordinate.longitude}
@@ -26,7 +26,7 @@ Page {
         }
     }
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: i18n.tr("Search")
         contents: TextField {
             id: searchInput
@@ -60,17 +60,10 @@ Page {
 
     WorkerScript {
         id: worker
-        source: "../js/Worker.js"
+        source: "../js/TimelineWorker.js"
         onMessage: {
             console.log(msg)
         }
-    }
-
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: searchlocationpage.header.bottom
-        visible: instagram.busy
     }
 
     ListModel {

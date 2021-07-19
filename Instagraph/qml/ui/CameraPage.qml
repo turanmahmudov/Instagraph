@@ -1,8 +1,8 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 import Ubuntu.Content 1.1
-import QtMultimedia 5.6
+import QtMultimedia 5.12
 
 import "../components"
 
@@ -10,22 +10,22 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+PageItem {
     id: takephotopage
 
     property int takePhotoMode: functionSelector.selectedIndex
 
     property var imagePath
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: functionSelector.selectedIndex == 1 ? i18n.tr("Photo") : i18n.tr("Video")
-        leadingActionBar.actions: [
+        leadingActions: [
             Action {
                 id: closePageAction
                 text: i18n.tr("Close")
-                iconName: "close"
+                iconName: "\uea63"
                 onTriggered: {
-                    pageStack.pop();
+                    pageLayout.removePages(takephotopage);
                 }
             }
         ]
@@ -193,11 +193,10 @@ Page {
 
             onSelectedIndexChanged: {
                 if (selectedIndex == 0) {
-                    var importPage = pageStack.push(Qt.resolvedUrl("ImportPhotoPage.qml"))
+                    var importPage = pageLayout.pushToCurrent(takephotopage, Qt.resolvedUrl("ImportPhotoPage.qml"))
 
                     importPage.imported.connect(function(fileUrl) {
-                        //console.log("File" << fileUrl << "has been imported!")
-                        Scripts.pushImageCrop(fileUrl)
+                        Scripts.pushImageCrop(takephotopage, fileUrl)
                     })
                 }
             }
@@ -213,7 +212,7 @@ Page {
             instagram.scaleImg(String(imagePath).replace('file://', ''));
         }
         onImgScaled: {
-            Scripts.pushImageEdit(imagePath)
+            Scripts.pushImageEdit(takephotopage, imagePath)
         }
     }
 }

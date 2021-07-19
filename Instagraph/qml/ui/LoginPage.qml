@@ -1,56 +1,31 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
-import QtGraphicalEffects 1.0
-import Ubuntu.Components.Styles 1.3
+import QtQuick.LocalStorage 2.12
 
 import "../components"
 
 import "../js/Storage.js" as Storage
 
-Page {
+PageItem {
     id: loginpage
 
-    header: PageHeader {
-        StyleHints {
-            dividerColor: "transparent"
-        }
-        trailingActionBar {
-            numberOfSlots: 1
-            delegate: AbstractButton {
-                id: button
-                action: modelData
-                height: parent.height
-                width: height
-                Icon {
-                    anchors.centerIn: parent
-                    width: units.gu(2)
-                    height: width
-                    name: iconName
-                    color: "#ffffff"
+    header: PageHeaderItem {
+        noBackAction: true
+        trailingActions: [
+            Action {
+                text: i18n.tr("Close")
+                iconName: "\ueab0"
+                onTriggered: {
+                    Qt.quit();
                 }
             }
-            actions: [
-                Action {
-                    iconName: "close"
-                    text: i18n.tr("Close")
-                    onTriggered: {
-                        Qt.quit();
-                    }
-                }
-            ]
-        }
+        ]
     }
 
     Component.onCompleted: {
         anchorToKeyboard = false
-    }
 
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: parent.top
-        visible: instagram.busy
+        loading.visible = false
     }
 
     Column {
@@ -61,18 +36,18 @@ Page {
         width: parent.width
         spacing: units.gu(2)
 
-        Label {
+        Image {
             anchors.horizontalCenter: parent.horizontalCenter
-            text: "Instagraph"
-            wrapMode: Text.WordWrap
-            font.weight: Font.Bold
-            fontSize: "x-large"
-            textFormat: Text.RichText
+            width: units.gu(15)
+            height: units.gu(5)
+            fillMode: Image.PreserveAspectFit
+            sourceSize: Qt.size(width, height)
+            source: Qt.resolvedUrl("../../instagraph_title.png")
         }
 
         Item {
             width: parent.width
-            height: units.gu(2)
+            height: units.gu(1)
         }
 
         TextField {
@@ -101,20 +76,72 @@ Page {
             width: parent.width*0.8
             height: units.gu(5)
             anchors.horizontalCenter: parent.horizontalCenter
-            color: UbuntuColors.green
+            color: UbuntuColors.blue
             text: i18n.tr("Log In")
             onTriggered: {
                 if(usernameField.text && passwordField.text) {
-                    instagram.setUsername(usernameField.text);
-                    instagram.setPassword(passwordField.text);
+                    tmpUsername = usernameField.text
+                    tmpPassword = passwordField.text
+
+                    instagram.setUsername(tmpUsername);
+                    instagram.setPassword(tmpPassword);
+
                     instagram.login(true);
                 }
             }
         }
 
-        Item {
+        Column {
+            property bool savedAccounts: Storage.getAccounts().length > 0
+
             width: parent.width
-            height: units.gu(2)
+            height: savedAccounts ? units.gu(10) : 0
+            visible: savedAccounts
+            spacing: units.gu(1)
+
+            Item {
+                width: parent.width
+                height: units.gu(4)
+
+                Rectangle {
+                    anchors.centerIn: parent
+                    width: parent.width
+                    height: units.gu(0.1)
+                    color: UbuntuColors.ash
+                }
+
+                Rectangle {
+                    anchors.centerIn: parent
+                    width: orText.width + units.gu(3)
+                    height: orText.height
+                    color: styleApp.mainView.backgroundColor
+
+                    Label {
+                        id: orText
+                        anchors.centerIn: parent
+                        text: i18n.tr("OR")
+                        font.weight: Font.DemiBold
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                pageLayout.addPageToCurrentColumn(pageLayout.primaryPage, Qt.resolvedUrl("RegisterPage.qml"))
+                            }
+                        }
+                    }
+                }
+            }
+
+            Button {
+                width: parent.width*0.8
+                height: units.gu(5)
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: UbuntuColors.blue
+                text: i18n.tr("Log In with Saved Accounts")
+                onTriggered: {
+                    bottomEdge.commit()
+                }
+            }
         }
 
         Label {
@@ -126,8 +153,8 @@ Page {
 
     Column {
         width: parent.width
-        anchors.bottom: parent.bottom
         height: units.gu(7)
+        anchors.bottom: parent.bottom
 
         Rectangle {
             width: parent.width
@@ -141,48 +168,53 @@ Page {
 
             Label {
                 anchors.centerIn: parent
+                width: parent.width
                 text: i18n.tr("Don't have an account? <b>Sign Up</b>.")
                 wrapMode: Text.WordWrap
                 textFormat: Text.RichText
+                horizontalAlignment: Text.AlignHCenter
 
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        pageStack.push(Qt.resolvedUrl("RegisterPage.qml"));
+                        pageLayout.addPageToCurrentColumn(pageLayout.primaryPage, Qt.resolvedUrl("RegisterPage.qml"))
                     }
                 }
             }
         }
-
     }
 
-    Connections{
-        target: instagram
-        onProfileConnected:{
-            console.log('loginned')
-            Storage.set("password", passwordField.text);
-            Storage.set("username",usernameField.text)
-            pageStack.push(tabs);
-            anchorToKeyboard = true
-            loginPageIsActive = true
+    BottomEdge {
+        id: bottomEdge
+        height: parent.height/2
+        hint.visible: false
+        preloadContent: true
+        contentComponent: MultipleAccountsSwitcher {
+            width: bottomEdge.width
+            height: bottomEdge.height
         }
-        onTwoFactorRequired:{
-            Storage.set("password", passwordField.text);
-            Storage.set("username",usernameField.text)
-            pageStack.push(Qt.resolvedUrl("2FactorLoginPage.qml"), {answer: answer});
-            anchorToKeyboard = true
-            loginPageIsActive = false
+        onCommitCompleted: {
+            bottomEdge.contentItem.init()
         }
     }
 
     Connections{
         target: instagram
-        onProfileConnectedFail:{
-            console.log('login failed')
+        onProfileConnected: {
+            console.log('LOGIN COMPLETED')
+        }
+        onTwoFactorRequired: {
+            console.log('2FACTOR REQUIRED ON LOGIN')
+        }
+        onProfileConnectedFail: {
+            console.log('LOGIN FAILED')
         }
         onError:{
             console.log(message);
             errorTextLabel.text = message;
+        }
+        onChallengeRequired: {
+            var challengeUrl = answer["url"]
         }
     }
 }

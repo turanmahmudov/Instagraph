@@ -1,24 +1,13 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
 
-Page {
+import "../components"
+
+PageItem {
     id: aboutPage
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: i18n.tr("About")
-        trailingActionBar {
-            numberOfSlots: 1
-            actions: [
-                Action {
-                    id: donateAction
-                    text: i18n.tr("Donate")
-                    iconName: "like"
-                    onTriggered: {
-                        Qt.openUrlExternally("https://liberapay.com/turanmahmudov")
-                    }
-                }
-            ]
-        }
     }
 
     Column {
@@ -49,7 +38,7 @@ Page {
             Label {
                 width: parent.width
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "<b>Instagraph</b> " + current_version
+                text: "<b>Instagraph</b> 0.1"
                 fontSize: "large"
                 horizontalAlignment: Text.AlignHCenter
             }
@@ -78,7 +67,7 @@ Page {
                 width: parent.width
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter
-                linkColor: UbuntuColors.blue
+                linkColor: styleApp.common.linkColor
                 fontSize: "small"
                 onLinkActivated: Qt.openUrlExternally(link)
             }
@@ -97,7 +86,7 @@ Page {
             width: parent.width
             wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
-            linkColor: UbuntuColors.blue
+            linkColor: styleApp.common.linkColor
             fontSize: "small"
             onLinkActivated: Qt.openUrlExternally(link)
         }

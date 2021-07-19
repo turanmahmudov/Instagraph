@@ -1,6 +1,6 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 import QtGraphicalEffects 1.0
 import Ubuntu.Components.Styles 1.3
 
@@ -10,64 +10,13 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+PageItem {
     id: registerpage
 
-    header: PageHeader {
-        StyleHints {
-            backgroundColor: "transparent"
-            dividerColor: "transparent"
-        }
-        leadingActionBar {
-            numberOfSlots: 1
-            delegate: AbstractButton {
-                id: button
-                action: modelData
-                height: parent.height
-                width: height
-                Icon {
-                    anchors.centerIn: parent
-                    width: units.gu(2)
-                    height: width
-                    name: iconName
-                    color: "#ffffff"
-                }
-            }
-            actions: [
-                Action {
-                    iconName: "back"
-                    text: i18n.tr("Back")
-                    onTriggered: {
-                        pageStack.pop()
-                    }
-                }
-            ]
-        }
-    }
+    header: PageHeaderItem {}
 
     Component.onCompleted: {
         anchorToKeyboard = false
-    }
-
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: parent.top
-        visible: instagram.busy
-    }
-
-    Rectangle {
-        anchors.fill: parent
-
-        LinearGradient {
-            anchors.fill: parent
-            start: Qt.point(0, 0)
-            end: Qt.point(parent.width, 0)
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "#7451A9" }
-                GradientStop { position: 1.0; color: "#2270C0" }
-            }
-        }
     }
 
     Column {
@@ -78,19 +27,18 @@ Page {
         width: parent.width
         spacing: units.gu(2)
 
-        Label {
+        Image {
             anchors.horizontalCenter: parent.horizontalCenter
-            text: "Instagraph"
-            wrapMode: Text.WordWrap
-            font.weight: Font.Bold
-            fontSize: "large"
-            textFormat: Text.RichText
-            color: "#ffffff"
+            width: units.gu(15)
+            height: units.gu(5)
+            fillMode: Image.PreserveAspectFit
+            sourceSize: Qt.size(width, height)
+            source: Qt.resolvedUrl("../../instagraph_title.png")
         }
 
         Item {
             width: parent.width
-            height: units.gu(2)
+            height: units.gu(1)
         }
 
         TextField {
@@ -104,10 +52,6 @@ Page {
                     forceActiveFocus()
                 }
             }
-            StyleHints {
-                backgroundColor: "#EAE9E7"
-                borderColor: "transparent"
-            }
         }
 
         TextField {
@@ -116,10 +60,6 @@ Page {
             height: units.gu(5)
             anchors.horizontalCenter: parent.horizontalCenter
             placeholderText: i18n.tr("Username")
-            StyleHints {
-                backgroundColor: "#EAE9E7"
-                borderColor: "transparent"
-            }
         }
 
         TextField {
@@ -129,17 +69,13 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             echoMode: TextInput.Password
             placeholderText: i18n.tr("Password")
-            StyleHints {
-                backgroundColor: "#EAE9E7"
-                borderColor: "transparent"
-            }
         }
 
         Button {
             width: parent.width*0.8
             height: units.gu(5)
             anchors.horizontalCenter: parent.horizontalCenter
-            color: "#EAE9E7"
+            color: UbuntuColors.blue
             text: i18n.tr("Sign Up")
             onTriggered: {
                 if(usernameField.text && passwordField.text && emailField.text) {
@@ -157,7 +93,7 @@ Page {
         Rectangle {
             width: parent.width
             height: units.gu(0.08)
-            color: Qt.rgba(234,233,231,0.2)
+            color: UbuntuColors.ash
         }
 
         Item {
@@ -169,17 +105,15 @@ Page {
                 text: i18n.tr("Already have an account? <b>Log In</b>.")
                 wrapMode: Text.WordWrap
                 textFormat: Text.RichText
-                color: "#EAE9E7"
 
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        pageStack.pop()
+                        pageLayout.removePages(pageLayout.primaryPage)
                     }
                 }
             }
         }
-
     }
 
     Connections{
@@ -187,14 +121,11 @@ Page {
         onCreateAccountDataReady: {
             console.log(answer);
             var data = JSON.parse(answer);
-            if (data.status == "ok") {
-                if (data.account_created == true) {
-                    Storage.set("password", passwordField.text);
-                    Storage.set("username", usernameField.text);
+            if (data.status === "ok") {
+                if (data.account_created === true) {
+                    console.log('REGISTER COMPLETED')
 
-                    Scripts.registered()
-
-                    anchorToKeyboard = true
+                    console.log('TODO: GO TO LOGIN AND ASK TO LOGIN')
                 } else {
                     if (data.errors && data.errors.length > 0) {
 

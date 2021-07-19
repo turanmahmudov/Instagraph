@@ -1,3 +1,13 @@
 {
-  "template": "qmake"
+    "builder": "qmake",
+    "clickable_minimum_required": "6.23.3",
+    "qt_version": "5.12",
+    "dependencies_ppa": [
+    ],
+    "dependencies_target": [
+      "gstreamer1.0-pulseaudio",
+      "gstreamer1.0-libav",
+      "gstreamer1.0-plugins-bad",
+      "gstreamer1.0-plugins-ugly"
+    ]
 }

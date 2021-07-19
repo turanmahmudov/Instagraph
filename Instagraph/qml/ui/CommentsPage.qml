@@ -1,8 +1,8 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 import Ubuntu.Content 1.1
-import QtMultimedia 5.4
+import QtMultimedia 5.12
 
 import "../components"
 
@@ -10,7 +10,7 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+PageItem {
     id: commentspage
 
     property var photoId
@@ -23,24 +23,38 @@ Page {
     property bool list_loading: false
     property bool clear_models: true
 
-    header: PageHeader {
+    property string next_max_id: ""
+    property bool more_available: true
+    property bool next_coming: true
+
+    header: PageHeaderItem {
         title: i18n.tr("Comments")
     }
 
     function mediaCommentsDataFinished(data) {
-        if (typeof data.caption != 'undefined' && data.caption) {
-            data.caption.ctext = typeof data.caption != 'undefined' && data.caption ? data.caption.text : ""
-
-            worker.sendMessage({'feed': 'CommentsPage', 'obj': [data.caption], 'model': mediaCommentsModel, 'clear_model': clear_models})
+        if (next_max_id == data.next_max_id) {
+            return false;
         } else {
-            data.caption = '';
+            next_max_id = typeof data.next_min_id != 'undefined' ? data.next_min_id : "";
+            more_available = typeof data.next_min_id != 'undefined'
+            next_coming = true;
 
-            worker.sendMessage({'feed': 'CommentsPage', 'obj': [], 'model': mediaCommentsModel, 'clear_model': clear_models})
+            if (typeof data.caption != 'undefined' && data.caption && mediaCommentsModel.count == 0) {
+                data.caption.ctext = typeof data.caption != 'undefined' && data.caption ? data.caption.text : ""
+
+                worker.sendMessage({'feed': 'CommentsPage', 'obj': [data.caption], 'model': mediaCommentsModel, 'clear_model': clear_models})
+            } else {
+                data.caption = '';
+
+                worker.sendMessage({'feed': 'CommentsPage', 'obj': [], 'model': mediaCommentsModel, 'clear_model': clear_models})
+            }
+
+            commentCaption = data.caption;
+
+            worker.sendMessage({'feed': 'CommentsPage', 'obj': data.comments, 'model': mediaCommentsModel})
+
+            next_coming = false;
         }
-
-        commentCaption = data.caption;
-
-        worker.sendMessage({'feed': 'CommentsPage', 'obj': data.comments, 'model': mediaCommentsModel})
 
         list_loading = false
     }
@@ -69,21 +83,15 @@ Page {
         clear_models = false
         if (!next_id) {
             mediaCommentsModel.clear()
+            next_max_id = ""
             clear_models = true
         }
-        instagram.getMediaComments(photoId);
+        instagram.getComments(photoId, next_id);
     }
 
     function postComment(text)
     {
-        instagram.postComment(photoId, text);
-    }
-
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: commentspage.header.bottom
-        visible: instagram.busy || list_loading
+        instagram.comment(photoId, text);
     }
 
     ListModel {
@@ -99,10 +107,13 @@ Page {
             top: commentspage.header.bottom
         }
         onMovementEnded: {
+            if (atYEnd && more_available && !next_coming) {
+                getMediaComments(next_max_id)
+            }
         }
 
         clip: true
-        cacheBuffer: parent.height*2
+        cacheBuffer: parent.height
         model: mediaCommentsModel
         delegate: ListItem {
             id: mediaCommentsDelegate
@@ -114,7 +125,7 @@ Page {
             leadingActions: ListItemActions {
                 actions: [
                     Action {
-                        visible: user.pk == my_usernameId || mediaUserId == my_usernameId ? true : false
+                        visible: user.pk === activeUsernameId || mediaUserId === activeUsernameId ? true : false
                         iconName: "delete"
                         text: i18n.tr("Remove")
                         onTriggered: {
@@ -128,8 +139,7 @@ Page {
                 Connections {
                     target: instagram
                     onCommentDeleted: {
-                        if (index == last_deleted_media_comment) {
-                            console.log(answer)
+                        if (index === last_deleted_media_comment) {
                             var data = JSON.parse(answer)
 
                             removalAnimation.start()
@@ -190,8 +200,9 @@ Page {
                             wrapMode: Text.WordWrap
                             width: parent.width
                             textFormat: Text.RichText
+                            color: styleApp.common.textColor
                             onLinkActivated: {
-                                Scripts.linkClick(link)
+                                Scripts.linkClick(commentspage, link)
                             }
                         }
 
@@ -202,10 +213,11 @@ Page {
                             Label {
                                 text: Helper.milisecondsToString(created_at)
                                 fontSize: "small"
-                                color: UbuntuColors.darkGrey
+                                color: styleApp.common.text2Color
                                 font.weight: Font.Light
                                 wrapMode: Text.WordWrap
                                 anchors.verticalCenter: parent.verticalCenter
+                                font.capitalization: Font.AllLowercase
                             }
 
                             Label {
@@ -219,7 +231,7 @@ Page {
                             }
 
                             Label {
-                                visible: commentCaption.ctext != ctext
+                                visible: commentCaption.ctext !== ctext
                                 text: i18n.tr("Reply")
                                 fontSize: "small"
                                 font.weight: Font.Normal
@@ -240,13 +252,13 @@ Page {
 
                 LikeComponent {
                     id: comment_like_component
-                    visible: commentCaption.ctext != ctext
-                    width: commentCaption.ctext != ctext ? units.gu(4) : 0
+                    visible: commentCaption.ctext !== ctext
+                    width: commentCaption.ctext !== ctext ? units.gu(4) : 0
                     height: units.gu(5)
                     commentId: pk
                     has_liked: has_liked_c
                     onLikedfinished: {
-                        if (likedCommentId == pk) {
+                        if (likedCommentId === pk) {
                             if (liked) {
                                 comment_like_c = comment_like_c + 1
                                 comment_likes_count.visible = true

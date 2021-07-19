@@ -1,6 +1,6 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 
 import "../components"
 
@@ -8,10 +8,10 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+PageItem {
     id: likedmediapage
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: i18n.tr("Likes")
     }
 
@@ -48,7 +48,7 @@ Page {
 
     WorkerScript {
         id: worker
-        source: "../js/Worker.js"
+        source: "../js/TimelineWorker.js"
         onMessage: {
             console.log(msg)
         }
@@ -67,13 +67,6 @@ Page {
             clear_models = true
         }
         instagram.getLikedMedia(next_id);
-    }
-
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: likedmediapage.header.bottom
-        visible: instagram.busy || list_loading
     }
 
     ListModel {
@@ -100,6 +93,7 @@ Page {
         }
         model: likedMediaModel
         delegate: GridFeedDelegate {
+            currentDelegatePage: likedmediapage
             width: gridView.cellWidth
             height: width
         }
@@ -122,8 +116,7 @@ Page {
             horizontalCenter: parent.horizontalCenter
         }
 
-        icon: true
-        iconName: "stock_image"
+        iconName: "\ueaeb"
 
         description: i18n.tr("No photos or videos yet!")
     }

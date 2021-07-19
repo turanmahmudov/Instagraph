@@ -1,6 +1,6 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 
 import "../components"
 
@@ -22,7 +22,7 @@ Item {
                 likedfinished(true, commentId)
                 has_liked = true
 
-                commentlikeicon.name = "like"
+                commentlikeicon.name = "\ueadf"
                 commentlikeicon.color = UbuntuColors.red
 
                 latest_like_request = 0
@@ -36,22 +36,21 @@ Item {
                 likedfinished(false, commentId)
                 has_liked = false
 
-                commentlikeicon.name = "unlike"
-                commentlikeicon.color = "#000000"
+                commentlikeicon.name = "\ueae1"
+                commentlikeicon.color = styleApp.common.iconActiveColor
 
                 latest_like_request = 0
             }
         }
     }
 
-    Icon {
+    LineIcon {
         id: commentlikeicon
         anchors.centerIn: parent
         anchors.right: parent.right
-        width: units.gu(2)
-        height: width
-        name: has_liked == true ? "like" : "unlike"
-        color: has_liked == true ? UbuntuColors.red : "#000000"
+        name: has_liked === true ? "\ueadf" : "\ueae1"
+        color: has_liked === true ? UbuntuColors.red : styleApp.common.iconActiveColor
+        iconSize: units.gu(2.2)
     }
 
     MouseArea {
@@ -73,7 +72,7 @@ Item {
             var data = JSON.parse(answer);
             commentLikeDataFinished(data)
         }
-        onCommentUnLiked: {
+        onCommentUnliked: {
             var data = JSON.parse(answer);
             commentUnLikeDataFinished(data)
         }

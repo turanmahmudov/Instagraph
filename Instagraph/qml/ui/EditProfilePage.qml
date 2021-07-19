@@ -1,31 +1,28 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 import Ubuntu.Components.Popups 1.3
 
 import "../components"
 
 import "../js/Storage.js" as Storage
 
-Page {
+PageItem {
     id: editprofilepage
 
     property bool changeProfilePictureLoading: false
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: i18n.tr("Edit Profile")
-        trailingActionBar {
-            numberOfSlots: 1
-            actions: [
-                Action {
-                    iconName: "tick"
-                    text: i18n.tr("Save")
-                    onTriggered: {
-                        instagram.editProfile(webField.text, (phoneField.text.replace('+', '')), nameField.text, bioField.text, emailField.text, genderField.selectedIndex == 1 ? true : false);
-                    }
+        trailingActions: [
+            Action {
+                iconName: "\uea55"
+                text: i18n.tr("Save")
+                onTriggered: {
+                    instagram.editProfile(webField.text, (phoneField.text.replace('+', '')), nameField.text, bioField.text, emailField.text, genderField.selectedIndex == 1 ? true : false);
                 }
-            ]
-        }
+            }
+        ]
     }
 
     Component {
@@ -89,7 +86,7 @@ Page {
     }
 
     function changePhotoClicked() {
-        var importPage = pageStack.push(Qt.resolvedUrl("ImportPhotoPage.qml"))
+        var importPage = pageLayout.pushToCurrent(editprofilepage, Qt.resolvedUrl("ImportPhotoPage.qml"))
 
         importPage.imported.connect(function(fileUrl) {
             changeProfilePictureLoading = true
@@ -100,14 +97,7 @@ Page {
     }
 
     Component.onCompleted: {
-        instagram.getProfileData()
-    }
-
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: editprofilepage.header.bottom
-        visible: instagram.busy || changeProfilePictureLoading
+        instagram.getCurrentUser()
     }
 
     Flickable {
@@ -388,7 +378,7 @@ Page {
 
     Connections{
         target: instagram
-        onProfileDataReady: {
+        onCurrentUserDataReady: {
             var data = JSON.parse(answer);
             profileDataFinished(data);
         }
@@ -400,19 +390,19 @@ Page {
         }
         onProfilePictureChanged: {
             changeProfilePictureLoading = false
-            pageStack.clear();
-            pageStack.push(tabs);
-            tabs.selectedTabIndex = 3
+            pageLayout.removePages(userPage)
+            pageLayout.primaryPage = userPage
 
             userPage.getUsernameInfo();
+            userPage.getUsernameFeed();
         }
         onProfilePictureDeleted: {
             changeProfilePictureLoading = false
-            pageStack.clear();
-            pageStack.push(tabs);
-            tabs.selectedTabIndex = 3
+            pageLayout.removePages(userPage)
+            pageLayout.primaryPage = userPage
 
             userPage.getUsernameInfo();
+            userPage.getUsernameFeed();
         }
     }
 }

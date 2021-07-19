@@ -1,6 +1,6 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 
 import "../components"
 
@@ -18,9 +18,9 @@ Item {
     property string followBorderColor: UbuntuColors.green
     property string followIcon: "add"
 
-    property string followingColor: "#000000"
+    property string followingColor: styleApp.common.outlineButtonTextColor
     property string followingBgColor: "transparent"
-    property string followingBorderColor: "#000000"
+    property string followingBorderColor: styleApp.common.outlineButtonBorderColor
     property string followingIcon: "tick"
 
     property string requestedColor: "#ffffff"
@@ -213,7 +213,7 @@ Item {
                 followDataFinished(data);
             }
         }
-        onUnFollowDataReady: {
+        onUnfollowDataReady: {
             if (userId == latest_follow_request) {
                 var data = JSON.parse(answer);
                 followDataFinished(data);

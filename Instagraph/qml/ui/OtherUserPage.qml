@@ -1,6 +1,6 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 import Ubuntu.Components.Popups 1.3
 
 import "../components"
@@ -9,38 +9,35 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+PageItem {
     id: otheruserpage
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: usernameString ? usernameString : ''
-        trailingActionBar {
-            numberOfSlots: 1
-            actions: [
-                Action {
-                    visible: usernameId != my_usernameId
-                    id: userMenuAction
-                    text: i18n.tr("Options")
-                    iconName: "contextual-menu"
-                    onTriggered: {
-                        if (usernameId != my_usernameId) {
-                            PopupUtils.open(userMenuComponent)
-                        } else {
-                            pageStack.push(Qt.resolvedUrl("OptionsPage.qml"));
-                        }
-                    }
-                },
-                Action {
-                    visible: usernameId == my_usernameId
-                    id: settingsAction
-                    text: i18n.tr("Settings")
-                    iconName: "settings"
-                    onTriggered: {
-                        pageStack.push(Qt.resolvedUrl("OptionsPage.qml"));
+        trailingActions: [
+            Action {
+                visible: usernameId != activeUsernameId
+                id: userMenuAction
+                text: i18n.tr("Options")
+                name: "\ueb2e"
+                onTriggered: {
+                    if (usernameId != activeUsernameId) {
+                        PopupUtils.open(userMenuComponent)
+                    } else {
+                        pageLayout.pushToCurrent(otheruserpage, Qt.resolvedUrl("OptionsPage.qml"));
                     }
                 }
-            ]
-        }
+            },
+            Action {
+                visible: usernameId == activeUsernameId
+                id: settingsAction
+                text: i18n.tr("Settings")
+                iconName: "\uea6f"
+                onTriggered: {
+                    pageLayout.pushToCurrent(otheruserpage, Qt.resolvedUrl("OptionsPage.qml"));
+                }
+            }
+        ]
     }
 
     property var usernameString
@@ -64,15 +61,24 @@ Page {
 
     property bool isEmpty: false
 
+    property var allHighlight: []
+
+    property var userData
+
     function usernameDataFinished(data) {
+        userData = data.user
+
         otheruserpage.header.title = data.user.username;
-        uzimage.source = data.user.profile_pic_url;
-        uzname.text = data.user.full_name;
-        uzbio.text = data.user.biography;
-        uzexternal.text = '<a href="'+data.user.external_url+'" style="text-decoration:none;color:rgb(0,53,105);">'+data.user.external_url+'</a>';
-        uzmedia_count.text = data.user.media_count;
-        uzfollower_count.text = data.user.follower_count;
-        uzfollowing_count.text = data.user.following_count;
+
+        getUserHighlightFeed();
+    }
+
+    function highlightFeedDataFinished(data) {
+        highlightsWorker.sendMessage({'feed': 'UserHighlights', 'obj': data.tray, 'model': userHighlightsModel, 'clear_model': true})
+
+        for (var i = 0; i < data.tray.length; i++) {
+            allHighlight.push(data.tray[i].id)
+        }
     }
 
     function userTimeLineDataFinished(data) {
@@ -128,25 +134,33 @@ Page {
 
     Component.onCompleted: {
         if (usernameId) {
-            if (usernameId == my_usernameId) {
+            if (usernameId == activeUsernameId) {
                 selfProfile = true
 
                 getUsernameFeed();
             } else {
                 selfProfile = false
 
-                instagram.userFriendship(usernameId);
+                instagram.getFriendship(usernameId);
             }
 
             getUsernameInfo()
         } else {
-            instagram.searchUsername(usernameString)
+            instagram.getInfoByName(usernameString)
         }
     }
 
     WorkerScript {
         id: worker
-        source: "../js/Worker.js"
+        source: "../js/TimelineWorker.js"
+        onMessage: {
+            console.log(msg)
+        }
+    }
+
+    WorkerScript {
+        id: highlightsWorker
+        source: "../js/SimpleWorker.js"
         onMessage: {
             console.log(msg)
         }
@@ -154,7 +168,7 @@ Page {
 
     function getUsernameInfo()
     {
-        instagram.getUsernameInfo(usernameId);
+        instagram.getInfoById(usernameId);
     }
 
     function getUsernameFeed(next_id)
@@ -165,7 +179,13 @@ Page {
             next_max_id = 0
             clear_models = true
         }
-        instagram.getUsernameFeed(usernameId, next_id);
+        instagram.getUserFeed(usernameId, next_id);
+    }
+
+    function getUserHighlightFeed()
+    {
+        userHighlightsModel.clear()
+        instagram.getUserHighlightFeed(usernameId);
     }
 
     Component {
@@ -218,19 +238,16 @@ Page {
         }
     }
 
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: otheruserpage.header.bottom
-        visible: instagram.busy || list_loading
-    }
-
     ListModel {
         id: userPhotosModel
     }
 
     ListModel {
         id: userTagPhotosModel
+    }
+
+    ListModel {
+        id: userHighlightsModel
     }
 
     Flickable {
@@ -256,215 +273,77 @@ Page {
             width: parent.width
             y: units.gu(1)
 
-            Column {
+            Loader {
                 x: units.gu(1)
-                spacing: units.gu(2)
                 width: parent.width - units.gu(2)
+                active: typeof userData != 'undefined' && userData.hasOwnProperty("username")
 
-                Row {
-                    spacing: units.gu(1)
-                    width: parent.width
-                    anchors.horizontalCenter: parent.horizontalCenter
+                sourceComponent: userDataComponent
+            }
 
-                    CircleImage {
-                        id: uzimage
-                        width: units.gu(10)
-                        height: width
-                        source: typeof profile_pic_url !== 'undefined' ? profile_pic_url : "../images/not_found_user.jpg"
-                    }
+            Item {
+                width: parent.width
+                height: units.gu(2)
+            }
 
-                    Column {
-                        spacing: units.gu(1)
-                        width: parent.width - units.gu(11)
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        Row {
-                            spacing: units.gu(1)
-                            width: parent.width
-                            anchors.horizontalCenter: parent.horizontalCenter
-
-                            Column {
-                                width: (parent.width-units.gu(2))/3
-
-                                Label {
-                                    id: uzmedia_count
-                                    fontSize: "medium"
-                                    font.weight: Font.Bold
-                                    wrapMode: Text.WordWrap
-                                    anchors.horizontalCenter: parent.horizontalCenter
-                                }
-                                Label {
-                                    text: i18n.tr("posts")
-                                    fontSize: "medium"
-                                    font.weight: Font.Light
-                                    wrapMode: Text.WordWrap
-                                    anchors.horizontalCenter: parent.horizontalCenter
-                                }
-                            }
-
-                            Column {
-                                width: (parent.width-units.gu(2))/3
-
-                                Label {
-                                    id: uzfollower_count
-                                    fontSize: "medium"
-                                    font.weight: Font.Bold
-                                    wrapMode: Text.WordWrap
-                                    anchors.horizontalCenter: parent.horizontalCenter
-
-                                    MouseArea {
-                                        width: parent.width
-                                        height: parent.height
-                                        onClicked: {
-                                            pageStack.push(Qt.resolvedUrl("UserFollowers.qml"), {userId: usernameId});
-                                        }
-                                    }
-                                }
-                                Label {
-                                    text: i18n.tr("followers")
-                                    fontSize: "medium"
-                                    font.weight: Font.Light
-                                    wrapMode: Text.WordWrap
-                                    anchors.horizontalCenter: parent.horizontalCenter
-
-                                    MouseArea {
-                                        width: parent.width
-                                        height: parent.height
-                                        onClicked: {
-                                            pageStack.push(Qt.resolvedUrl("UserFollowers.qml"), {userId: usernameId});
-                                        }
-                                    }
-                                }
-                            }
-
-                            Column {
-                                width: (parent.width-units.gu(2))/3
-
-                                Label {
-                                    id: uzfollowing_count
-                                    fontSize: "medium"
-                                    font.weight: Font.Bold
-                                    wrapMode: Text.WordWrap
-                                    anchors.horizontalCenter: parent.horizontalCenter
-
-                                    MouseArea {
-                                        width: parent.width
-                                        height: parent.height
-                                        onClicked: {
-                                            pageStack.push(Qt.resolvedUrl("UserFollowings.qml"), {userId: usernameId});
-                                        }
-                                    }
-                                }
-                                Label {
-                                    text: i18n.tr("following")
-                                    fontSize: "medium"
-                                    font.weight: Font.Light
-                                    wrapMode: Text.WordWrap
-                                    anchors.horizontalCenter: parent.horizontalCenter
-
-                                    MouseArea {
-                                        width: parent.width
-                                        height: parent.height
-                                        onClicked: {
-                                            pageStack.push(Qt.resolvedUrl("UserFollowings.qml"), {userId: usernameId});
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        Button {
-                            id: followingButton
-                            visible: false
-                            width: parent.width - units.gu(2)
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            text: i18n.tr("Following")
-                            onTriggered: {
-                                latest_follow_request = usernameId
-                                instagram.unFollow(usernameId)
-                            }
-                        }
-
-                        Button {
-                            id: unfollowingButton
-                            visible: false
-                            width: parent.width - units.gu(2)
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            color: UbuntuColors.green
-                            text: i18n.tr("Follow")
-                            onTriggered: {
-                                latest_follow_request = usernameId
-                                instagram.follow(usernameId)
-                            }
-                        }
-
-                        Button {
-                            id: requestedButton
-                            visible: false
-                            width: parent.width - units.gu(2)
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            color: "#666666"
-                            text: i18n.tr("Requested")
-                            onTriggered: {
-                                latest_follow_request = usernameId
-                                instagram.unFollow(usernameId)
-                            }
-                        }
-
-                        Button {
-                            id: unBlockButton
-                            visible: false
-                            width: parent.width - units.gu(2)
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            text: i18n.tr("Unblock")
-                            onTriggered: {
-                                latest_follow_request = usernameId
-                                instagram.unBlock(usernameId)
-                            }
-                        }
-
-                        Button {
-                            visible: selfProfile
-                            width: parent.width - units.gu(2)
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            color: UbuntuColors.green
-                            text: i18n.tr("Edit Profile")
-                            onClicked: {
-                                pageStack.push(Qt.resolvedUrl("EditProfilePage.qml"));
-                            }
-                        }
-                    }
+            Button {
+                id: followingButton
+                visible: false
+                width: parent.width - units.gu(2)
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: i18n.tr("Following")
+                onTriggered: {
+                    latest_follow_request = usernameId
+                    instagram.unFollow(usernameId)
                 }
+            }
 
-                Column {
-                    width: parent.width
-                    spacing: units.gu(0.5)
+            Button {
+                id: unfollowingButton
+                visible: false
+                width: parent.width - units.gu(2)
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: UbuntuColors.green
+                text: i18n.tr("Follow")
+                onTriggered: {
+                    latest_follow_request = usernameId
+                    instagram.follow(usernameId)
+                }
+            }
 
-                    Label {
-                        id: uzname
-                        fontSize: "medium"
-                        font.weight: Font.Bold
-                        wrapMode: Text.WordWrap
-                    }
+            Button {
+                id: requestedButton
+                visible: false
+                width: parent.width - units.gu(2)
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: "#666666"
+                text: i18n.tr("Requested")
+                onTriggered: {
+                    latest_follow_request = usernameId
+                    instagram.unFollow(usernameId)
+                }
+            }
 
-                    Label {
-                        id: uzbio
-                        width: parent.width
-                        wrapMode: Text.WordWrap
-                        onLinkActivated: {
-                            Scripts.linkClick(link)
-                        }
-                    }
+            Button {
+                id: unBlockButton
+                visible: false
+                width: parent.width - units.gu(2)
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: i18n.tr("Unblock")
+                onTriggered: {
+                    latest_follow_request = usernameId
+                    instagram.unBlock(usernameId)
+                }
+            }
 
-                    Text {
-                        id: uzexternal
-                        wrapMode: Text.WordWrap
-                        width: parent.width
-                        textFormat: Text.RichText
-                        onLinkActivated: {
-                            Scripts.linkClick(link)
-                        }
-                    }
+            Button {
+                visible: selfProfile
+                width: parent.width - units.gu(2)
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: UbuntuColors.green
+                text: i18n.tr("Edit Profile")
+                onClicked: {
+                    pageLayout.pushToCurrent(otheruserpage, Qt.resolvedUrl("EditProfilePage.qml"));
                 }
             }
 
@@ -473,18 +352,30 @@ Page {
                 height: units.gu(2)
             }
 
+            Loader {
+                id: storiesFeedTrayLoader
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: parent.width - units.gu(2)
+                height: width/5 + units.gu(3)
+                visible: userHighlightsModel.count > 0
+                active: userHighlightsModel.count > 0
+                asynchronous: true
+
+                sourceComponent: UserHighlightsTray {
+                    currentDelegatePage: otheruserpage
+                    model: userHighlightsModel
+                    allHighlights: allHighlight
+                    width: parent.width
+                    height: parent.height
+                }
+            }
+
             Column {
                 visible: !isPrivate
                 width: !isPrivate ? parent.width : 0
                 anchors.horizontalCenter: parent.horizontalCenter
                 spacing: units.gu(0.5)
                 y: !isPrivate ? units.gu(2) : 0
-
-                Rectangle {
-                    width: parent.width
-                    height: units.gu(0.17)
-                    color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
-                }
 
                 Row {
                     anchors {
@@ -496,12 +387,11 @@ Page {
                         width: units.gu(5)
                         height: width
 
-                        Icon {
+                        LineIcon {
                             anchors.centerIn: parent
-                            width: units.gu(3)
-                            height: width
-                            name: "view-grid-symbolic"
-                            color: current_user_section == 0 ? "#003569" : UbuntuColors.darkGrey
+                            name: "\uead5"
+                            active: current_user_section == 0
+                            iconSize: units.gu(2.2)
                         }
 
                         MouseArea {
@@ -517,12 +407,11 @@ Page {
                         width: units.gu(5)
                         height: width
 
-                        Icon {
+                        LineIcon {
                             anchors.centerIn: parent
-                            width: units.gu(3)
-                            height: width
-                            name: "view-list-symbolic"
-                            color: current_user_section == 1 ? "#003569" : UbuntuColors.darkGrey
+                            name: "\ueb16"
+                            active: current_user_section == 1
+                            iconSize: units.gu(2.2)
                         }
 
                         MouseArea {
@@ -538,12 +427,11 @@ Page {
                         width: units.gu(5)
                         height: width
 
-                        Icon {
+                        LineIcon {
                             anchors.centerIn: parent
-                            width: units.gu(3)
-                            height: width
-                            name: "contact"
-                            color: current_user_section == 3 ? "#003569" : UbuntuColors.darkGrey
+                            name: "\uebde"
+                            active: current_user_section == 3
+                            iconSize: units.gu(2.2)
                         }
 
                         MouseArea {
@@ -582,8 +470,7 @@ Page {
                 width: parent.width
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                icon: true
-                iconName: "stock_image"
+                iconName: "\ueaeb"
 
                 title: current_user_section == 3 ? i18n.tr("No Photos Yet") : ""
 
@@ -602,9 +489,7 @@ Page {
                 width: parent.width
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                icon: true
-                iconName: "lock"
-                iconColor: UbuntuColors.darkGrey
+                iconName: "\ueb17"
 
                 description: i18n.tr("This account is private.")
                 description2: i18n.tr("Follow to see their photos and videos.")
@@ -622,6 +507,17 @@ Page {
     }
 
     Component {
+        id: userDataComponent
+
+        UserDataColumn {
+            width: parent.width
+
+            currentPage: otheruserpage
+            currentUserId: usernameId
+        }
+    }
+
+    Component {
         id: listviewComponent
 
         ListView {
@@ -631,6 +527,7 @@ Page {
             model: userPhotosModel
             delegate: ListFeedDelegate {
                 id: userPhotosDelegate
+                currentDelegatePage: otheruserpage
                 thismodel: userPhotosModel
             }
         }
@@ -647,6 +544,7 @@ Page {
                 model: userPhotosModel
 
                 GridFeedDelegate {
+                    currentDelegatePage: otheruserpage
                     width: (viewLoader.width-units.gu(0.1))/3
                     height: width
                 }
@@ -665,6 +563,7 @@ Page {
                 model: userTagPhotosModel
 
                 GridFeedDelegate {
+                    currentDelegatePage: otheruserpage
                     width: (viewLoader.width-units.gu(0.1))/3
                     height: width
                 }
@@ -674,35 +573,35 @@ Page {
 
     Connections{
         target: instagram
-        onUserTimeLineDataReady: {
+        onUserFeedDataReady: {
             var data = JSON.parse(answer);
-            userTimeLineDataFinished(data);
+            if (data.status == "ok") {
+                userTimeLineDataFinished(data);
+            } else {
+                // error
+            }
         }
-        onUsernameDataReady: {
+        onInfoByIdDataReady: {
             var data = JSON.parse(answer);
             usernameDataFinished(data);
         }
-        onUserTagsDataReady: {
-            var data = JSON.parse(answer);
-            userTagDataFinished(data);
-        }
-        onSearchUsernameDataReady: {
+        onInfoByNameDataReady: {
             var data = JSON.parse(answer);
             usernameId = data.user.pk;
 
-            if (usernameId == my_usernameId) {
+            if (usernameId == activeUsernameId) {
                 selfProfile = true
 
                 getUsernameFeed();
             } else {
                 selfProfile = false
 
-                instagram.userFriendship(usernameId);
+                instagram.getFriendship(usernameId);
             }
 
             getUsernameInfo();
         }
-        onUserFriendshipDataReady: {
+        onFriendshipDataReady: {
             var data = JSON.parse(answer);
 
             if (!data.following && data.is_private) {
@@ -718,6 +617,10 @@ Page {
             requestedButton.visible = data.outgoing_request
             unBlockButton.visible = data.blocking
         }
+        onUserTagsDataReady: {
+            var data = JSON.parse(answer);
+            userTagDataFinished(data);
+        }
 
         onFollowDataReady: {
             if (usernameId == latest_follow_request) {
@@ -725,7 +628,7 @@ Page {
                 followDataFinished(data);
             }
         }
-        onUnFollowDataReady: {
+        onUnfollowDataReady: {
             if (usernameId == latest_follow_request) {
                 var data = JSON.parse(answer);
                 followDataFinished(data);
@@ -740,6 +643,10 @@ Page {
                 requestedButton.visible = false
                 unBlockButton.visible = false
             }
+        }
+        onUserHighlightFeedDataReady: {
+            var data = JSON.parse(answer)
+            highlightFeedDataFinished(data)
         }
     }
 

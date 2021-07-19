@@ -1,6 +1,6 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 
 import "../components"
 
@@ -8,7 +8,7 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+PageItem {
     id: directinboxpage
 
     property bool list_loading: false
@@ -20,15 +20,21 @@ Page {
     property bool next_coming: true
     property bool clear_models: true
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: i18n.tr("Direct")
-        trailingActionBar {
-            numberOfSlots: 1
-            actions: [newDirectMessageAction]
-        }
+        trailingActions: [
+            Action {
+                id: newDirectMessageAction
+                text: i18n.tr("New Message")
+                iconName: "\ueb48"
+                onTriggered: {
+                    pageLayout.pushToNext(pageLayout.primaryPage, Qt.resolvedUrl("NewDirectMessagePage.qml"))
+                }
+            }
+        ]
     }
 
-    function v2InboxDataFinished(data) {
+    function inboxDataFinished(data) {
         if (data.inbox.threads.length == 0) {
             isEmpty = true;
         } else {
@@ -55,10 +61,10 @@ Page {
     }
 
     Component.onCompleted: {
-        getv2Inbox();
+        getInbox();
     }
 
-    function getv2Inbox(oldest_cursor_id)
+    function getInbox(oldest_cursor_id)
     {
         clear_models = false
         if (!oldest_cursor_id) {
@@ -66,14 +72,7 @@ Page {
             next_oldest_cursor_id = 0
             clear_models = true
         }
-        instagram.getv2Inbox(oldest_cursor_id);
-    }
-
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: directinboxpage.header.bottom
-        visible: instagram.busy || list_loading
+        instagram.getInbox(oldest_cursor_id);
     }
 
     ListModel {
@@ -94,19 +93,19 @@ Page {
         }
         onMovementEnded: {
             if (atYEnd && more_available && !next_coming) {
-                getv2Inbox(next_oldest_cursor_id)
+                getInbox(next_oldest_cursor_id)
             }
         }
 
         clip: true
-        cacheBuffer: parent.height*2
+        cacheBuffer: parent.height
         model: v2InboxModel
         delegate: ListItem {
             id: userFollowersDelegate
             height: layout.height
             divider.visible: false
             onClicked: {
-                pageStack.push(Qt.resolvedUrl("DirectThreadPage.qml"), {threadId: thread_id});
+                pageLayout.pushToNext(directinboxpage, Qt.resolvedUrl("DirectThreadPage.qml"), {threadId: thread_id});
             }
 
             property bool unseen: last_permanent_item.timestamp > last_seen_at[Object.keys(last_seen_at)[0]].timestamp
@@ -139,20 +138,21 @@ Page {
                             text: thread_title != "" ? thread_title : inviter.username
                             wrapMode: Text.WordWrap
                             font.weight: Font.DemiBold
+                            color: styleApp.common.textColor
                             width: parent.width
                         }
 
                         Text {
-                            property string item_text: last_permanent_item.item_type === 'media_share' ? (last_permanent_item.user_id == my_usernameId ? i18n.tr("You shared a post") : i18n.tr("Shared a post")) :
-                                                       last_permanent_item.item_type === 'media' ? (last_permanent_item.user_id == my_usernameId ? i18n.tr("You shared a media") : i18n.tr("Shared a media")) :
-                                                       last_permanent_item.item_type === 'story_share' ? (last_permanent_item.user_id == my_usernameId ? i18n.tr("You sent a story") : i18n.tr("Sent a story")) :
-                                                       last_permanent_item.item_type === 'link' ? (last_permanent_item.user_id == my_usernameId ? i18n.tr("You shared a link") : i18n.tr("Shared a link")) :
+                            property string item_text: last_permanent_item.item_type === 'media_share' ? (last_permanent_item.user_id == activeUsername ? i18n.tr("You shared a post") : i18n.tr("Shared a post")) :
+                                                       last_permanent_item.item_type === 'media' ? (last_permanent_item.user_id == activeUsername ? i18n.tr("You shared a media") : i18n.tr("Shared a media")) :
+                                                       last_permanent_item.item_type === 'story_share' ? (last_permanent_item.user_id == activeUsername ? i18n.tr("You sent a story") : i18n.tr("Sent a story")) :
+                                                       last_permanent_item.item_type === 'link' ? (last_permanent_item.user_id == activeUsername ? i18n.tr("You shared a link") : i18n.tr("Shared a link")) :
                                                        last_permanent_item.item_type === 'like' ? last_permanent_item.like :
                                                        last_permanent_item.item_type === 'action_log' ? last_permanent_item.action_log.description :
                                                        last_permanent_item.item_type === 'placeholder' ? last_permanent_item.placeholder.title :
                                                        last_permanent_item.item_type === 'reel_share' ?
-                                                            (last_permanent_item.reel_share.type == 'mention' ? (last_permanent_item.user_id == my_usernameId ? i18n.tr("You mentioned their in a story") : i18n.tr("Mentioned you in a story")) :
-                                                            last_permanent_item.reel_share.type == 'reply' ? (last_permanent_item.user_id == my_usernameId ? i18n.tr("You replied to their story") : i18n.tr("Replied to your story")) : i18n.tr("UNKNOWN")) :
+                                                            (last_permanent_item.reel_share.type == 'mention' ? (last_permanent_item.user_id == activeUsername ? i18n.tr("You mentioned their in a story") : i18n.tr("Mentioned you in a story")) :
+                                                            last_permanent_item.reel_share.type == 'reply' ? (last_permanent_item.user_id == activeUsername ? i18n.tr("You replied to their story") : i18n.tr("Replied to your story")) : i18n.tr("UNKNOWN")) :
                                                        last_permanent_item.text
                             text: item_text
                             font.weight: typeof unseen != 'undefined' && unseen ? Font.DemiBold : Font.ExtraLight
@@ -160,13 +160,14 @@ Page {
                             wrapMode: Text.WordWrap
                             maximumLineCount: 1
                             elide: Text.ElideRight
+                            color: styleApp.common.textColor
                         }
 
                         Label {
                             id: item_time
                             text: Helper.milisecondsToString(last_permanent_item.timestamp, false, true)
                             fontSize: "small"
-                            color: UbuntuColors.darkGrey
+                            color: styleApp.common.text2Color
                             font.weight: Font.Light
                             font.capitalization: Font.AllLowercase
                         }
@@ -191,7 +192,7 @@ Page {
             refreshing: list_loading && v2InboxModel.count == 0
             onRefresh: {
                 list_loading = true
-                getv2Inbox()
+                getInbox()
             }
         }
     }
@@ -204,8 +205,7 @@ Page {
             horizontalCenter: parent.horizontalCenter
         }
 
-        icon: true
-        iconName: "mail-unread"
+        iconName: "\ueaab"
 
         title: i18n.tr("Welcome to Instagraph Direct!")
         description: i18n.tr("Tap the + icon to send a photo, video or message.")
@@ -213,9 +213,9 @@ Page {
 
     Connections{
         target: instagram
-        onV2InboxDataReady: {
+        onInboxDataReady: {
             var data = JSON.parse(answer);
-            v2InboxDataFinished(data);
+            inboxDataFinished(data);
         }
     }
 }

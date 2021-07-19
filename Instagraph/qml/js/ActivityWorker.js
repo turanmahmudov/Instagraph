@@ -39,10 +39,10 @@ WorkerScript.onMessage = function(msg) {
 
             for (var k = 0; k < linked_part.length; k++) {
                 if (linked_part_types[k] == "like_count_chrono") {
-                    var rpl_with = '<a href="likes://'+linked_part[k]+'" style="text-decoration:none;font-weight:500;color:rgb(0,0,0);">'+linked_part[k]+'</a>';
+                    var rpl_with = '<a href="likes://'+linked_part[k]+'" style="text-decoration:none;font-weight:500;color:'+msg.textColor+';">'+linked_part[k]+'</a>';
                     act_text = act_text.replace(linked_part[k], rpl_with);
                 } else if (linked_part_types[k] == "user") {
-                    var rpl_with = '<a href="userid://'+linked_part_ids[k]+'" style="text-decoration:none;font-weight:500;color:rgb(0,0,0);">'+linked_part[k]+'</a>';
+                    var rpl_with = '<a href="userid://'+linked_part_ids[k]+'" style="text-decoration:none;font-weight:500;color:'+msg.textColor+';">'+linked_part[k]+'</a>';
                     act_text = act_text.replace(linked_part[k], rpl_with);
                 }
             }

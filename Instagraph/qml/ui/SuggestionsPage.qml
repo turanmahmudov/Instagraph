@@ -1,6 +1,6 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
-import QtQuick.LocalStorage 2.0
+import QtQuick.LocalStorage 2.12
 
 import "../components"
 
@@ -8,10 +8,10 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-Page {
+PageItem {
     id: suggestionspage
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: i18n.tr("Suggestions")
     }
 
@@ -27,7 +27,7 @@ Page {
 
         for (var i = 0; i < data.suggested_users.suggestions.length; i++) {
 
-            suggestionsModel.append(data.suggested_users.suggestions[i]);
+            suggestionsModel.append(data.suggested_users.suggestions[i].user);
         }
 
         next_coming = false;
@@ -43,14 +43,7 @@ Page {
     {
         suggestionsModel.clear()
         list_loading = true
-        instagram.suggestions();
-    }
-
-    BouncingProgressBar {
-        id: bouncingProgress
-        z: 10
-        anchors.top: suggestionspage.header.bottom
-        visible: instagram.busy
+        instagram.getSuggestions();
     }
 
     ListModel {
@@ -80,7 +73,7 @@ Page {
             height: layout.height
             divider.visible: false
             onClicked: {
-                pageStack.push(Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: user.pk});
+                pageLayout.pushToCurrent(suggestionspage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk});
             }
 
             SlotsLayout {
@@ -92,42 +85,16 @@ Page {
                 padding.top: units.gu(1)
                 padding.bottom: units.gu(1)
 
-                mainSlot: Row {
+                mainSlot: UserRowSlot {
                     id: label
-                    spacing: units.gu(1)
                     width: parent.width - followButton.width
-
-                    CircleImage {
-                        width: units.gu(5)
-                        height: width
-                        source: user.profile_pic_url
-                    }
-
-                    Column {
-                        width: parent.width - units.gu(6)
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        Text {
-                            text: user.username
-                            wrapMode: Text.WordWrap
-                            font.weight: Font.DemiBold
-                            width: parent.width
-                        }
-
-                        Text {
-                            text: user.full_name
-                            wrapMode: Text.WordWrap
-                            width: parent.width
-                            textFormat: Text.RichText
-                        }
-                    }
                 }
 
                 FollowComponent {
                     id: followButton
                     height: units.gu(3.5)
                     friendship_var: {"following": false, "outgoing_request": false}
-                    userId: user.pk
+                    userId: pk
                     just_icon: false
 
                     anchors.verticalCenter: parent.verticalCenter
@@ -144,7 +111,7 @@ Page {
 
     Connections{
         target: instagram
-        onSuggestionsDataReady: {
+        onSuggestionsFeedDataReady: {
             var data = JSON.parse(answer);
             suggestionsDataFinished(data);
         }

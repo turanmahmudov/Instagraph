@@ -1,10 +1,12 @@
-import QtQuick 2.4
+import QtQuick 2.12
 import Ubuntu.Components 1.3
 
-Page {
+import "../components"
+
+PageItem {
     id: creditsPage
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: i18n.tr("Credits")
     }
 
@@ -94,31 +96,6 @@ Page {
                }
                onClicked: {
                    Qt.openUrlExternally("mailto:kevinfeyder@gmail.com")
-               }
-           }
-
-           ListItem {
-               height: thanksHeaderLayout.height
-
-               ListItemLayout {
-                   id: thanksHeaderLayout
-
-                   title.text: i18n.tr("Special Thanks")
-                   title.font.weight: Font.Normal
-               }
-           }
-
-           ListItem {
-               height: prs4Layout.height
-               divider.visible: false
-               ListItemLayout {
-                   id: prs4Layout
-
-                   title.text: "Ozan Erdem Boyoglu"
-                   subtitle.text: "boyogluozan@gmail.com"
-               }
-               onClicked: {
-                   Qt.openUrlExternally("mailto:boyogluozan@gmail.com")
                }
            }
         }

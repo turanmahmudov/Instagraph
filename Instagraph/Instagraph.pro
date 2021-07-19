@@ -7,23 +7,45 @@ QT += qml quick
 
 UBUNTU_TRANSLATION_DOMAIN="instagraph-devs.turan-mahmudov-l"
 
+equals(INSTAGRAM_API_VERSION, "v1") {
+    SOURCES += src/instagram.cpp \
+        src/instagramrequest.cpp
+
+    HEADERS += src/instagram.h \
+        src/instagramrequest.h
+} else {
+    SOURCES += src/v2/constants.cpp \
+        src/v2/instagram.cpp \
+        src/v2/instagramrequest.cpp \
+        src/v2/request/account.cpp \
+        src/v2/request/direct.cpp \
+        src/v2/request/discover.cpp \
+        src/v2/request/hashtag.cpp \
+        src/v2/request/highlight.cpp \
+        src/v2/request/location.cpp \
+        src/v2/request/media.cpp \
+        src/v2/request/people.cpp \
+        src/v2/request/story.cpp \
+        src/v2/request/timeline.cpp \
+        src/v2/request/usertag.cpp
+
+    HEADERS += src/v2/constants.h \
+        src/v2/instagram.h \
+        src/v2/instagram_p.h \
+        src/v2/instagramrequest.h
+}
+
 SOURCES += main.cpp \
-    src/instagram.cpp \
-    src/instagramrequest.cpp \
     src/cripto/hmacsha.cpp \
     src/imageprocessor.cpp \
     src/offscreenrenderer.cpp \
     src/cropimageprovider.cpp \
-    src/instagramcheckpoint.cpp \
-    src/cacheimage.cpp
+    src/cacheimage.cpp \
 
-HEADERS += src/instagram.h \
-    src/instagramrequest.h \
-    src/cripto/hmacsha.h \
+HEADERS += src/cripto/hmacsha.h \
     src/imageprocessor.h \
     src/offscreenrenderer.h \
     src/cropimageprovider.h \
-    src/instagramcheckpoint.h \
     src/cacheimage.h
 
 RESOURCES += Instagraph.qrc
@@ -50,7 +72,7 @@ config_files.path = /Instagraph
 config_files.files += $${CONF_FILES}
 INSTALLS+=config_files
 
-#install the desktop file, a translated version is 
+#install the desktop file, a translated version is
 #automatically created in the build directory
 desktop_file.path = /Instagraph
 desktop_file.files = $$OUT_PWD/Instagraph.desktop
@@ -63,12 +85,28 @@ target.path = $${UBUNTU_CLICK_BINARY_PATH}
 INSTALLS+=target
 
 DISTFILES += \
+    qml/components/ActionLineIconDelegate.qml \
+    qml/components/ErrorPopup.qml \
+    qml/components/LineIcon.qml \
+    qml/components/LoadingSpinner.qml \
+    qml/components/MultiUserSelector.qml \
+    qml/components/MultipleAccountsSwitcher.qml \
+    qml/components/PageHeaderItem.qml \
+    qml/components/PageItem.qml \
+    qml/components/UserDataColumn.qml \
+    qml/components/UserHighlightsTray.qml \
+    qml/components/UserRowSlot.qml \
+    qml/fonts/Fonts.qml \
+    qml/fonts/LineIcons.ttf \
+    qml/fonts/qmldir \
     qml/js/Storage.js \
+    qml/js/TimelineWorker.js \
+    qml/ui/ActivityPage.qml \
+    qml/ui/HighlightStoriesPage.qml \
     qml/ui/LoginPage.qml \
     qml/components/BouncingProgressBar.qml \
     qml/ui/HomePage.qml \
     qml/js/Helper.js \
-    qml/ui/NotifsPage.qml \
     qml/ui/SearchPage.qml \
     qml/ui/UserPage.qml \
     qml/ui/CameraPage.qml \
@@ -94,7 +132,6 @@ DISTFILES += \
     qml/ui/ChangePasswordPage.qml \
     qml/ui/DiscoverPeoplePage.qml \
     qml/ui/RegisterPage.qml \
-    qml/js/Worker.js \
     qml/js/ActivityWorker.js \
     qml/js/SimpleWorker.js \
     Instagraph.dispatcher \
@@ -151,5 +188,8 @@ DISTFILES += \
     qml/ui/SuggestionsPage.qml \
     qml/ui/ShareMediaPage.qml \
     qml/components/ContentDownloadDialog.qml \
-    qml/components/FeedImage.qml
-
+    qml/components/FeedImage.qml \
+    qml/components/Helpers/UriHandlerHelper.qml \
+    qml/components/Style/Style.qml \
+    qml/components/Style/StyleDark.qml \
+    qml/components/Style/StyleLight.qml
