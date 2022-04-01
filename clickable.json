@@ -1,6 +1,6 @@
 {
     "builder": "qmake",
-    "clickable_minimum_required": "6.23.3",
+    "clickable_minimum_required": "7",
     "qt_version": "5.12",
     "dependencies_ppa": [
     ],

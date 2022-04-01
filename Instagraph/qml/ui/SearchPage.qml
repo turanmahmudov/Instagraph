@@ -14,16 +14,6 @@ PageItem {
     header: PageHeaderItem {
         noBackAction: true
         title: i18n.tr("Search")
-        trailingActions: [
-            Action {
-                id: addPeopleAction
-                text: i18n.tr("Discover People")
-                iconName: "\uebdf"
-                onTriggered: {
-                    pageLayout.pushToCurrent(searchpage, Qt.resolvedUrl("DiscoverPeoplePage.qml"))
-                }
-            }
-        ]
         contents: TextField {
             id: searchInput
             anchors {
@@ -38,6 +28,7 @@ PageItem {
                 width: height
                 name: "find"
             }
+            focus: true
             hasClearButton: true
             placeholderText: i18n.tr("Search")
             onAccepted: {
@@ -74,6 +65,10 @@ PageItem {
                 }
             ]
         }
+    }
+
+    Component.onCompleted: {
+        searchInput.forceActiveFocus()
     }
 
     property bool firstOpen: true
@@ -137,7 +132,7 @@ PageItem {
             next_max_id = "";
             clear_models = true;
         }
-        instagram.getPopularFeed(next_id);
+        instagram.getExploreFeed(next_id);
     }
 
     ListModel {
@@ -412,6 +407,14 @@ PageItem {
     Connections{
         target: instagram
         onPopularFeedDataReady: {
+            console.log(answer)
+
+            var data = JSON.parse(answer);
+            popularFeedDataFinished(data);
+        }
+        onExploreFeedDataReady: {
+            console.log(answer)
+
             var data = JSON.parse(answer);
             popularFeedDataFinished(data);
         }

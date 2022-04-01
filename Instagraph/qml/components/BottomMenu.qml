@@ -46,6 +46,7 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
+                    pageLayout.removePages(homePage)
                     pageLayout.primaryPage = homePage
                 }
             }
@@ -58,7 +59,7 @@ Rectangle {
             LineIcon {
                 anchors.centerIn: parent
                 name: "\ueb7b"
-                active: pageLayout.primaryPage == searchPage
+                active: pageLayout.primaryPage == searchPage || pageLayout.primaryPage == exploreFeedPage
                 iconSize: units.gu(2.4)
                 font.weight: Font.DemiBold
             }
@@ -66,11 +67,16 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    pageLayout.primaryPage = searchPage
+                    pageLayout.removePages(exploreFeedPage)
+                    pageLayout.primaryPage = exploreFeedPage
 
-                    if (searchPage.firstOpen) {
-                        searchPage.getPopular();
-                        searchPage.firstOpen = false
+                    exploreFeedPage.mode = "exploreFeed"
+                    exploreFeedPage.current_search_section = 0
+                    exploreFeedPage.resetSearch()
+
+                    if (exploreFeedPage.firstOpen) {
+                        exploreFeedPage.getExploreFeed()
+                        exploreFeedPage.firstOpen = false
                     }
                 }
             }
@@ -119,6 +125,7 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
+                    pageLayout.removePages(activityPage)
                     pageLayout.primaryPage = activityPage
 
                     activityPage.new_notifs = false
@@ -141,6 +148,7 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     if (loggedIn) {
+                        pageLayout.removePages(userPage)
                         pageLayout.primaryPage = userPage
 
                         userPage.getUsernameInfo();

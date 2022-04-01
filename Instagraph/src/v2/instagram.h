@@ -67,11 +67,14 @@ public Q_SLOTS:
     Q_INVOKABLE void directShare(QString mediaId, QString recipients, QString text = "");
 
     //Discover
-    Q_INVOKABLE void getExploreFeed(QString max_id="", QString isPrefetch = "false");
+    Q_INVOKABLE void getExploreFeed(QString max_id="");
     Q_INVOKABLE void getSuggestions();
 
+    //FBSearch
+    Q_INVOKABLE void recentSearches();
+    Q_INVOKABLE void searchPlaces(QString query);
+
     //Location
-    Q_INVOKABLE void searchFBLocation(QString query);
     Q_INVOKABLE void getGeoMedia(QString usernameId);
     Q_INVOKABLE void getLocationFeed(QString locationId, QString max_id = "");
 
@@ -182,8 +185,11 @@ Q_SIGNALS:
     void exploreFeedDataReady(QVariant answer);
     void suggestionsFeedDataReady(QVariant answer);
 
+    //FBSearch
+    void recentSearchesDataReady(QVariant answer);
+    void searchPlacesDataReady(QVariant answer);
+
     //Location
-    void searchFBLocationDataReady(QVariant answer);
     void geoMediaDataReady(QVariant answer);
     void getLocationFeedDataReady(QVariant answer);
 

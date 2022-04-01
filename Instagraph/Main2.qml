@@ -157,6 +157,9 @@ MainView {
         UserPage {
             id: userPage
         }
+        ExploreFeedPage {
+            id: exploreFeedPage
+        }
     }
 
     Component.onCompleted: {

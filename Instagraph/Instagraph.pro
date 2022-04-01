@@ -20,6 +20,7 @@ equals(INSTAGRAM_API_VERSION, "v1") {
         src/v2/request/account.cpp \
         src/v2/request/direct.cpp \
         src/v2/request/discover.cpp \
+        src/v2/request/fbsearch.cpp \
         src/v2/request/hashtag.cpp \
         src/v2/request/highlight.cpp \
         src/v2/request/location.cpp \
@@ -40,7 +41,7 @@ SOURCES += main.cpp \
     src/imageprocessor.cpp \
     src/offscreenrenderer.cpp \
     src/cropimageprovider.cpp \
-    src/cacheimage.cpp \
+    src/cacheimage.cpp
 
 HEADERS += src/cripto/hmacsha.h \
     src/imageprocessor.h \
@@ -99,6 +100,7 @@ DISTFILES += \
     qml/fonts/Fonts.qml \
     qml/fonts/LineIcons.ttf \
     qml/fonts/qmldir \
+    qml/js/DiscoverWorker.js \
     qml/js/Storage.js \
     qml/js/TimelineWorker.js \
     qml/ui/ActivityPage.qml \

@@ -141,5 +141,8 @@
         <file>qml/components/PageItem.qml</file>
         <file>qml/components/MultiUserSelector.qml</file>
         <file>qml/components/MultipleAccountsSwitcher.qml</file>
+        <file>qml/js/ExploreWorker.js</file>
+        <file>qml/ui/ExploreFeedPage.qml</file>
+        <file>qml/js/SearchWorker.js</file>
     </qresource>
 </RCC>

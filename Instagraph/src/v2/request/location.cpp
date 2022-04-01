@@ -2,17 +2,6 @@
 #include "../instagramrequest.h"
 #include <QJsonObject>
 
-void Instagram::searchFBLocation(QString query)
-{
-    Q_D(Instagram);
-
-    InstagramRequest *searchFBLocationRequest =
-        d->request("fbsearch/places/?"
-                   "query="+query+"&"
-                   "rank_token="+d->m_rank_token, NULL, false,true);
-    QObject::connect(searchFBLocationRequest,SIGNAL(replyStringReady(QVariant)), this, SIGNAL(searchFBLocationDataReady(QVariant)));
-}
-
 void Instagram::getGeoMedia(QString usernameId)
 {
     Q_D(Instagram);

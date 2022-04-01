@@ -3,17 +3,19 @@
 #include <QJsonObject>
 #include <QUuid>
 
-void Instagram::getExploreFeed(QString max_id, QString isPrefetch)
+void Instagram::getExploreFeed(QString max_id)
 {
     Q_D(Instagram);
     InstagramRequest *getExploreRequest =
-        d->request("discover/explore/?"
-                   "is_prefetch="+isPrefetch+"&"
-                   "is_from_promote=false&"
+        d->request("discover/topical_explore/?"
+                   "is_prefetch=false&"
+                   "omit_cover_media=false&"
+                   "use_sectional_payload=true&"
+                   "timezone_offset=0&"
+                   "include_fixed_destinations=false&"
                    "session_id=" + d->m_token +
-                   "&module=explore_popular" +
                    (max_id.length()>0 ? "&max_id="+max_id : "" )
-                   ,NULL);
+                   ,NULL, false, true);
     QObject::connect(getExploreRequest,SIGNAL(replyStringReady(QVariant)),this,SIGNAL(exploreFeedDataReady(QVariant)));
 }
 
