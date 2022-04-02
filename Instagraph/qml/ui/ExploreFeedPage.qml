@@ -1,4 +1,5 @@
 import QtQuick 2.12
+import QtQuick.Layouts 1.12
 import Ubuntu.Components 1.3
 
 import "../components"
@@ -85,8 +86,31 @@ PageItem {
 
     property int current_search_section: 0
 
+    property string next_max_id: ""
+    property bool more_available: true
+    property bool next_coming: true
+    property bool clear_models: true
+
+    property bool list_loading: false
+
     Component.onCompleted: {
         instagram.recentSearches()
+    }
+
+    function exploreFeedDataFinished(data) {
+        if (next_max_id === data.next_max_id) {
+            return false;
+        } else {
+            next_max_id = data.more_available === true ? data.next_max_id : "";
+            more_available = data.more_available;
+            next_coming = true;
+
+            exploreWorker.sendMessage({'obj': data.sectional_items, 'model': exploreFeedModel, 'clear_model': clear_models})
+
+            next_coming = false;
+        }
+
+        list_loading = false
     }
 
     function recentSearchesDataFinished(data) {
@@ -126,7 +150,13 @@ PageItem {
     }
 
     function getExploreFeed(next_id) {
-
+        clear_models = false
+        if (!next_id) {
+            exploreFeedModel.clear();
+            next_max_id = "";
+            clear_models = true;
+        }
+        instagram.getExploreFeed(next_id);
     }
 
     WorkerScript {
@@ -143,6 +173,10 @@ PageItem {
         onMessage: {
             console.log(msg)
         }
+    }
+
+    ListModel {
+        id: exploreFeedModel
     }
 
     ListModel {
@@ -173,6 +207,8 @@ PageItem {
         height: parent.height
         visible: mode == "exploreFeed"
         active: visible
+
+        sourceComponent: exploreFeed
     }
 
     Loader {
@@ -205,6 +241,52 @@ PageItem {
         active: visible
 
         sourceComponent: current_search_section === 0 ? searchUsersList : (current_search_section === 1 ? searchTagsList : searchPlacesList)
+    }
+
+    Component {
+        id: exploreFeed
+
+        Flickable {
+            id: layoutFlickable
+            anchors.fill: parent
+            contentWidth: parent.width
+            contentHeight: layout.height
+
+            GridLayout {
+                id: layout
+                rowSpacing: units.gu(0.1)
+                columnSpacing: units.gu(0.1)
+                columns: 3
+
+                Repeater {
+                    model: exploreFeedModel
+
+                    Loader {
+                        asynchronous: true
+                        Layout.preferredWidth: (layoutFlickable.width-units.gu(0.1))*rowSpan/3
+                        Layout.preferredHeight: Layout.preferredWidth
+                        Layout.rowSpan: rowSpan
+                        Layout.columnSpan: columnSpan
+                        Layout.row: row
+                        Layout.column: column
+                        sourceComponent: GridFeedDelegate {
+                            currentDelegatePage: exploreFeedPage
+                            width: parent.width
+                            height: parent.height
+                        }
+                    }
+                }
+            }
+
+            PullToRefresh {
+                parent: layoutFlickable
+                refreshing: list_loading && exploreFeedModel.count == 0
+                onRefresh: {
+                    list_loading = true
+                    getExploreFeed()
+                }
+            }
+        }
     }
 
     Component {
@@ -482,6 +564,10 @@ PageItem {
 
     Connections{
         target: instagram
+        onExploreFeedDataReady: {
+            var data = JSON.parse(answer);
+            exploreFeedDataFinished(data)
+        }
         onRecentSearchesDataReady: {
             var data = JSON.parse(answer);
             recentSearchesDataFinished(data);

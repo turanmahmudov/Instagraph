@@ -412,12 +412,6 @@ PageItem {
             var data = JSON.parse(answer);
             popularFeedDataFinished(data);
         }
-        onExploreFeedDataReady: {
-            console.log(answer)
-
-            var data = JSON.parse(answer);
-            popularFeedDataFinished(data);
-        }
         onSearchUserDataReady: {
             var data = JSON.parse(answer);
             searchUsersDataFinished(data);
