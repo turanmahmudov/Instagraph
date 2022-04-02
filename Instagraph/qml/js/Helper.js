@@ -12,6 +12,25 @@ function formatString(string)
     return string;
 }
 
+function formatRichTextUsers(string)
+{
+    var regex = /{([a-zA-Z0-9._|?=\\%&]*)}/g;
+    var match
+
+    while (match = regex.exec(string)) {
+        var user_id = match[1].split('user?id=')[1]
+        var user_name = match[1].split('|')[0]
+
+        if (typeof user_id != 'undefined') {
+            string = string.replace(match[0], '<a href="userid://'+user_id+'" style="text-decoration:none;font-weight:500;color:'+hexToRgb(styleApp.common.textColor)+';">'+user_name+'</a>')
+        } else {
+            string = string.replace(match[0], '<a href="user://'+user_name+'" style="text-decoration:none;font-weight:500;color:'+hexToRgb(styleApp.common.textColor)+';">'+user_name+'</a>')
+        }
+    }
+
+    return string
+}
+
 function formatUser(string)
 {
     var textColor = styleApp.common.textColor

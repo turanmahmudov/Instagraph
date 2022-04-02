@@ -14,15 +14,29 @@ WorkerScript.onMessage = function(msg) {
     // Object loop
     for (var i = 0; i < obj.length; i++) {
         var story = obj[i];
+        var header = ""
+
+        if (msg.old === true && "time_bucket" in msg.partition) {
+            for (var h = 0; h < msg.partition.time_bucket.headers.length; h++) {
+                if (i === msg.partition.time_bucket.indices[h]) {
+                    header = msg.partition.time_bucket.headers[h]
+                }
+            }
+        }
 
         var act_text = "";
 
         // empty
         if (story.args && typeof story.args.links == 'undefined') {
+            if ("rich_text" in story.args) {
+                act_text = story.args.rich_text;
 
-            act_text = story.args.text;
+                model.append({"activity_text":act_text, "story":story, "list_type":"recent_activity", "header": header});
+            } else {
+                act_text = story.args.text;
 
-            model.append({"activity_text":act_text, "story":story, "list_type":"recent_activity"});
+                model.append({"activity_text":act_text, "story":story, "list_type":"recent_activity", "header": header});
+            }
 
         } else if (story.args && typeof story.args.links != 'undefined' && story.args.links.length > 0) {
 
@@ -47,7 +61,7 @@ WorkerScript.onMessage = function(msg) {
                 }
             }
 
-            model.append({"activity_text":act_text, "story":story, "list_type":"recent_activity"});
+            model.append({"activity_text":act_text, "story":story, "list_type":"recent_activity", "header": header});
 
         }
 

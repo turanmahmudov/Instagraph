@@ -28,10 +28,6 @@ WorkerScript.onMessage = function(msg) {
             model.append(exploreObj);
 
             last_row += 2
-
-            //obj[i].layout_content.two_by_two_item.channel.media
-            //obj[i].layout_content.fill_items[0].media
-            //obj[i].layout_content.fill_items[1].media
         } else if (obj[i].layout_type === "two_by_two_left") {
             exploreObj = "channel" in obj[i].layout_content.two_by_two_item ? setMedia(obj[i].layout_content.two_by_two_item.channel.media) : setMedia(obj[i].layout_content.two_by_two_item.igtv.media)
             exploreObj.rowSpan = 2
@@ -50,10 +46,6 @@ WorkerScript.onMessage = function(msg) {
             }
 
             last_row += 2
-
-            //obj[i].layout_content.two_by_two_item.channel.media
-            //obj[i].layout_content.fill_items[0].media
-            //obj[i].layout_content.fill_items[1].media
         } else if (obj[i].layout_type === "media_grid") {
             for (var j = 0; j < obj[i].layout_content.medias.length; j++) {
                 exploreObj = setMedia(obj[i].layout_content.medias[j].media)
@@ -65,10 +57,6 @@ WorkerScript.onMessage = function(msg) {
             }
 
             last_row += 1
-
-            //obj[i].layout_content.medias[0].media
-            //obj[i].layout_content.medias[1].media
-            //obj[i].layout_content.medias[2].media
         }
 
         model.sync();

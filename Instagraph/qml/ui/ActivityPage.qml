@@ -49,8 +49,8 @@ PageItem {
 
         var textColor = Helper.hexToRgb(styleApp.common.textColor)
 
-        worker.sendMessage({'obj': data.new_stories, 'model': recentActivityModel, 'clear_model': true, 'hasFollowRequests': hasFollowRequests, 'textColor': textColor})
-        worker.sendMessage({'obj': data.old_stories, 'model': recentActivityModel, 'clear_model': false, 'hasFollowRequests': false, 'textColor': textColor})
+        worker.sendMessage({'obj': data.new_stories, 'model': recentActivityModel, 'clear_model': true, 'hasFollowRequests': hasFollowRequests, 'textColor': textColor, 'old': false})
+        worker.sendMessage({'obj': data.old_stories, 'model': recentActivityModel, 'clear_model': false, 'hasFollowRequests': false, 'textColor': textColor, 'old': true, 'partition': data.partition})
 
         list_loading = false
     }
@@ -200,46 +200,64 @@ PageItem {
                         padding.top: units.gu(1)
                         padding.bottom: units.gu(1)
 
-                        mainSlot: Row {
-                            id: labelRecent
-                            spacing: units.gu(1)
-                            width: parent.width - (story.type == 3 ? (followButton.width+units.gu(4)) : (feed_image.width+units.gu(4)))
+                        mainSlot: Column {
+                            width: parent.width
 
-                            CircleImage {
-                                width: units.gu(5)
-                                height: width
-                                source: story.type == 13 ? "image://theme/info" : (typeof story.args.profile_image !== 'undefined' ? story.args.profile_image : "../images/not_found_user.jpg")
+                            Loader {
+                                visible: header !== ""
+                                active: visible
+                                width: parent.width
+                                height: units.gu(4)
 
-                                MouseArea {
-                                    anchors.fill: parent
-                                    onClicked: {
-                                        pageLayout.pushToCurrent(pageLayout.primaryPage, Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: story.args.profile_id});
-                                    }
+                                sourceComponent: Text {
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    text: i18n.tr(header)
+                                    width: parent.width
+                                    font.weight: Font.DemiBold
                                 }
                             }
 
-                            Column {
-                                width: parent.width - units.gu(6)
-                                anchors.verticalCenter: parent.verticalCenter
+                            Row {
+                                id: labelRecent
+                                spacing: units.gu(1)
+                                width: parent.width - (story.type == 3 ? (followButton.width+units.gu(2)) : (feed_image.width+units.gu(2)))
 
-                                Text {
-                                    text: Helper.formatString(activity_text)
-                                    wrapMode: Text.WordWrap
-                                    width: parent.width
-                                    textFormat: Text.RichText
-                                    color: styleApp.common.textColor
-                                    font.weight: story.type == 13 ? Font.DemiBold : Font.Normal
-                                    onLinkActivated: {
-                                        Scripts.linkClick(activitypage, link, story.type == 1 ? story.args.media[0].id : 0)
+                                CircleImage {
+                                    width: units.gu(5)
+                                    height: width
+                                    source: story.type == 13 ? "image://theme/info" : (typeof story.args.profile_image !== 'undefined' ? story.args.profile_image : "../images/not_found_user.jpg")
+
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        onClicked: {
+                                            pageLayout.pushToCurrent(pageLayout.primaryPage, Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: story.args.profile_id});
+                                        }
                                     }
                                 }
 
-                                Label {
-                                    text: Helper.milisecondsToString(story.args.timestamp)
-                                    fontSize: "small"
-                                    color: styleApp.common.text2Color
-                                    font.weight: Font.Light
-                                    font.capitalization: Font.AllLowercase
+                                Column {
+                                    width: parent.width - units.gu(6)
+                                    anchors.verticalCenter: parent.verticalCenter
+
+                                    Text {
+                                        text: story.type == 3 || story.type == 4 ? Helper.formatRichTextUsers(activity_text) : Helper.formatString(activity_text)
+                                        wrapMode: Text.WordWrap
+                                        width: parent.width
+                                        textFormat: Text.RichText
+                                        color: styleApp.common.textColor
+                                        font.weight: story.type == 13 ? Font.DemiBold : Font.Normal
+                                        onLinkActivated: {
+                                            Scripts.linkClick(activitypage, link, story.type == 1 ? story.args.media[0].id : 0)
+                                        }
+                                    }
+
+                                    Label {
+                                        text: Helper.milisecondsToString(story.args.timestamp)
+                                        fontSize: "small"
+                                        color: styleApp.common.text2Color
+                                        font.weight: Font.Light
+                                        font.capitalization: Font.AllLowercase
+                                    }
                                 }
                             }
                         }
@@ -247,7 +265,7 @@ PageItem {
                         FollowComponent {
                             id: followButton
                             height: units.gu(3.5)
-                            visible: story.type == 3
+                            visible: story.type == 3 && "inline_follow" in story.args
                             friendship_var: story.args.inline_follow
                             userId: story.args.profile_id
 

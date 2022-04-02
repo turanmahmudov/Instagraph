@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Instagraph\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-02 00:33+0000\n"
+"POT-Creation-Date: 2022-04-02 22:51+0000\n"
 "Language: az\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -742,72 +742,72 @@ msgstr ""
 msgid "Start capturing and sharing your moments"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:68
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:87
 #, qt-format
 msgid "%1M"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:68
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:87
 #, qt-format
 msgid "%1 MONTH AGO"
 msgid_plural "%1 MONTHS AGO"
 msgstr[0] "%1 AY ƏVVƏL"
 msgstr[1] "%1 AY ƏVVƏL"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:70
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:89
 #, qt-format
 msgid "%1w"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:70
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:89
 #, qt-format
 msgid "%1 WEEK AGO"
 msgid_plural "%1 WEEKS AGO"
 msgstr[0] "%1 HƏFTƏ ƏVVƏL"
 msgstr[1] "%1 HƏFTƏ ƏVVƏL"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:72
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:91
 #, c-format, qt-format
 msgid "%1d"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:72
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:91
 #, qt-format
 msgid "%1 DAY AGO"
 msgid_plural "%1 DAYS AGO"
 msgstr[0] "%1 GÜN ƏVVƏL"
 msgstr[1] "%1 GÜN ƏVVƏL"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:74
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:93
 #, qt-format
 msgid "%1h"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:74
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:93
 #, qt-format
 msgid "%1 HOUR AGO"
 msgid_plural "%1 HOURS AGO"
 msgstr[0] "%1 SAAT ƏVVƏL"
 msgstr[1] "%1 SAAT ƏVVƏL"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:76
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:95
 #, c-format, qt-format
 msgid "%1m"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:76
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:95
 #, qt-format
 msgid "%1 MINUTE AGO"
 msgid_plural "%1 MINUTES AGO"
 msgstr[0] "%1 DƏQİQƏ ƏVVƏL"
 msgstr[1] "%1 DƏQİQƏ ƏVVƏL"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:78
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:97
 #, c-format, qt-format
 msgid "%1s"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:78
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:97
 #, qt-format
 msgid "%1 SECOND AGO"
 msgid_plural "%1 SECONDS AGO"
