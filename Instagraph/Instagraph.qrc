@@ -7,7 +7,6 @@
         <file>qml/ui/HomePage.qml</file>
         <file>qml/js/Helper.js</file>
         <file>qml/images/not_found_user.jpg</file>
-        <file>qml/ui/SearchPage.qml</file>
         <file>qml/ui/UserPage.qml</file>
         <file>qml/ui/CameraPage.qml</file>
         <file>qml/js/Scripts.js</file>
@@ -25,7 +24,6 @@
         <file>qml/ui/OptionsPage.qml</file>
         <file>qml/ui/About.qml</file>
         <file>qml/ui/Credits.qml</file>
-        <file>qml/ui/Libraries.qml</file>
         <file>qml/ui/DirectThreadPage.qml</file>
         <file>qml/ui/ChangePasswordPage.qml</file>
         <file>qml/ui/DiscoverPeoplePage.qml</file>

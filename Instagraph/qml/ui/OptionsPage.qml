@@ -172,19 +172,6 @@ PageItem {
            }
 
            ListItem {
-               height: librariesLayout.height
-               divider.visible: false
-               ListItemLayout {
-                   id: librariesLayout
-
-                   title.text: i18n.tr("Libraries")
-               }
-               onClicked: {
-                   pageLayout.pushToCurrent(optionspage, Qt.resolvedUrl("Libraries.qml"))
-               }
-           }
-
-           ListItem {
                height: logOutLayout.height
                divider.visible: false
                ListItemLayout {

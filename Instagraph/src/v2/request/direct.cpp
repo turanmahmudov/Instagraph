@@ -58,7 +58,7 @@ void Instagram::getRecentRecipients()
 
     InstagramRequest *getRecentRecipientsRequest =
 
-        d->request("direct_share/recent_recipients/", NULL);
+        d->request("direct_share/recent_recipients/", NULL, false, true);
     QObject::connect(getRecentRecipientsRequest,SIGNAL(replyStringReady(QVariant)), this, SIGNAL(recentRecipientsDataReady(QVariant)));
 
 }
@@ -78,7 +78,7 @@ void Instagram::getRankedRecipients(QString query)
     }
 
     InstagramRequest *getRankedRecipientsRequest =
-        d->request(target, NULL);
+        d->request(target, NULL, false, true);
     QObject::connect(getRankedRecipientsRequest,SIGNAL(replyStringReady(QVariant)),this,SIGNAL(rankedRecipientsDataReady(QVariant)));
 }
 
@@ -138,7 +138,36 @@ void Instagram::directMessage(QString recipients, QString text, QString thread_i
 
 void Instagram::directShare(QString mediaId, QString recipients, QString text)
 {
+    Q_D(Instagram);
 
+    QString boundary = d->m_uuid;
+
+    QUuid uuid;
+
+    /*Body build*/
+    QByteArray body = "";
+    body += "--"+boundary+"\r\n";
+    body += "Content-Disposition: form-data; name=\"media_id\"\r\n\r\n";
+    body += mediaId+"\r\n";
+
+    body += "--"+boundary+"\r\n";
+    body += "Content-Disposition: form-data; name=\"recipient_users\"\r\n\r\n";
+    body += "[["+recipients+"]]\r\n";
+
+    body += "--"+boundary+"\r\n";
+    body += "Content-Disposition: form-data; name=\"client_context\"\r\n\r\n";
+    body += uuid.createUuid().toString().replace("{","").replace("}","")+"\r\n";
+
+    body += "--"+boundary+"\r\n";
+    body += "Content-Disposition: form-data; name=\"text\"\r\n\r\n";
+    body += text+"\r\n";
+
+    body += "--"+boundary+"--";
+
+    InstagramRequest *directShareRequest =
+        d->directRequest("direct_v2/threads/broadcast/media_share/?media_type=photo",boundary, body);
+
+    QObject::connect(directShareRequest,SIGNAL(replyStringReady(QVariant)),this,SIGNAL(directShareDataReady(QVariant)));
 }
 
 void Instagram::directLike(QString recipients, QString thread_id)

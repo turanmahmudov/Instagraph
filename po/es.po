@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-02 22:51+0000\n"
+"POT-Creation-Date: 2022-04-02 23:28+0000\n"
 "PO-Revision-Date: 2018-07-03 09:45+0000\n"
 "Last-Translator: advocatux <advocatux@airpost.net>\n"
 "Language-Team: UBports Spanish Team\n"
@@ -36,11 +36,11 @@ msgstr "Nuevo mensaje"
 msgid "Back"
 msgstr "Atrás"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main2.qml:204
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main2.qml:201
 msgid "Network Error"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main2.qml:205
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main2.qml:202
 msgid "Your device must be connected to the internet."
 msgstr ""
 
@@ -544,8 +544,6 @@ msgstr "Masculino"
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:183
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/SearchLocation.qml:30
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/SearchLocation.qml:45
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:16
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:33
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:196
 msgid "Search"
 msgstr "Buscar"
@@ -556,17 +554,14 @@ msgid "Accounts"
 msgstr "Cuenta"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ExploreFeedPage.qml:68
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:55
 msgid "Tags"
 msgstr "Etiquetas"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ExploreFeedPage.qml:74
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:61
 msgid "Places"
 msgstr "Lugares"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ExploreFeedPage.qml:476
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:324
 msgid " posts"
 msgstr " publicaciones"
 
@@ -589,15 +584,6 @@ msgstr "Seguir cuentas para ver fotos y vídeos aquí en su «feed»"
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ImportPhotoPage.qml:30
 msgid "Choose from"
 msgstr "Elegir desde"
-
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/Libraries.qml:10
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:180
-msgid "Libraries"
-msgstr "Bibliotecas"
-
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/Libraries.qml:33
-msgid "Open Source"
-msgstr "Código abierto"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/LikedMediaPage.qml:15
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/MediaLikersPage.qml:22
@@ -666,7 +652,7 @@ msgstr ""
 "Cuando su cuenta es privada, solo la gente que acepte puede ver sus fotos y "
 "vídeos. Sus seguidores actuales no se verán afectados."
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:193
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:180
 msgid "Log Out"
 msgstr "Cerrar sesión"
 
@@ -707,10 +693,6 @@ msgstr "¿Ya tiene una cuenta? <b>Iniciar sesión</b>"
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/SavedMediaPage.qml:15
 msgid "Saved"
 msgstr "Guardado"
-
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:49
-msgid "People"
-msgstr "Gente"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:24
 msgid "Send to"
@@ -821,6 +803,15 @@ msgid "%1 SECOND AGO"
 msgid_plural "%1 SECONDS AGO"
 msgstr[0] "HACE %1 SEGUNDO"
 msgstr[1] "HACE %1 SEGUNDOS"
+
+#~ msgid "Libraries"
+#~ msgstr "Bibliotecas"
+
+#~ msgid "Open Source"
+#~ msgstr "Código abierto"
+
+#~ msgid "People"
+#~ msgstr "Gente"
 
 #~ msgid "Special Thanks"
 #~ msgstr "Agradecimiento especial"

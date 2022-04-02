@@ -148,17 +148,14 @@ MainView {
         HomePage {
             id: homePage
         }
-        SearchPage {
-            id: searchPage
+        ExploreFeedPage {
+            id: exploreFeedPage
         }
         ActivityPage {
             id: activityPage
         }
         UserPage {
             id: userPage
-        }
-        ExploreFeedPage {
-            id: exploreFeedPage
         }
     }
 

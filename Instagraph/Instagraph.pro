@@ -129,7 +129,6 @@ DISTFILES += \
     qml/ui/OptionsPage.qml \
     qml/ui/About.qml \
     qml/ui/Credits.qml \
-    qml/ui/Libraries.qml \
     qml/ui/DirectThreadPage.qml \
     qml/ui/ChangePasswordPage.qml \
     qml/ui/DiscoverPeoplePage.qml \

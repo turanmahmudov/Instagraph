@@ -13,7 +13,7 @@ void Instagram::getUserTags(QString userId, QString max_id, QString minTimestamp
                    "ranked_content=true" +
                    (max_id.length()>0 ?  "&max_id="+max_id : "" ) +
                    (minTimestamp.length()>0? "&min_timestamp="+minTimestamp : "" )
-                   ,NULL);
+                   ,NULL, false, true);
     QObject::connect(getUserTagsRequest,SIGNAL(replyStringReady(QVariant)),this,SIGNAL(userTagsDataReady(QVariant)));
 }
 

@@ -356,7 +356,7 @@ PageItem {
             var data = JSON.parse(answer);
             recentRecipientsFinished(data);
         }
-        onDirectShareReady: {
+        onDirectShareDataReady: {
             var data = JSON.parse(answer);
             pageStack.pop();
         }

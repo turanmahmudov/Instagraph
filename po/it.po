@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Instagraph\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-02 22:51+0000\n"
+"POT-Creation-Date: 2022-04-02 23:28+0000\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,11 +28,11 @@ msgstr "Nuovo Messaggio"
 msgid "Back"
 msgstr "Indietro"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main2.qml:204
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main2.qml:201
 msgid "Network Error"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main2.qml:205
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main2.qml:202
 msgid "Your device must be connected to the internet."
 msgstr ""
 
@@ -540,8 +540,6 @@ msgstr "Maschio"
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:183
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/SearchLocation.qml:30
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/SearchLocation.qml:45
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:16
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:33
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:196
 msgid "Search"
 msgstr "Cerca"
@@ -552,17 +550,14 @@ msgid "Accounts"
 msgstr "Profilo"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ExploreFeedPage.qml:68
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:55
 msgid "Tags"
 msgstr "Tag"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ExploreFeedPage.qml:74
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:61
 msgid "Places"
 msgstr "Posti"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ExploreFeedPage.qml:476
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:324
 msgid " posts"
 msgstr " post"
 
@@ -587,15 +582,6 @@ msgstr ""
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ImportPhotoPage.qml:30
 msgid "Choose from"
 msgstr "Scegli da"
-
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/Libraries.qml:10
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:180
-msgid "Libraries"
-msgstr "Librerie"
-
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/Libraries.qml:33
-msgid "Open Source"
-msgstr "Open Source"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/LikedMediaPage.qml:15
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/MediaLikersPage.qml:22
@@ -665,7 +651,7 @@ msgstr ""
 "vedere le tue foto ed i tuoi video. I tuoi seguaci già esistenti non "
 "subiranno alcun cambiamento."
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:193
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:180
 msgid "Log Out"
 msgstr "Esci"
 
@@ -707,10 +693,6 @@ msgstr "Hai già un profilo? <b>Accedi</b>"
 #, fuzzy
 msgid "Saved"
 msgstr "Salva"
-
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/SearchPage.qml:49
-msgid "People"
-msgstr "Persone"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:24
 #, fuzzy
@@ -822,6 +804,15 @@ msgid "%1 SECOND AGO"
 msgid_plural "%1 SECONDS AGO"
 msgstr[0] "%1 SECONDO FA"
 msgstr[1] "%1 SECONDI FA"
+
+#~ msgid "Libraries"
+#~ msgstr "Librerie"
+
+#~ msgid "Open Source"
+#~ msgstr "Open Source"
+
+#~ msgid "People"
+#~ msgstr "Persone"
 
 #~ msgid "Special Thanks"
 #~ msgstr "Ringraziamenti Speciali"

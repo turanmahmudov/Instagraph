@@ -59,7 +59,7 @@ Rectangle {
             LineIcon {
                 anchors.centerIn: parent
                 name: "\ueb7b"
-                active: pageLayout.primaryPage == searchPage || pageLayout.primaryPage == exploreFeedPage
+                active: pageLayout.primaryPage == exploreFeedPage
                 iconSize: units.gu(2.4)
                 font.weight: Font.DemiBold
             }

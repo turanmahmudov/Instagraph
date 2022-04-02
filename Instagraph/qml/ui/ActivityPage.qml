@@ -214,6 +214,7 @@ PageItem {
                                     text: i18n.tr(header)
                                     width: parent.width
                                     font.weight: Font.DemiBold
+                                    color: styleApp.common.textColor
                                 }
                             }
 
