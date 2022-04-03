@@ -182,7 +182,8 @@ PageItem {
                                                             item_type == "story_share" ? storyShareMessageComponent :
                                                             item_type == "action_log" ? actionLogMessageComponent :
                                                             item_type == "placeholder" ? placeholderMessageComponent :
-                                                            item_type == "link" ? linkMessageComponent : textMessageComponent
+                                                            item_type == "link" ? linkMessageComponent :
+                                                            item_type == "animated_media" ? animatedMediaComponent : textMessageComponent
                     }
 
                     // Text
@@ -389,6 +390,41 @@ PageItem {
                                     width: Math.min(myMediaShareText.implicitWidth, label.width*3/4)
                                     anchors.centerIn: parent
                                     text: typeof media_share.text != 'undefined' ? media_share.text : ''
+                                }
+
+                                Component.onCompleted: {
+                                    if (outgoing_message) {
+                                        anchors.right = parent.right
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                    // Animated Media
+                    Component {
+                        id: animatedMediaComponent
+
+                        Column {
+                            spacing: units.gu(0.4)
+
+                            Rectangle {
+                                width: label.width*3/4
+                                height: mediShareColumn.height + units.gu(2.5)
+
+                                Column {
+                                    id: mediShareColumn
+                                    width: parent.width
+
+                                    AnimatedImage {
+                                        id: feed_image
+                                        width: parent.width
+                                        height: width/animated_media.images.fixed_height.width*animated_media.images.fixed_height.height
+                                        source: animated_media.images.fixed_height.url
+                                        smooth: true
+                                        clip: true
+                                    }
                                 }
 
                                 Component.onCompleted: {
@@ -903,7 +939,6 @@ PageItem {
     Connections{
         target: instagram
         onDirectThreadDataReady: {
-            console.log(answer)
             var data = JSON.parse(answer);
             directThreadFinished(data);
         }
