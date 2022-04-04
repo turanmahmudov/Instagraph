@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Instagraph\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-03 22:03+0000\n"
+"POT-Creation-Date: 2022-04-04 22:58+0000\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -10,31 +10,31 @@ msgstr ""
 "X-Generator: POEditor.com\n"
 "Plural-Forms: nplurals=2; plural=(n>1);\n"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:84
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:201
+msgid "Network Error"
+msgstr ""
+
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:202
+msgid "Your device must be connected to the internet."
+msgstr ""
+
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main_old.qml:84
 msgid "Refresh"
 msgstr "Yenile"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:92
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main_old.qml:92
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:28
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:21
 msgid "New Message"
 msgstr "Yeni Mesaj"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:100
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main_old.qml:100
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:28
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCropPage.qml:26
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:29
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ExploreFeedPage.qml:16
 msgid "Back"
 msgstr "Geri"
-
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main2.qml:201
-msgid "Network Error"
-msgstr ""
-
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main2.qml:202
-msgid "Your device must be connected to the internet."
-msgstr ""
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/components/ErrorPopup.qml:34
 msgid "OK"
@@ -557,7 +557,7 @@ msgstr "Etiketler"
 msgid "Places"
 msgstr "Yerler"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ExploreFeedPage.qml:476
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ExploreFeedPage.qml:481
 msgid " posts"
 msgstr " gönderi"
 

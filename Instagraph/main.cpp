@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 
     QObject::connect(engine, SIGNAL(quit()), QGuiApplication::instance(), SLOT(quit()));
 
-    view.setSource(QUrl(QStringLiteral("qrc:///Main2.qml")));
+    view.setSource(QUrl(QStringLiteral("qrc:///Main.qml")));
     view.setResizeMode(QQuickView::SizeRootObjectToView);
     view.show();
     return app.exec();

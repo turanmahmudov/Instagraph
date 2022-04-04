@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-03 22:03+0000\n"
+"POT-Creation-Date: 2022-04-04 22:58+0000\n"
 "PO-Revision-Date: 2020-01-07 10:44+0200\n"
 "Last-Translator: Ivo Xavier <ivofernandes12@gmail.com>\n"
 "Language: \n"
@@ -16,31 +16,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:84
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:201
+msgid "Network Error"
+msgstr ""
+
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:202
+msgid "Your device must be connected to the internet."
+msgstr ""
+
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main_old.qml:84
 msgid "Refresh"
 msgstr "Atualizar"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:92
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main_old.qml:92
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:28
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:21
 msgid "New Message"
 msgstr "Nova mensagem"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:100
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main_old.qml:100
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:28
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCropPage.qml:26
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:29
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ExploreFeedPage.qml:16
 msgid "Back"
 msgstr "Atrás"
-
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main2.qml:201
-msgid "Network Error"
-msgstr ""
-
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main2.qml:202
-msgid "Your device must be connected to the internet."
-msgstr ""
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/components/ErrorPopup.qml:34
 msgid "OK"
@@ -564,7 +564,7 @@ msgstr "Etiquetas"
 msgid "Places"
 msgstr "Locais"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ExploreFeedPage.qml:476
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ExploreFeedPage.qml:481
 msgid " posts"
 msgstr " publicações"
 

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>Main.qml</file>
+        <file>Main_old.qml</file>
         <file>qml/components/BouncingProgressBar.qml</file>
         <file>qml/js/Storage.js</file>
         <file>qml/ui/LoginPage.qml</file>
@@ -122,7 +122,7 @@
         <file>qml/fonts/qmldir</file>
         <file>qml/components/ActionLineIconDelegate.qml</file>
         <file>qml/components/MediaItem.qml</file>
-        <file>Main2.qml</file>
+        <file>Main.qml</file>
         <file>qml/components/Helpers/UriHandlerHelper.qml</file>
         <file>qml/components/PageHeaderItem.qml</file>
         <file>qml/components/LoadingSpinner.qml</file>

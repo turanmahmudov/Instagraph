@@ -251,6 +251,11 @@ PageItem {
             anchors.fill: parent
             contentWidth: parent.width
             contentHeight: layout.height
+            onMovementEnded: {
+                if (atYEnd && more_available && !next_coming) {
+                    getExploreFeed(next_max_id);
+                }
+            }
 
             GridLayout {
                 id: layout

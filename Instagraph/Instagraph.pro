@@ -7,34 +7,26 @@ QT += qml quick
 
 UBUNTU_TRANSLATION_DOMAIN="instagraph-devs.turan-mahmudov-l"
 
-equals(INSTAGRAM_API_VERSION, "v1") {
-    SOURCES += src/instagram.cpp \
-        src/instagramrequest.cpp
+SOURCES += src/v2/constants.cpp \
+    src/v2/instagram.cpp \
+    src/v2/instagramrequest.cpp \
+    src/v2/request/account.cpp \
+    src/v2/request/direct.cpp \
+    src/v2/request/discover.cpp \
+    src/v2/request/fbsearch.cpp \
+    src/v2/request/hashtag.cpp \
+    src/v2/request/highlight.cpp \
+    src/v2/request/location.cpp \
+    src/v2/request/media.cpp \
+    src/v2/request/people.cpp \
+    src/v2/request/story.cpp \
+    src/v2/request/timeline.cpp \
+    src/v2/request/usertag.cpp
 
-    HEADERS += src/instagram.h \
-        src/instagramrequest.h
-} else {
-    SOURCES += src/v2/constants.cpp \
-        src/v2/instagram.cpp \
-        src/v2/instagramrequest.cpp \
-        src/v2/request/account.cpp \
-        src/v2/request/direct.cpp \
-        src/v2/request/discover.cpp \
-        src/v2/request/fbsearch.cpp \
-        src/v2/request/hashtag.cpp \
-        src/v2/request/highlight.cpp \
-        src/v2/request/location.cpp \
-        src/v2/request/media.cpp \
-        src/v2/request/people.cpp \
-        src/v2/request/story.cpp \
-        src/v2/request/timeline.cpp \
-        src/v2/request/usertag.cpp
-
-    HEADERS += src/v2/constants.h \
-        src/v2/instagram.h \
-        src/v2/instagram_p.h \
-        src/v2/instagramrequest.h
-}
+HEADERS += src/v2/constants.h \
+    src/v2/instagram.h \
+    src/v2/instagram_p.h \
+    src/v2/instagramrequest.h
 
 SOURCES += main.cpp \
     src/cripto/hmacsha.cpp \

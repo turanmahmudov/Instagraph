@@ -9,10 +9,13 @@ void Instagram::getExploreFeed(QString max_id)
     InstagramRequest *getExploreRequest =
         d->request("discover/topical_explore/?"
                    "is_prefetch=false&"
-                   "omit_cover_media=false&"
+                   "omit_cover_media=true&"
+                   "module=explore_popular&"
+                   "reels_configuration=hide_hero&"
                    "use_sectional_payload=true&"
                    "timezone_offset=0&"
-                   "include_fixed_destinations=false&"
+                   "cluster_id=explore_all:0&"
+                   "include_fixed_destinations=true&"
                    "session_id=" + d->m_token +
                    (max_id.length()>0 ? "&max_id="+max_id : "" )
                    ,NULL, false, true);

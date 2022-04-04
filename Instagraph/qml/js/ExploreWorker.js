@@ -1,3 +1,4 @@
+var last_row = 0
 WorkerScript.onMessage = function(msg) {
     var obj = msg.obj;
     var model = msg.model;
@@ -7,7 +8,6 @@ WorkerScript.onMessage = function(msg) {
     }
 
     // Object loop
-    var last_row = 0
     var exploreObj
     for (var i = 0; i < obj.length; i++) {
         if (obj[i].layout_type === "two_by_two_right") {
@@ -20,7 +20,7 @@ WorkerScript.onMessage = function(msg) {
                 model.append(exploreObj);
             }
 
-            exploreObj = "channel" in obj[i].layout_content.two_by_two_item ? setMedia(obj[i].layout_content.two_by_two_item.channel.media) : setMedia(obj[i].layout_content.two_by_two_item.igtv.media)
+            exploreObj = extractMediaObjFromTwoByTwo(obj[i].layout_content.two_by_two_item)
             exploreObj.rowSpan = 2
             exploreObj.columnSpan = 2
             exploreObj.row = last_row
@@ -29,7 +29,7 @@ WorkerScript.onMessage = function(msg) {
 
             last_row += 2
         } else if (obj[i].layout_type === "two_by_two_left") {
-            exploreObj = "channel" in obj[i].layout_content.two_by_two_item ? setMedia(obj[i].layout_content.two_by_two_item.channel.media) : setMedia(obj[i].layout_content.two_by_two_item.igtv.media)
+            exploreObj = extractMediaObjFromTwoByTwo(obj[i].layout_content.two_by_two_item)
             exploreObj.rowSpan = 2
             exploreObj.columnSpan = 2
             exploreObj.row = last_row
@@ -90,4 +90,14 @@ function setMedia(media) {
     list_obj.list_type = 'media_entry';
 
     return list_obj
+}
+
+function extractMediaObjFromTwoByTwo(obj) {
+    if ("channel" in obj) {
+         return setMedia(obj.channel.media)
+    } else if ("igtv" in obj) {
+        return setMedia(obj.igtv.media)
+    } else {
+        return setMedia(obj.media)
+    }
 }
