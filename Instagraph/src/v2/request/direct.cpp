@@ -12,6 +12,7 @@ void Instagram::getInbox(QString cursorId)
 
     InstagramRequest *getInboxRequest =
         d->request("direct_v2/inbox/?"
+                   "visual_message_return_type=unseen&"
                    "persistentBadging=true&"
                    "use_unified_inbox=true" +
                    (cursorId.length()>0 ? "&cursor=" + cursorId : "")

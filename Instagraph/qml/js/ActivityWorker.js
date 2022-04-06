@@ -24,23 +24,16 @@ WorkerScript.onMessage = function(msg) {
             }
         }
 
-        var act_text = "";
-
         // empty
-        if (story.args && typeof story.args.links == 'undefined') {
+        if (story.args && !("links" in story.args)) {
             if ("rich_text" in story.args) {
-                act_text = story.args.rich_text;
-
-                model.append({"activity_text":act_text, "story":story, "list_type":"recent_activity", "header": header});
+                model.append({"activity_text": story.args.rich_text, "story": story, "list_type": "recent_activity", "header": header});
             } else {
-                act_text = story.args.text;
-
-                model.append({"activity_text":act_text, "story":story, "list_type":"recent_activity", "header": header});
+                model.append({"activity_text": story.args.text, "story": story, "list_type": "recent_activity", "header": header});
             }
 
-        } else if (story.args && typeof story.args.links != 'undefined' && story.args.links.length > 0) {
-
-            act_text = story.args.text;
+        } else if (story.args && "links" in story.args && story.args.links.length > 0) {
+            var act_text = story.args.text;
             var linked_part = [];
             var linked_part_types = [];
             var linked_part_ids = [];
@@ -52,11 +45,12 @@ WorkerScript.onMessage = function(msg) {
             }
 
             for (var k = 0; k < linked_part.length; k++) {
-                if (linked_part_types[k] == "like_count_chrono") {
-                    var rpl_with = '<a href="likes://'+linked_part[k]+'" style="text-decoration:none;font-weight:500;color:'+msg.textColor+';">'+linked_part[k]+'</a>';
+                var rpl_with
+                if (linked_part_types[k] === "like_count_chrono") {
+                    rpl_with = '<a href="likes://'+linked_part[k]+'" style="text-decoration:none;font-weight:500;color:'+msg.textColor+';">'+linked_part[k]+'</a>';
                     act_text = act_text.replace(linked_part[k], rpl_with);
-                } else if (linked_part_types[k] == "user") {
-                    var rpl_with = '<a href="userid://'+linked_part_ids[k]+'" style="text-decoration:none;font-weight:500;color:'+msg.textColor+';">'+linked_part[k]+'</a>';
+                } else if (linked_part_types[k] === "user") {
+                    rpl_with = '<a href="userid://'+linked_part_ids[k]+'" style="text-decoration:none;font-weight:500;color:'+msg.textColor+';">'+linked_part[k]+'</a>';
                     act_text = act_text.replace(linked_part[k], rpl_with);
                 }
             }

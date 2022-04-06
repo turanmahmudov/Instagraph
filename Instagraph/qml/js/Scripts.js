@@ -1,12 +1,12 @@
 function linkClick(page, link, photoId) {
     var result = link.split("://");
-    if(result[0] == "user") {
+    if(result[0] === "user") {
         pageLayout.pushToCurrent(page, Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameString: result[1]});
-    } else if(result[0] == "userid") {
+    } else if(result[0] === "userid") {
         pageLayout.pushToCurrent(page, Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: result[1]});
-    } else if(result[0] == "tag") {
+    } else if(result[0] === "tag") {
         pageLayout.pushToCurrent(page, Qt.resolvedUrl("../ui/TagFeedPage.qml"), {tag: result[1]});
-    } else if(result[0] == "likes") {
+    } else if(result[0] === "likes") {
         pageLayout.pushToCurrent(page, Qt.resolvedUrl("../ui/MediaLikersPage.qml"), {photoId: photoId});
     } else {
         Qt.openUrlExternally(link)

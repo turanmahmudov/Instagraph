@@ -142,5 +142,6 @@
         <file>qml/js/ExploreWorker.js</file>
         <file>qml/ui/ExploreFeedPage.qml</file>
         <file>qml/js/SearchWorker.js</file>
+        <file>qml/js/HomeWorker.js</file>
     </qresource>
 </RCC>

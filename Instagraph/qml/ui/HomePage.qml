@@ -12,8 +12,6 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-import "../js/TimelineWorker.js" as JsModel
-
 PageItem {
     id: homepage
 
@@ -84,7 +82,7 @@ PageItem {
             more_available = data.more_available;
             next_coming = true;
 
-            worker.sendMessage({'feed': 'homePage', 'obj': data.feed_items, 'model': homePhotosModel, 'suggestionsModel': homeSuggestionsModel, 'clear_model': clear_models})
+            worker.sendMessage({'obj': data.feed_items, 'model': homePhotosModel, 'suggestionsModel': homeSuggestionsModel, 'clear_model': clear_models})
 
             for (var i = 0; i < data.feed_items.length; i++) {
                 var obj = data.feed_items[i];
@@ -102,7 +100,7 @@ PageItem {
 
     WorkerScript {
         id: worker
-        source: "../js/TimelineWorker.js"
+        source: "../js/HomeWorker.js"
         onMessage: {
 
         }
@@ -117,7 +115,6 @@ PageItem {
             clear_models = true
         }
         instagram.getTimelineFeed(next_id, seen_posts.join(','), isPullToRefresh);
-        //instagram.getTimelineFeed(next_id);
     }
 
     ListModel {

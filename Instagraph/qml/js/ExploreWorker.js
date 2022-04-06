@@ -10,8 +10,9 @@ WorkerScript.onMessage = function(msg) {
     // Object loop
     var exploreObj
     for (var i = 0; i < obj.length; i++) {
+        var j = 0
         if (obj[i].layout_type === "two_by_two_right") {
-            for (var j = 0; j < obj[i].layout_content.fill_items.length; j++) {
+            for (j = 0; j < obj[i].layout_content.fill_items.length; j++) {
                 exploreObj = setMedia(obj[i].layout_content.fill_items[j].media)
                 exploreObj.rowSpan = 1
                 exploreObj.columnSpan = 1
@@ -36,7 +37,7 @@ WorkerScript.onMessage = function(msg) {
             exploreObj.column = 0
             model.append(exploreObj);
 
-            for (var j = 0; j < obj[i].layout_content.fill_items.length; j++) {
+            for (j = 0; j < obj[i].layout_content.fill_items.length; j++) {
                 exploreObj = setMedia(obj[i].layout_content.fill_items[j].media)
                 exploreObj.rowSpan = 1
                 exploreObj.columnSpan = 1
@@ -47,7 +48,7 @@ WorkerScript.onMessage = function(msg) {
 
             last_row += 2
         } else if (obj[i].layout_type === "media_grid") {
-            for (var j = 0; j < obj[i].layout_content.medias.length; j++) {
+            for (j = 0; j < obj[i].layout_content.medias.length; j++) {
                 exploreObj = setMedia(obj[i].layout_content.medias[j].media)
                 exploreObj.rowSpan = 1
                 exploreObj.columnSpan = 1
@@ -67,24 +68,15 @@ function setMedia(media) {
     var list_obj = {}
     list_obj.photo_id = media.id
 
-    // Preview Comments
-    list_obj.preview_comments = {}
-    list_obj.preview_comments.comments = media.preview_comments
-    for (var j = 0; j < media.max_num_visible_preview_comments; j++) {
-        if (typeof media.preview_comments[j] !== 'undefined') {
-            list_obj.preview_comments.comments[j].ctext = media.preview_comments[j].text
-        }
-    }
-
     // Carousel media
     list_obj.carousel_media_obj = {}
-    list_obj.carousel_media_obj.media = typeof media.carousel_media != 'undefined' ? media.carousel_media : []
+    list_obj.carousel_media_obj.media = "carousel_media" in media ? media.carousel_media : []
 
     // Images
-    list_obj.images_obj = typeof media.image_versions2 != 'undefined' ? media.image_versions2 : {}
+    list_obj.images_obj = "image_versions2" in media ? media.image_versions2 : {}
 
     // Video
-    list_obj.video_url = typeof media.video_versions != 'undefined' ? media.video_versions[0].url : ''
+    list_obj.video_url = "video_versions" in media ? media.video_versions[0].url : ''
 
     list_obj.media_type = media.media_type
     list_obj.list_type = 'media_entry';
