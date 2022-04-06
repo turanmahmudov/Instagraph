@@ -82,7 +82,7 @@ PageItem {
             bottomMargin: bottomMenu.height
             top: activitypage.header.bottom
         }
-        active: recentActivityComponent
+        active: true
         sourceComponent: recentActivityComponent
     }
 
@@ -221,17 +221,17 @@ PageItem {
                             Row {
                                 id: labelRecent
                                 spacing: units.gu(1)
-                                width: parent.width - (story.type == 3 ? (followButton.width+units.gu(2)) : (feed_image.width+units.gu(2)))
+                                width: parent.width - (story_type === 3 ? followButton.width : feed_image.width)
 
                                 CircleImage {
                                     width: units.gu(5)
                                     height: width
-                                    source: story.type == 13 ? "image://theme/info" : (typeof story.args.profile_image !== 'undefined' ? story.args.profile_image : "../images/not_found_user.jpg")
+                                    source: story_type === 13 ? "image://theme/info" : (typeof profile_image !== 'undefined' ? profile_image : "../images/not_found_user.jpg")
 
                                     MouseArea {
                                         anchors.fill: parent
                                         onClicked: {
-                                            pageLayout.pushToCurrent(pageLayout.primaryPage, Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: story.args.profile_id});
+                                            if (typeof profile_id !== 'undefined') pageLayout.pushToCurrent(pageLayout.primaryPage, Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: profile_id})
                                         }
                                     }
                                 }
@@ -241,19 +241,19 @@ PageItem {
                                     anchors.verticalCenter: parent.verticalCenter
 
                                     Text {
-                                        text: story.type == 3 || story.type == 4 ? Helper.formatRichTextUsers(activity_text) : Helper.formatString(activity_text)
+                                        text: (story_type === 3 || story_type === 4) ? Helper.formatRichTextUsers(activity_text) : Helper.formatString(activity_text)
                                         wrapMode: Text.WordWrap
                                         width: parent.width
                                         textFormat: Text.RichText
                                         color: styleApp.common.textColor
-                                        font.weight: story.type == 13 ? Font.DemiBold : Font.Normal
+                                        font.weight: story_type == 13 ? Font.DemiBold : Font.Normal
                                         onLinkActivated: {
-                                            Scripts.linkClick(activitypage, link, story.type == 1 ? story.args.media[0].id : 0)
+                                            Scripts.linkClick(activitypage, link, story_type === 1 ? media.id : 0)
                                         }
                                     }
 
                                     Label {
-                                        text: Helper.milisecondsToString(story.args.timestamp)
+                                        text: Helper.milisecondsToString(timestamp)
                                         fontSize: "small"
                                         color: styleApp.common.text2Color
                                         font.weight: Font.Light
@@ -266,9 +266,9 @@ PageItem {
                         FollowComponent {
                             id: followButton
                             height: units.gu(3.5)
-                            visible: story.type == 3 && "inline_follow" in story.args
-                            friendship_var: story.args.inline_follow
-                            userId: story.args.profile_id
+                            visible: story_type == 3 && typeof inline_follow !== 'undefined'
+                            friendship_var: inline_follow
+                            userId: profile_id
 
                             anchors.verticalCenter: parent.verticalCenter
                             SlotsLayout.position: SlotsLayout.Trailing
@@ -277,10 +277,10 @@ PageItem {
 
                         FeedImage {
                             id: feed_image
-                            width: (story.type == 1 || story.type == 14) ? units.gu(5) : 0
+                            width: (story_type === 1 || story_type === 14) ? units.gu(5) : 0
                             height: width
-                            visible: (story.type == 1 || story.type == 14)
-                            source: (story.type == 1 || story.type == 14) ? story.args.media[0].image : ""
+                            visible: (story_type === 1 || story_type === 14)
+                            source: visible ? media.image : ""
 
                             anchors.verticalCenter: parent.verticalCenter
                             SlotsLayout.position: SlotsLayout.Trailing
@@ -290,8 +290,8 @@ PageItem {
                                 anchors.fill: parent
 
                                 onClicked: {
-                                    if (story.type == 1 || story.type == 14) {
-                                        pageLayout.pushToNext(pageLayout.primaryPage, Qt.resolvedUrl("SinglePhoto.qml"), {photoId: story.args.media[0].id});
+                                    if (feed_image.visible) {
+                                        pageLayout.pushToNext(pageLayout.primaryPage, Qt.resolvedUrl("SinglePhoto.qml"), {photoId: media.id});
                                     }
                                 }
                             }

@@ -16,20 +16,16 @@ PageItem {
         title: usernameString ? usernameString : ''
         trailingActions: [
             Action {
-                visible: usernameId != activeUsernameId
+                visible: usernameId !== activeUsernameId
                 id: userMenuAction
                 text: i18n.tr("Options")
-                name: "\ueb2e"
+                iconName: "\ueb2e"
                 onTriggered: {
-                    if (usernameId != activeUsernameId) {
-                        PopupUtils.open(userMenuComponent)
-                    } else {
-                        pageLayout.pushToCurrent(otheruserpage, Qt.resolvedUrl("OptionsPage.qml"));
-                    }
+                    PopupUtils.open(userMenuComponent)
                 }
             },
             Action {
-                visible: usernameId == activeUsernameId
+                visible: usernameId === activeUsernameId
                 id: settingsAction
                 text: i18n.tr("Settings")
                 iconName: "\uea6f"
@@ -582,6 +578,8 @@ PageItem {
             }
         }
         onInfoByIdDataReady: {
+            console.log(answer)
+
             var data = JSON.parse(answer);
             usernameDataFinished(data);
         }
@@ -589,7 +587,7 @@ PageItem {
             var data = JSON.parse(answer);
             usernameId = data.user.pk;
 
-            if (usernameId == activeUsernameId) {
+            if (usernameId === activeUsernameId) {
                 selfProfile = true
 
                 getUsernameFeed();

@@ -8,14 +8,13 @@ WorkerScript.onMessage = function(msg) {
     }
 
     if (msg.hasFollowRequests) {
-        model.append({"list_type":"follow_requests"});
+        model.append({"list_type": "follow_requests"});
     }
 
     // Object loop
     for (var i = 0; i < obj.length; i++) {
-        var story = obj[i];
+        // time bucket headers
         var header = ""
-
         if (msg.old === true && "time_bucket" in msg.partition) {
             for (var h = 0; h < msg.partition.time_bucket.headers.length; h++) {
                 if (i === msg.partition.time_bucket.indices[h]) {
@@ -24,14 +23,18 @@ WorkerScript.onMessage = function(msg) {
             }
         }
 
+        var story = obj[i]
+
+        var list_obj = generateListObj(story)
+        list_obj.header = header
+
         // empty
         if (story.args && !("links" in story.args)) {
             if ("rich_text" in story.args) {
-                model.append({"activity_text": story.args.rich_text, "story": story, "list_type": "recent_activity", "header": header});
+                list_obj.activity_text = story.args.rich_text
             } else {
-                model.append({"activity_text": story.args.text, "story": story, "list_type": "recent_activity", "header": header});
+                list_obj.activity_text = story.args.text
             }
-
         } else if (story.args && "links" in story.args && story.args.links.length > 0) {
             var act_text = story.args.text;
             var linked_part = [];
@@ -55,10 +58,26 @@ WorkerScript.onMessage = function(msg) {
                 }
             }
 
-            model.append({"activity_text":act_text, "story":story, "list_type":"recent_activity", "header": header});
+            list_obj.activity_text = act_text
 
         }
 
+        model.append(list_obj);
         model.sync();
     }
+}
+
+function generateListObj(story) {
+    var list_obj = {}
+
+    list_obj.story_type = story.type
+    if ("profile_image" in story.args) list_obj.profile_image = story.args.profile_image
+    if ("profile_id" in story.args) list_obj.profile_id = story.args.profile_id
+    if ("media" in story.args) list_obj.media = story.args.media[0]
+    if ("inline_follow" in story.args) list_obj.inline_follow = story.args.inline_follow
+    list_obj.timestamp = story.args.timestamp
+    list_obj.story = story
+    list_obj.list_type = "recent_activity"
+
+    return list_obj
 }

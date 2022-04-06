@@ -144,22 +144,53 @@ Column {
             wrapMode: Text.WordWrap
         }
 
-        Label {
-            text: userData.biography
+        Loader {
             width: parent.width
-            wrapMode: Text.WordWrap
-            onLinkActivated: {
-                Scripts.linkClick(userpage, link)
+            visible: userData.is_business
+            active: visible
+
+            sourceComponent: Label {
+                text: userData.category
+                width: parent.width
+                color: styleApp.common.text2Color
             }
         }
 
-        Text {
-            text: '<a href="'+userData.external_url+'" style="text-decoration:none;color:'+Helper.hexToRgb(styleApp.common.linkColor)+';">'+userData.external_url+'</a>'
-            wrapMode: Text.WordWrap
+        Label {
+            text: Helper.formatString(userData.biography).split("\n").join("<br>")
             width: parent.width
+            wrapMode: Text.WordWrap
             textFormat: Text.RichText
             onLinkActivated: {
-                Scripts.linkClick(userpage, link)
+                Scripts.linkClick(currentPage, link)
+            }
+        }
+
+        Loader {
+            width: parent.width
+            visible: "external_url" in userData && userData.external_url.length > 0
+            active: visible
+
+            sourceComponent: Text {
+                text: '<a href="'+userData.external_url+'" style="text-decoration:none;color:'+Helper.hexToRgb(styleApp.common.linkColor)+';">'+userData.external_url+'</a>'
+                wrapMode: Text.WordWrap
+                width: parent.width
+                textFormat: Text.RichText
+                onLinkActivated: {
+                    Scripts.linkClick(currentPage, link)
+                }
+            }
+        }
+
+        Loader {
+            width: parent.width
+            visible: userData.is_business && (("address_street" in userData && userData.address_street.length > 0) || ("city_name" in userData && userData.city_name.length > 0))
+            active: visible
+
+            sourceComponent: Label {
+                text: userData.address_street + (userData.city_name && userData.address_street ? (", " + userData.city_name) : (userData.city_name ? userData.city_name : ""))
+                width: parent.width
+                color: styleApp.common.text2Color
             }
         }
     }

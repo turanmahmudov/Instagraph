@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Instagraph\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-06 15:20+0000\n"
+"POT-Creation-Date: 2022-04-06 22:56+0000\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,20 +42,20 @@ msgstr ""
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/components/FollowComponent.qml:56
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/components/FollowComponent.qml:123
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:294
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:290
 msgid "Following"
 msgstr "Takip ediliyor"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/components/FollowComponent.qml:64
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/components/FollowComponent.qml:99
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:320
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:316
 msgid "Requested"
 msgstr "İstek gönderildi"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/components/FollowComponent.qml:72
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/components/FollowComponent.qml:81
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/components/FollowComponent.qml:111
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:307
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:303
 msgid "Follow"
 msgstr "Takip et"
 
@@ -471,7 +471,7 @@ msgstr "Tamam"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:16
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OptionsPage.qml:61
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:344
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:340
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/UserPage.qml:211
 msgid "Edit Profile"
 msgstr "Profili Düzenle"
@@ -587,7 +587,7 @@ msgid "Likes"
 msgstr "Beğeniler"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/LikedMediaPage.qml:121
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:477
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:473
 msgid "No photos or videos yet!"
 msgstr "Henüz fotoğraf ya da video yok"
 
@@ -652,29 +652,29 @@ msgstr ""
 msgid "Log Out"
 msgstr "Çıkış"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:34
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:30
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/UserPage.qml:39
 msgid "Settings"
 msgstr "Ayarlar"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:216
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:212
 msgid "Block"
 msgstr "Engelle"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:332
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:328
 msgid "Unblock"
 msgstr "Engeli Kaldır"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:475
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:471
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/UserPage.qml:361
 msgid "No Photos Yet"
 msgstr "Henüz hiç fotoğraf yok"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:494
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:490
 msgid "This account is private."
 msgstr "Bu hesap gizli."
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:495
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/OtherUserPage.qml:491
 msgid "Follow to see their photos and videos."
 msgstr "Fotoğraf ile videolarını görebilmek için takip et"
 

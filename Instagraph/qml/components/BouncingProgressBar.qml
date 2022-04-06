@@ -11,7 +11,7 @@ Item {
         id: rectangle
         anchors.fill: parent
         color: UbuntuColors.blue
-        visible: animation.running // Avoid to show the blue bar before animation starts
+        visible: animation.running
     }
 
     SequentialAnimation {
