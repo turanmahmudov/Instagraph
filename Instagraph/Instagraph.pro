@@ -17,6 +17,7 @@ SOURCES += src/v2/constants.cpp \
     src/v2/request/hashtag.cpp \
     src/v2/request/highlight.cpp \
     src/v2/request/location.cpp \
+    src/v2/request/location_search.cpp \
     src/v2/request/media.cpp \
     src/v2/request/people.cpp \
     src/v2/request/story.cpp \

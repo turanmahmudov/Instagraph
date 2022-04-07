@@ -23,6 +23,10 @@ PageItem {
     property bool list_loading: false
 
     function mediaDataFinished(data) {
+        if (!("items" in data) || ("items" in data && data.items.length === 0)) {
+            pageLayout.removePages(singlephotopage)
+        }
+
         worker.sendMessage({'feed': 'singlePhotoPage', 'obj': data.items, 'model': singlePhotoModel, 'clear_model': true})
 
         list_loading = false

@@ -38,8 +38,8 @@ function pushSingleImage(page, mediaId) {
     pageLayout.pushToCurrent(page, Qt.resolvedUrl("../ui/SinglePhoto.qml"), {photoId: mediaId})
 }
 
-function publishImage(url, caption, location) {
-    instagram.postImage(String(url).replace('file://', ''), caption, location);
+function publishImage(url, caption, location, disableComments = false) {
+    instagram.postImage(String(url).replace('file://', ''), caption, location, "", disableComments ? "1" : "0");
 }
 
 function logOut() {

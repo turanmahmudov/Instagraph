@@ -54,6 +54,7 @@ private:
     QDir m_photos_path;
 
     QVariantMap lastUploadLocation;
+    QString disableComments;
 
     QNetworkAccessManager *m_manager;
     QNetworkCookieJar *m_jar;

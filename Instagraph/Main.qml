@@ -66,6 +66,7 @@ MainView {
     property string tmpPassword: ""
 
     signal fileImported(var fileUrl)
+    signal locationSelected(var location)
 
     // API
     Instagram {

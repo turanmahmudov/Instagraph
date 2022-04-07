@@ -37,7 +37,7 @@ PageItem {
             Action {
                 id: nextPageAction
                 text: i18n.tr("Next")
-                iconName: "next"
+                iconName: "\uea5c"
                 onTriggered: {
                     if (!imageproc.saveToDisk(instagram.photos_path() + "/" + new Date().valueOf() + ".jpg", 100)) {
                         console.log("ERROR", "File not saved!")

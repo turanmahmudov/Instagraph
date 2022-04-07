@@ -16,6 +16,7 @@ PageItem {
 
     property var imagePath
 
+    property bool locationSelected: false
     property var locationVar: ({})
 
     property bool imageUploading: false
@@ -36,10 +37,10 @@ PageItem {
             Action {
                 id: nextPageAction
                 text: i18n.tr("Share")
-                iconName: "tick"
+                iconName: "\uea55"
                 onTriggered: {
                     imageUploading = true
-                    Scripts.publishImage(imagePath, caption.text, locationVar)
+                    Scripts.publishImage(imagePath, caption.text, locationVar, disableCommentsSwitch.checked)
                 }
             }
 
@@ -125,79 +126,62 @@ PageItem {
         }
 
         ListItem.Base {
-            width: parent.width
-            showDivider: true
+            height: addLocationLayout.height
+            divider.visible: true
             onClicked: {
-                var searchLocationPage = pageLayout.push(Qt.resolvedUrl("SearchLocation.qml"));
+                pageLayout.pushToCurrent(cameracaptionpage, Qt.resolvedUrl("SearchLocation.qml"));
 
-                searchLocationPage.locationSelected.connect(function(location) {
+                mainView.locationSelected.connect(function(location) {
+                    locationSelected = true
                     locationVar = location;
-
-                    if (typeof location.address != 'undefined') {
-                        addLocationButton.visible = false;
-                        addLocationSpace.visible = true;
-                        locationLabel.text = location.name;
-                    }
-
-                    //console.log(JSON.stringify(location));
                 })
             }
+            ListItemLayout {
+                id: addLocationLayout
+                padding.leading: 0
+                padding.trailing: 0
 
-            Row {
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.right: parent.right
-                anchors.left: parent.left
-                spacing: units.gu(1)
+                title.text: locationSelected ? locationVar.name : i18n.tr("Add Location")
 
-                Icon {
-                    width: units.gu(2)
+                Item {
+                    visible: locationSelected
+                    width: visible ? units.gu(2) : 0
                     height: width
-                    name: "location"
-                }
+                    SlotsLayout.position: SlotsLayout.Trailing
 
-                Item {
-                    id: addLocationButton
-                    width: parent.width - units.gu(3)
-                    height: addLocationLabel.height
-
-                    Label {
-                        id: addLocationLabel
-                        width: parent.width
-                        wrapMode: Text.WordWrap
-                        text: i18n.tr("Add Location")
-                    }
-                }
-
-                Item {
-                    id: addLocationSpace
-                    visible: false
-                    width: parent.width - units.gu(3)
-                    height: addLocationLabel.height
-
-                    Label {
-                        id: locationLabel
-                        width: parent.width - units.gu(3)
-                        wrapMode: Text.WordWrap
+                    LineIcon {
+                        anchors.centerIn: parent
+                        name: "\uea63"
+                        color: styleApp.common.iconActiveColor
+                        iconSize: units.gu(2)
                     }
 
-                    Icon {
-                        width: units.gu(2)
-                        height: width
-                        anchors.right: parent.right
-                        name: "close"
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                locationVar = {};
-                                addLocationButton.visible = true;
-                                addLocationSpace.visible = false;
-                                locationLabel.text = "";
-                            }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            locationSelected = false
+                            locationVar = {}
                         }
                     }
                 }
+            }
+        }
 
+        ListItem.Base {
+            height: disableCommentsLayout.height
+            divider.visible: true
+            ListItemLayout {
+                id: disableCommentsLayout
+                padding.leading: 0
+                padding.trailing: 0
+
+                title.text: i18n.tr("Turn off commenting")
+
+                Switch {
+                    id: disableCommentsSwitch
+                    SlotsLayout.position: SlotsLayout.Trailing
+                    checked: false
+                }
             }
         }
     }
@@ -213,7 +197,6 @@ PageItem {
             Scripts.pushSingleImage(pageLayout.primaryPage, data.media.id)
         }
         onImageUploadProgressDataReady: {
-            //console.log(answer);
             uploadProgressBar.value = answer
         }
     }

@@ -12,7 +12,6 @@ import "../js/Scripts.js" as Scripts
 
 PageItem {
     id: cameracroppage
-    // Clear below codes
 
     property int editPhotoMode: 1
 
@@ -34,7 +33,7 @@ PageItem {
             Action {
                 id: nextPageAction
                 text: i18n.tr("Next")
-                iconName: "next"
+                iconName: "\uea5c"
                 onTriggered: {
                     //Scripts.pushImageCaption(imagePath)
 

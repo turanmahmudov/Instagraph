@@ -49,9 +49,6 @@ PageItem {
         }
     }
 
-    signal cancel()
-    signal locationSelected(var location)
-
     function searchLocationDataFinished(data) {
         searchPlacesModel.clear();
 
@@ -90,16 +87,16 @@ PageItem {
             anchors.fill: parent
 
             clip: true
-            cacheBuffer: searchlocationpage.height*2
+            cacheBuffer: searchlocationpage.height
             model: searchPlacesModel
             delegate: ListItem {
                 id: searchPlacesDelegate
                 height: layout.height
                 divider.visible: false
                 onClicked: {
-                    locationSelected({"name":name.replace("&", "%26"), "address":address.replace("&", "%26"), "lat":lat.toFixed(4), "lng":lng.toFixed(4), "external_id":external_id, "external_id_source":external_id_source})
+                    mainView.locationSelected({"name":name.replace("&", "%26"), "address":address.replace("&", "%26"), "lat":lat.toFixed(4), "lng":lng.toFixed(4), "external_id":external_id, "external_id_source":external_id_source})
 
-                    pageStack.pop()
+                    pageLayout.removePages(searchlocationpage)
                 }
 
                 SlotsLayout {
@@ -120,11 +117,19 @@ PageItem {
                             width: units.gu(5)
                             height: width
 
-                            Icon {
-                                anchors.centerIn: parent
-                                width: units.gu(3)
-                                height: width
-                                name: "location"
+                            Rectangle {
+                                anchors.fill: parent
+                                color: "transparent"
+                                border.width: units.gu(0.1)
+                                border.color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
+                                radius: width/2
+
+                                LineIcon {
+                                    anchors.centerIn: parent
+                                    width: units.gu(3)
+                                    height: width
+                                    name: "\ueb1c"
+                                }
                             }
                         }
 

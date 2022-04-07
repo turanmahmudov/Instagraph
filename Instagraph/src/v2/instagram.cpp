@@ -342,7 +342,7 @@ void InstagramPrivate::syncFeatures()
 }
 
 //FIXME: uploadImage is not public yeat. Give me few weeks to optimize code
-void Instagram::postImage(QString path, QString caption, QVariantMap location, QString upload_id)
+void Instagram::postImage(QString path, QString caption, QVariantMap location, QString upload_id, QString disableComments)
 {
     Q_D(Instagram);
 
@@ -350,6 +350,7 @@ void Instagram::postImage(QString path, QString caption, QVariantMap location, Q
     d->m_image_path = path;
 
     d->lastUploadLocation = location;
+    d->disableComments = disableComments;
 
     QFile image(path);
     if(!image.open(QIODevice::ReadOnly))
@@ -428,27 +429,31 @@ void InstagramPrivate::configurePhoto(QVariant answer)
                 data.insert("_uid",                 m_username_id);
                 data.insert("_csrftoken",           "Set-Cookie: csrftoken="+m_token);
 
-                if (lastUploadLocation.count() > 0 && lastUploadLocation["name"].toString().length() > 0) {
-                    QJsonObject location;
-                    QString eisk = lastUploadLocation["external_id_source"].toString() + "_id";
-                    location.insert(eisk, lastUploadLocation["external_id"].toString());
-                    location.insert("name",             lastUploadLocation["name"].toString());
-                    location.insert("lat",              lastUploadLocation["lat"].toString());
-                    location.insert("lng",              lastUploadLocation["lng"].toString());
-                    location.insert("address",          lastUploadLocation["address"].toString());
-                    location.insert("external_source",  lastUploadLocation["external_id_source"].toString());
+            if (lastUploadLocation.count() > 0 && lastUploadLocation["name"].toString().length() > 0) {
+                QJsonObject location;
+                QString eisk = lastUploadLocation["external_id_source"].toString() + "_id";
+                location.insert(eisk, lastUploadLocation["external_id"].toString());
+                location.insert("name",             lastUploadLocation["name"].toString());
+                location.insert("lat",              lastUploadLocation["lat"].toString());
+                location.insert("lng",              lastUploadLocation["lng"].toString());
+                location.insert("address",          lastUploadLocation["address"].toString());
+                location.insert("external_source",  lastUploadLocation["external_id_source"].toString());
 
-                    QJsonDocument doc(location);
-                    QString strJson(doc.toJson(QJsonDocument::Compact));
+                QJsonDocument doc(location);
+                QString strJson(doc.toJson(QJsonDocument::Compact));
 
-                    data.insert("location",             strJson);
-                    data.insert("geotag_enabled",       true);
-                    data.insert("media_latitude",       lastUploadLocation["lat"].toString());
-                    data.insert("posting_latitude",     lastUploadLocation["lat"].toString());
-                    data.insert("media_longitude",      lastUploadLocation["lng"].toString());
-                    data.insert("posting_longitude",    lastUploadLocation["lng"].toString());
-                    data.insert("altitude",             rand() % 10 + 800);
-                }
+                data.insert("location",             strJson);
+                data.insert("geotag_enabled",       true);
+                data.insert("media_latitude",       lastUploadLocation["lat"].toString());
+                data.insert("posting_latitude",     lastUploadLocation["lat"].toString());
+                data.insert("media_longitude",      lastUploadLocation["lng"].toString());
+                data.insert("posting_longitude",    lastUploadLocation["lng"].toString());
+                data.insert("altitude",             rand() % 10 + 800);
+            }
+
+            if (disableComments == "1") {
+                data.insert("disable_comments", "1");
+            }
 
             QString signature = InstagramRequest::generateSignature(data);
             InstagramRequest *configureImageRequest =

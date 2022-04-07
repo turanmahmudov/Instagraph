@@ -29,6 +29,7 @@ PageHeader {
         actions: trailingActions
         delegate: ActionLineIconDelegate {
             model: modelData
+            iconSize: units.gu(1.5)
             customIconColor: whiteIcons ? styleApp.common.white : styleApp.common.iconActiveColor
         }
     }

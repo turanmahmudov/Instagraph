@@ -34,7 +34,7 @@ public Q_SLOTS:
     Q_INVOKABLE QString getProfilePic();
     //End
 
-    Q_INVOKABLE void postImage(QString path, QString caption, QVariantMap location, QString upload_id = "");
+    Q_INVOKABLE void postImage(QString path, QString caption, QVariantMap location, QString upload_id = "", QString disableComments = "0");
     Q_INVOKABLE void postVideo(QFile *video);
 
     //Unnown source of funct
@@ -79,6 +79,9 @@ public Q_SLOTS:
     //Location
     Q_INVOKABLE void getGeoMedia(QString usernameId);
     Q_INVOKABLE void getLocationFeed(QString locationId, QString max_id = "");
+
+    // Location Search
+    Q_INVOKABLE void searchLocation(QString lat, QString lng, QString query = "");
 
     //Hashtag
     Q_INVOKABLE void getTagFeed(QString tag, QString max_id="");
@@ -200,6 +203,9 @@ Q_SIGNALS:
     //Location
     void geoMediaDataReady(QVariant answer);
     void getLocationFeedDataReady(QVariant answer);
+
+    // Location Search
+    void searchLocationDataReady(QVariant answer);
 
     //Hashtag
     void tagFeedDataReady(QVariant answer);
