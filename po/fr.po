@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Instagraph\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-07 00:11+0000\n"
+"POT-Creation-Date: 2022-04-07 20:32+0000\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -10,11 +10,11 @@ msgstr ""
 "X-Generator: POEditor.com\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:201
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:203
 msgid "Network Error"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:202
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:204
 msgid "Your device must be connected to the internet."
 msgstr ""
 
@@ -260,16 +260,16 @@ msgstr "Ajouter un lieu"
 msgid "Crop"
 msgstr "Recadrer"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCropPage.qml:37
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:40
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCropPage.qml:36
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:39
 msgid "Next"
 msgstr "Suivant"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:188
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:187
 msgid "Filters"
 msgstr "Filtres"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:188
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:187
 msgid "Tools"
 msgstr "Outils"
 
@@ -582,7 +582,7 @@ msgstr "Bienvenue sur Instagraph !"
 msgid "Follow accounts to see photos and videos here in your feed."
 msgstr "Suivez des comptes pour voir des photos et des vidéos dans votre flux."
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ImportPhotoPage.qml:30
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ImportPhotoPage.qml:28
 msgid "Choose from"
 msgstr "Choisir parmi"
 
@@ -736,72 +736,72 @@ msgstr "Les photos où vous êtes identifié apparaîtront ici."
 msgid "Start capturing and sharing your moments"
 msgstr "Commencez à capturer et partager vos moments"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:99
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:84
 #, qt-format
 msgid "%1M"
 msgstr "%1M"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:99
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:84
 #, qt-format
 msgid "%1 MONTH AGO"
 msgid_plural "%1 MONTHS AGO"
 msgstr[0] "Il y a %1 mois"
 msgstr[1] "Il y a %1 mois"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:101
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:86
 #, qt-format
 msgid "%1w"
 msgstr "%1s"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:101
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:86
 #, qt-format
 msgid "%1 WEEK AGO"
 msgid_plural "%1 WEEKS AGO"
 msgstr[0] "Il y a %1 semaine"
 msgstr[1] "Il y a %1 semaines"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:103
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:88
 #, c-format, qt-format
 msgid "%1d"
 msgstr "%1j"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:103
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:88
 #, qt-format
 msgid "%1 DAY AGO"
 msgid_plural "%1 DAYS AGO"
 msgstr[0] "Il y a %1 jour"
 msgstr[1] "Il y a %1 jours"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:105
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:90
 #, qt-format
 msgid "%1h"
 msgstr "%1h"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:105
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:90
 #, qt-format
 msgid "%1 HOUR AGO"
 msgid_plural "%1 HOURS AGO"
 msgstr[0] "Il y a %1 heure"
 msgstr[1] "Il y a %1 heures"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:107
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:92
 #, c-format, qt-format
 msgid "%1m"
 msgstr "%1m"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:107
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:92
 #, qt-format
 msgid "%1 MINUTE AGO"
 msgid_plural "%1 MINUTES AGO"
 msgstr[0] "Il y a %1 minute"
 msgstr[1] "Il y a %1 minutes"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:109
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:94
 #, c-format, qt-format
 msgid "%1s"
 msgstr "%1s"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:109
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:94
 #, qt-format
 msgid "%1 SECOND AGO"
 msgid_plural "%1 SECONDS AGO"

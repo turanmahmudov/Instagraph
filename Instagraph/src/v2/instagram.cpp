@@ -21,10 +21,16 @@ InstagramPrivate::InstagramPrivate(Instagram *q):
     q_ptr(q)
 {
     m_data_path = QDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
+    m_photos_path = QDir(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
 
     if(!m_data_path.exists())
     {
         m_data_path.mkpath(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
+    }
+
+    if(!m_photos_path.exists())
+    {
+        m_photos_path.mkpath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
     }
 
     m_jar = new QNetworkCookieJar;
@@ -145,6 +151,12 @@ Instagram::~Instagram()
 bool Instagram::busy() const
 {
     return m_busy;
+}
+
+QString Instagram::photos_path()
+{
+    Q_D(Instagram);
+    return d->m_photos_path.absolutePath();
 }
 
 void Instagram::login(bool force, QString username, QString password, bool set)
@@ -330,12 +342,14 @@ void InstagramPrivate::syncFeatures()
 }
 
 //FIXME: uploadImage is not public yeat. Give me few weeks to optimize code
-void Instagram::postImage(QString path, QString caption, QString upload_id)
+void Instagram::postImage(QString path, QString caption, QVariantMap location, QString upload_id)
 {
     Q_D(Instagram);
 
     d->m_caption = caption;
     d->m_image_path = path;
+
+    d->lastUploadLocation = location;
 
     QFile image(path);
     if(!image.open(QIODevice::ReadOnly))
@@ -348,40 +362,13 @@ void Instagram::postImage(QString path, QString caption, QString upload_id)
     QFileInfo info(image.fileName());
     QString ext = info.completeSuffix();
 
-    QString boundary = d->m_uuid;
-
     if(upload_id.size() == 0)
     {
         upload_id =QString::number(QDateTime::currentMSecsSinceEpoch());
     }
-    /*Body build*/
-    QByteArray body = "";
-    body += "--"+boundary+"\r\n";
-    body += "Content-Disposition: form-data; name=\"upload_id\"\r\n\r\n";
-    body += upload_id+"\r\n";
-
-    body += "--"+boundary+"\r\n";
-    body += "Content-Disposition: form-data; name=\"_uuid\"\r\n\r\n";
-    body += d->m_uuid.replace("{","").replace("}","")+"\r\n";
-
-    body += "--"+boundary+"\r\n";
-    body += "Content-Disposition: form-data; name=\"_csrftoken\"\r\n\r\n";
-    body += d->m_token+"\r\n";
-
-    body += "--"+boundary+"\r\n";
-    body += "Content-Disposition: form-data; name=\"image_compression\"\r\n\r\n";
-    body += "{\"lib_name\":\"jt\",\"lib_version\":\"1.3.0\",\"quality\":\"70\"}\r\n";
-
-    body += "--"+boundary+"\r\n";
-    body += "Content-Disposition: form-data; name=\"photo\"; filename=\"pending_media_"+upload_id+"."+ext+"\"\r\n";
-    body += "Content-Transfer-Encoding: binary\r\n";
-    body += "Content-Type: application/octet-stream\r\n\r\n";
-
-    body += dataStream+"\r\n";
-    body += "--"+boundary+"--";
 
     InstagramRequest *putPhotoReqest =
-        d->fileRequest("upload/photo/",boundary, body);
+        d->fileRequest("rupload_igphoto/", dataStream, upload_id);
 
     QObject::connect(putPhotoReqest,&InstagramRequest::replyStringReady,d,&InstagramPrivate::configurePhoto);
 }
@@ -441,10 +428,34 @@ void InstagramPrivate::configurePhoto(QVariant answer)
                 data.insert("_uid",                 m_username_id);
                 data.insert("_csrftoken",           "Set-Cookie: csrftoken="+m_token);
 
+                if (lastUploadLocation.count() > 0 && lastUploadLocation["name"].toString().length() > 0) {
+                    QJsonObject location;
+                    QString eisk = lastUploadLocation["external_id_source"].toString() + "_id";
+                    location.insert(eisk, lastUploadLocation["external_id"].toString());
+                    location.insert("name",             lastUploadLocation["name"].toString());
+                    location.insert("lat",              lastUploadLocation["lat"].toString());
+                    location.insert("lng",              lastUploadLocation["lng"].toString());
+                    location.insert("address",          lastUploadLocation["address"].toString());
+                    location.insert("external_source",  lastUploadLocation["external_id_source"].toString());
+
+                    QJsonDocument doc(location);
+                    QString strJson(doc.toJson(QJsonDocument::Compact));
+
+                    data.insert("location",             strJson);
+                    data.insert("geotag_enabled",       true);
+                    data.insert("media_latitude",       lastUploadLocation["lat"].toString());
+                    data.insert("posting_latitude",     lastUploadLocation["lat"].toString());
+                    data.insert("media_longitude",      lastUploadLocation["lng"].toString());
+                    data.insert("posting_longitude",    lastUploadLocation["lng"].toString());
+                    data.insert("altitude",             rand() % 10 + 800);
+                }
+
             QString signature = InstagramRequest::generateSignature(data);
             InstagramRequest *configureImageRequest =
                 request("media/configure/",signature.toUtf8());
             QObject::connect(configureImageRequest,&InstagramRequest::replyStringReady,q,&Instagram::imageConfigureDataReady);
+
+            lastUploadLocation.clear();
         }
     }
     m_caption = "";
@@ -501,6 +512,8 @@ void Instagram::rotateImg(QString filename, qreal deg)
     if(!image.save(&imgFile,"JPG",100))
     {
         qDebug() << "NOT SAVE";
+    } else {
+        emit imgRotated();
     }
 
     imgFile.close();
@@ -544,6 +557,8 @@ void Instagram::cropImg(QString filename, bool squared, bool isRotated)
     if(!image.save(&imgFile,"JPG",100))
     {
         qDebug() << "NOT SAVE";
+    } else {
+        emit imgCropped();
     }
 
     imgFile.close();
@@ -567,6 +582,8 @@ void Instagram::cropImg(QString in_filename, QString out_filename, int topSpace,
     if(!image.save(out_filename))
     {
         qDebug() << "NOT SAVE HERE";
+    } else {
+        emit imgCropped();
     }
 }
 
@@ -589,10 +606,10 @@ void Instagram::scaleImg(QString filename)
         {
             qDebug() << "NOT SAVE ON CROP";
         } else {
-            //emit imgScaled();
+            emit imgScaled();
         }
     } else {
-        //emit imgScaled();
+        emit imgScaled();
     }
 
     imgFile.close();

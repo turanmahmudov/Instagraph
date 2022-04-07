@@ -8,6 +8,7 @@ namespace Constants {
     QString experiments();
     QString sigKeyVersion();
     QString apiUrl(bool v2 = false);
+    QString urlWithoutApi();
     QByteArray userAgent();
     QByteArray isSigKey();
 }

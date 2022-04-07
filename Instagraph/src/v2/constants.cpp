@@ -12,6 +12,11 @@ namespace Constants {
         }
         return QStringLiteral("https://i.instagram.com/api/v1/");
     }
+
+    QString urlWithoutApi() {
+        return QStringLiteral("https://i.instagram.com/");
+    }
+
     //QByteArray userAgent() { return "Instagram 27.0.0.7.97 Android (10/29; 560dpi; 2759x1440; SM-N975F; samsung; samsung; d2s; en_US)"; }
     //QByteArray isSigKey() { return "109513c04303341a7daf27bb41b268e633b30dcc65a3fe14503f743176113869"; }
 

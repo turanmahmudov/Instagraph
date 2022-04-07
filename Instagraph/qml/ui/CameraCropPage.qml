@@ -18,20 +18,19 @@ PageItem {
 
     property var imagePath
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: i18n.tr("Crop")
-        leadingActionBar.actions: [
+        leadingActions: [
             Action {
                 id: closePageAction
                 text: i18n.tr("Back")
-                iconName: "back"
+                iconName: "\uea5a"
                 onTriggered: {
-                    pageStack.clear();
-                    pageLayout.push(tabs);
+                    pageLayout.removePages(cameracroppage);
                 }
             }
         ]
-        trailingActionBar.actions: [
+        trailingActions: [
             Action {
                 id: nextPageAction
                 text: i18n.tr("Next")

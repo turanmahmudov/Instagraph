@@ -129,7 +129,7 @@ ListItem {
                         if (data.did_delete) {
                             thismodel.remove(index)
                             if (thismodel.count == 0) {
-                                pageLayout.pop();
+                                pageLayout.removePages(currentDelegatePage);
                             }
                         }
                     }
@@ -140,7 +140,7 @@ ListItem {
                         if (data.status == "ok") {
                             thismodel.remove(index)
                             if (thismodel.count == 0) {
-                                pageLayout.pop();
+                                pageLayout.removePages(currentDelegatePage);
                             }
                         }
                     }

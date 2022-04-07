@@ -3,7 +3,7 @@ TARGET = Instagraph
 
 load(ubuntu-click)
 
-QT += qml quick
+QT += qml quick widgets
 
 UBUNTU_TRANSLATION_DOMAIN="instagraph-devs.turan-mahmudov-l"
 

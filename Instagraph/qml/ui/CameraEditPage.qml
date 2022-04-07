@@ -21,26 +21,25 @@ PageItem {
 
     property string imageFilter: "normal"
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: i18n.tr("Edit")
-        leadingActionBar.actions: [
+        leadingActions: [
             Action {
                 id: closePageAction
                 text: i18n.tr("Back")
-                iconName: "back"
+                iconName: "\uea5a"
                 onTriggered: {
-                    pageStack.clear();
-                    pageLayout.push(tabs);
+                    pageLayout.removePages(cameraeditpage);
                 }
             }
         ]
-        trailingActionBar.actions: [
+        trailingActions: [
             Action {
                 id: nextPageAction
                 text: i18n.tr("Next")
                 iconName: "next"
                 onTriggered: {
-                    if (!imageproc.saveToDisk(instagram.photos_path + "/" + new Date().valueOf() + ".jpg", 100)) {
+                    if (!imageproc.saveToDisk(instagram.photos_path() + "/" + new Date().valueOf() + ".jpg", 100)) {
                         console.log("ERROR", "File not saved!")
                         return
                     }

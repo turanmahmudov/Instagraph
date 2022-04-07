@@ -21,7 +21,7 @@ public:
     void setNetworkAccessManager(QNetworkAccessManager *nam);
     void loadCookies();
 
-    InstagramRequest *fileRequest(QString endpoint, QString boundary, QByteArray data);
+    InstagramRequest *fileRequest(QString endpoint, QByteArray data, QString upload_id);
     InstagramRequest *request(QString endpoint, QByteArray post, bool apiV2 = false, bool isGet = false);
     InstagramRequest *timelineRequest(QString endpoint, QByteArray post, QString uuid, bool apiV2 = false, bool isGet = false);
     InstagramRequest *directRequest(QString endpoint, QString boundary, QByteArray data);
@@ -51,6 +51,10 @@ private:
     QString m_image_path;
 
     QDir m_data_path;
+    QDir m_photos_path;
+
+    QVariantMap lastUploadLocation;
+
     QNetworkAccessManager *m_manager;
     QNetworkCookieJar *m_jar;
 

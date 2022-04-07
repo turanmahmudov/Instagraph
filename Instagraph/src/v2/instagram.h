@@ -21,6 +21,8 @@ public:
     bool busy() const;
 
 public Q_SLOTS:
+    Q_INVOKABLE QString photos_path();
+
     Q_INVOKABLE void login(bool forse = false, QString username = "", QString password = "", bool set = false);
     Q_INVOKABLE void logout();
     Q_INVOKABLE void confirm2Factor(QString code, QString identifier, QString method);
@@ -32,7 +34,7 @@ public Q_SLOTS:
     Q_INVOKABLE QString getProfilePic();
     //End
 
-    Q_INVOKABLE void postImage(QString path, QString caption, QString upload_id = "");
+    Q_INVOKABLE void postImage(QString path, QString caption, QVariantMap location, QString upload_id = "");
     Q_INVOKABLE void postVideo(QFile *video);
 
     //Unnown source of funct
@@ -154,12 +156,18 @@ Q_SIGNALS:
     void busyChanged();
 
     void imageConfigureDataReady(QVariant answer);
+    void imageUploadProgressDataReady(double answer);
 
     //Unnown source
     void popularFeedDataReady(QVariant answer);
     void searchUsernameDataReady(QVariant answer);
 
     //Refactored
+
+    void imgSquared();
+    void imgRotated();
+    void imgCropped();
+    void imgScaled();
 
     //Account
     void profilePictureDeleted(QVariant answer);

@@ -16,23 +16,23 @@ PageItem {
 
     property var imagePath
 
-    property var locationVar: {}
+    property var locationVar: ({})
 
     property bool imageUploading: false
 
-    header: PageHeader {
+    header: PageHeaderItem {
         title: i18n.tr("Publish")
-        leadingActionBar.actions: [
+        leadingActions: [
             Action {
                 id: closePageAction
                 text: i18n.tr("Back")
-                iconName: "back"
+                iconName: "\uea5a"
                 onTriggered: {
-                    pageLayout.pop();
+                    pageLayout.removePages(cameracaptionpage);
                 }
             }
         ]
-        trailingActionBar.actions: [
+        trailingActions: [
             Action {
                 id: nextPageAction
                 text: i18n.tr("Share")
@@ -205,15 +205,12 @@ PageItem {
     Connections{
         target: instagram
         onImageConfigureDataReady: {
-            //console.log(answer)
-            pageStack.pop();
-            pageStack.pop();
-            pageStack.pop();
-            pageLayout.push(tabs);
+            pageLayout.removePages(homePage)
+            pageLayout.primaryPage = homePage
 
             var data = JSON.parse(answer);
 
-            pageLayout.push(Qt.resolvedUrl("SinglePhoto.qml"), {photoId: data.media.id});
+            Scripts.pushSingleImage(pageLayout.primaryPage, data.media.id)
         }
         onImageUploadProgressDataReady: {
             //console.log(answer);

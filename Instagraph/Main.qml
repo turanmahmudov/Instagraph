@@ -65,6 +65,8 @@ MainView {
     property string tmpUsername: ""
     property string tmpPassword: ""
 
+    signal fileImported(var fileUrl)
+
     // API
     Instagram {
         id: instagram
@@ -88,7 +90,7 @@ MainView {
 
         onImageSaved: {
             __output.setDefaultSize()
-            Scripts.pushImageCaption(path)
+            Scripts.pushImageCaption(pageLayout.primaryPage, path)
         }
     }
 
