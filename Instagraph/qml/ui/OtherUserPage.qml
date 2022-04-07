@@ -578,8 +578,6 @@ PageItem {
             }
         }
         onInfoByIdDataReady: {
-            console.log(answer)
-
             var data = JSON.parse(answer);
             usernameDataFinished(data);
         }

@@ -157,7 +157,7 @@ Column {
         }
 
         Label {
-            text: Helper.formatString(userData.biography).split("\n").join("<br>")
+            text: userData.biography.split("\n").join("<br>")
             width: parent.width
             wrapMode: Text.WordWrap
             textFormat: Text.RichText
