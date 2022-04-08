@@ -28,10 +28,22 @@ PageItem {
         title: i18n.tr("Choose from")
     }
 
+    Component.onCompleted: {
+        console.log("is desktop: " + IS_DESKTOP)
+    }
+
     Loader {
         anchors.fill: parent
+        active: IS_DESKTOP == true
+        visible: active
+        sourceComponent: filePickerComponent
+    }
 
-        sourceComponent: IS_DESKTOP ? filePickerComponent : contentPickerComponent
+    Loader {
+        anchors.fill: parent
+        active: IS_DESKTOP == false
+        visible: active
+        sourceComponent: contentPickerComponent
     }
 
     Component {
@@ -48,7 +60,7 @@ PageItem {
             onRejected: {
                 pageLayout.removePages(picker);
             }
-            Component.onCompleted: visible = true
+            visible: parent.visible
         }
     }
 
