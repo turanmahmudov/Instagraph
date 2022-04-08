@@ -35,11 +35,11 @@ PageItem {
                 right: parent.right
                 verticalCenter: parent.verticalCenter
             }
-            primaryItem: Icon {
+            primaryItem: LineIcon {
                 anchors.leftMargin: units.gu(0.2)
-                height: parent.height*0.5
-                width: height
-                name: "find"
+                iconSize: parent.height*0.4
+                active: false
+                name: "\ueb7b"
             }
             hasClearButton: true
             placeholderText: i18n.tr("Search")

@@ -211,11 +211,10 @@ PageItem {
                     Component {
                         id: likeMessageComponent
 
-                        Icon {
-                            width: units.gu(4)
-                            height: units.gu(4)
-                            name: "like"
+                        LineIcon {
+                            name: "\ueadf"
                             color: UbuntuColors.red
+                            iconSize: units.gu(2.4)
                         }
                     }
 
@@ -724,12 +723,11 @@ PageItem {
                             height: units.gu(5)
                             spacing: units.gu(0.5)
 
-                            Icon {
+                            LineIcon {
                                 anchors.verticalCenter: parent.verticalCenter
-                                width: units.gu(2)
-                                height: units.gu(2)
-                                name: "like"
+                                name: "\ueadf"
                                 color: UbuntuColors.red
+                                iconSize: units.gu(2.4)
                             }
 
                             CircleImage {
@@ -908,13 +906,18 @@ PageItem {
                 }
             }
 
-            Icon {
+            Item {
                 id: sendLikeButton
-                anchors.verticalCenter: parent.verticalCenter
-                color: UbuntuColors.red
                 height: units.gu(3)
                 width: height
-                name: "unlike"
+                anchors.verticalCenter: parent.verticalCenter
+
+                LineIcon {
+                    anchors.centerIn: parent
+                    name: "\ueae1"
+                    color: UbuntuColors.red
+                    iconSize: units.gu(2.4)
+                }
 
                 MouseArea {
                     anchors.fill: parent

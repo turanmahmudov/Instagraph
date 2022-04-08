@@ -321,13 +321,18 @@ PageItem {
                 }
             }
 
-            Icon {
+            Item {
                 id: sendLikeButton
-                anchors.verticalCenter: parent.verticalCenter
-                color: UbuntuColors.red
                 height: units.gu(3)
                 width: height
-                name: "unlike"
+                anchors.verticalCenter: parent.verticalCenter
+
+                LineIcon {
+                    anchors.centerIn: parent
+                    name: "\ueae1"
+                    color: UbuntuColors.red
+                    iconSize: units.gu(2.4)
+                }
 
                 MouseArea {
                     anchors.fill: parent

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-08 00:27+0000\n"
+"POT-Creation-Date: 2022-04-08 00:44+0000\n"
 "PO-Revision-Date: 2020-01-07 10:44+0200\n"
 "Last-Translator: Ivo Xavier <ivofernandes12@gmail.com>\n"
 "Language: \n"
@@ -290,7 +290,7 @@ msgstr "Foto"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraPage.qml:21
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraPage.qml:192
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:273
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:272
 msgid "Video"
 msgstr "Vídeo"
 
@@ -355,8 +355,8 @@ msgid "Add a comment"
 msgstr "Adicionar um comentário"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:318
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:931
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:344
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:934
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:349
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:341
 msgid "Send"
 msgstr "Enviar"
@@ -417,7 +417,7 @@ msgid "Shared a link"
 msgstr "Partilhou um link"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:154
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:466
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:465
 msgid "You mentioned their in a story"
 msgstr "Você mencionou-os numa história"
 
@@ -427,17 +427,17 @@ msgid "Mentioned you in a story"
 msgstr "Mencionou te numa história"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:155
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:467
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:466
 msgid "You replied to their story"
 msgstr "Você respondeu à história dele"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:155
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:467
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:466
 msgid "Replied to your story"
 msgstr "Respondeu à sua história"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:155
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:467
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:466
 msgid "UNKNOWN"
 msgstr "DESCONHECIDO"
 
@@ -449,25 +449,25 @@ msgstr "Bem-vindo ao Instagraph Direct!"
 msgid "Tap the + icon to send a photo, video or message."
 msgstr "Toque no ícone + para enviar uma foto, vídeo ou mensagem."
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:273
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:272
 msgid "Image"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:466
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:465
 msgid "Mentied you in a story"
 msgstr "Mencionou te numa história"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:580
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:579
 #, qt-format
 msgid "You sent %1's story."
 msgstr "Você enviou a história de %1."
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:580
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:579
 #, qt-format
 msgid "Sent %1's story."
 msgstr "Enviou a história de %1."
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:905
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:903
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:318
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:331
 msgid "Write a message..."
