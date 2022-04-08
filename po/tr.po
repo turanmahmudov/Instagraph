@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Instagraph\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-08 00:44+0000\n"
+"POT-Creation-Date: 2022-04-08 02:03+0000\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,7 +29,7 @@ msgid "New Message"
 msgstr "Yeni Mesaj"
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main_old.qml:100
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:29
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:43
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCropPage.qml:25
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraEditPage.qml:29
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ExploreFeedPage.qml:16
@@ -228,32 +228,32 @@ msgstr "İstekleri onayla ya da reddet"
 msgid "Blocked Users"
 msgstr "Engellenmiş Kullanıcılar"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:25
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:39
 msgid "Publish"
 msgstr "Yayınla"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:39
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:53
 msgid "Share"
 msgstr "Paylaş"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:65
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:106
 msgid "Saving"
 msgstr "Kaydediliyor"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:65
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:106
 msgid "Posting"
 msgstr "Yayınlanıyor"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:112
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:153
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:78
 msgid "Write a caption..."
 msgstr "Başlık yaz..."
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:144
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:180
 msgid "Add Location"
 msgstr "Konum Ekle"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:178
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CameraCaptionPage.qml:263
 #, fuzzy
 msgid "Turn off commenting"
 msgstr "Yorum yapmayı kapat"

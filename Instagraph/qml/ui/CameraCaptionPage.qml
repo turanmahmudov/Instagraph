@@ -3,7 +3,7 @@ import Ubuntu.Components 1.3
 import QtQuick.LocalStorage 2.12
 import Ubuntu.Content 1.1
 import QtMultimedia 5.12
-import Ubuntu.Components.ListItems 1.3 as ListItem
+import QtPositioning 5.2
 
 import "../components"
 
@@ -20,6 +20,20 @@ PageItem {
     property var locationVar: ({})
 
     property bool imageUploading: false
+
+    property var coord: {'latitude':positionSource.position.coordinate.latitude, 'longitude':positionSource.position.coordinate.longitude}
+
+    PositionSource {
+        id: positionSource
+        updateInterval: 1000 //1 seconds (?)
+        active: true
+        onPositionChanged: {
+            coord.latitude = positionSource.position.coordinate.latitude;
+            coord.longitude = positionSource.position.coordinate.longitude;
+
+            instagram.searchLocation(coord.latitude, coord.longitude, "");
+        }
+    }
 
     header: PageHeaderItem {
         title: i18n.tr("Publish")
@@ -45,6 +59,33 @@ PageItem {
             }
 
         ]
+    }
+
+    function searchLocationDataFinished(data) {
+        searchPlacesModel.clear();
+
+        worker.sendMessage({'feed': 'searchPage', 'obj': data.venues, 'model': searchPlacesModel, 'clear_model': true})
+    }
+
+    WorkerScript {
+        id: worker
+        source: "../js/TimelineWorker.js"
+        onMessage: {
+            console.log(msg)
+        }
+    }
+
+    ListModel {
+        id: searchPlacesModel
+    }
+
+    Component.onCompleted: {
+        instagram.searchLocation(coord.latitude, coord.longitude, "");
+
+        mainView.locationSelected.connect(function(location) {
+            cameracaptionpage.locationSelected = true
+            cameracaptionpage.locationVar = location;
+        })
     }
 
     Column {
@@ -125,26 +166,21 @@ PageItem {
             color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
         }
 
-        ListItem.Base {
+        ListItem {
             height: addLocationLayout.height
             divider.visible: true
             onClicked: {
                 pageLayout.pushToCurrent(cameracaptionpage, Qt.resolvedUrl("SearchLocation.qml"));
-
-                mainView.locationSelected.connect(function(location) {
-                    locationSelected = true
-                    locationVar = location;
-                })
             }
             ListItemLayout {
                 id: addLocationLayout
                 padding.leading: 0
                 padding.trailing: 0
 
-                title.text: locationSelected ? locationVar.name : i18n.tr("Add Location")
+                title.text: cameracaptionpage.locationSelected ? cameracaptionpage.locationVar.name : i18n.tr("Add Location")
 
                 Item {
-                    visible: locationSelected
+                    visible: cameracaptionpage.locationSelected
                     width: visible ? units.gu(2) : 0
                     height: width
                     SlotsLayout.position: SlotsLayout.Trailing
@@ -159,15 +195,64 @@ PageItem {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            locationSelected = false
-                            locationVar = {}
+                            cameracaptionpage.locationSelected = false
+                            cameracaptionpage.locationVar = {}
                         }
                     }
                 }
             }
         }
 
-        ListItem.Base {
+        ListItem {
+            height: rankedLocationsLayout.height
+            visible: searchPlacesModel.count > 0
+            divider.visible: true
+            SlotsLayout {
+                id: rankedLocationsLayout
+                padding.leading: 0
+                padding.trailing: 0
+
+                mainSlot: ListView {
+                    width: rankedLocationsLayout.width
+                    height: units.gu(3)
+                    orientation: Qt.Horizontal
+                    clip: true
+                    spacing: units.gu(0.5)
+                    model: searchPlacesModel
+
+                    delegate: Item {
+                        width: username_rect.width
+                        height: username_rect.height
+                        clip: true
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        Rectangle {
+                            id: username_rect
+                            height: username_label.height + units.gu(1.5)
+                            width: username_label.width + units.gu(2.5)
+                            color: UbuntuColors.blue
+                            radius: units.gu(0.3)
+                            Label {
+                                anchors.centerIn: parent
+                                id: username_label
+                                text: name
+                                color: "#ffffff"
+                                fontSize: "small"
+                                font.weight: Font.DemiBold
+                            }
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    mainView.locationSelected({"name":name.replace("&", "%26"), "address":address.replace("&", "%26"), "lat":lat.toFixed(4), "lng":lng.toFixed(4), "external_id":external_id, "external_id_source":external_id_source})
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        ListItem {
             height: disableCommentsLayout.height
             divider.visible: true
             ListItemLayout {
@@ -198,6 +283,10 @@ PageItem {
         }
         onImageUploadProgressDataReady: {
             uploadProgressBar.value = answer
+        }
+        onSearchLocationDataReady: {
+            var data = JSON.parse(answer);
+            searchLocationDataFinished(data);
         }
     }
 }
