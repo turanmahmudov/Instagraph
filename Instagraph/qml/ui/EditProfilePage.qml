@@ -86,13 +86,12 @@ PageItem {
     }
 
     function changePhotoClicked() {
-        var importPage = pageLayout.pushToCurrent(editprofilepage, Qt.resolvedUrl("ImportPhotoPage.qml"))
+        pageLayout.pushToCurrent(editprofilepage, Qt.resolvedUrl("ImportPhotoPage.qml"))
 
-        importPage.imported.connect(function(fileUrl) {
+        mainView.fileImported.connect(function(fileUrl) {
             changeProfilePictureLoading = true
             var pth = String(fileUrl).replace('file://', '')
             instagram.changeProfilePicture(pth)
-            pageStack.pop()
         })
     }
 
@@ -385,7 +384,10 @@ PageItem {
         onEditDataReady: {
             var data = JSON.parse(answer);
             if (data.status == 'ok') {
-                pageStack.pop();
+                pageLayout.removePages(editprofilepage)
+
+                userPage.getUsernameInfo();
+                userPage.getUsernameFeed();
             }
         }
         onProfilePictureChanged: {

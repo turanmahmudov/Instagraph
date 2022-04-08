@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-08 00:02+0000\n"
+"POT-Creation-Date: 2022-04-08 00:27+0000\n"
 "PO-Revision-Date: 2018-07-03 09:45+0000\n"
 "Last-Translator: advocatux <advocatux@airpost.net>\n"
 "Language-Team: UBports Spanish Team\n"
@@ -498,49 +498,49 @@ msgstr "Nueva foto del perfil"
 msgid "Remove Profile Photo"
 msgstr "Eliminar la foto del perfil"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:150
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:149
 msgid "Change Photo"
 msgstr "Cambiar la foto"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:183
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:192
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:182
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:191
 msgid "Name"
 msgstr "Nombre"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:216
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:225
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:215
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:224
 msgid "Website"
 msgstr "Sitio web"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:250
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:259
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:249
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:258
 msgid "Bio"
 msgstr "Biografía"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:275
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:274
 msgid "Private Information"
 msgstr "Información privada"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:295
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:304
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:294
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:303
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/RegisterPage.qml:49
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:329
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:338
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:328
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:337
 msgid "Phone"
 msgstr "Teléfono"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:362
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:361
 msgid "Gender"
 msgstr "Género"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:370
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:369
 msgid "Female"
 msgstr "Femenino"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:371
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditProfilePage.qml:370
 msgid "Male"
 msgstr "Masculino"
 

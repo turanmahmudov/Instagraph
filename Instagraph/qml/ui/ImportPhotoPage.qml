@@ -56,6 +56,7 @@ PageItem {
             selectMultiple: false
             onAccepted: {
                 mainView.fileImported(fileDialog.fileUrl)
+                pageLayout.removePages(picker);
             }
             onRejected: {
                 pageLayout.removePages(picker);
@@ -85,6 +86,7 @@ PageItem {
                     if (mainView.activeTransfer.state === ContentTransfer.Charged) {
                         mainView.fileImported(mainView.activeTransfer.items[0].url)
                         mainView.activeTransfer = null
+                        pageLayout.removePages(picker);
                     }
                 })
             }
