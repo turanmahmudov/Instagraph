@@ -20,11 +20,13 @@ private:
 
 Q_SIGNALS:
     void replyStringReady(QVariant ans);
+    void progressReady(double ans);
 
 public Q_SLOTS:
 
 private Q_SLOTS:
     void finishGetUrl();
+    void progressChanged(qint64 a, qint64 b);
 };
 
 #endif // INSTAGRAMREQUEST_H

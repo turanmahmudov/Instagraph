@@ -18,6 +18,7 @@ InstagramRequest::InstagramRequest(QNetworkReply *reply,
     QObject(parent),
     m_reply(reply)
 {
+    QObject::connect(reply, &QNetworkReply::uploadProgress, this, &InstagramRequest::progressChanged);
     QObject::connect(reply, &QNetworkReply::finished, this, &InstagramRequest::finishGetUrl);
 }
 
@@ -183,6 +184,12 @@ void InstagramPrivate::saveCookie() const
     f.close();
 }
 
+void InstagramRequest::progressChanged(qint64 a, qint64 b)
+{
+    if (b > 0) {
+        emit progressReady(100.0*(double)a/(double)b);
+    }
+}
 
 QString InstagramRequest::generateSignature(QJsonObject data)
 {

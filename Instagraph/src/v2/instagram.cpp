@@ -371,6 +371,7 @@ void Instagram::postImage(QString path, QString caption, QVariantMap location, Q
     InstagramRequest *putPhotoReqest =
         d->fileRequest("rupload_igphoto/", dataStream, upload_id);
 
+    QObject::connect(putPhotoReqest,SIGNAL(progressReady(double)),this,SIGNAL(imageUploadProgressDataReady(double)));
     QObject::connect(putPhotoReqest,&InstagramRequest::replyStringReady,d,&InstagramPrivate::configurePhoto);
 }
 
