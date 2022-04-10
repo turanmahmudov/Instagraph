@@ -30,7 +30,7 @@ PageItem {
 
     function directThreadFinished(data) {
         if (firstLoad == true) {
-            directthreadpage.header.title = data.thread.thread_title != "" ? data.thread.thread_title : data.thread.inviter.username;
+            directthreadpage.header.title = data.thread.thread_title !== "" ? data.thread.thread_title : data.thread.inviter.username;
 
             for (var j = 0; j < data.thread.users.length; j++) {
                 threadUsers[data.thread.users[j].pk] = data.thread.users[j];
@@ -42,18 +42,14 @@ PageItem {
             instagram.markThreadSeen(thId, thItemId);
         }
 
-        if (next_oldest_cursor_id == data.thread.oldest_cursor) {
+        if (next_oldest_cursor_id === data.thread.oldest_cursor) {
             return false;
         } else {
-            next_oldest_cursor_id = data.thread.has_older == true ? data.thread.oldest_cursor : "";
+            next_oldest_cursor_id = data.thread.has_older === true ? data.thread.oldest_cursor : "";
             more_available = data.thread.has_older;
             next_coming = true;
 
-            for (var i = 0; i < data.thread.items.length; i++) {
-                data.thread.items[i].ctext = data.thread.items[i].text;
-
-                directThreadModel.append(data.thread.items[i]);
-            }
+            directThreadWorker.sendMessage({'obj': data.thread.items, 'model': directThreadModel, 'clear_model': clear_models})
 
             next_coming = false;
         }
@@ -65,7 +61,7 @@ PageItem {
         for (var j = 0; j < data.threads.length; j++) {
             var thread = data.threads[j];
             for (var i = 0; i < thread.items.length; i++) {
-                thread.items[i].ctext = thread.items[i].text;
+                thread.items[i].cText = thread.items[i].text;
                 directThreadModel.insert(0, thread.items[i]);
             }
         }
@@ -77,7 +73,7 @@ PageItem {
         for (var j = 0; j < data.threads.length; j++) {
             var thread = data.threads[j];
             for (var i = 0; i < thread.items.length; i++) {
-                thread.items[i].ctext = thread.items[i].text;
+                thread.items[i].cText = thread.items[i].text;
                 directThreadModel.insert(0, thread.items[i]);
             }
         }
@@ -124,9 +120,16 @@ PageItem {
         instagram.directLike(recip_string, threadId);
     }
 
+    WorkerScript {
+        id: directThreadWorker
+        source: "../js/DirectThreadWorker.js"
+        onMessage: {
+            console.log(msg)
+        }
+    }
+
     ListModel {
         id: directThreadModel
-        dynamicRoles: true
     }
 
     ListView {
@@ -153,7 +156,7 @@ PageItem {
             height: layout.height
 
             property bool outgoing_message: user_id == activeUsernameId || (user_id != activeUsernameId && item_type == "action_log")
-            property bool show_user_image: (user_id != activeUsernameId && index == 0) || (user_id != activeUsernameId && index != 0 && directThreadModel.get(index-1).user_id != user_id)
+            property bool show_user_image: (user_id != activeUsernameId && index == 0) || (user_id != activeUsernameId && index != 0 && directThreadModel.get(index-1).user_id !== user_id)
 
             SlotsLayout {
                 id: layout
@@ -171,19 +174,69 @@ PageItem {
                     layoutDirection: outgoing_message ? Qt.RightToLeft : Qt.LeftToRight
 
                     Loader {
-                        id: messageLoader
-                        asynchronous: true
-                        sourceComponent: item_type == "text" ? textMessageComponent :
-                                                            item_type == "like" ? likeMessageComponent :
-                                                            item_type == "media" ? mediaMessageComponent :
-                                                            item_type == "media_share" ? mediaShareMessageComponent :
-                                                            item_type == "raven_media" ? ravenMediaMessageComponent :
-                                                            item_type == "reel_share" ? reelShareMessageComponent :
-                                                            item_type == "story_share" ? storyShareMessageComponent :
-                                                            item_type == "action_log" ? actionLogMessageComponent :
-                                                            item_type == "placeholder" ? placeholderMessageComponent :
-                                                            item_type == "link" ? linkMessageComponent :
-                                                            item_type == "animated_media" ? animatedMediaComponent : textMessageComponent
+                        visible: item_type == "text"
+                        active: visible
+                        sourceComponent: textMessageComponent
+                    }
+
+                    Loader {
+                        visible: item_type == "animated_media"
+                        active: visible
+                        sourceComponent: animatedMediaComponent
+                    }
+
+                    Loader {
+                        visible: item_type == "raven_media"
+                        active: visible
+                        sourceComponent: ravenMediaMessageComponent
+                    }
+
+                    Loader {
+                        visible: item_type == "link"
+                        active: visible
+                        sourceComponent: linkMessageComponent
+                    }
+
+                    Loader {
+                        visible: item_type == "placeholder"
+                        active: visible
+                        sourceComponent: placeholderMessageComponent
+                    }
+
+                    Loader {
+                        visible: item_type == "media"
+                        active: visible
+                        sourceComponent: mediaMessageComponent
+                    }
+
+                    Loader {
+                        visible: item_type == "media_share"
+                        active: visible
+                        sourceComponent: mediaShareMessageComponent
+                    }
+
+                    Loader {
+                        visible: item_type == "reel_share"
+                        active: visible
+                        sourceComponent: reelShareMessageComponent
+                    }
+
+                    Loader {
+                        visible: item_type == "story_share"
+                        active: visible
+                        sourceComponent: storyShareMessageComponent
+                    }
+
+                    Loader {
+                        visible: item_type == "like"
+                        active: visible
+                        sourceComponent: likeMessageComponent
+                    }
+
+                    Loader {
+                        visible: item_type == "action_log"
+                        active: visible
+                        sourceComponent: actionLogMessageComponent
                     }
 
                     // Text
@@ -201,7 +254,7 @@ PageItem {
                                 wrapMode: Text.WordWrap
                                 width: Math.min(myText.implicitWidth, label.width*3/4)
                                 anchors.centerIn: parent
-                                text: ctext
+                                text: cText
                                 color: outgoing_message ? styleApp.directInbox.outgoingMessageTextColor : styleApp.directInbox.incomingMessageTextColor
                             }
                         }
@@ -239,7 +292,7 @@ PageItem {
 
                         Loader {
                             active: true
-                            sourceComponent: typeof visual_media != 'undefined' ? ravenMediaImageComponent : ravenMediaNoVisualComponent
+                            sourceComponent: options.raven_media_expired === true ? ravenMediaNoVisualComponent : ravenMediaImageComponent
                         }
                     }
                     Component {
@@ -247,8 +300,8 @@ PageItem {
 
                         Image {
                             width: label.width*3/4
-                            height: width/visual_media.media.image_versions2.candidates[0].width*visual_media.media.image_versions2.candidates[0].height
-                            source: visual_media.media.image_versions2.candidates[0].url
+                            height: width/media.media.image_versions2.candidates[0].width*media.media.image_versions2.candidates[0].height
+                            source: media.media.image_versions2.candidates[0].url
                             fillMode: Image.PreserveAspectCrop
                             sourceSize: Qt.size(width,height)
                             smooth: true
@@ -269,7 +322,7 @@ PageItem {
                                 wrapMode: Text.WordWrap
                                 width: Math.min(myText.implicitWidth, label.width*3/4)
                                 anchors.centerIn: parent
-                                text: raven_media.media_type == 2 ? i18n.tr("Video") : i18n.tr("Image")
+                                text: media.media.media_type === 2 ? i18n.tr("Video") : i18n.tr("Photo")
                                 color: outgoing_message ? styleApp.directInbox.outgoingMessageTextColor : styleApp.directInbox.incomingMessageTextColor
                             }
                         }
@@ -417,12 +470,12 @@ PageItem {
                                     width: feed_image.width
 
                                     AnimatedImage {
-                                        property bool horizontal: parseInt(animated_media.images.fixed_height.width) > parseInt(animated_media.images.fixed_height.height)
+                                        property bool horizontal: parseInt(media.images.fixed_height.width) > parseInt(media.images.fixed_height.height)
 
                                         id: feed_image
-                                        width: animated_media.is_sticker ? (horizontal ? (animated_media.images.fixed_height.width*height / animated_media.images.fixed_height.height) : units.gu(16)) : label.width*3/4
-                                        height: animated_media.is_sticker ? (horizontal ? units.gu(8) : (animated_media.images.fixed_height.height*width / animated_media.images.fixed_height.width)) : (width/animated_media.images.fixed_height.width*animated_media.images.fixed_height.height)
-                                        source: animated_media.images.fixed_height.url
+                                        width: media.is_sticker ? (horizontal ? (media.images.fixed_height.width*height / media.images.fixed_height.height) : units.gu(16)) : label.width*3/4
+                                        height: media.is_sticker ? (horizontal ? units.gu(8) : (media.images.fixed_height.height*width / media.images.fixed_height.width)) : (width/media.images.fixed_height.width*media.images.fixed_height.height)
+                                        source: media.images.fixed_height.url
                                         smooth: true
                                         clip: true
                                     }
@@ -464,8 +517,8 @@ PageItem {
                                     anchors.verticalCenter: parent.verticalCenter
 
                                     Label {
-                                        text: reel_share.type == 'mention' ? (outgoing_message ? i18n.tr("You mentioned their in a story") : i18n.tr("Mentied you in a story")) :
-                                                                             reel_share.type == 'reply' ? (outgoing_message ? i18n.tr("You replied to their story") : i18n.tr("Replied to your story")) : i18n.tr("UNKNOWN")
+                                        text: reel_share.type === 'mention' ? (outgoing_message ? i18n.tr("You mentioned their in a story") : i18n.tr("Mentied you in a story")) :
+                                                                             reel_share.type === '' ? (outgoing_message ? i18n.tr("You replied to their story") : i18n.tr("Replied to your story")) : i18n.tr("UNKNOWN")
                                         fontSize: "small"
                                         color: UbuntuColors.darkGrey
                                         font.weight: Font.Light
@@ -515,9 +568,9 @@ PageItem {
                             }
 
                             Rectangle {
-                                visible: typeof reel_share.text != 'undefined' && reel_share.text != ''
-                                width: typeof reel_share.text != 'undefined' && reel_share.text != '' ? myReelText.width + units.gu(3) : 0
-                                height: typeof reel_share.text != 'undefined' && reel_share.text != '' ? myReelText.height + units.gu(2.5) : 0
+                                visible: typeof reel_share.text != 'undefined' && reel_share.text !== ''
+                                width: typeof reel_share.text != 'undefined' && reel_share.text !== '' ? myReelText.width + units.gu(3) : 0
+                                height: typeof reel_share.text != 'undefined' && reel_share.text !== '' ? myReelText.height + units.gu(2.5) : 0
                                 color: outgoing_message ? Qt.lighter(UbuntuColors.lightGrey, 1.2) : "#ffffff"
                                 radius: units.gu(2)
                                 border.width: units.gu(0.1)
@@ -528,7 +581,7 @@ PageItem {
                                     wrapMode: Text.WordWrap
                                     width: Math.min(myReelText.implicitWidth, label.width*3/4)
                                     anchors.centerIn: parent
-                                    text: typeof reel_share.text != 'undefined' && reel_share.text != '' ? reel_share.text : ''
+                                    text: typeof reel_share.text != 'undefined' && reel_share.text !== '' ? reel_share.text : ''
                                 }
 
                                 Component.onCompleted: {
@@ -548,7 +601,7 @@ PageItem {
                             spacing: units.gu(0.4)
 
                             Loader {
-                                sourceComponent: story_share.is_linked == false ? noStoryShareComponent : storyShareComponent
+                                sourceComponent: story_share.is_linked === false ? noStoryShareComponent : storyShareComponent
 
                                 Component.onCompleted: {
                                     if (outgoing_message) {
@@ -691,9 +744,9 @@ PageItem {
                             }
 
                             Rectangle {
-                                visible: typeof story_share.text != 'undefined' && story_share.text != ''
-                                width: typeof story_share.text != 'undefined' && story_share.text != '' ? myStoryText.width + units.gu(3) : 0
-                                height: typeof story_share.text != 'undefined' && story_share.text != '' ? myStoryText.height + units.gu(2.5) : 0
+                                visible: typeof story_share.text != 'undefined' && story_share.text !== ''
+                                width: typeof story_share.text != 'undefined' && story_share.text !== '' ? myStoryText.width + units.gu(3) : 0
+                                height: typeof story_share.text != 'undefined' && story_share.text !== '' ? myStoryText.height + units.gu(2.5) : 0
                                 color: outgoing_message ? Qt.lighter(UbuntuColors.lightGrey, 1.2) : "#ffffff"
                                 radius: units.gu(2)
                                 border.width: units.gu(0.1)
@@ -704,7 +757,7 @@ PageItem {
                                     wrapMode: Text.WordWrap
                                     width: Math.min(myStoryText.implicitWidth, label.width*3/4)
                                     anchors.centerIn: parent
-                                    text: typeof story_share.text != 'undefined' && story_share.text != '' ? story_share.text : ''
+                                    text: typeof story_share.text != 'undefined' && story_share.text !== '' ? story_share.text : ''
                                 }
 
                                 Component.onCompleted: {
