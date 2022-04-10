@@ -181,18 +181,27 @@ void Instagram::directLike(QString recipients, QString thread_id)
 
     /*Body build*/
     QByteArray body = "";
+
     body += "--"+boundary+"\r\n";
-    body += "Content-Disposition: form-data; name=\"recipient_users\"\r\n\r\n";
-    body += "[["+recipients+"]]\r\n";
+    body += "Content-Disposition: form-data; name=\"action\"\r\n\r\n";
+    body += "send_item\r\n";
 
     body += "--"+boundary+"\r\n";
     body += "Content-Disposition: form-data; name=\"client_context\"\r\n\r\n";
+    body += uuid.createUuid().toString().replace("{","").replace("}","")+"\r\n";
+
+    body += "--"+boundary+"\r\n";
+    body += "Content-Disposition: form-data; name=\"mutation_token\"\r\n\r\n";
     body += uuid.createUuid().toString().replace("{","").replace("}","")+"\r\n";
 
     if (thread_id != "") {
         body += "--"+boundary+"\r\n";
         body += "Content-Disposition: form-data; name=\"thread_ids\"\r\n\r\n";
         body += "[\""+thread_id+"\"]\r\n";
+    } else {
+        body += "--"+boundary+"\r\n";
+        body += "Content-Disposition: form-data; name=\"recipient_users\"\r\n\r\n";
+        body += "[["+recipients+"]]\r\n";
     }
 
     body += "--"+boundary+"--";

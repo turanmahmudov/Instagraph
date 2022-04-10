@@ -55,8 +55,12 @@ WorkerScript.onMessage = function(msg) {
 
         }
 
-        model.append(listObj);
+        if (msg.insert) {
+            WorkerScript.sendMessage(listObj)
+        } else {
+            model.append(listObj);
+            model.sync();
+        }
 
-        model.sync();
     }
 }

@@ -49,7 +49,7 @@ PageItem {
             more_available = data.thread.has_older;
             next_coming = true;
 
-            directThreadWorker.sendMessage({'obj': data.thread.items, 'model': directThreadModel, 'clear_model': clear_models})
+            directThreadWorker.sendMessage({'obj': data.thread.items, 'model': directThreadModel, 'clear_model': clear_models, 'insert': false})
 
             next_coming = false;
         }
@@ -60,23 +60,16 @@ PageItem {
     function messagePostedFinished(data) {
         for (var j = 0; j < data.threads.length; j++) {
             var thread = data.threads[j];
-            for (var i = 0; i < thread.items.length; i++) {
-                thread.items[i].cText = thread.items[i].text;
-                directThreadModel.insert(0, thread.items[i]);
-            }
+            directThreadWorker.sendMessage({'obj': thread.items, 'model': directThreadModel, 'clear_model': false, 'insert': true})
         }
 
         addMessageField.text = '';
     }
 
     function likePostedFinished(data) {
-        for (var j = 0; j < data.threads.length; j++) {
-            var thread = data.threads[j];
-            for (var i = 0; i < thread.items.length; i++) {
-                thread.items[i].cText = thread.items[i].text;
-                directThreadModel.insert(0, thread.items[i]);
-            }
-        }
+        var items = [{"item_type": "like", "user_id": parseInt(activeUsernameId), "item_id": data.payload.item_id}]
+
+        directThreadWorker.sendMessage({'obj': items, 'model': directThreadModel, 'clear_model': false, 'insert': true})
     }
 
     Component.onCompleted: {
@@ -112,9 +105,7 @@ PageItem {
     {
         var recip_array = [];
         var recip_string = '';
-        for (var i in threadUsers) {
-            recip_array.push('"'+i+'"');
-        }
+        recip_array.push('"'+threadId+'"');
         recip_string = recip_array.join(',');
 
         instagram.directLike(recip_string, threadId);
@@ -124,7 +115,7 @@ PageItem {
         id: directThreadWorker
         source: "../js/DirectThreadWorker.js"
         onMessage: {
-            console.log(msg)
+            directThreadModel.insert(0, messageObject)
         }
     }
 
@@ -1005,8 +996,6 @@ PageItem {
             messagePostedFinished(data);
         }
         onDirectLikeDataReady: {
-            console.log(answer);
-
             var data = JSON.parse(answer);
             likePostedFinished(data);
         }
