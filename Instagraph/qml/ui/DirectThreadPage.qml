@@ -409,17 +409,19 @@ PageItem {
                             spacing: units.gu(0.4)
 
                             Rectangle {
-                                width: label.width*3/4
+                                width: mediShareColumn.width
                                 height: mediShareColumn.height + units.gu(2.5)
 
                                 Column {
                                     id: mediShareColumn
-                                    width: parent.width
+                                    width: feed_image.width
 
                                     AnimatedImage {
+                                        property bool horizontal: parseInt(animated_media.images.fixed_height.width) > parseInt(animated_media.images.fixed_height.height)
+
                                         id: feed_image
-                                        width: parent.width
-                                        height: width/animated_media.images.fixed_height.width*animated_media.images.fixed_height.height
+                                        width: animated_media.is_sticker ? (horizontal ? (animated_media.images.fixed_height.width*height / animated_media.images.fixed_height.height) : units.gu(16)) : label.width*3/4
+                                        height: animated_media.is_sticker ? (horizontal ? units.gu(8) : (animated_media.images.fixed_height.height*width / animated_media.images.fixed_height.width)) : (width/animated_media.images.fixed_height.width*animated_media.images.fixed_height.height)
                                         source: animated_media.images.fixed_height.url
                                         smooth: true
                                         clip: true
