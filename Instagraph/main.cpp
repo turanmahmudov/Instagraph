@@ -27,8 +27,8 @@ int main(int argc, char *argv[])
     QQmlEngine *engine = view.engine();
     engine->addImageProvider(QLatin1String("photo"), new CropImageProvider);
 
-    engine->rootContext()->setContextProperty("IS_DESKTOP", qgetenv("CLICKABLE_DESKTOP_MODE"));
-    //engine->rootContext()->setContextProperty("IS_DESKTOP", qgetenv("IS_DESKTOP"));
+    //engine->rootContext()->setContextProperty("IS_DESKTOP", qgetenv("CLICKABLE_DESKTOP_MODE"));
+    engine->rootContext()->setContextProperty("IS_DESKTOP", qgetenv("IS_DESKTOP"));
 
     QObject::connect(engine, SIGNAL(quit()), QGuiApplication::instance(), SLOT(quit()));
 

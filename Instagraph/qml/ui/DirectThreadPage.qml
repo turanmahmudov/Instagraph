@@ -363,7 +363,7 @@ PageItem {
                                                     fill: parent
                                                 }
                                                 onClicked: {
-                                                    pageLayout.pushToCurrent(directthreadpage, Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: media_share.user.pk});
+                                                    pageLayout.pushToCurrent(directthreadpage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: media_share.user.pk});
                                                 }
                                             }
                                         }
@@ -385,7 +385,7 @@ PageItem {
                                                         fill: parent
                                                     }
                                                     onClicked: {
-                                                        pageLayout.pushToCurrent(directthreadpage, Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: media_share.user.pk});
+                                                        pageLayout.pushToCurrent(directthreadpage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: media_share.user.pk});
                                                     }
                                                 }
                                             }
@@ -403,11 +403,28 @@ PageItem {
                                         property var bestImage: typeof media_share.carousel_media !== 'undefined' && media_share.carousel_media.length > 0 ?
                                                                     Helper.getBestImage(media_share.carousel_media[0].image_versions2.candidates, parent.width) :
                                                                     Helper.getBestImage(media_share.image_versions2.candidates, parent.width)
+
+                                        MouseArea {
+                                            anchors.fill: parent
+                                            onClicked: {
+                                                pageLayout.pushToNext(directthreadpage, Qt.resolvedUrl("SinglePhoto.qml"), {photoId: media_share.id})
+                                            }
+                                        }
                                     }
 
-                                    Item {
-                                        width: parent.width
-                                        height: units.gu(0.1)
+                                    Text {
+                                        anchors.horizontalCenter: parent.horizontalCenter
+                                        visible: typeof media_share.caption !== 'undefined' ?
+                                                     (typeof media_share.caption.text !== 'undefined' ? true : false) :
+                                                     false
+                                        text: visible ? (Helper.formatUser(media_share.caption.user.username) + ' ' + media_share.caption.text.substring(0, 45) + '...') : ""
+                                        wrapMode: Text.WordWrap
+                                        width: parent.width - units.gu(2)
+                                        textFormat: Text.RichText
+                                        color: outgoing_message ? styleApp.directInbox.outgoingMessageTextColor : styleApp.directInbox.incomingMessageTextColor
+                                        onLinkActivated: {
+                                            Scripts.linkClick(directthreadpage, link)
+                                        }
                                     }
                                 }
 
@@ -433,6 +450,7 @@ PageItem {
                                     width: Math.min(myMediaShareText.implicitWidth, label.width*3/4)
                                     anchors.centerIn: parent
                                     text: typeof media_share.text != 'undefined' ? media_share.text : ''
+                                    color: outgoing_message ? styleApp.directInbox.outgoingMessageTextColor : styleApp.directInbox.incomingMessageTextColor
                                 }
 
                                 Component.onCompleted: {
