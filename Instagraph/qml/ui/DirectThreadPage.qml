@@ -595,66 +595,80 @@ PageItem {
                             Component {
                                 id: storyShareComponent
 
-                                Row {
-                                    Rectangle {
-                                        visible: outgoing_message == false
-                                        width: outgoing_message == false ? units.gu(0.1) : 0
-                                        height: Math.max(parent.height, units.gu(5))
-                                        color: UbuntuColors.lightGrey
-                                    }
-                                    Item {
-                                        visible: outgoing_message == false
-                                        width: outgoing_message == false ? units.gu(0.5) : 0
-                                        height: outgoing_message == false ? units.gu(1) : 0
-                                    }
+                                Item {
+                                    width: storyShareRow.width
+                                    height: storyShareRow.height
 
-                                    Column {
-                                        spacing: units.gu(0.1)
-                                        anchors.verticalCenter: parent.verticalCenter
+                                    Row {
+                                        id: storyShareRow
 
-                                        Label {
-                                            text: outgoing_message ? i18n.tr("You sent %1's story.").arg(story_share.media.user.username) : i18n.tr("Sent %1's story.").arg(story_share.media.user.username)
-                                            fontSize: "small"
-                                            color: UbuntuColors.darkGrey
-                                            font.weight: Font.Light
-                                            wrapMode: Text.WordWrap
-                                            width: contentWidth
-
-                                            horizontalAlignment: Text.AlignRight
+                                        Rectangle {
+                                            visible: outgoing_message == false
+                                            width: outgoing_message == false ? units.gu(0.1) : 0
+                                            height: Math.max(parent.height, units.gu(5))
+                                            color: UbuntuColors.lightGrey
+                                        }
+                                        Item {
+                                            visible: outgoing_message == false
+                                            width: outgoing_message == false ? units.gu(0.5) : 0
+                                            height: outgoing_message == false ? units.gu(1) : 0
                                         }
 
-                                        Image {
-                                            width: label.width/3
-                                            height: width/story_share.media.image_versions2.candidates[0].width*story_share.media.image_versions2.candidates[0].height
-                                            source: story_share.media.image_versions2.candidates[0].url
-                                            fillMode: Image.PreserveAspectCrop
-                                            sourceSize: Qt.size(width,height)
-                                            smooth: true
-                                            clip: true
+                                        Column {
+                                            spacing: units.gu(0.1)
+                                            anchors.verticalCenter: parent.verticalCenter
 
-                                            Component.onCompleted: {
-                                                if (outgoing_message) {
-                                                    anchors.right = parent.right
+                                            Label {
+                                                text: outgoing_message ? i18n.tr("You sent %1's story.").arg(story_share.media.user.username) : i18n.tr("Sent %1's story.").arg(story_share.media.user.username)
+                                                fontSize: "small"
+                                                color: UbuntuColors.darkGrey
+                                                font.weight: Font.Light
+                                                wrapMode: Text.WordWrap
+                                                width: contentWidth
+
+                                                horizontalAlignment: Text.AlignRight
+                                            }
+
+                                            Image {
+                                                width: label.width/3
+                                                height: width/story_share.media.image_versions2.candidates[0].width*story_share.media.image_versions2.candidates[0].height
+                                                source: story_share.media.image_versions2.candidates[0].url
+                                                fillMode: Image.PreserveAspectCrop
+                                                sourceSize: Qt.size(width,height)
+                                                smooth: true
+                                                clip: true
+
+                                                Component.onCompleted: {
+                                                    if (outgoing_message) {
+                                                        anchors.right = parent.right
+                                                    }
                                                 }
+                                            }
+                                        }
+
+                                        Item {
+                                            visible: outgoing_message
+                                            width: outgoing_message ? units.gu(0.5) : 0
+                                            height: outgoing_message ? units.gu(1) : 0
+                                        }
+                                        Rectangle {
+                                            visible: outgoing_message
+                                            width: outgoing_message ? units.gu(0.1) : 0
+                                            height: Math.max(parent.height, units.gu(5))
+                                            color: UbuntuColors.lightGrey
+                                        }
+
+                                        Component.onCompleted: {
+                                            if (outgoing_message) {
+                                                anchors.right = parent.right
                                             }
                                         }
                                     }
 
-                                    Item {
-                                        visible: outgoing_message
-                                        width: outgoing_message ? units.gu(0.5) : 0
-                                        height: outgoing_message ? units.gu(1) : 0
-                                    }
-                                    Rectangle {
-                                        visible: outgoing_message
-                                        width: outgoing_message ? units.gu(0.1) : 0
-                                        height: Math.max(parent.height, units.gu(5))
-                                        color: UbuntuColors.lightGrey
-                                    }
-
-                                    Component.onCompleted: {
-                                        if (outgoing_message) {
-                                            anchors.right = parent.right
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        onClicked: {
+                                            pageLayout.pushToCurrent(directthreadpage, Qt.resolvedUrl("HighlightStoriesPage.qml"), {highlightId: story_share.reel_id});
                                         }
                                     }
                                 }

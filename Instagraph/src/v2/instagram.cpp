@@ -419,7 +419,7 @@ void InstagramPrivate::configurePhoto(QVariant answer)
             QJsonObject data;
                 data.insert("upload_id",            upload_id);
                 data.insert("camera_model",         QString("HM1S"));
-                data.insert("source_type",          3);
+                data.insert("source_type",          4);
                 data.insert("date_time_original",   QDateTime::currentDateTime().toString("yyyy:MM:dd HH:mm:ss"));
                 data.insert("camera_make",          QString("XIAOMI"));
                 data.insert("edits",                edits);

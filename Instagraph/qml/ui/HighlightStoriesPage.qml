@@ -121,8 +121,8 @@ PageItem {
 
         user = data.reels[highlightId].user
         highlight = {
-            'title': data.reels[highlightId].title,
-            'cover_url': data.reels[highlightId].cover_media.cropped_image_version.url
+            'title': "title" in data.reels[highlightId] ? data.reels[highlightId].title : user.username,
+            'cover_url': "cover_media" in data.reels[highlightId] ? data.reels[highlightId].cover_media.cropped_image_version.url : data.reels[highlightId].user.profile_pic_url
         }
 
         timeAgo.text = Helper.milisecondsToString(items[0].taken_at, true)
@@ -348,6 +348,10 @@ PageItem {
                     getReelsMediaFeed()
                     getting = true
                     timer.stop()
+                }
+
+                if (allHighlights.length == 0) {
+                    pageLayout.removePages(highlightstoriespage)
                 }
             }
         }
