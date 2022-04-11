@@ -330,7 +330,7 @@ PageItem {
                             Rectangle {
                                 width: label.width*3/4
                                 height: mediShareColumn.height + units.gu(2.5)
-                                color: outgoing_message ? Qt.lighter(UbuntuColors.lightGrey, 1.2) : "#ffffff"
+                                color: outgoing_message ? styleApp.directInbox.outgoingMessageBackgroundColor : styleApp.directInbox.incomingMessageBackgroundColor
                                 radius: units.gu(2)
                                 border.width: units.gu(0.1)
                                 border.color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
@@ -422,7 +422,7 @@ PageItem {
                                 visible: typeof media_share.text != 'undefined'
                                 width: typeof media_share.text != 'undefined' ? myMediaShareText.width + units.gu(3) : 0
                                 height: typeof media_share.text != 'undefined' ? myMediaShareText.height + units.gu(2.5) : 0
-                                color: outgoing_message ? Qt.lighter(UbuntuColors.lightGrey, 1.2) : "#ffffff"
+                                color: outgoing_message ? styleApp.directInbox.outgoingMessageBackgroundColor : styleApp.directInbox.incomingMessageBackgroundColor
                                 radius: units.gu(2)
                                 border.width: units.gu(0.1)
                                 border.color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
@@ -449,33 +449,24 @@ PageItem {
                     Component {
                         id: animatedMediaComponent
 
-                        Column {
-                            spacing: units.gu(0.4)
+                        Item {
+                            width: feed_image.width
+                            height: feed_image.height + units.gu(2.5)
 
-                            Rectangle {
-                                width: mediShareColumn.width
-                                height: mediShareColumn.height + units.gu(2.5)
+                            AnimatedImage {
+                                property bool horizontal: parseInt(media.images.fixed_height.width) > parseInt(media.images.fixed_height.height)
 
-                                Column {
-                                    id: mediShareColumn
-                                    width: feed_image.width
+                                id: feed_image
+                                width: media.is_sticker ? (horizontal ? (media.images.fixed_height.width*height / media.images.fixed_height.height) : units.gu(16)) : label.width*3/4
+                                height: media.is_sticker ? (horizontal ? units.gu(8) : (media.images.fixed_height.height*width / media.images.fixed_height.width)) : (width/media.images.fixed_height.width*media.images.fixed_height.height)
+                                source: media.images.fixed_height.url
+                                smooth: true
+                                clip: true
+                            }
 
-                                    AnimatedImage {
-                                        property bool horizontal: parseInt(media.images.fixed_height.width) > parseInt(media.images.fixed_height.height)
-
-                                        id: feed_image
-                                        width: media.is_sticker ? (horizontal ? (media.images.fixed_height.width*height / media.images.fixed_height.height) : units.gu(16)) : label.width*3/4
-                                        height: media.is_sticker ? (horizontal ? units.gu(8) : (media.images.fixed_height.height*width / media.images.fixed_height.width)) : (width/media.images.fixed_height.width*media.images.fixed_height.height)
-                                        source: media.images.fixed_height.url
-                                        smooth: true
-                                        clip: true
-                                    }
-                                }
-
-                                Component.onCompleted: {
-                                    if (outgoing_message) {
-                                        anchors.right = parent.right
-                                    }
+                            Component.onCompleted: {
+                                if (outgoing_message) {
+                                    anchors.right = parent.right
                                 }
                             }
                         }
@@ -562,7 +553,7 @@ PageItem {
                                 visible: typeof reel_share.text != 'undefined' && reel_share.text !== ''
                                 width: typeof reel_share.text != 'undefined' && reel_share.text !== '' ? myReelText.width + units.gu(3) : 0
                                 height: typeof reel_share.text != 'undefined' && reel_share.text !== '' ? myReelText.height + units.gu(2.5) : 0
-                                color: outgoing_message ? Qt.lighter(UbuntuColors.lightGrey, 1.2) : "#ffffff"
+                                color: outgoing_message ? styleApp.directInbox.outgoingMessageBackgroundColor : styleApp.directInbox.incomingMessageBackgroundColor
                                 radius: units.gu(2)
                                 border.width: units.gu(0.1)
                                 border.color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
@@ -738,7 +729,7 @@ PageItem {
                                 visible: typeof story_share.text != 'undefined' && story_share.text !== ''
                                 width: typeof story_share.text != 'undefined' && story_share.text !== '' ? myStoryText.width + units.gu(3) : 0
                                 height: typeof story_share.text != 'undefined' && story_share.text !== '' ? myStoryText.height + units.gu(2.5) : 0
-                                color: outgoing_message ? Qt.lighter(UbuntuColors.lightGrey, 1.2) : "#ffffff"
+                                color: outgoing_message ? styleApp.directInbox.outgoingMessageBackgroundColor : styleApp.directInbox.incomingMessageBackgroundColor
                                 radius: units.gu(2)
                                 border.width: units.gu(0.1)
                                 border.color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
@@ -792,7 +783,7 @@ PageItem {
                         Rectangle {
                             width: label.width*3/4
                             height: linkColumn.height + units.gu(2.5)
-                            color: outgoing_message ? Qt.lighter(UbuntuColors.lightGrey, 1.2) : "#ffffff"
+                            color: outgoing_message ? styleApp.directInbox.outgoingMessageBackgroundColor : styleApp.directInbox.incomingMessageBackgroundColor
                             radius: units.gu(2)
                             border.width: units.gu(0.1)
                             border.color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
@@ -817,7 +808,7 @@ PageItem {
                                     }
                                     width: parent.width - units.gu(2)
                                     text: Helper.makeLink(link.text)
-                                    color: UbuntuColors.darkGrey
+                                    color: outgoing_message ? styleApp.directInbox.outgoingMessageTextColor : styleApp.directInbox.incomingMessageTextColor
                                     wrapMode: Text.WordWrap
                                     textFormat: Text.RichText
                                     font.weight: Font.DemiBold
@@ -841,7 +832,7 @@ PageItem {
                                     }
                                     width: parent.width - units.gu(2)
                                     text: link.link_context.link_title
-                                    color: UbuntuColors.darkGrey
+                                    color: outgoing_message ? styleApp.directInbox.outgoingMessageTextColor : styleApp.directInbox.incomingMessageTextColor
                                     wrapMode: Text.WordWrap
                                 }
 
@@ -855,7 +846,7 @@ PageItem {
                                     width: parent.width - units.gu(2)
                                     text: link.link_context.link_summary
                                     fontSize: "small"
-                                    color: UbuntuColors.darkGrey
+                                    color: outgoing_message ? styleApp.directInbox.outgoingMessageTextColor : styleApp.directInbox.incomingMessageTextColor
                                     font.weight: Font.Light
                                     wrapMode: Text.WordWrap
                                 }
@@ -870,7 +861,7 @@ PageItem {
                         Rectangle {
                             width: placeholderColumn.width + units.gu(3)
                             height: placeholderColumn.height + units.gu(2.5)
-                            color: outgoing_message ? Qt.lighter(UbuntuColors.lightGrey, 1.2) : "#ffffff"
+                            color: outgoing_message ? styleApp.directInbox.outgoingMessageBackgroundColor : styleApp.directInbox.incomingMessageBackgroundColor
                             radius: units.gu(2)
                             border.width: units.gu(0.1)
                             border.color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
@@ -885,7 +876,7 @@ PageItem {
                                     text: placeholder.title
                                     fontSize: "small"
                                     font.weight: Font.DemiBold
-                                    color: UbuntuColors.darkGrey
+                                    color: outgoing_message ? styleApp.directInbox.outgoingMessageTextColor : styleApp.directInbox.incomingMessageTextColor
                                     wrapMode: Text.WordWrap
                                     width: Math.min(placeholderText.implicitWidth, label.width*3/4)
                                 }
@@ -894,7 +885,7 @@ PageItem {
                                     id: placeholderMessage
                                     text: placeholder.message
                                     fontSize: "small"
-                                    color: UbuntuColors.darkGrey
+                                    color: outgoing_message ? styleApp.directInbox.outgoingMessageTextColor : styleApp.directInbox.incomingMessageTextColor
                                     font.weight: Font.Light
                                     wrapMode: Text.WordWrap
                                     width: Math.min(placeholderMessage.implicitWidth, label.width*3/4)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-10 08:13+0000\n"
+"POT-Creation-Date: 2022-04-11 05:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -352,7 +352,7 @@ msgid "Add a comment"
 msgstr ""
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/CommentsPage.qml:318
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:980
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:971
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:349
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:341
 msgid "Send"
@@ -413,7 +413,7 @@ msgid "Shared a link"
 msgstr ""
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:154
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:511
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:502
 msgid "You mentioned their in a story"
 msgstr ""
 
@@ -422,17 +422,17 @@ msgid "Mentioned you in a story"
 msgstr ""
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:155
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:512
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:503
 msgid "You replied to their story"
 msgstr ""
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:155
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:512
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:503
 msgid "Replied to your story"
 msgstr ""
 
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectInboxPage.qml:155
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:512
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:503
 msgid "UNKNOWN"
 msgstr ""
 
@@ -444,21 +444,21 @@ msgstr ""
 msgid "Tap the + icon to send a photo, video or message."
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:511
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:502
 msgid "Mentied you in a story"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:625
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:616
 #, qt-format
 msgid "You sent %1's story."
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:625
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:616
 #, qt-format
 msgid "Sent %1's story."
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:949
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DirectThreadPage.qml:940
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/NewDirectMessagePage.qml:318
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ShareMediaPage.qml:331
 msgid "Write a message..."
@@ -726,72 +726,72 @@ msgstr ""
 msgid "Start capturing and sharing your moments"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:84
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:82
 #, qt-format
 msgid "%1M"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:84
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:82
 #, qt-format
 msgid "%1 MONTH AGO"
 msgid_plural "%1 MONTHS AGO"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:86
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:84
 #, qt-format
 msgid "%1w"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:86
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:84
 #, qt-format
 msgid "%1 WEEK AGO"
 msgid_plural "%1 WEEKS AGO"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:88
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:86
 #, c-format, qt-format
 msgid "%1d"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:88
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:86
 #, qt-format
 msgid "%1 DAY AGO"
 msgid_plural "%1 DAYS AGO"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:90
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:88
 #, qt-format
 msgid "%1h"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:90
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:88
 #, qt-format
 msgid "%1 HOUR AGO"
 msgid_plural "%1 HOURS AGO"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:92
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:90
 #, c-format, qt-format
 msgid "%1m"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:92
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:90
 #, qt-format
 msgid "%1 MINUTE AGO"
 msgid_plural "%1 MINUTES AGO"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:94
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:92
 #, c-format, qt-format
 msgid "%1s"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:94
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/js/Helper.js:92
 #, qt-format
 msgid "%1 SECOND AGO"
 msgid_plural "%1 SECONDS AGO"

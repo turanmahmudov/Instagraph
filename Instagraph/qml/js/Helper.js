@@ -29,14 +29,12 @@ function formatRichTextUsers(string)
 
 function formatUser(string)
 {
-    var textColor = styleApp.common.textColor
-
-    return '<a href="user://'+string+'" style="text-decoration:none;font-weight:500;color:'+textColor+';">'+string+'</a>';
+    return '<a href="user://'+string+'" style="text-decoration:none;font-weight:500;color:'+styleApp.common.textColor+';">'+string+'</a>';
 }
 
 function makeLink(string)
 {
-    return '<a href="'+string+'" style="text-decoration:none;font-weight:500;color:rgb(0,0,0);">'+string+'</a>';
+    return '<a href="'+string+'" style="text-decoration:none;font-weight:500;color:'+styleApp.common.textColor+';">'+string+'</a>';
 }
 
 function getBestImage(imageObject, width) {
