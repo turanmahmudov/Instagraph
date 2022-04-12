@@ -69,45 +69,14 @@ PageItem {
         id: userFollowersModel
     }
 
-    ListView {
-        id: userFollowingsList
-        anchors {
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-            top: userfollowerspage.header.bottom
-        }
+    UsersListView {
+        id: userFollowersList
         onMovementEnded: {
-            if (atYEnd && more_available && !next_coming) {
-                getUserFollowers(next_max_id)
-            }
+            if (atYEnd && more_available && !next_coming) getUserFollowers(next_max_id)
         }
-
-        clip: true
-        cacheBuffer: parent.height*2
         model: userFollowersModel
-        delegate: ListItem {
-            id: userFollowersDelegate
-            height: layout.height
-            divider.visible: false
-            onClicked: {
-                pageLayout.pushToCurrent(userfollowerspage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk});
-            }
-
-            SlotsLayout {
-                id: layout
-                anchors.centerIn: parent
-
-                padding.leading: 0
-                padding.trailing: 0
-                padding.top: units.gu(1)
-                padding.bottom: units.gu(1)
-
-                mainSlot: UserRowSlot {
-                    id: label
-                    width: parent.width
-                }
-            }
+        delegate: UserListItem {
+            onClicked: pageLayout.pushToCurrent(userfollowerspage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk})
         }
         PullToRefresh {
             refreshing: list_loading && userFollowersModel.count == 0

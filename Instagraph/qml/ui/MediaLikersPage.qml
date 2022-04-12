@@ -56,42 +56,11 @@ PageItem {
         id: mediaLikersModel
     }
 
-    ListView {
+    UsersListView {
         id: mediaLikersList
-        anchors {
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-            top: medialikerspage.header.bottom
-        }
-        onMovementEnded: {
-        }
-
-        clip: true
-        cacheBuffer: parent.height*2
         model: mediaLikersModel
-        delegate: ListItem {
-            id: mediaLikersDelegate
-            height: layout.height
-            divider.visible: false
-            onClicked: {
-                pageLayout.pushToCurrent(medialikerspage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk});
-            }
-
-            SlotsLayout {
-                id: layout
-                anchors.centerIn: parent
-
-                padding.leading: 0
-                padding.trailing: 0
-                padding.top: units.gu(1)
-                padding.bottom: units.gu(1)
-
-                mainSlot: UserRowSlot {
-                    id: label
-                    width: parent.width - units.gu(5)
-                }
-            }
+        delegate: UserListItem {
+            onClicked: pageLayout.pushToCurrent(medialikerspage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: user_id})
         }
         PullToRefresh {
             refreshing: list_loading && mediaLikersModel.count == 0

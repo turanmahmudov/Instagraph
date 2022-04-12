@@ -26,7 +26,6 @@
         <file>qml/ui/Credits.qml</file>
         <file>qml/ui/DirectThreadPage.qml</file>
         <file>qml/ui/ChangePasswordPage.qml</file>
-        <file>qml/ui/DiscoverPeoplePage.qml</file>
         <file>qml/ui/RegisterPage.qml</file>
         <file>qml/js/ActivityWorker.js</file>
         <file>qml/js/SimpleWorker.js</file>
@@ -144,5 +143,7 @@
         <file>qml/js/SearchWorker.js</file>
         <file>qml/js/HomeWorker.js</file>
         <file>qml/js/DirectThreadWorker.js</file>
+        <file>qml/components/UsersListView.qml</file>
+        <file>qml/components/UserListItem.qml</file>
     </qresource>
 </RCC>

@@ -69,54 +69,16 @@ PageItem {
         id: userFollowingsModel
     }
 
-    ListView {
+    UsersListView {
         id: userFollowingsList
-        anchors {
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-            top: usersfollowingspage.header.bottom
-        }
         onMovementEnded: {
+            if (atYEnd && more_available && !next_coming) getUserFollowings(next_max_id)
         }
-
-        clip: true
-        cacheBuffer: parent.height*2
         model: userFollowingsModel
-        delegate: ListItem {
-            id: userFollowingsDelegate
-            height: layout.height
-            divider.visible: false
-            onClicked: {
-                pageLayout.pushToCurrent(usersfollowingspage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk});
-            }
-
-            SlotsLayout {
-                id: layout
-                anchors.centerIn: parent
-
-                padding.leading: 0
-                padding.trailing: 0
-                padding.top: units.gu(1)
-                padding.bottom: units.gu(1)
-
-                mainSlot: UserRowSlot {
-                    id: label
-                    width: parent.width - followButton.width
-                }
-
-                FollowComponent {
-                    id: followButton
-                    height: units.gu(3.5)
-                    friendship_var: {"following": true, "outgoing_request": false}
-                    userId: pk
-                    just_icon: false
-
-                    anchors.verticalCenter: parent.verticalCenter
-                    SlotsLayout.position: SlotsLayout.Trailing
-                    SlotsLayout.overrideVerticalPositioning: true
-                }
-            }
+        delegate: UserListItem {
+            onClicked: pageLayout.pushToCurrent(usersfollowingspage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk})
+            followButton: true
+            followData: {"friendship": {"following": true, "outgoing_request": false}, "pk": pk}
         }
         PullToRefresh {
             refreshing: list_loading && userFollowingsModel.count == 0

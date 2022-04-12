@@ -191,7 +191,7 @@ void Instagram::getMediaLikers(QString mediaId)
     Q_D(Instagram);
 
     InstagramRequest *getMediaLikersRequest =
-        d->request("media/"+mediaId+"/likers/",NULL);
+        d->request("media/"+mediaId+"/likers/", NULL, false, true);
     QObject::connect(getMediaLikersRequest,SIGNAL(replyStringReady(QVariant)),this,SIGNAL(mediaLikersDataReady(QVariant)));
 }
 

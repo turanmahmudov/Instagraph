@@ -51,43 +51,11 @@ PageItem {
         id: blockedUsersModel
     }
 
-    ListView {
+    UsersListView {
         id: blockedUsersList
-        anchors {
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-            top: blockeduserspage.header.bottom
-        }
-        onMovementEnded: {
-        }
-
-        clip: true
-        cacheBuffer: parent.height
         model: blockedUsersModel
-        delegate: ListItem {
-            id: blockedUsersDelegate
-            height: layout.height
-            divider.visible: false
-            onClicked: {
-                pageLayout.pushToCurrent(blockeduserspage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: user_id});
-            }
-
-            SlotsLayout {
-                id: layout
-                anchors.centerIn: parent
-
-                padding.leading: 0
-                padding.trailing: 0
-                padding.top: units.gu(1)
-                padding.bottom: units.gu(1)
-
-                mainSlot: UserRowSlot {
-                    id: label
-                    width: parent.width - units.gu(5)
-                }
-            }
-
+        delegate: UserListItem {
+            onClicked: pageLayout.pushToCurrent(blockeduserspage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: user_id})
         }
         PullToRefresh {
             refreshing: list_loading && blockedUsersModel.count == 0

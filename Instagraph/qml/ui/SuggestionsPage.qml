@@ -50,58 +50,13 @@ PageItem {
         id: suggestionsModel
     }
 
-    ListView {
-        id: recentActivityList
-        anchors {
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-            bottomMargin: bottomMenu.height
-            top: suggestionspage.header.bottom
-        }
-        onMovementEnded: {
-            if (atYEnd && more_available && !next_coming) {
-                suggestions()
-            }
-        }
-
-        clip: true
-        cacheBuffer: suggestionspage.height*2
+    UsersListView {
+        id: suggestionsList
         model: suggestionsModel
-        delegate: ListItem {
-            id: searchUsersDelegate
-            height: layout.height
-            divider.visible: false
-            onClicked: {
-                pageLayout.pushToCurrent(suggestionspage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk});
-            }
-
-            SlotsLayout {
-                id: layout
-                anchors.centerIn: parent
-
-                padding.leading: 0
-                padding.trailing: 0
-                padding.top: units.gu(1)
-                padding.bottom: units.gu(1)
-
-                mainSlot: UserRowSlot {
-                    id: label
-                    width: parent.width - followButton.width
-                }
-
-                FollowComponent {
-                    id: followButton
-                    height: units.gu(3.5)
-                    friendship_var: {"following": false, "outgoing_request": false}
-                    userId: pk
-                    just_icon: false
-
-                    anchors.verticalCenter: parent.verticalCenter
-                    SlotsLayout.position: SlotsLayout.Trailing
-                    SlotsLayout.overrideVerticalPositioning: true
-                }
-            }
+        delegate: UserListItem {
+            onClicked: pageLayout.pushToCurrent(suggestionspage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk})
+            followButton: true
+            followData: {"friendship": {"following": false, "outgoing_request": false}, "pk": pk}
         }
         PullToRefresh {
             refreshing: list_loading && suggestionsModel.count == 0

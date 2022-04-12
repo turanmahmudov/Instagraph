@@ -183,7 +183,7 @@ MainView {
             instagram.setUsername(username)
             instagram.setPassword(password)
 
-            instagram.login(force == true ? true : false, username, password, true)
+            instagram.login(force === true ? true : false, username, password, true)
         }
     }
 
