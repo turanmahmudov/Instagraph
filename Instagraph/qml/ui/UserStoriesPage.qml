@@ -103,6 +103,7 @@ PageItem {
     property var allUsers: []
 
     property bool getting: false
+    property bool paused: false
 
     function refreshTimers() {
 
@@ -265,12 +266,12 @@ PageItem {
                         source: image_versions2.candidates[0].url
                         sourceSize: Qt.size(width,height)
                         smooth: false
-                    }
 
-                    Component.onCompleted: {
-                        timer.stop()
-                        timer.interval = 4000
-                        timer.start()
+                        Component.onCompleted: {
+                            timer.stop()
+                            timer.interval = 4000
+                            timer.start()
+                        }
                     }
                 }
             }
@@ -285,6 +286,12 @@ PageItem {
                         source: video_url
                         autoLoad: true
                         autoPlay: true
+
+                        Component.onCompleted: {
+                            timer.stop()
+                            timer.interval = video_duration*1000
+                            timer.start()
+                        }
                     }
                     VideoOutput {
                         id: videoOutput
@@ -293,12 +300,6 @@ PageItem {
                         width: 800
                         height: 600
                         anchors.fill: parent
-                    }
-
-                    Component.onCompleted: {
-                        timer.stop()
-                        timer.interval = video_duration*1000
-                        timer.start()
                     }
 
                     Component.onDestruction: {

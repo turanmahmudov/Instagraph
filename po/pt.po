@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-12 12:55+0000\n"
+"POT-Creation-Date: 2022-04-20 20:02+0000\n"
 "PO-Revision-Date: 2020-01-07 10:44+0200\n"
 "Last-Translator: Ivo Xavier <ivofernandes12@gmail.com>\n"
 "Language: \n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:204
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:209
 msgid "Network Error"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:205
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:210
 msgid "Your device must be connected to the internet."
 msgstr ""
 
@@ -470,10 +470,6 @@ msgstr "Enviou a história de %1."
 msgid "Write a message..."
 msgstr "Escreva uma mensagem..."
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DiscoverPeoplePage.qml:15
-msgid "Discover People"
-msgstr "Encontrar pessoas"
-
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:23
 msgid "Done"
 msgstr "Feito"
@@ -587,7 +583,8 @@ msgstr "Bem-vindo ao Instagraph!"
 msgid "Follow accounts to see photos and videos here in your feed."
 msgstr "Segue contas para veres fotos e vídeos aqui no teu feed."
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ImportPhotoPage.qml:28
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ImportPhotoPage.qml:11
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ImportPhotoPageDesktop.qml:11
 msgid "Choose from"
 msgstr "Escolher de"
 
@@ -811,6 +808,9 @@ msgid "%1 SECOND AGO"
 msgid_plural "%1 SECONDS AGO"
 msgstr[0] "HÁ %1 SEGUNDO"
 msgstr[1] "HÁ %1 SEGUNDOS"
+
+#~ msgid "Discover People"
+#~ msgstr "Encontrar pessoas"
 
 #~ msgid "Libraries"
 #~ msgstr "Bibliotecas"

@@ -86,7 +86,7 @@ PageItem {
     }
 
     function changePhotoClicked() {
-        pageLayout.pushToCurrent(editprofilepage, Qt.resolvedUrl("ImportPhotoPage.qml"))
+        Scripts.openImportPhotoPage(editprofilepage, IS_DESKTOP)
 
         mainView.fileImported.connect(function(fileUrl) {
             changeProfilePictureLoading = true

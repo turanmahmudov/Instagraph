@@ -68,6 +68,9 @@ MainView {
     signal fileImported(var fileUrl)
     signal locationSelected(var location)
 
+    property alias appStore: appStore
+    property var activeTransfer
+
     // API
     Instagram {
         id: instagram

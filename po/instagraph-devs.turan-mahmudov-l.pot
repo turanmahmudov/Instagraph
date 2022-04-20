@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-12 12:55+0000\n"
+"POT-Creation-Date: 2022-04-20 20:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:204
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:209
 msgid "Network Error"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:205
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:210
 msgid "Your device must be connected to the internet."
 msgstr ""
 
@@ -464,10 +464,6 @@ msgstr ""
 msgid "Write a message..."
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/DiscoverPeoplePage.qml:15
-msgid "Discover People"
-msgstr ""
-
 #: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/EditMediaPage.qml:23
 msgid "Done"
 msgstr ""
@@ -578,7 +574,8 @@ msgstr ""
 msgid "Follow accounts to see photos and videos here in your feed."
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ImportPhotoPage.qml:28
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ImportPhotoPage.qml:11
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/qml/ui/ImportPhotoPageDesktop.qml:11
 msgid "Choose from"
 msgstr ""
 

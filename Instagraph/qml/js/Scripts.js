@@ -42,6 +42,14 @@ function publishImage(url, caption, location, disableComments = false) {
     instagram.postImage(String(url).replace('file://', ''), caption, location, "", disableComments ? "1" : "0");
 }
 
+function openImportPhotoPage(currentpage, is_desktop = false) {
+    if (is_desktop === true || is_desktop === "true" || parseInt(is_desktop) === 1) {
+        pageLayout.pushToCurrent(currentpage, Qt.resolvedUrl("../ui/ImportPhotoPageDesktop.qml"))
+    } else {
+        pageLayout.pushToCurrent(currentpage, Qt.resolvedUrl("../ui/ImportPhotoPage.qml"))
+    }
+}
+
 function logOut() {
     instagram.logout()
 

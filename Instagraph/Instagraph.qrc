@@ -145,5 +145,6 @@
         <file>qml/js/DirectThreadWorker.js</file>
         <file>qml/components/UsersListView.qml</file>
         <file>qml/components/UserListItem.qml</file>
+        <file>qml/ui/ImportPhotoPageDesktop.qml</file>
     </qresource>
 </RCC>

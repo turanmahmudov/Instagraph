@@ -193,7 +193,7 @@ PageItem {
 
             onSelectedIndexChanged: {
                 if (selectedIndex == 0) {
-                    pageLayout.pushToCurrent(takephotopage, Qt.resolvedUrl("ImportPhotoPage.qml"))
+                    Scripts.openImportPhotoPage(takephotopage, IS_DESKTOP)
 
                     mainView.fileImported.connect(function(fileUrl) {
                         Scripts.pushImageCrop(takephotopage, fileUrl)
