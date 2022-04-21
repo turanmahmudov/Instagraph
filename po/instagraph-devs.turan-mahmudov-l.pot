@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-20 20:02+0000\n"
+"POT-Creation-Date: 2022-04-20 20:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:209
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:207
 msgid "Network Error"
 msgstr ""
 
-#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:210
+#: /home/turan/Projects/Ubuntu/Instagraph/Instagraph/Main.qml:208
 msgid "Your device must be connected to the internet."
 msgstr ""
 

@@ -175,7 +175,7 @@ PageItem {
                     anchors.fill: parent
                     onClicked: {
                         // Capture Image to location
-                        camera.imageCapture.captureToLocation(instagram.photos_path+'/')
+                        camera.imageCapture.captureToLocation(instagram.photos_path()+'/')
                     }
                 }
             }
