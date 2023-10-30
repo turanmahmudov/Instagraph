@@ -29,13 +29,11 @@ jobs:
 
       - name: Build the app
         run: clickable build --arch=arm64
-
       - uses: actions/upload-artifact@v2
         with:
           name: "instagraph click"
           path: build/*/app/*.click
           if-no-files-found: error
-        
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -46,7 +44,6 @@ jobs:
           release_name: 0.1.2.3
           draft: false
           prerelease: false
-      
       - name: Upload Release Asset
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
