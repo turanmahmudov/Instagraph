@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
 import "../components"
@@ -148,7 +148,7 @@ PageItem {
                         id: username_rect
                         height: username_label.height + units.gu(1.5)
                         width: username_label.width + units.gu(2.5)
-                        color: UbuntuColors.blue
+                        color: LomiriColors.blue
                         radius: units.gu(0.3)
                         Label {
                             anchors.centerIn: parent
@@ -337,7 +337,7 @@ PageItem {
             Button {
                 id: addMessageButton
                 anchors.verticalCenter: parent.verticalCenter
-                color: UbuntuColors.green
+                color: LomiriColors.green
                 text: i18n.tr("Send")
                 onClicked: {
                     sendMessage(addMessageField.text)

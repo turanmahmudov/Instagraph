@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 import QtGraphicalEffects 1.0
 import QtMultimedia 5.12
@@ -84,7 +84,7 @@ PageItem {
                     }
                     font.weight: Font.DemiBold
                     wrapMode: Text.WordWrap
-                    color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
+                    color: Qt.lighter(LomiriColors.lightGrey, 1.1)
                     layer.enabled: true
                     layer.effect: DropShadow {
                         verticalOffset: 2
@@ -234,7 +234,7 @@ PageItem {
 
         snapMode: ListView.SnapOneItem
         orientation: Qt.Horizontal
-        highlightMoveDuration: UbuntuAnimation.FastDuration
+        highlightMoveDuration: LomiriAnimation.FastDuration
         highlightRangeMode: ListView.StrictlyEnforceRange
         highlightFollowsCurrentItem: true
         clip: true

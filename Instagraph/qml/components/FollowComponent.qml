@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
 import "../components"
@@ -14,8 +14,8 @@ Item {
 
     // Theme
     property string followColor: "#ffffff"
-    property string followBgColor: UbuntuColors.green
-    property string followBorderColor: UbuntuColors.green
+    property string followBgColor: LomiriColors.green
+    property string followBorderColor: LomiriColors.green
     property string followIcon: "add"
 
     property string followingColor: styleApp.common.outlineButtonTextColor

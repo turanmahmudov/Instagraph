@@ -15,7 +15,7 @@
  */
 
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 
 import "../components"
 
@@ -26,7 +26,7 @@ ListView {
     anchors.fill: parent
     orientation: ListView.Horizontal
 
-    highlightMoveDuration: UbuntuAnimation.SnapDuration
+    highlightMoveDuration: LomiriAnimation.SnapDuration
     preferredHighlightBegin: units.gu(12)
     preferredHighlightEnd: filtersView.width - units.gu(12)
 

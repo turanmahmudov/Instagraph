@@ -1,6 +1,6 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
-import Ubuntu.Components.Styles 1.3
+import Lomiri.Components 1.3
+import Lomiri.Components.Styles 1.3
 import QtQuick.LocalStorage 2.12
 import QtMultimedia 5.12
 import QtQml.Models 2.12

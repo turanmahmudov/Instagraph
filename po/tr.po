@@ -837,7 +837,7 @@ msgstr[1] "%1 SANİYE ÖNCE"
 #~ msgid "Donate me"
 #~ msgstr "Bağışta bulun"
 
-#~ msgid "Donate to support me continue developing for Ubuntu."
+#~ msgid "Donate to support me continue developing for Lomiri."
 #~ msgstr ""
 #~ "Ubuntu uygulamasını geliştirmeyi sürdürmeme destek olmak için bağış yap."
 

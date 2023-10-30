@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
 import "../components"
@@ -23,7 +23,7 @@ Item {
                 has_liked = true
 
                 commentlikeicon.name = "\ueadf"
-                commentlikeicon.color = UbuntuColors.red
+                commentlikeicon.color = LomiriColors.red
 
                 latest_like_request = 0
             }
@@ -49,7 +49,7 @@ Item {
         anchors.centerIn: parent
         anchors.right: parent.right
         name: has_liked === true ? "\ueadf" : "\ueae1"
-        color: has_liked === true ? UbuntuColors.red : styleApp.common.iconActiveColor
+        color: has_liked === true ? LomiriColors.red : styleApp.common.iconActiveColor
         iconSize: units.gu(2.2)
     }
 

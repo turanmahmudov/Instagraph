@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
 import "../components"
@@ -76,7 +76,7 @@ PageItem {
             width: parent.width*0.8
             height: units.gu(5)
             anchors.horizontalCenter: parent.horizontalCenter
-            color: UbuntuColors.blue
+            color: LomiriColors.blue
             text: i18n.tr("Log In")
             onTriggered: {
                 if(usernameField.text && passwordField.text) {
@@ -107,7 +107,7 @@ PageItem {
                     anchors.centerIn: parent
                     width: parent.width
                     height: units.gu(0.1)
-                    color: UbuntuColors.ash
+                    color: LomiriColors.ash
                 }
 
                 Rectangle {
@@ -136,7 +136,7 @@ PageItem {
                 width: parent.width*0.8
                 height: units.gu(5)
                 anchors.horizontalCenter: parent.horizontalCenter
-                color: UbuntuColors.blue
+                color: LomiriColors.blue
                 text: i18n.tr("Log In with Saved Accounts")
                 onTriggered: {
                     bottomEdge.commit()
@@ -159,7 +159,7 @@ PageItem {
         Rectangle {
             width: parent.width
             height: units.gu(0.08)
-            color: UbuntuColors.ash
+            color: LomiriColors.ash
         }
 
         Item {

@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 import QtPositioning 5.2
 
@@ -121,7 +121,7 @@ PageItem {
                                 anchors.fill: parent
                                 color: "transparent"
                                 border.width: units.gu(0.1)
-                                border.color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
+                                border.color: Qt.lighter(LomiriColors.lightGrey, 1.1)
                                 radius: width/2
 
                                 LineIcon {

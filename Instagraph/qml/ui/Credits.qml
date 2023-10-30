@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 
 import "../components"
 
@@ -96,6 +96,31 @@ PageItem {
                }
                onClicked: {
                    Qt.openUrlExternally("mailto:kevinfeyder@gmail.com")
+               }
+           }
+
+           ListItem {
+               height: focalHeaderLayout.height
+
+               ListItemLayout {
+                   id: focalHeaderLayout
+
+                   title.text: i18n.tr("Focal Update")
+                   title.font.weight: Font.Normal
+               }
+           }
+
+            ListItem {
+               height: prs4Layout.height
+               divider.visible: false
+               ListItemLayout {
+                   id: prs4Layout
+
+                   title.text: "Rúben Carneiro"
+                   subtitle.text: "rubencarneiro01@gmail.com"
+               }
+               onClicked: {
+                   Qt.openUrlExternally("mailto:rubencarneiro01@gmail.com")
                }
            }
         }

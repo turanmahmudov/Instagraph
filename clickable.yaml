@@ -1,0 +1,13 @@
+clickable_minimum_required: '7'
+framework: 'ubuntu-sdk-20.04'
+builder: 'qmake'
+qt_version: '5.12'
+dependencies_target:
+  - 'gstreamer1.0-pulseaudio'
+  - 'gstreamer1.0-libav'
+  - 'gstreamer1.0-plugins-bad'
+  - 'gstreamer1.0-plugins-ugly'
+  - 'qml-module-qtquick-dialogs'
+  - 'qml-module-qtquick-controls'
+# Avoid failing `clickable build` with warning: (NEEDS REVIEW) 'unconfined' not allowed
+ignore_review_warnings: true

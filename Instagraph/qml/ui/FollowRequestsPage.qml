@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
 import "../components"
@@ -90,7 +90,7 @@ PageItem {
                     spacing: units.gu(1)
 
                     Button {
-                        color: UbuntuColors.blue
+                        color: LomiriColors.blue
                         text: i18n.tr("Confirm")
 
                         anchors.verticalCenter: parent.verticalCenter
@@ -104,7 +104,7 @@ PageItem {
                     }
 
                     Button {
-                        color: UbuntuColors.lightGrey
+                        color: LomiriColors.lightGrey
                         text: i18n.tr("Delete")
 
                         anchors.verticalCenter: parent.verticalCenter

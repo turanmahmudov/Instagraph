@@ -1,7 +1,7 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
-import Ubuntu.Components.Popups 1.3
+import Lomiri.Components.Popups 1.3
 
 import "../components"
 
@@ -148,7 +148,7 @@ PageItem {
                        Label {
                            text: i18n.tr("Change Photo")
                            font.weight: Font.Normal
-                           color: UbuntuColors.blue
+                           color: LomiriColors.blue
                            anchors.horizontalCenter: parent.horizontalCenter
 
                            MouseArea {

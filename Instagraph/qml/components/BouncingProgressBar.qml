@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 
 Item {
     height: units.dp(3)
@@ -10,7 +10,7 @@ Item {
     Rectangle {
         id: rectangle
         anchors.fill: parent
-        color: UbuntuColors.blue
+        color: LomiriColors.blue
         visible: animation.running
     }
 

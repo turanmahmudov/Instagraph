@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
 import "../components"
@@ -148,7 +148,7 @@ PageItem {
                                         anchors.verticalCenter: parent.verticalCenter
 
                                         Text {
-                                            text: i18n.tr("<span style='color:"+UbuntuColors.red+";'>%1</span> Follow Requests").arg(followRequests.request_count)
+                                            text: i18n.tr("<span style='color:"+LomiriColors.red+";'>%1</span> Follow Requests").arg(followRequests.request_count)
                                             wrapMode: Text.WordWrap
                                             font.weight: Font.DemiBold
                                             textFormat: Text.RichText

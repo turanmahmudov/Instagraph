@@ -1,8 +1,8 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 
 QtObject {
-    property bool dark: theme.name == 'Ubuntu.Components.Themes.SuruDark'
+    property bool dark: theme.name == 'Lomiri.Components.Themes.SuruDark'
     property var currentStyle: dark ? styleDark : styleLight
 
     property QtObject common: QtObject {

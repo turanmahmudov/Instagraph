@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtGraphicalEffects 1.0
 
 Item {
@@ -43,8 +43,8 @@ Item {
         opacity: !finishedLoading
 
         Behavior on opacity {
-            UbuntuNumberAnimation {
-                duration: UbuntuAnimation.SlowDuration
+            LomiriNumberAnimation {
+                duration: LomiriAnimation.SlowDuration
             }
         }
 
@@ -67,7 +67,7 @@ Item {
 
         snapMode: ListView.SnapToItem
         orientation: Qt.Horizontal
-        highlightMoveDuration: UbuntuAnimation.FastDuration
+        highlightMoveDuration: LomiriAnimation.FastDuration
         highlightRangeMode: ListView.ApplyRange
         highlightFollowsCurrentItem: true
 

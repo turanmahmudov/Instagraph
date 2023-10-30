@@ -6,5 +6,5 @@ Exec=Instagraph
 Icon=Instagraph/Instagraph.png
 Terminal=false
 Type=Application
-X-Ubuntu-Touch=true
-X-Ubuntu-Splash-Color=#ffffff
+X-Lomiri-Touch=true
+X-Lomiri-Splash-Color=#ffffff

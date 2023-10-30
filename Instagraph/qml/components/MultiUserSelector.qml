@@ -1,8 +1,8 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
-import Ubuntu.Components.Popups 1.3
+import Lomiri.Components.Popups 1.3
 
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper

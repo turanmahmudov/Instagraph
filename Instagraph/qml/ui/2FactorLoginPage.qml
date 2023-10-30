@@ -1,8 +1,8 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 import QtGraphicalEffects 1.0
-import Ubuntu.Components.Styles 1.3
+import Lomiri.Components.Styles 1.3
 
 import "../components"
 
@@ -72,7 +72,7 @@ PageItem {
             width: parent.width*0.8
             height: units.gu(5)
             anchors.horizontalCenter: parent.horizontalCenter
-            color: UbuntuColors.blue
+            color: LomiriColors.blue
             text: i18n.tr("Confirm")
             onTriggered: {
                 instagram.confirm2Factor(codeField.text, answer.two_factor_info.two_factor_identifier, has_totp ? "3" : "1");
