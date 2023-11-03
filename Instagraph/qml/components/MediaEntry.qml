@@ -1,10 +1,10 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 import QtMultimedia 5.12
-import Ubuntu.Components.Popups 1.3
-import Ubuntu.Content 1.3
+import Lomiri.Components.Popups 1.3
+import Lomiri.Content 1.3
 import QtGraphicalEffects 1.0
 
 import "../js/Storage.js" as Storage
@@ -143,7 +143,7 @@ Column {
                 id: imagelikeicon
                 anchors.verticalCenter: parent.verticalCenter
                 name: has_liked === true ? "\ueadf" : "\ueae1"
-                color: has_liked === true ? UbuntuColors.red : styleApp.common.iconActiveColor
+                color: has_liked === true ? LomiriColors.red : styleApp.common.iconActiveColor
                 iconSize: units.gu(2.2)
             }
 
@@ -171,7 +171,7 @@ Column {
             LineIcon {
                 anchors.verticalCenter: parent.verticalCenter
                 name: "\uea74"
-                color: typeof comments_disabled != 'undefined' && comments_disabled == true ? UbuntuColors.lightGrey : styleApp.common.iconActiveColor
+                color: typeof comments_disabled != 'undefined' && comments_disabled == true ? LomiriColors.lightGrey : styleApp.common.iconActiveColor
                 iconSize: units.gu(2.2)
             }
 
@@ -453,10 +453,10 @@ Column {
                             width: height
                             radius: width/2
                             anchors.verticalCenter: parent.verticalCenter
-                            color: active ? UbuntuColors.blue : styleApp.common.iconActiveColor
+                            color: active ? LomiriColors.blue : styleApp.common.iconActiveColor
                             Behavior on color {
                                 ColorAnimation {
-                                    duration: UbuntuAnimation.FastDuration
+                                    duration: LomiriAnimation.FastDuration
                                 }
                             }
                         }
@@ -470,7 +470,7 @@ Column {
         target: instagram
         onLikeDataReady: {
             if (JSON.parse(answer).status === "ok" && last_like_id === id) {
-                imagelikeicon.color = UbuntuColors.red;
+                imagelikeicon.color = LomiriColors.red;
                 imagelikeicon.name = "\ueadf";
             }
         }

@@ -843,9 +843,9 @@ msgstr[1] "Il y a %1 secondes"
 #~ msgid "Donate me"
 #~ msgstr "Me faire un don"
 
-#~ msgid "Donate to support me continue developing for Ubuntu."
+#~ msgid "Donate to support me continue developing for Lomiri."
 #~ msgstr ""
-#~ "Faites un don pour m'encourager à continuer à développer pour Ubuntu."
+#~ "Faites un don pour m'encourager à continuer à développer pour Lomiri."
 
 #~ msgid "Ignore"
 #~ msgstr "Ignorer"

@@ -1,7 +1,7 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
-import Ubuntu.Content 1.1
+import Lomiri.Content 1.1
 import QtMultimedia 5.12
 
 import "../components"
@@ -60,7 +60,7 @@ PageItem {
             }
 
             Rectangle {
-                color: UbuntuColors.slate
+                color: LomiriColors.slate
                 opacity: 0.1
                 anchors.fill: parent
                 visible: clarityButton.pressed

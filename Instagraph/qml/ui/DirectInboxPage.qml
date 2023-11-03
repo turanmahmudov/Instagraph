@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
 import "../components"
@@ -180,7 +180,7 @@ PageItem {
                     height: width
                     visible: unseen
                     radius: width/2
-                    color: UbuntuColors.blue
+                    color: LomiriColors.blue
 
                     anchors.verticalCenter: parent.verticalCenter
                     SlotsLayout.position: SlotsLayout.Trailing

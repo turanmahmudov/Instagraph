@@ -1,0 +1,56 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+    types:
+      - opened
+  workflow_dispatch:
+
+jobs:
+  clickable:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Clickable
+        run: |
+          # For whatever reason, I have to manually install runc before
+          # docker.io or containerd, else it fails because of broken dependency
+          # Using apt-get because apt complains it shouldn't be used in scripts
+          sudo apt-get update
+          sudo apt-get install -y runc
+          sudo apt-get install -y docker.io adb git python3 python3-pip
+          pip3 install --user git+https://gitlab.com/clickable/clickable.git
+
+          # Clickable requires a reboot. This is a sneaky way to bypass that :^)
+          sudo systemctl unmask docker.service
+          sudo systemctl start docker.service
+
+      - name: Build the app
+        run: clickable build --arch=arm64
+      - uses: actions/upload-artifact@v2
+        with:
+          name: "instagraph click"
+          path: build/*/app/*.click
+          if-no-files-found: error
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: 0.1.2.3
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: build/aarch64-linux-gnu/app/instagraph-devs.turan-mahmudov-l_0.1.2.3_arm64.click
+          asset_name: instagraph-devs.turan-mahmudov-l_0.1.2.3_arm64.click
+          asset_content_type: click

@@ -1,6 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 
 import "../components"
 
@@ -453,7 +453,7 @@ PageItem {
                                 anchors.fill: parent
                                 color: "transparent"
                                 border.width: units.gu(0.1)
-                                border.color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
+                                border.color: Qt.lighter(LomiriColors.lightGrey, 1.1)
                                 radius: width/2
 
                                 LineIcon {
@@ -529,7 +529,7 @@ PageItem {
                                 anchors.fill: parent
                                 color: "transparent"
                                 border.width: units.gu(0.1)
-                                border.color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
+                                border.color: Qt.lighter(LomiriColors.lightGrey, 1.1)
                                 radius: width/2
 
                                 LineIcon {

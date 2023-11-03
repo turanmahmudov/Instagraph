@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 
 import "../components"
 
@@ -21,7 +21,7 @@ PageItem {
             topMargin: units.gu(5)
         }
 
-        UbuntuShape {
+        LomiriShape {
             anchors.horizontalCenter: parent.horizontalCenter
             width: units.gu(16)
             height: units.gu(16)

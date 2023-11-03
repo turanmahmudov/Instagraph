@@ -1,10 +1,10 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 import QtMultimedia 5.12
-import Ubuntu.Components.Popups 1.3
-import Ubuntu.Content 1.3
-import Ubuntu.DownloadManager 1.2
+import Lomiri.Components.Popups 1.3
+import Lomiri.Content 1.3
+import Lomiri.DownloadManager 1.2
 
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper

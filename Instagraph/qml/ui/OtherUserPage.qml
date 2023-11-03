@@ -1,7 +1,7 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
-import Ubuntu.Components.Popups 1.3
+import Lomiri.Components.Popups 1.3
 
 import "../components"
 
@@ -299,7 +299,7 @@ PageItem {
                 visible: false
                 width: parent.width - units.gu(2)
                 anchors.horizontalCenter: parent.horizontalCenter
-                color: UbuntuColors.green
+                color: LomiriColors.green
                 text: i18n.tr("Follow")
                 onTriggered: {
                     latest_follow_request = usernameId
@@ -336,7 +336,7 @@ PageItem {
                 visible: selfProfile
                 width: parent.width - units.gu(2)
                 anchors.horizontalCenter: parent.horizontalCenter
-                color: UbuntuColors.green
+                color: LomiriColors.green
                 text: i18n.tr("Edit Profile")
                 onClicked: {
                     pageLayout.pushToCurrent(otheruserpage, Qt.resolvedUrl("EditProfilePage.qml"));
@@ -445,7 +445,7 @@ PageItem {
                 Rectangle {
                     width: parent.width
                     height: units.gu(0.17)
-                    color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
+                    color: Qt.lighter(LomiriColors.lightGrey, 1.1)
                 }
             }
 
@@ -477,7 +477,7 @@ PageItem {
                 visible: isPrivate ? true : false
                 width: isPrivate ? parent.width : 0
                 height: isPrivate ? units.gu(0.17) : 0
-                color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
+                color: Qt.lighter(LomiriColors.lightGrey, 1.1)
             }
 
             EmptyBox {

@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
 import "../components"
@@ -257,7 +257,7 @@ PageItem {
 
                         LineIcon {
                             name: "\ueadf"
-                            color: UbuntuColors.red
+                            color: LomiriColors.red
                             iconSize: units.gu(2.4)
                         }
                     }
@@ -333,7 +333,7 @@ PageItem {
                                 color: outgoing_message ? styleApp.directInbox.outgoingMessageBackgroundColor : styleApp.directInbox.incomingMessageBackgroundColor
                                 radius: units.gu(2)
                                 border.width: units.gu(0.1)
-                                border.color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
+                                border.color: Qt.lighter(LomiriColors.lightGrey, 1.2)
 
                                 Column {
                                     id: mediShareColumn
@@ -442,7 +442,7 @@ PageItem {
                                 color: outgoing_message ? styleApp.directInbox.outgoingMessageBackgroundColor : styleApp.directInbox.incomingMessageBackgroundColor
                                 radius: units.gu(2)
                                 border.width: units.gu(0.1)
-                                border.color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
+                                border.color: Qt.lighter(LomiriColors.lightGrey, 1.2)
 
                                 Label {
                                     id: myMediaShareText
@@ -504,7 +504,7 @@ PageItem {
                                     visible: outgoing_message == false
                                     width: outgoing_message == false ? units.gu(0.1) : 0
                                     height: Math.max(parent.height, units.gu(5))
-                                    color: UbuntuColors.lightGrey
+                                    color: LomiriColors.lightGrey
                                 }
                                 Item {
                                     visible: outgoing_message == false
@@ -520,7 +520,7 @@ PageItem {
                                         text: reel_share.type === 'mention' ? (outgoing_message ? i18n.tr("You mentioned their in a story") : i18n.tr("Mentied you in a story")) :
                                                                              reel_share.type === '' ? (outgoing_message ? i18n.tr("You replied to their story") : i18n.tr("Replied to your story")) : i18n.tr("UNKNOWN")
                                         fontSize: "small"
-                                        color: UbuntuColors.darkGrey
+                                        color: LomiriColors.darkGrey
                                         font.weight: Font.Light
                                         wrapMode: Text.WordWrap
                                         width: contentWidth
@@ -557,7 +557,7 @@ PageItem {
                                     visible: outgoing_message
                                     width: outgoing_message ? units.gu(0.1) : 0
                                     height: Math.max(parent.height, units.gu(5))
-                                    color: UbuntuColors.lightGrey
+                                    color: LomiriColors.lightGrey
                                 }
 
                                 Component.onCompleted: {
@@ -574,7 +574,7 @@ PageItem {
                                 color: outgoing_message ? styleApp.directInbox.outgoingMessageBackgroundColor : styleApp.directInbox.incomingMessageBackgroundColor
                                 radius: units.gu(2)
                                 border.width: units.gu(0.1)
-                                border.color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
+                                border.color: Qt.lighter(LomiriColors.lightGrey, 1.2)
 
                                 Label {
                                     id: myReelText
@@ -624,7 +624,7 @@ PageItem {
                                             visible: outgoing_message == false
                                             width: outgoing_message == false ? units.gu(0.1) : 0
                                             height: Math.max(parent.height, units.gu(5))
-                                            color: UbuntuColors.lightGrey
+                                            color: LomiriColors.lightGrey
                                         }
                                         Item {
                                             visible: outgoing_message == false
@@ -639,7 +639,7 @@ PageItem {
                                             Label {
                                                 text: outgoing_message ? i18n.tr("You sent %1's story.").arg(story_share.media.user.username) : i18n.tr("Sent %1's story.").arg(story_share.media.user.username)
                                                 fontSize: "small"
-                                                color: UbuntuColors.darkGrey
+                                                color: LomiriColors.darkGrey
                                                 font.weight: Font.Light
                                                 wrapMode: Text.WordWrap
                                                 width: contentWidth
@@ -673,7 +673,7 @@ PageItem {
                                             visible: outgoing_message
                                             width: outgoing_message ? units.gu(0.1) : 0
                                             height: Math.max(parent.height, units.gu(5))
-                                            color: UbuntuColors.lightGrey
+                                            color: LomiriColors.lightGrey
                                         }
 
                                         Component.onCompleted: {
@@ -700,7 +700,7 @@ PageItem {
                                         visible: outgoing_message == false
                                         width: outgoing_message == false ? units.gu(0.1) : 0
                                         height: Math.max(parent.height, units.gu(5))
-                                        color: UbuntuColors.lightGrey
+                                        color: LomiriColors.lightGrey
                                     }
                                     Item {
                                         visible: outgoing_message == false
@@ -715,7 +715,7 @@ PageItem {
                                         Label {
                                             text: Helper.formatString(story_share.title)
                                             fontSize: "small"
-                                            color: UbuntuColors.darkGrey
+                                            color: LomiriColors.darkGrey
                                             font.weight: Font.Light
                                             wrapMode: Text.WordWrap
                                             textFormat: Text.RichText
@@ -729,7 +729,7 @@ PageItem {
                                         Label {
                                             text: story_share.message
                                             fontSize: "small"
-                                            color: UbuntuColors.darkGrey
+                                            color: LomiriColors.darkGrey
                                             font.weight: Font.Light
                                             wrapMode: Text.WordWrap
 
@@ -746,7 +746,7 @@ PageItem {
                                         visible: outgoing_message
                                         width: outgoing_message ? units.gu(0.1) : 0
                                         height: Math.max(parent.height, units.gu(5))
-                                        color: UbuntuColors.lightGrey
+                                        color: LomiriColors.lightGrey
                                     }
 
                                     Component.onCompleted: {
@@ -764,7 +764,7 @@ PageItem {
                                 color: outgoing_message ? styleApp.directInbox.outgoingMessageBackgroundColor : styleApp.directInbox.incomingMessageBackgroundColor
                                 radius: units.gu(2)
                                 border.width: units.gu(0.1)
-                                border.color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
+                                border.color: Qt.lighter(LomiriColors.lightGrey, 1.2)
 
                                 Label {
                                     id: myStoryText
@@ -795,7 +795,7 @@ PageItem {
                             LineIcon {
                                 anchors.verticalCenter: parent.verticalCenter
                                 name: "\ueadf"
-                                color: UbuntuColors.red
+                                color: LomiriColors.red
                                 iconSize: units.gu(2.4)
                             }
 
@@ -818,7 +818,7 @@ PageItem {
                             color: outgoing_message ? styleApp.directInbox.outgoingMessageBackgroundColor : styleApp.directInbox.incomingMessageBackgroundColor
                             radius: units.gu(2)
                             border.width: units.gu(0.1)
-                            border.color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
+                            border.color: Qt.lighter(LomiriColors.lightGrey, 1.2)
 
                             Column {
                                 id: linkColumn
@@ -852,7 +852,7 @@ PageItem {
                                 Rectangle {
                                     width: parent.width
                                     height: units.gu(0.1)
-                                    color: UbuntuColors.lightGrey
+                                    color: LomiriColors.lightGrey
                                 }
 
                                 Label {
@@ -896,7 +896,7 @@ PageItem {
                             color: outgoing_message ? styleApp.directInbox.outgoingMessageBackgroundColor : styleApp.directInbox.incomingMessageBackgroundColor
                             radius: units.gu(2)
                             border.width: units.gu(0.1)
-                            border.color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
+                            border.color: Qt.lighter(LomiriColors.lightGrey, 1.2)
 
                             Column {
                                 id: placeholderColumn
@@ -984,7 +984,7 @@ PageItem {
                 LineIcon {
                     anchors.centerIn: parent
                     name: "\ueae1"
-                    color: UbuntuColors.red
+                    color: LomiriColors.red
                     iconSize: units.gu(2.4)
                 }
 
@@ -999,7 +999,7 @@ PageItem {
             Button {
                 id: addMessageButton
                 anchors.verticalCenter: parent.verticalCenter
-                color: UbuntuColors.green
+                color: LomiriColors.green
                 text: i18n.tr("Send")
                 onClicked: {
                     sendMessage(addMessageField.text)

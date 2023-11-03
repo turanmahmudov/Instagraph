@@ -17,7 +17,7 @@
 // FIXME(loicm) Add support for keyboard shortcuts (basically left/right).
 
 import QtQuick 2.12
-import Ubuntu.Components 1.3 as Toolkit
+import Lomiri.Components 1.3 as Toolkit
 
 // [InstantFX] Custom Slider, which implements single steps on click, instead of positioning
 // the thumb under the cursor position.
@@ -25,7 +25,7 @@ import Ubuntu.Components 1.3 as Toolkit
 
 /*!
     \qmltype Slider
-    \inqmlmodule Ubuntu.Components
+    \inqmlmodule Lomiri.Components
     \ingroup ubuntu
     \brief Slider is a component to select a value from a continuous range of
      values.
@@ -34,7 +34,7 @@ import Ubuntu.Components 1.3 as Toolkit
     styles should take this into account when defining the visuals, and
     alter these values to align the graphics' sizes.
 
-    \l {https://design.ubuntu.com/apps/building-blocks/selection#slider}{See also the Design Guidelines on Sliders}.
+    \l {https://design.Lomiri.com/apps/building-blocks/selection#slider}{See also the Design Guidelines on Sliders}.
 
     Example:
     \qml

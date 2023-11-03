@@ -15,7 +15,7 @@
  */
 
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 
 PageHeader {
     id: functionSelector
@@ -47,7 +47,7 @@ PageHeader {
                     //font.capitalization: Font.AllUppercase
                     font.weight: Font.DemiBold
                     //fontSize: "small"
-                    color: button.isSelected ? "#000000" : UbuntuColors.darkGrey
+                    color: button.isSelected ? "#000000" : LomiriColors.darkGrey
                 }
 
                 Rectangle {

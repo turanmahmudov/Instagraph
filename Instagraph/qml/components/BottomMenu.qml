@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
 import "../fonts/"
@@ -119,7 +119,7 @@ Rectangle {
                 width: units.gu(0.8)
                 height: width
                 radius: width/2
-                color: UbuntuColors.orange
+                color: LomiriColors.orange
             }
 
             MouseArea {

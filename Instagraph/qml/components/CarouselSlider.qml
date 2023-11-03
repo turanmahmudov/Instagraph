@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtMultimedia 5.12
 import QtGraphicalEffects 1.0
 
@@ -24,7 +24,7 @@ ListView {
 
     snapMode: ListView.SnapOneItem
     orientation: Qt.Horizontal
-    highlightMoveDuration: UbuntuAnimation.FastDuration
+    highlightMoveDuration: LomiriAnimation.FastDuration
     highlightRangeMode: ListView.StrictlyEnforceRange
     highlightFollowsCurrentItem: true
     clip: true

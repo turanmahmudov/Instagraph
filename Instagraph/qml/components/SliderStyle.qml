@@ -15,7 +15,7 @@
  */
 
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import "sliderUtils.js" as SliderUtils
 
 // [InstantFX] Not sure which is the real bottleneck.
@@ -38,7 +38,7 @@ Item {
     implicitWidth: units.gu(38)
     implicitHeight: units.gu(6)
 
-    UbuntuShapeOverlay {
+    LomiriShapeOverlay {
         id: background
         anchors {
             verticalCenter: parent.verticalCenter
@@ -47,7 +47,7 @@ Item {
         }
         height: units.dp(2)
         backgroundColor: sliderStyle.backgroundColor
-        aspect: UbuntuShape.Flat
+        aspect: LomiriShape.Flat
         overlayColor: sliderStyle.foregroundColor
         overlayRect: {
             var pos = (sliderStyle.thumb.x / sliderStyle.thumb.barMinusThumbWidth)

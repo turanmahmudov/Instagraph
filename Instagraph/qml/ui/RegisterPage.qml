@@ -1,8 +1,8 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 import QtGraphicalEffects 1.0
-import Ubuntu.Components.Styles 1.3
+import Lomiri.Components.Styles 1.3
 
 import "../components"
 
@@ -75,7 +75,7 @@ PageItem {
             width: parent.width*0.8
             height: units.gu(5)
             anchors.horizontalCenter: parent.horizontalCenter
-            color: UbuntuColors.blue
+            color: LomiriColors.blue
             text: i18n.tr("Sign Up")
             onTriggered: {
                 if(usernameField.text && passwordField.text && emailField.text) {
@@ -93,7 +93,7 @@ PageItem {
         Rectangle {
             width: parent.width
             height: units.gu(0.08)
-            color: UbuntuColors.ash
+            color: LomiriColors.ash
         }
 
         Item {

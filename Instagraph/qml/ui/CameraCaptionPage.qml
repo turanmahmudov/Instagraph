@@ -1,7 +1,7 @@
 import QtQuick 2.12
-import Ubuntu.Components 1.3
+import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
-import Ubuntu.Content 1.1
+import Lomiri.Content 1.1
 import QtMultimedia 5.12
 import QtPositioning 5.2
 
@@ -97,7 +97,7 @@ PageItem {
         Rectangle {
             width: parent.width
             height: units.gu(5)
-            color: Qt.lighter(UbuntuColors.lightGrey, 1.2)
+            color: Qt.lighter(LomiriColors.lightGrey, 1.2)
 
             Label {
                 anchors.left: parent.left
@@ -163,7 +163,7 @@ PageItem {
         Rectangle {
             width: parent.width
             height: units.gu(0.17)
-            color: Qt.lighter(UbuntuColors.lightGrey, 1.1)
+            color: Qt.lighter(LomiriColors.lightGrey, 1.1)
         }
 
         ListItem {
@@ -230,7 +230,7 @@ PageItem {
                             id: username_rect
                             height: username_label.height + units.gu(1.5)
                             width: username_label.width + units.gu(2.5)
-                            color: UbuntuColors.blue
+                            color: LomiriColors.blue
                             radius: units.gu(0.3)
                             Label {
                                 anchors.centerIn: parent

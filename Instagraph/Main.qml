@@ -2,12 +2,12 @@ import QtQuick 2.12
 import QtQuick.LocalStorage 2.12
 import QtSystemInfo 5.0
 import Qt.labs.settings 1.0
-import Ubuntu.Components 1.3
-import Ubuntu.Components.Popups 1.3
-import Ubuntu.Content 1.3
-import Ubuntu.DownloadManager 1.2
-import Ubuntu.Connectivity 1.0
-import Ubuntu.Layouts 1.0
+import Lomiri.Components 1.3
+import Lomiri.Components.Popups 1.3
+import Lomiri.Content 1.3
+import Lomiri.DownloadManager 1.2
+import Lomiri.Connectivity 1.0
+import Lomiri.Layouts 1.0
 
 import "qml/js/Storage.js" as Storage
 import "qml/js/Helper.js" as Helper

@@ -16,7 +16,7 @@
 
 /*!
   \qmltype sliderUtils
-  \inqmlmodule Ubuntu.Components 1.3
+  \inqmlmodule Lomiri.Components 1.3
   \ingroup ubuntu
   \brief Various sliding utility functions.
  */

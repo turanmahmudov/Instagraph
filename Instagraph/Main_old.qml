@@ -2,12 +2,12 @@ import QtQuick 2.9
 import QtSystemInfo 5.0
 import Qt.labs.settings 1.0
 import QtQuick.LocalStorage 2.0
-import Ubuntu.Components 1.3
-import Ubuntu.Components.Popups 1.3
-import Ubuntu.Content 1.3
-import Ubuntu.DownloadManager 1.2
-import Ubuntu.Connectivity 1.0
-import Ubuntu.Layouts 1.0
+import Lomiri.Components 1.3
+import Lomiri.Components.Popups 1.3
+import Lomiri.Content 1.3
+import Lomiri.DownloadManager 1.2
+import Lomiri.Connectivity 1.0
+import Lomiri.Layouts 1.0
 import QtQml.Models 2.2
 
 import "qml/js/Storage.js" as Storage
@@ -30,7 +30,7 @@ MainView {
 
     width: units.gu(50)
     height: units.gu(75)
-    backgroundColor: theme.name == 'Ubuntu.Components.Themes.SuruDark' ? "#030303" : "#FFFFFF"
+    backgroundColor: theme.name == 'Lomiri.Components.Themes.SuruDark' ? "#030303" : "#FFFFFF"
 
     // Settings
     Settings {
