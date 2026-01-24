@@ -5,38 +5,69 @@ load(ubuntu-click)
 
 QT += qml quick widgets
 
+# OpenSSL for password encryption
+LIBS += -lssl -lcrypto
+
 UBUNTU_TRANSLATION_DOMAIN="instagraph-devs.turan-mahmudov-l"
 
-SOURCES += src/v2/constants.cpp \
-    src/v2/instagram.cpp \
-    src/v2/instagramrequest.cpp \
-    src/v2/request/account.cpp \
-    src/v2/request/direct.cpp \
-    src/v2/request/discover.cpp \
-    src/v2/request/fbsearch.cpp \
-    src/v2/request/hashtag.cpp \
-    src/v2/request/highlight.cpp \
-    src/v2/request/location.cpp \
-    src/v2/request/location_search.cpp \
-    src/v2/request/media.cpp \
-    src/v2/request/people.cpp \
-    src/v2/request/story.cpp \
-    src/v2/request/timeline.cpp \
-    src/v2/request/usertag.cpp
+# New refactored Instagram API architecture
+SOURCES += \
+    src/instagram/utils/Constants.cpp \
+    src/instagram/errors/ClientError.cpp \
+    src/instagram/errors/ErrorHandler.cpp \
+    src/instagram/session/SessionManager.cpp \
+    src/instagram/network/CookieManager.cpp \
+    src/instagram/network/SignatureGenerator.cpp \
+    src/instagram/core/Request.cpp \
+    src/instagram/core/Response.cpp \
+    src/instagram/core/ApiClient.cpp \
+    src/instagram/endpoints/AccountEndpoint.cpp \
+    src/instagram/endpoints/MediaEndpoint.cpp \
+    src/instagram/endpoints/DirectEndpoint.cpp \
+    src/instagram/endpoints/FeedEndpoint.cpp \
+    src/instagram/endpoints/PeopleEndpoint.cpp \
+    src/instagram/endpoints/StoryEndpoint.cpp \
+    src/instagram/endpoints/HashtagEndpoint.cpp \
+    src/instagram/endpoints/LocationEndpoint.cpp \
+    src/instagram/endpoints/SearchEndpoint.cpp \
+    src/instagram/endpoints/UsertagEndpoint.cpp \
+    src/instagram/endpoints/UploadEndpoint.cpp \
+    src/instagram/services/ImageService.cpp \
+    src/instagram/crypto/PasswordEncryptor.cpp \
+    src/instagram/api/Instagram.cpp
 
-HEADERS += src/v2/constants.h \
-    src/v2/instagram.h \
-    src/v2/instagram_p.h \
-    src/v2/instagramrequest.h
+HEADERS += \
+    src/instagram/utils/Constants.h \
+    src/instagram/errors/ClientError.h \
+    src/instagram/errors/ErrorHandler.h \
+    src/instagram/session/SessionManager.h \
+    src/instagram/network/CookieManager.h \
+    src/instagram/network/SignatureGenerator.h \
+    src/instagram/core/Request.h \
+    src/instagram/core/Response.h \
+    src/instagram/core/ApiClient.h \
+    src/instagram/endpoints/AccountEndpoint.h \
+    src/instagram/endpoints/MediaEndpoint.h \
+    src/instagram/endpoints/DirectEndpoint.h \
+    src/instagram/endpoints/FeedEndpoint.h \
+    src/instagram/endpoints/PeopleEndpoint.h \
+    src/instagram/endpoints/StoryEndpoint.h \
+    src/instagram/endpoints/HashtagEndpoint.h \
+    src/instagram/endpoints/LocationEndpoint.h \
+    src/instagram/endpoints/SearchEndpoint.h \
+    src/instagram/endpoints/UsertagEndpoint.h \
+    src/instagram/endpoints/UploadEndpoint.h \
+    src/instagram/services/ImageService.h \
+    src/instagram/crypto/PasswordEncryptor.h \
+    src/instagram/api/Instagram.h
 
 SOURCES += main.cpp \
-    src/cripto/hmacsha.cpp \
     src/imageprocessor.cpp \
     src/offscreenrenderer.cpp \
     src/cropimageprovider.cpp \
     src/cacheimage.cpp
 
-HEADERS += src/cripto/hmacsha.h \
+HEADERS += \
     src/imageprocessor.h \
     src/offscreenrenderer.h \
     src/cropimageprovider.h \

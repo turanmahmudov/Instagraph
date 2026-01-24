@@ -5,7 +5,7 @@
 #include <QtQml>
 #include <QtQml/QQmlContext>
 
-#include <src/instagram.h>
+#include <src/instagram/api/Instagram.h>
 #include <src/imageprocessor.h>
 #include <src/offscreenrenderer.h>
 #include <src/cropimageprovider.h>

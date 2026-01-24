@@ -11,7 +11,8 @@ import "../js/Storage.js" as Storage
 PageItem {
     id: twoFactorLoginPage
 
-    property var answer
+    // answer can be passed directly or read from mainView.twoFactorData
+    property var answer: mainView.twoFactorData
 
     property var has_sms: false
     property var has_totp: false
@@ -23,13 +24,14 @@ PageItem {
     }
 
     Component.onCompleted: {
-        if (answer.two_factor_info.sms_two_factor_on == true) {
-            has_sms = true
-
-            phoneEnding = answer.two_factor_info.obfuscated_phone_number;
-        }
-        if (answer.two_factor_info.totp_two_factor_on == true) {
-            has_totp = true
+        if (answer && answer.two_factor_info) {
+            if (answer.two_factor_info.sms_two_factor_on == true) {
+                has_sms = true
+                phoneEnding = answer.two_factor_info.obfuscated_phone_number;
+            }
+            if (answer.two_factor_info.totp_two_factor_on == true) {
+                has_totp = true
+            }
         }
     }
 

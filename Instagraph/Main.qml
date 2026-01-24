@@ -64,6 +64,7 @@ MainView {
     property bool loginPageActive: false
     property string tmpUsername: ""
     property string tmpPassword: ""
+    property var twoFactorData: null
 
     signal fileImported(var fileUrl)
     signal locationSelected(var location)
@@ -243,7 +244,9 @@ MainView {
         onTwoFactorRequired: {
             console.log('2FACTOR REQUIRED')
 
-            pageLayout.addPageToCurrentColumn(pageLayout.primaryPage, Qt.resolvedUrl("qml/ui/2FactorLoginPage.qml"), {answer: answer})
+            // Store the 2FA data and load the 2FA page as primary
+            twoFactorData = answer
+            pageLayout.primaryPageSource = Qt.resolvedUrl("qml/ui/2FactorLoginPage.qml")
 
             loading.visible = false
         }
