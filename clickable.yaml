@@ -1,7 +1,8 @@
-clickable_minimum_required: '7'
+clickable_minimum_required: '8.0.0'
 framework: 'ubuntu-sdk-20.04'
-builder: 'qmake'
+builder: 'cmake'
 qt_version: '5.12'
+kill: instagraph
 dependencies_target:
   - 'gstreamer1.0-pulseaudio'
   - 'gstreamer1.0-libav'

@@ -27,7 +27,7 @@ PageItem {
                 width: units.gu(12)
                 height: units.gu(4)
                 sourceSize: Qt.size(width,height)
-                source: Qt.resolvedUrl("../../instagraph_title.png")
+                source: "qrc:/assets/instagraph_title.png"
                 smooth: true
                 cache: true
             }

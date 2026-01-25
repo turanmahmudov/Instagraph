@@ -4,10 +4,10 @@
     "architecture": "@CLICK_ARCH@",
     "title": "Instagraph",
     "hooks": {
-        "Instagraph": {
-            "apparmor": "Instagraph/Instagraph.apparmor",
-            "desktop": "Instagraph/Instagraph.desktop",
-            "urls": "Instagraph/Instagraph.dispatcher"
+        "instagraph": {
+            "apparmor": "instagraph.apparmor",
+            "desktop": "instagraph.desktop",
+            "urls": "instagraph.dispatcher"
         }
     },
     "version": "0.1.2.3",

@@ -42,7 +42,7 @@ PageItem {
             height: units.gu(5)
             fillMode: Image.PreserveAspectFit
             sourceSize: Qt.size(width, height)
-            source: Qt.resolvedUrl("../../instagraph_title.png")
+            source: "qrc:/assets/instagraph_title.png"
         }
 
         Item {

@@ -14,7 +14,7 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-#include <src/cropimageprovider.h>
+#include "cropimageprovider.h"
 
 #include <QUrl>
 #include <QUrlQuery>

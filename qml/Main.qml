@@ -9,14 +9,14 @@ import Lomiri.DownloadManager 1.2
 import Lomiri.Connectivity 1.0
 import Lomiri.Layouts 1.0
 
-import "qml/js/Storage.js" as Storage
-import "qml/js/Helper.js" as Helper
-import "qml/js/Scripts.js" as Scripts
+import "js/Storage.js" as Storage
+import "js/Helper.js" as Helper
+import "js/Scripts.js" as Scripts
 
-import "qml/ui"
-import "qml/components"
-import "qml/components/Style"
-import "qml/components/Helpers"
+import "ui"
+import "components"
+import "components/Style"
+import "components/Helpers"
 
 import Instagram 1.0
 import ImageProcessor 1.0
@@ -82,7 +82,7 @@ MainView {
         id: imageproc
 
         // Default filter
-        filterUrl: Qt.resolvedUrl("qml/filters/NoFilter.qml")
+        filterUrl: Qt.resolvedUrl("filters/NoFilter.qml")
 
         // TODO: Move to C++
         onFilterChanged: {
@@ -194,7 +194,7 @@ MainView {
     function goLogin() {
         console.log('GO LOGIN PAGE')
 
-        pageLayout.primaryPageSource = Qt.resolvedUrl("qml/ui/LoginPage.qml")
+        pageLayout.primaryPageSource = Qt.resolvedUrl("ui/LoginPage.qml")
     }
 
     LoadingSpinner {
@@ -246,7 +246,7 @@ MainView {
 
             // Store the 2FA data and load the 2FA page as primary
             twoFactorData = answer
-            pageLayout.primaryPageSource = Qt.resolvedUrl("qml/ui/2FactorLoginPage.qml")
+            pageLayout.primaryPageSource = Qt.resolvedUrl("ui/2FactorLoginPage.qml")
 
             loading.visible = false
         }

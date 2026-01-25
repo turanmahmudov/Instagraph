@@ -14,8 +14,8 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-#include <src/imageprocessor.h>
-#include <src/offscreenrenderer.h>
+#include "imageprocessor.h"
+#include "offscreenrenderer.h"
 
 #include <QQmlComponent>
 #include <QQuickItem>
