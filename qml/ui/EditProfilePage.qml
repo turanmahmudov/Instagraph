@@ -4,6 +4,19 @@ import QtQuick.LocalStorage 2.12
 import Lomiri.Components.Popups 1.3
 
 import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/Constants"
+import "../components/User"
+import "../components/Constants"
+import "../components/Feed"
+import "../components/Constants"
+import "../components/Media"
+import "../components/Constants"
+import "../components/Camera"
+import "../components/Constants"
+import "../components/Actions"
+import "../components/Constants"
 
 import "../js/Storage.js" as Storage
 
@@ -16,7 +29,7 @@ PageItem {
         title: i18n.tr("Edit Profile")
         trailingActions: [
             Action {
-                iconName: "\uea55"
+                iconName: IconsConstants.camera_flip
                 text: i18n.tr("Save")
                 onTriggered: {
                     instagram.editProfile(webField.text, (phoneField.text.replace('+', '')), nameField.text, bioField.text, emailField.text, genderField.selectedIndex == 1 ? true : false);

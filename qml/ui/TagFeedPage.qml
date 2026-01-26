@@ -3,6 +3,12 @@ import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
 import "../components"
+import "../components/Page"
+import "../components/User"
+import "../components/Feed"
+import "../components/Media"
+import "../components/Camera"
+import "../components/Actions"
 
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
@@ -44,7 +50,7 @@ PageItem {
 
     WorkerScript {
         id: worker
-        source: "../js/TimelineWorker.js"
+        source: "../js/Workers/TimelineWorker.js"
         onMessage: {
             console.log(msg)
         }

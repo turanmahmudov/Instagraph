@@ -1,9 +1,10 @@
 import QtQuick 2.12
+import ".."
 import QtQuick.Layouts 1.12
 import Lomiri.Components 1.3
 
-import "../js/Helper.js" as Helper
-import "../js/Scripts.js" as Scripts
+import "../../js/Helper.js" as Helper
+import "../../js/Scripts.js" as Scripts
 
 Column {
     width: parent.width
@@ -73,7 +74,7 @@ Column {
                             width: parent.width
                             height: parent.height
                             onClicked: {
-                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../ui/UserFollowers.qml"), {userId: currentUserId});
+                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../ui/UserFollowers.qml"), {userId: currentUserId});
                             }
                         }
                     }
@@ -88,7 +89,7 @@ Column {
                             width: parent.width
                             height: parent.height
                             onClicked: {
-                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../ui/UserFollowers.qml"), {userId: currentUserId});
+                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../ui/UserFollowers.qml"), {userId: currentUserId});
                             }
                         }
                     }
@@ -109,7 +110,7 @@ Column {
                             width: parent.width
                             height: parent.height
                             onClicked: {
-                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../ui/UserFollowings.qml"), {userId: currentUserId});
+                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../ui/UserFollowings.qml"), {userId: currentUserId});
                             }
                         }
                     }
@@ -124,7 +125,7 @@ Column {
                             width: parent.width
                             height: parent.height
                             onClicked: {
-                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../ui/UserFollowings.qml"), {userId: currentUserId});
+                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../ui/UserFollowings.qml"), {userId: currentUserId});
                             }
                         }
                     }

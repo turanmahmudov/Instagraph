@@ -3,6 +3,19 @@ import QtQuick.Layouts 1.12
 import Lomiri.Components 1.3
 
 import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/Constants"
+import "../components/User"
+import "../components/Constants"
+import "../components/Feed"
+import "../components/Constants"
+import "../components/Media"
+import "../components/Constants"
+import "../components/Camera"
+import "../components/Constants"
+import "../components/Actions"
+import "../components/Constants"
 
 PageItem {
     id: exploreFeedPage
@@ -14,7 +27,7 @@ PageItem {
             Action {
                 id: closePageAction
                 text: i18n.tr("Back")
-                iconName: "\uea5a"
+                iconName: IconsConstants.flash_on
                 visible: mode != "exploreFeed"
                 onTriggered: {
                     if (mode == "searchResults") {
@@ -161,7 +174,7 @@ PageItem {
 
     WorkerScript {
         id: exploreWorker
-        source: "../js/ExploreWorker.js"
+        source: "../js/Workers/ExploreWorker.js"
         onMessage: {
             console.log(msg)
         }
@@ -169,7 +182,7 @@ PageItem {
 
     WorkerScript {
         id: searchWorker
-        source: "../js/SearchWorker.js"
+        source: "../js/Workers/SearchWorker.js"
         onMessage: {
             console.log(msg)
         }
@@ -309,7 +322,7 @@ PageItem {
                 divider.visible: false
                 onClicked: {
                     if (search_type == "user") {
-                        pageLayout.pushToCurrent(exploreFeedPage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk});
+                        pageLayout.pushToCurrent(exploreFeedPage, PagesConstants.user, {usernameId: pk});
                     } else {
                         searchInput.text = name
                         searchKeyword(name)
@@ -394,7 +407,7 @@ PageItem {
                 height: layout.height
                 divider.visible: false
                 onClicked: {
-                    pageLayout.pushToCurrent(exploreFeedPage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk});
+                    pageLayout.pushToCurrent(exploreFeedPage, PagesConstants.user, {usernameId: pk});
                 }
 
                 SlotsLayout {
@@ -428,7 +441,7 @@ PageItem {
                 height: layout.height
                 divider.visible: false
                 onClicked: {
-                    pageLayout.pushToCurrent(exploreFeedPage, Qt.resolvedUrl("TagFeedPage.qml"), {tag: name});
+                    pageLayout.pushToCurrent(exploreFeedPage, PagesConstants.tag_feed, {tag: name});
                 }
 
                 SlotsLayout {
@@ -504,7 +517,7 @@ PageItem {
                 height: layout.height
                 divider.visible: false
                 onClicked: {
-                    pageLayout.pushToCurrent(exploreFeedPage, Qt.resolvedUrl("LocationFeedPage.qml"), {locationId: pk, locationName: title});
+                    pageLayout.pushToCurrent(exploreFeedPage, PagesConstants.location_feed, {locationId: pk, locationName: title});
                 }
 
                 SlotsLayout {

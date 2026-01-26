@@ -3,6 +3,12 @@ import Lomiri.Components 1.3
 import Lomiri.Content 1.3
 
 import "../components"
+import "../components/Page"
+import "../components/User"
+import "../components/Feed"
+import "../components/Media"
+import "../components/Camera"
+import "../components/Actions"
 
 PageItem {
     id: picker

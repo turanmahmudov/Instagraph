@@ -3,6 +3,19 @@ import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
 import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/Constants"
+import "../components/User"
+import "../components/Constants"
+import "../components/Feed"
+import "../components/Constants"
+import "../components/Media"
+import "../components/Constants"
+import "../components/Camera"
+import "../components/Constants"
+import "../components/Actions"
+import "../components/Constants"
 
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
@@ -26,9 +39,9 @@ PageItem {
             Action {
                 id: newDirectMessageAction
                 text: i18n.tr("New Message")
-                iconName: "\ueb48"
+                iconName: IconsConstants.mic
                 onTriggered: {
-                    pageLayout.pushToNext(pageLayout.primaryPage, Qt.resolvedUrl("NewDirectMessagePage.qml"))
+                    pageLayout.pushToNext(pageLayout.primaryPage, PagesConstants.new_direct_message)
                 }
             }
         ]
@@ -105,7 +118,7 @@ PageItem {
             height: layout.height
             divider.visible: false
             onClicked: {
-                pageLayout.pushToNext(directinboxpage, Qt.resolvedUrl("DirectThreadPage.qml"), {threadId: thread_id});
+                pageLayout.pushToNext(directinboxpage, PagesConstants.direct_thread, {threadId: thread_id});
             }
 
             property bool unseen: last_permanent_item.timestamp > last_seen_at[Object.keys(last_seen_at)[0]].timestamp
@@ -205,7 +218,7 @@ PageItem {
             horizontalCenter: parent.horizontalCenter
         }
 
-        iconName: "\ueaab"
+        iconName: IconsConstants.icon_eaab
 
         title: i18n.tr("Welcome to Instagraph Direct!")
         description: i18n.tr("Tap the + icon to send a photo, video or message.")

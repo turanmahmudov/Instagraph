@@ -3,6 +3,19 @@ import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
 import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/Constants"
+import "../components/User"
+import "../components/Constants"
+import "../components/Feed"
+import "../components/Constants"
+import "../components/Media"
+import "../components/Constants"
+import "../components/Camera"
+import "../components/Constants"
+import "../components/Actions"
+import "../components/Constants"
 
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
@@ -48,7 +61,7 @@ PageItem {
 
     WorkerScript {
         id: worker
-        source: "../js/TimelineWorker.js"
+        source: "../js/Workers/TimelineWorker.js"
         onMessage: {
             console.log(msg)
         }
@@ -116,7 +129,7 @@ PageItem {
             horizontalCenter: parent.horizontalCenter
         }
 
-        iconName: "\ueaeb"
+        iconName: IconsConstants.heart_filled
 
         description: i18n.tr("No photos or videos yet!")
     }

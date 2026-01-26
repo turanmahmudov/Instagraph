@@ -3,6 +3,19 @@ import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
 import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/Constants"
+import "../components/User"
+import "../components/Constants"
+import "../components/Feed"
+import "../components/Constants"
+import "../components/Media"
+import "../components/Constants"
+import "../components/Camera"
+import "../components/Constants"
+import "../components/Actions"
+import "../components/Constants"
 
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
@@ -54,7 +67,7 @@ PageItem {
         id: suggestionsList
         model: suggestionsModel
         delegate: UserListItem {
-            onClicked: pageLayout.pushToCurrent(suggestionspage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk})
+            onClicked: pageLayout.pushToCurrent(suggestionspage, PagesConstants.user, {usernameId: pk})
             followButton: true
             followData: {"friendship": {"following": false, "outgoing_request": false}, "pk": pk}
         }

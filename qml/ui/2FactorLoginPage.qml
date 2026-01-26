@@ -5,6 +5,12 @@ import QtGraphicalEffects 1.0
 import Lomiri.Components.Styles 1.3
 
 import "../components"
+import "../components/Page"
+import "../components/User"
+import "../components/Feed"
+import "../components/Media"
+import "../components/Camera"
+import "../components/Actions"
 
 import "../js/Storage.js" as Storage
 

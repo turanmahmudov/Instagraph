@@ -4,6 +4,19 @@ import QtQuick.LocalStorage 2.12
 import Lomiri.Components.Popups 1.3
 
 import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/Constants"
+import "../components/User"
+import "../components/Constants"
+import "../components/Feed"
+import "../components/Constants"
+import "../components/Media"
+import "../components/Constants"
+import "../components/Camera"
+import "../components/Constants"
+import "../components/Actions"
+import "../components/Constants"
 
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
@@ -19,7 +32,7 @@ PageItem {
                 visible: usernameId !== activeUsernameId
                 id: userMenuAction
                 text: i18n.tr("Options")
-                iconName: "\ueb2e"
+                iconName: IconsConstants.user_grid
                 onTriggered: {
                     PopupUtils.open(userMenuComponent)
                 }
@@ -28,9 +41,9 @@ PageItem {
                 visible: usernameId === activeUsernameId
                 id: settingsAction
                 text: i18n.tr("Settings")
-                iconName: "\uea6f"
+                iconName: IconsConstants.settings
                 onTriggered: {
-                    pageLayout.pushToCurrent(otheruserpage, Qt.resolvedUrl("OptionsPage.qml"));
+                    pageLayout.pushToCurrent(otheruserpage, PagesConstants.options);
                 }
             }
         ]
@@ -148,7 +161,7 @@ PageItem {
 
     WorkerScript {
         id: worker
-        source: "../js/TimelineWorker.js"
+        source: "../js/Workers/TimelineWorker.js"
         onMessage: {
             console.log(msg)
         }
@@ -156,7 +169,7 @@ PageItem {
 
     WorkerScript {
         id: highlightsWorker
-        source: "../js/SimpleWorker.js"
+        source: "../js/Workers/SimpleWorker.js"
         onMessage: {
             console.log(msg)
         }
@@ -339,7 +352,7 @@ PageItem {
                 color: LomiriColors.green
                 text: i18n.tr("Edit Profile")
                 onClicked: {
-                    pageLayout.pushToCurrent(otheruserpage, Qt.resolvedUrl("EditProfilePage.qml"));
+                    pageLayout.pushToCurrent(otheruserpage, PagesConstants.edit_profile);
                 }
             }
 
@@ -466,7 +479,7 @@ PageItem {
                 width: parent.width
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                iconName: "\ueaeb"
+                iconName: IconsConstants.heart_filled
 
                 title: current_user_section == 3 ? i18n.tr("No Photos Yet") : ""
 
@@ -485,7 +498,7 @@ PageItem {
                 width: parent.width
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                iconName: "\ueb17"
+                iconName: IconsConstants.forward
 
                 description: i18n.tr("This account is private.")
                 description2: i18n.tr("Follow to see their photos and videos.")

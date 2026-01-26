@@ -3,6 +3,12 @@ import Lomiri.Components 1.3
 import QtQuick.Dialogs 1.2
 
 import "../components"
+import "../components/Page"
+import "../components/User"
+import "../components/Feed"
+import "../components/Media"
+import "../components/Camera"
+import "../components/Actions"
 
 PageItem {
     id: picker

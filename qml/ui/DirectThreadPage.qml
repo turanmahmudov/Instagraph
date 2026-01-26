@@ -3,6 +3,19 @@ import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
 import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/Constants"
+import "../components/User"
+import "../components/Constants"
+import "../components/Feed"
+import "../components/Constants"
+import "../components/Media"
+import "../components/Constants"
+import "../components/Camera"
+import "../components/Constants"
+import "../components/Actions"
+import "../components/Constants"
 
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
@@ -113,7 +126,7 @@ PageItem {
 
     WorkerScript {
         id: directThreadWorker
-        source: "../js/DirectThreadWorker.js"
+        source: "../js/Workers/DirectThreadWorker.js"
         onMessage: {
             directThreadModel.insert(0, messageObject)
         }
@@ -363,7 +376,7 @@ PageItem {
                                                     fill: parent
                                                 }
                                                 onClicked: {
-                                                    pageLayout.pushToCurrent(directthreadpage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: media_share.user.pk});
+                                                    pageLayout.pushToCurrent(directthreadpage, PagesConstants.user, {usernameId: media_share.user.pk});
                                                 }
                                             }
                                         }
@@ -385,7 +398,7 @@ PageItem {
                                                         fill: parent
                                                     }
                                                     onClicked: {
-                                                        pageLayout.pushToCurrent(directthreadpage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: media_share.user.pk});
+                                                        pageLayout.pushToCurrent(directthreadpage, PagesConstants.user, {usernameId: media_share.user.pk});
                                                     }
                                                 }
                                             }
@@ -407,7 +420,7 @@ PageItem {
                                         MouseArea {
                                             anchors.fill: parent
                                             onClicked: {
-                                                pageLayout.pushToNext(directthreadpage, Qt.resolvedUrl("SinglePhoto.qml"), {photoId: media_share.id})
+                                                pageLayout.pushToNext(directthreadpage, PagesConstants.photo, {photoId: media_share.id})
                                             }
                                         }
                                     }
@@ -686,7 +699,7 @@ PageItem {
                                     MouseArea {
                                         anchors.fill: parent
                                         onClicked: {
-                                            pageLayout.pushToCurrent(directthreadpage, Qt.resolvedUrl("HighlightStoriesPage.qml"), {highlightId: story_share.reel_id});
+                                            pageLayout.pushToCurrent(directthreadpage, PagesConstants.highlight_stories, {highlightId: story_share.reel_id});
                                         }
                                     }
                                 }

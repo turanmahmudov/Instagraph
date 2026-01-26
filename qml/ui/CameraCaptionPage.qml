@@ -6,6 +6,19 @@ import QtMultimedia 5.12
 import QtPositioning 5.2
 
 import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/Constants"
+import "../components/User"
+import "../components/Constants"
+import "../components/Feed"
+import "../components/Constants"
+import "../components/Media"
+import "../components/Constants"
+import "../components/Camera"
+import "../components/Constants"
+import "../components/Actions"
+import "../components/Constants"
 
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
@@ -41,7 +54,7 @@ PageItem {
             Action {
                 id: closePageAction
                 text: i18n.tr("Back")
-                iconName: "\uea5a"
+                iconName: IconsConstants.flash_on
                 onTriggered: {
                     pageLayout.removePages(cameracaptionpage);
                 }
@@ -51,7 +64,7 @@ PageItem {
             Action {
                 id: nextPageAction
                 text: i18n.tr("Share")
-                iconName: "\uea55"
+                iconName: IconsConstants.camera_flip
                 onTriggered: {
                     imageUploading = true
                     Scripts.publishImage(imagePath, caption.text, locationVar, disableCommentsSwitch.checked)
@@ -69,7 +82,7 @@ PageItem {
 
     WorkerScript {
         id: worker
-        source: "../js/TimelineWorker.js"
+        source: "../js/Workers/TimelineWorker.js"
         onMessage: {
             console.log(msg)
         }
@@ -170,7 +183,7 @@ PageItem {
             height: addLocationLayout.height
             divider.visible: true
             onClicked: {
-                pageLayout.pushToCurrent(cameracaptionpage, Qt.resolvedUrl("SearchLocation.qml"));
+                pageLayout.pushToCurrent(cameracaptionpage, PagesConstants.search_location);
             }
             ListItemLayout {
                 id: addLocationLayout

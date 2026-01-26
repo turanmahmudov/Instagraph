@@ -5,6 +5,19 @@ import Lomiri.Content 1.1
 import QtMultimedia 5.12
 
 import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/Constants"
+import "../components/User"
+import "../components/Constants"
+import "../components/Feed"
+import "../components/Constants"
+import "../components/Media"
+import "../components/Constants"
+import "../components/Camera"
+import "../components/Constants"
+import "../components/Actions"
+import "../components/Constants"
 
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
@@ -32,7 +45,7 @@ PageItem {
 
     WorkerScript {
         id: worker
-        source: "../js/SimpleWorker.js"
+        source: "../js/Workers/SimpleWorker.js"
         onMessage: {
             console.log(msg)
         }
@@ -60,7 +73,7 @@ PageItem {
         id: mediaLikersList
         model: mediaLikersModel
         delegate: UserListItem {
-            onClicked: pageLayout.pushToCurrent(medialikerspage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: user_id})
+            onClicked: pageLayout.pushToCurrent(medialikerspage, PagesConstants.user, {usernameId: user_id})
         }
         PullToRefresh {
             refreshing: list_loading && mediaLikersModel.count == 0

@@ -21,7 +21,7 @@ Item {
 
     WorkerScript {
         id: worker
-        source: "../js/SimpleWorker.js"
+        source: "../js/Workers/SimpleWorker.js"
         onMessage: {
             console.log(msg)
         }

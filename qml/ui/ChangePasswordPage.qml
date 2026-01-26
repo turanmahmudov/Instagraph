@@ -3,6 +3,19 @@ import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
 import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/Constants"
+import "../components/User"
+import "../components/Constants"
+import "../components/Feed"
+import "../components/Constants"
+import "../components/Media"
+import "../components/Constants"
+import "../components/Camera"
+import "../components/Constants"
+import "../components/Actions"
+import "../components/Constants"
 
 import "../js/Storage.js" as Storage
 
@@ -14,7 +27,7 @@ PageItem {
         trailingActions: [
             Action {
                 text: i18n.tr("Save")
-                iconName: "\uea55"
+                iconName: IconsConstants.camera_flip
                 enabled: currentPasswordField.text.length > 0 && newPasswordField.text.length > 0 && newPasswordAgainField.text.length > 0
                 onTriggered: {
                     if (newPasswordField.text == newPasswordAgainField.text) {

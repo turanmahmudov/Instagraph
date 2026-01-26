@@ -17,6 +17,7 @@ import "ui"
 import "components"
 import "components/Style"
 import "components/Helpers"
+import "components/Constants"
 
 import Instagram 1.0
 import ImageProcessor 1.0
@@ -38,6 +39,9 @@ MainView {
     StyleDark { id: styleDark }
     StyleLight { id: styleLight }
 
+    // Constants (used directly as singletons - no need for aliases)
+    // Access via: IconsConstants.inbox, PagesConstants.home, etc.
+
     // Settings
     Settings {
         id: settings
@@ -57,6 +61,7 @@ MainView {
     property bool wideScreen: width > units.gu(50)
 
     property alias activeUsernameId: settings.activeUsernameId
+    property alias activeUserId: settings.activeUsernameId  // Alias for consistency with instapyo
     property alias activeUsername: settings.activeUsername
     property alias activeUserProfilePic: settings.activeUserProfilePic
 

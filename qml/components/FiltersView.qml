@@ -18,6 +18,12 @@ import QtQuick 2.12
 import Lomiri.Components 1.3
 
 import "../components"
+import "../components/Page"
+import "../components/User"
+import "../components/Feed"
+import "../components/Media"
+import "../components/Camera"
+import "../components/Actions"
 
 import ImageProcessor 1.0
 

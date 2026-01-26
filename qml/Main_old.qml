@@ -82,7 +82,7 @@ MainView {
         Action {
             id: refreshAction
             text: i18n.tr("Refresh")
-            iconName: "\ueb6d"
+            iconName: icons.icon_eb6d
             onTriggered: {
 
             }
@@ -90,7 +90,7 @@ MainView {
         Action {
             id: newDirectMessageAction
             text: i18n.tr("New Message")
-            iconName: "\ueb48"
+            iconName: icons.mic
             onTriggered: {
                 pageLayout.push(Qt.resolvedUrl("qml/ui/NewDirectMessagePage.qml"))
             }
@@ -98,7 +98,7 @@ MainView {
         Action {
             id: backAction
             text: i18n.tr("Back")
-            iconName: "\uea5a"
+            iconName: icons.flash_on
             onTriggered: {
                 pageLayout.pop()
             }

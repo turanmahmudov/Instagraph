@@ -1,4 +1,6 @@
 import QtQuick 2.12
+import "../Constants"
+import ".."
 import QtQuick.Layouts 1.12
 import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
@@ -7,9 +9,9 @@ import Lomiri.Components.Popups 1.3
 import Lomiri.Content 1.3
 import QtGraphicalEffects 1.0
 
-import "../js/Storage.js" as Storage
-import "../js/Helper.js" as Helper
-import "../js/Scripts.js" as Scripts
+import "../../js/Storage.js" as Storage
+import "../../js/Helper.js" as Helper
+import "../../js/Scripts.js" as Scripts
 
 Column {
     id: entry_column
@@ -37,14 +39,14 @@ Column {
             sourceComponent: CircleImage {
                 width: parent.width
                 height: width
-                source: typeof user != 'undefined' && typeof user.profile_pic_url != 'undefined' ? user.profile_pic_url : "../images/not_found_user.jpg"
+                source: typeof user != 'undefined' && typeof user.profile_pic_url != 'undefined' ? user.profile_pic_url : "../../images/not_found_user.jpg"
 
                 MouseArea {
                     anchors {
                         fill: parent
                     }
                     onClicked: {
-                        pageLayout.pushToCurrent(pageLayout.primaryPage, Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: user.pk});
+                        pageLayout.pushToCurrent(pageLayout.primaryPage, PagesConstants.user, {usernameId: user.pk});
                     }
                 }
             }
@@ -66,7 +68,7 @@ Column {
                         fill: parent
                     }
                     onClicked: {
-                        pageLayout.pushToCurrent(pageLayout.primaryPage, Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: user.pk});
+                        pageLayout.pushToCurrent(pageLayout.primaryPage, PagesConstants.user, {usernameId: user.pk});
                     }
                 }
             }
@@ -179,7 +181,7 @@ Column {
                 anchors.fill: parent
                 onClicked: {
                     if (typeof comments_disabled == 'undefined' || (typeof comments_disabled != 'undefined' && comments_disabled == false)) {
-                        pageLayout.pushToNext(currentDelegatePage, Qt.resolvedUrl("../ui/CommentsPage.qml"), {photoId: id, mediaUserId: user.pk});
+                        pageLayout.pushToNext(currentDelegatePage, PagesConstants.comments, {photoId: id, mediaUserId: user.pk});
                     }
                 }
             }
@@ -201,7 +203,7 @@ Column {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../ui/ShareMediaPage.qml"), {mediaId: id, mediaUser: user});
+                    pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../../ui/ShareMediaPage.qml"), {mediaId: id, mediaUser: user});
                 }
             }
         }
@@ -225,7 +227,7 @@ Column {
                 width: units.gu(3)
                 height: width
                 color: styleApp.common.iconActiveColor
-                source: typeof has_viewer_saved != 'undefined' && has_viewer_saved === true ? "../images/media_save.png" : "../images/media_save_bold.png"
+                source: typeof has_viewer_saved != 'undefined' && has_viewer_saved === true ? "../../images/media_save.png" : "../../images/media_save_bold.png"
                 property var iname: typeof has_viewer_saved != 'undefined' && has_viewer_saved === true ? "save" : "unsave"
             }
             ColorOverlay {
@@ -251,13 +253,13 @@ Column {
                 target: instagram
                 onSaveMediaDataReady: {
                     if (JSON.parse(answer).status === "ok" && last_save_id === id) {
-                        imagesaveicon.source = "../images/media_save.png";
+                        imagesaveicon.source = "../../images/media_save.png";
                         imagesaveicon.iname = "save"
                     }
                 }
                 onUnsaveMediaDataReady: {
                     if (JSON.parse(answer).status === "ok" && last_save_id === id) {
-                        imagesaveicon.source = "../images/media_save_bold.png";
+                        imagesaveicon.source = "../../images/media_save_bold.png";
                         imagesaveicon.iname = "unsave"
                     }
                 }
@@ -277,7 +279,7 @@ Column {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                pageLayout.pushToNext(currentDelegatePage, Qt.resolvedUrl("../ui/MediaLikersPage.qml"), {photoId: id});
+                pageLayout.pushToNext(currentDelegatePage, Qt.resolvedUrl("../../ui/MediaLikersPage.qml"), {photoId: id});
             }
         }
     }
@@ -315,7 +317,7 @@ Column {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    pageLayout.pushToNext(currentDelegatePage, Qt.resolvedUrl("../ui/CommentsPage.qml"), {photoId: id});
+                    pageLayout.pushToNext(currentDelegatePage, PagesConstants.comments, {photoId: id});
                 }
             }
         }

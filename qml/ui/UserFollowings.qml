@@ -5,6 +5,19 @@ import Lomiri.Content 1.1
 import QtMultimedia 5.12
 
 import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/Constants"
+import "../components/User"
+import "../components/Constants"
+import "../components/Feed"
+import "../components/Constants"
+import "../components/Media"
+import "../components/Constants"
+import "../components/Camera"
+import "../components/Constants"
+import "../components/Actions"
+import "../components/Constants"
 
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
@@ -44,7 +57,7 @@ PageItem {
 
     WorkerScript {
         id: worker
-        source: "../js/SimpleWorker.js"
+        source: "../js/Workers/SimpleWorker.js"
         onMessage: {
             console.log(msg)
         }
@@ -76,7 +89,7 @@ PageItem {
         }
         model: userFollowingsModel
         delegate: UserListItem {
-            onClicked: pageLayout.pushToCurrent(usersfollowingspage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk})
+            onClicked: pageLayout.pushToCurrent(usersfollowingspage, PagesConstants.user, {usernameId: pk})
             followButton: true
             followData: {"friendship": {"following": true, "outgoing_request": false}, "pk": pk}
         }

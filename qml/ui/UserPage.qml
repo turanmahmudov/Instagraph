@@ -5,6 +5,19 @@ import QtQuick.LocalStorage 2.12
 import Lomiri.Components.Popups 1.3
 
 import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/Constants"
+import "../components/User"
+import "../components/Constants"
+import "../components/Feed"
+import "../components/Constants"
+import "../components/Media"
+import "../components/Constants"
+import "../components/Camera"
+import "../components/Constants"
+import "../components/Actions"
+import "../components/Constants"
 
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
@@ -27,9 +40,9 @@ PageItem {
             Action {
                 id: addPeopleAction
                 text: i18n.tr("Suggestions")
-                iconName: "\uebdf"
+                iconName: IconsConstants.people_add
                 onTriggered: {
-                    pageLayout.pushToNext(pageLayout.primaryPage, Qt.resolvedUrl("SuggestionsPage.qml"));
+                    pageLayout.pushToNext(pageLayout.primaryPage, PagesConstants.suggestions);
                 }
             }
         ]
@@ -37,9 +50,9 @@ PageItem {
             Action {
                 id: settingsAction
                 text: i18n.tr("Settings")
-                iconName: "\uea6f"
+                iconName: IconsConstants.settings
                 onTriggered: {
-                    pageLayout.pushToCurrent(pageLayout.primaryPage, Qt.resolvedUrl("OptionsPage.qml"));
+                    pageLayout.pushToCurrent(pageLayout.primaryPage, PagesConstants.options);
                 }
             }
         ]
@@ -121,7 +134,7 @@ PageItem {
 
     WorkerScript {
         id: worker
-        source: "../js/TimelineWorker.js"
+        source: "../js/Workers/TimelineWorker.js"
         onMessage: {
             console.log(msg)
         }
@@ -129,7 +142,7 @@ PageItem {
 
     WorkerScript {
         id: highlightsWorker
-        source: "../js/SimpleWorker.js"
+        source: "../js/Workers/SimpleWorker.js"
         onMessage: {
             console.log(msg)
         }
@@ -210,7 +223,7 @@ PageItem {
                 color: LomiriColors.green
                 text: i18n.tr("Edit Profile")
                 onClicked: {
-                    pageLayout.pushToCurrent(pageLayout.primaryPage, Qt.resolvedUrl("EditProfilePage.qml"));
+                    pageLayout.pushToCurrent(pageLayout.primaryPage, PagesConstants.edit_profile);
                 }
             }
 
@@ -325,7 +338,7 @@ PageItem {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                pageLayout.pushToNext(pageLayout.primaryPage, Qt.resolvedUrl("SavedMediaPage.qml"))
+                                pageLayout.pushToNext(pageLayout.primaryPage, PagesConstants.saved_media)
                             }
                         }
                     }
@@ -356,7 +369,7 @@ PageItem {
                 width: parent.width
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                iconName: current_user_section == 3 ? "\ueaeb" : ""
+                iconName: current_user_section == 3 ? IconsConstants.heart_filled : ""
 
                 title: current_user_section == 3 ? i18n.tr("No Photos Yet") : ""
 

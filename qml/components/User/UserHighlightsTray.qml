@@ -1,4 +1,5 @@
 import QtQuick 2.12
+import ".."
 import Lomiri.Components 1.3
 import QtGraphicalEffects 1.0
 
@@ -29,12 +30,12 @@ ListView {
             CircleImage {
                 width: parent.width
                 height: width
-                source: typeof cover_media.cropped_image_version != 'undefined' ? cover_media.cropped_image_version.url : "../images/not_found_user.jpg"
+                source: typeof cover_media.cropped_image_version != 'undefined' ? cover_media.cropped_image_version.url : "../../images/not_found_user.jpg"
 
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../ui/HighlightStoriesPage.qml"), {highlightId: id, allHighlights: allHighlights});
+                        pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../../ui/HighlightStoriesPage.qml"), {highlightId: id, allHighlights: allHighlights});
                     }
                 }
             }
@@ -50,7 +51,7 @@ ListView {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../ui/HighlightStoriesPage.qml"), {highlightId: id, allHighlights: allHighlights});
+                        pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../../ui/HighlightStoriesPage.qml"), {highlightId: id, allHighlights: allHighlights});
                     }
                 }
             }

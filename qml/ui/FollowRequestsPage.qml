@@ -3,6 +3,19 @@ import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
 import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/Constants"
+import "../components/User"
+import "../components/Constants"
+import "../components/Feed"
+import "../components/Constants"
+import "../components/Media"
+import "../components/Constants"
+import "../components/Camera"
+import "../components/Constants"
+import "../components/Actions"
+import "../components/Constants"
 
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
@@ -27,7 +40,7 @@ PageItem {
 
     WorkerScript {
         id: worker
-        source: "../js/SimpleWorker.js"
+        source: "../js/Workers/SimpleWorker.js"
         onMessage: {
             console.log(msg)
         }
@@ -66,7 +79,7 @@ PageItem {
             height: layout.height
             divider.visible: false
             onClicked: {
-                pageLayout.pushToCurrent(followrequestspage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: pk});
+                pageLayout.pushToCurrent(followrequestspage, PagesConstants.user, {usernameId: pk});
             }
 
             property bool is_friendship_approved: false

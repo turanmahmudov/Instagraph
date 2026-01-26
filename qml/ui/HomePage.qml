@@ -7,6 +7,19 @@ import QtQml.Models 2.12
 import QtGraphicalEffects 1.0
 
 import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/Constants"
+import "../components/User"
+import "../components/Constants"
+import "../components/Feed"
+import "../components/Constants"
+import "../components/Media"
+import "../components/Constants"
+import "../components/Camera"
+import "../components/Constants"
+import "../components/Actions"
+import "../components/Constants"
 
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
@@ -41,9 +54,9 @@ PageItem {
             Action {
                 id: inboxAction
                 text: i18n.tr("Inbox")
-                iconName: "\ueaec"
+                iconName: IconsConstants.inbox
                 onTriggered: {
-                    pageLayout.pushToNext(pageLayout.primaryPage, Qt.resolvedUrl("DirectInboxPage.qml"))
+                    pageLayout.pushToNext(pageLayout.primaryPage, PagesConstants.direct_inbox)
                 }
             }
         ]
@@ -100,7 +113,7 @@ PageItem {
 
     WorkerScript {
         id: worker
-        source: "../js/HomeWorker.js"
+        source: "../js/Workers/HomeWorker.js"
         onMessage: {
 
         }

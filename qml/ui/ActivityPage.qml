@@ -3,6 +3,19 @@ import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
 import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/Constants"
+import "../components/User"
+import "../components/Constants"
+import "../components/Feed"
+import "../components/Constants"
+import "../components/Media"
+import "../components/Constants"
+import "../components/Camera"
+import "../components/Constants"
+import "../components/Actions"
+import "../components/Constants"
 
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
@@ -57,7 +70,7 @@ PageItem {
 
     WorkerScript {
         id: worker
-        source: "../js/ActivityWorker.js"
+        source: "../js/Workers/ActivityWorker.js"
         onMessage: {
             console.log(msg)
         }
@@ -120,7 +133,7 @@ PageItem {
                             height: layout.height
                             divider.visible: false
                             onClicked: {
-                                pageLayout.pushToNext(pageLayout.primaryPage, Qt.resolvedUrl("FollowRequestsPage.qml"));
+                                pageLayout.pushToNext(pageLayout.primaryPage, PagesConstants.follow_requests);
                             }
 
                             SlotsLayout {
@@ -231,7 +244,7 @@ PageItem {
                                     MouseArea {
                                         anchors.fill: parent
                                         onClicked: {
-                                            if (typeof profile_id !== 'undefined') pageLayout.pushToCurrent(pageLayout.primaryPage, Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: profile_id})
+                                            if (typeof profile_id !== 'undefined') pageLayout.pushToCurrent(pageLayout.primaryPage, PagesConstants.user, {usernameId: profile_id})
                                         }
                                     }
                                 }
@@ -291,7 +304,7 @@ PageItem {
 
                                 onClicked: {
                                     if (feed_image.visible) {
-                                        pageLayout.pushToNext(pageLayout.primaryPage, Qt.resolvedUrl("SinglePhoto.qml"), {photoId: media.id});
+                                        pageLayout.pushToNext(pageLayout.primaryPage, PagesConstants.photo, {photoId: media.id});
                                     }
                                 }
                             }

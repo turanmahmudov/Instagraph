@@ -5,6 +5,12 @@ import Lomiri.Content 1.1
 import QtMultimedia 5.12
 
 import "../components"
+import "../components/Page"
+import "../components/User"
+import "../components/Feed"
+import "../components/Media"
+import "../components/Camera"
+import "../components/Actions"
 
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
@@ -68,7 +74,7 @@ PageItem {
 
     WorkerScript {
         id: worker
-        source: "../js/SimpleWorker.js"
+        source: "../js/Workers/SimpleWorker.js"
         onMessage: {
             console.log(msg)
         }

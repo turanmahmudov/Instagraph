@@ -3,6 +3,19 @@ import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
 import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/Constants"
+import "../components/User"
+import "../components/Constants"
+import "../components/Feed"
+import "../components/Constants"
+import "../components/Media"
+import "../components/Constants"
+import "../components/Camera"
+import "../components/Constants"
+import "../components/Actions"
+import "../components/Constants"
 
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
@@ -60,9 +73,9 @@ PageItem {
 
                    title.text: i18n.tr("Edit Profile")
                }
-               onClicked: {
-                   pageLayout.pushToCurrent(optionspage, Qt.resolvedUrl("EditProfilePage.qml"))
-               }
+                onClicked: {
+                   pageLayout.pushToCurrent(optionspage, PagesConstants.edit_profile)
+                }
            }
 
            ListItem {
@@ -72,9 +85,9 @@ PageItem {
 
                    title.text: i18n.tr("Change Password")
                }
-               onClicked: {
-                   pageLayout.pushToCurrent(optionspage, Qt.resolvedUrl("ChangePasswordPage.qml"))
-               }
+                onClicked: {
+                   pageLayout.pushToCurrent(optionspage, PagesConstants.change_password)
+                }
            }
 
            ListItem {
@@ -84,9 +97,9 @@ PageItem {
 
                    title.text: i18n.tr("Posts You've Liked")
                }
-               onClicked: {
-                   pageLayout.pushToCurrent(optionspage, Qt.resolvedUrl("LikedMediaPage.qml"))
-               }
+                onClicked: {
+                   pageLayout.pushToCurrent(optionspage, PagesConstants.liked_media)
+                }
            }
 
            ListItem {
@@ -96,9 +109,9 @@ PageItem {
 
                    title.text: i18n.tr("Blocked Users")
                }
-               onClicked: {
-                   pageLayout.pushToCurrent(optionspage, Qt.resolvedUrl("BlockedUsers.qml"))
-               }
+                onClicked: {
+                   pageLayout.pushToCurrent(optionspage, PagesConstants.blocked_users)
+                }
            }
 
            ListItem {
@@ -154,9 +167,9 @@ PageItem {
 
                    title.text: i18n.tr("About")
                }
-               onClicked: {
-                   pageLayout.pushToCurrent(optionspage, Qt.resolvedUrl("About.qml"))
-               }
+                onClicked: {
+                   pageLayout.pushToCurrent(optionspage, PagesConstants.about)
+                }
            }
 
            ListItem {
@@ -166,9 +179,9 @@ PageItem {
 
                    title.text: i18n.tr("Credits")
                }
-               onClicked: {
-                   pageLayout.pushToCurrent(optionspage, Qt.resolvedUrl("Credits.qml"))
-               }
+                onClicked: {
+                   pageLayout.pushToCurrent(optionspage, PagesConstants.credits)
+                }
            }
 
            ListItem {

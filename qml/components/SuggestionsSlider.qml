@@ -1,4 +1,5 @@
 import QtQuick 2.12
+import "Constants"
 import Lomiri.Components 1.3
 
 import "../js/Helper.js" as Helper
@@ -31,7 +32,7 @@ ListView {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: user.pk});
+                        pageLayout.pushToCurrent(currentDelegatePage, PagesConstants.user, {usernameId: user.pk});
                     }
                 }
             }
@@ -46,7 +47,7 @@ ListView {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: user.pk});
+                        pageLayout.pushToCurrent(currentDelegatePage, PagesConstants.user, {usernameId: user.pk});
                     }
                 }
             }
