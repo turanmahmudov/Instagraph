@@ -18,17 +18,10 @@ import "../components/Constants"
 import "../components/Page"
 import "../components/User"
 import "../components/Feed"
+import "../viewmodels"
 import "../components/Media"
 import "../components/Camera"
 import "../components/Actions"
-
-// Qt imports
-
-// Lomiri imports
-
-// JavaScript imports
-
-// Component imports
 
 PageItem {
     id: userpage
@@ -65,34 +58,22 @@ PageItem {
         ]
     }
 
-    property var next_max_id
-    property bool more_available: true
-    property bool next_coming: true
-    property var last_like_id
-    property var last_save_id
-    property bool clear_models: true
+    // ViewModel handles all feed logic
+    UserFeedViewModel {
+        id: feedViewModel
+        userId: activeUsernameId
+    }
 
     property int current_user_section: 0
 
-    property bool list_loading: false
+    // Expose loading state and empty state
+    property alias list_loading: feedViewModel.isLoading
+    property alias isEmpty: feedViewModel.isEmpty
+    property alias userData: feedViewModel.userData
+    property alias allHighlight: feedViewModel.allHighlight
 
-    property bool isEmpty: false
-
-    property var allHighlight: []
-
-    property var userData
-
-    ListModel {
-        id: userPhotosModel
-    }
-
-    ListModel {
-        id: userTagPhotosModel
-    }
-
-    ListModel {
-        id: userHighlightsModel
-    }
+    property var last_like_id
+    property var last_save_id
 
     Flickable {
         id: flickpage
@@ -105,9 +86,9 @@ PageItem {
         height: parent.height
         contentWidth: parent.width
         contentHeight: entry_column.height
-        onMovementEnded: {
-            if (atYEnd && more_available && !next_coming) {
-                getUsernameFeed(next_max_id);
+        onContentYChanged: {
+            if (feedViewModel.shouldLoadMore(contentY, contentHeight, height)) {
+                feedViewModel.loadMore()
             }
         }
 
@@ -149,14 +130,13 @@ PageItem {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width - units.gu(2)
                 height: width/5 + units.gu(3)
-                visible: userHighlightsModel.count > 0
-                active: userHighlightsModel.count > 0
-                asynchronous: true
+                visible: feedViewModel.highlightsModel.count > 0
+                active: feedViewModel.highlightsModel.count > 0
 
                 sourceComponent: UserHighlightsTray {
                     currentDelegatePage: userpage
-                    model: userHighlightsModel
-                    allHighlights: allHighlight
+                    model: feedViewModel.highlightsModel
+                    allHighlights: feedViewModel.allHighlight
                     width: parent.width
                     height: parent.height
                 }
@@ -228,7 +208,7 @@ PageItem {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                next_max_id = 0
+                                feedViewModel.nextMaxId = ""
                                 instagram.getUserTags(activeUsernameId)
                                 current_user_section = 3
                                 viewLoader.sourceComponent = tagviewComponent
@@ -290,11 +270,10 @@ PageItem {
         }
         PullToRefresh {
             parent: flickpage
-            refreshing: list_loading && userPhotosModel.count == 0
+            refreshing: list_loading && feedViewModel.feedModel.count == 0
             onRefresh: {
-                list_loading = true
-                getUsernameInfo()
-                getUsernameFeed()
+                feedViewModel.loadUserInfo()
+                feedViewModel.loadFeed(true)
             }
         }
     }
@@ -317,11 +296,11 @@ PageItem {
             width: viewLoader.width
             height: contentHeight
             interactive: false
-            model: userPhotosModel
+            model: feedViewModel.feedModel
             delegate: ListFeedDelegate {
                 id: userPhotosDelegate
                 currentPage: userpage
-                currentModel: userPhotosModel
+                currentModel: feedViewModel.feedModel
             }
         }
     }
@@ -334,7 +313,7 @@ PageItem {
             spacing: units.gu(0.1)
 
             Repeater {
-                model: userPhotosModel
+                model: feedViewModel.feedModel
 
                 GridFeedDelegate {
                     currentDelegatePage: userpage
@@ -353,7 +332,7 @@ PageItem {
             spacing: units.gu(0.1)
 
             Repeater {
-                model: userTagPhotosModel
+                model: feedViewModel.taggedPhotosModel
 
                 GridFeedDelegate {
                     currentDelegatePage: userpage
@@ -384,124 +363,20 @@ PageItem {
         width: parent.width
     }
 
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/TimelineWorker.js"
-        onMessage: {
-
-        }
-    }
-
-    WorkerScript {
-        id: highlightsWorker
-        source: "../js/Workers/SimpleWorker.js"
-        onMessage: {
-
-        }
-    }
-
-    Connections{
-        target: instagram
-        onUserFeedDataReady: {
-            var data = JSON.parse(answer);
-            if (data.status === "ok") {
-                userTimeLineDataFinished(data);
-            } else {
-                // error
+    // Update header title when user data changes
+    Connections {
+        target: feedViewModel
+        onUserDataChanged: {
+            if (userData) {
+                userpage.header.title = userData.username
+                activeUserProfilePic = userData.profile_pic_url
+                Storage.updateProfilePic(activeUsername, activeUserProfilePic)
             }
         }
-        onInfoByIdDataReady: {
-            var data = JSON.parse(answer);
-            if (data.user.pk == activeUsernameId) {
-                usernameDataFinished(data);
-            }
-        }
-        onUserTagsDataReady: {
-            var data = JSON.parse(answer);
-            userTagDataFinished(data);
-        }
-        onUserHighlightFeedDataReady: {
-            var data = JSON.parse(answer)
-            highlightFeedDataFinished(data)
-        }
     }
 
-    function getUsernameInfo()
-    {
-        instagram.getInfoById(activeUsernameId);
-    }
-
-    function getUsernameFeed(next_id)
-    {
-        clear_models = false
-        if (!next_id) {
-            userPhotosModel.clear()
-            next_max_id = 0
-            clear_models = true
-        }
-        instagram.getUserFeed(activeUsernameId, next_id);
-    }
-
-    function getUserHighlightFeed()
-    {
-        userHighlightsModel.clear()
-        instagram.getUserHighlightFeed(activeUsernameId);
-    }
-
-    function usernameDataFinished(data) {
-        userData = data.user
-
-        userPage.header.title = userData.username
-
-        activeUserProfilePic = userData.profile_pic_url
-        Storage.updateProfilePic(activeUsername, activeUserProfilePic)
-
-        getUserHighlightFeed()
-    }
-
-    function highlightFeedDataFinished(data) {
-        highlightsWorker.sendMessage({'feed': 'UserHighlights', 'obj': data.tray, 'model': userHighlightsModel, 'clear_model': true})
-
-        for (var i = 0; i < data.tray.length; i++) {
-            allHighlight.push(data.tray[i].id)
-        }
-    }
-
-    function userTimeLineDataFinished(data) {
-        if (data.num_results == 0) {
-            isEmpty = true;
-        } else {
-            isEmpty = false;
-        }
-
-        if (next_max_id == data.next_max_id) {
-            return false;
-        } else {
-            next_max_id = data.more_available == true ? data.next_max_id : "";
-            more_available = data.more_available;
-            next_coming = true;
-
-            worker.sendMessage({'feed': 'userPage', 'obj': data.items, 'model': userPhotosModel, 'clear_model': clear_models})
-
-            next_coming = false;
-        }
-
-        list_loading = false
-    }
-
-    function userTagDataFinished(data) {
-        if (next_max_id == data.next_max_id) {
-            return false;
-        } else {
-            next_max_id = data.next_max_id;
-            more_available = data.more_available;
-            next_coming = true;
-
-            worker.sendMessage({'feed': 'userPage', 'obj': data.items, 'model': userTagPhotosModel, 'clear_model': clear_models})
-
-            next_coming = false;
-        }
-
-        list_loading = false
+    Component.onCompleted: {
+        feedViewModel.loadUserInfo()
+        feedViewModel.loadFeed(true)
     }
 }

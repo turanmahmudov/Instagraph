@@ -92,7 +92,7 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../ui/UserStoriesPage.qml"), {userId: user.pk, allUsers: allUsers});
+                            pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../pages/UserStoriesPage.qml"), {userId: user.pk, allUsers: allUsers});
                         }
                     }
                 }
@@ -108,7 +108,7 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../ui/UserStoriesPage.qml"), {userId: user.pk, allUsers: allUsers});
+                            pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../pages/UserStoriesPage.qml"), {userId: user.pk, allUsers: allUsers});
                         }
                     }
                 }

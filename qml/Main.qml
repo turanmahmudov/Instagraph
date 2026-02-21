@@ -13,7 +13,7 @@ import "js/Storage.js" as Storage
 import "js/Helper.js" as Helper
 import "js/Scripts.js" as Scripts
 
-import "ui"
+import "pages"
 import "components"
 import "components/Style"
 import "components/Helpers"
@@ -199,7 +199,7 @@ MainView {
     function goLogin() {
         console.log('GO LOGIN PAGE')
 
-        pageLayout.primaryPageSource = Qt.resolvedUrl("ui/LoginPage.qml")
+        pageLayout.primaryPageSource = Qt.resolvedUrl("pages/LoginPage.qml")
     }
 
     LoadingSpinner {
@@ -251,7 +251,7 @@ MainView {
 
             // Store the 2FA data and load the 2FA page as primary
             twoFactorData = answer
-            pageLayout.primaryPageSource = Qt.resolvedUrl("ui/2FactorLoginPage.qml")
+            pageLayout.primaryPageSource = Qt.resolvedUrl("pages/2FactorLoginPage.qml")
 
             loading.visible = false
         }

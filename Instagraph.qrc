@@ -6,39 +6,39 @@
         <file>assets/instagraph.png</file>
         <file>qml/components/BouncingProgressBar.qml</file>
         <file>qml/js/Storage.js</file>
-        <file>qml/ui/LoginPage.qml</file>
-        <file>qml/ui/HomePage.qml</file>
+        <file>qml/pages/LoginPage.qml</file>
+        <file>qml/pages/HomePage.qml</file>
         <file>qml/js/Helper.js</file>
         <file>qml/images/not_found_user.jpg</file>
-        <file>qml/ui/UserPage.qml</file>
-        <file>qml/ui/CameraPage.qml</file>
+        <file>qml/pages/UserPage.qml</file>
+        <file>qml/pages/CameraPage.qml</file>
         <file>qml/js/Scripts.js</file>
-        <file>qml/ui/TagFeedPage.qml</file>
-        <file>qml/ui/DirectInboxPage.qml</file>
-        <file>qml/ui/CameraEditPage.qml</file>
-        <file>qml/ui/CommentsPage.qml</file>
+        <file>qml/pages/TagFeedPage.qml</file>
+        <file>qml/pages/DirectInboxPage.qml</file>
+        <file>qml/pages/CameraEditPage.qml</file>
+        <file>qml/pages/CommentsPage.qml</file>
         <file>qml/components/BottomMenu.qml</file>
-        <file>qml/ui/CameraCaptionPage.qml</file>
+        <file>qml/pages/CameraCaptionPage.qml</file>
         <file>qml/components/FollowComponent.qml</file>
         <file>qml/components/FollowComponent2.qml</file>
-        <file>qml/ui/OtherUserPage.qml</file>
-        <file>qml/ui/SinglePhoto.qml</file>
-        <file>qml/ui/MediaLikersPage.qml</file>
-        <file>qml/ui/EditProfilePage.qml</file>
-        <file>qml/ui/OptionsPage.qml</file>
-        <file>qml/ui/About.qml</file>
-        <file>qml/ui/Credits.qml</file>
-        <file>qml/ui/DirectThreadPage.qml</file>
-        <file>qml/ui/ChangePasswordPage.qml</file>
-        <file>qml/ui/RegisterPage.qml</file>
-        <file>qml/ui/CheckpointInfo.qml</file>
+        <file>qml/pages/OtherUserPage.qml</file>
+        <file>qml/pages/SinglePhoto.qml</file>
+        <file>qml/pages/MediaLikersPage.qml</file>
+        <file>qml/pages/EditProfilePage.qml</file>
+        <file>qml/pages/OptionsPage.qml</file>
+        <file>qml/pages/About.qml</file>
+        <file>qml/pages/Credits.qml</file>
+        <file>qml/pages/DirectThreadPage.qml</file>
+        <file>qml/pages/ChangePasswordPage.qml</file>
+        <file>qml/pages/RegisterPage.qml</file>
+        <file>qml/pages/CheckpointInfo.qml</file>
         <file>qml/js/Workers/ActivityWorker.js</file>
         <file>qml/js/Workers/SimpleWorker.js</file>
         <file>qml/js/Workers/UserWorker.js</file>
-        <file>qml/ui/UserFollowings.qml</file>
-        <file>qml/ui/UserFollowers.qml</file>
-        <file>qml/ui/CameraCropPage.qml</file>
-        <file>qml/ui/EditMediaPage.qml</file>
+        <file>qml/pages/UserFollowings.qml</file>
+        <file>qml/pages/UserFollowers.qml</file>
+        <file>qml/pages/CameraCropPage.qml</file>
+        <file>qml/pages/EditMediaPage.qml</file>
         <file>qml/components/FiltersView.qml</file>
         <file>qml/filters/FiltersList.qml</file>
         <file>qml/filters/effects/WebkitCssFilter.qml</file>
@@ -88,25 +88,25 @@
         <file>qml/components/FunctionSelector.qml</file>
         <file>qml/components/Camera/CameraToolButton.qml</file>
         <file>qml/components/Camera/CameraCaptureButton.qml</file>
-        <file>qml/ui/ImportPhotoPage.qml</file>
-        <file>qml/ui/SearchLocation.qml</file>
-        <file>qml/ui/LocationFeedPage.qml</file>
+        <file>qml/pages/ImportPhotoPage.qml</file>
+        <file>qml/pages/SearchLocation.qml</file>
+        <file>qml/pages/LocationFeedPage.qml</file>
         <file>qml/components/ClaritySettingsPanel.qml</file>
         <file>qml/components/EmptyBox.qml</file>
-        <file>qml/ui/LikedMediaPage.qml</file>
+        <file>qml/pages/LikedMediaPage.qml</file>
         <file>qml/components/FloatingActionButton.qml</file>
         <file>instagraph.dispatcher</file>
-        <file>qml/ui/SuggestionsPage.qml</file>
-        <file>qml/ui/ShareMediaPage.qml</file>
+        <file>qml/pages/SuggestionsPage.qml</file>
+        <file>qml/pages/ShareMediaPage.qml</file>
         <file>qml/components/ContentDownloadDialog.qml</file>
-        <file>qml/ui/BlockedUsers.qml</file>
+        <file>qml/pages/BlockedUsers.qml</file>
 
         <file>qml/components/LikeComponent.qml</file>
         <file>qml/components/CarouselSlider.qml</file>
         <file>qml/components/SuggestionsSlider.qml</file>
-        <file>qml/ui/NewDirectMessagePage.qml</file>
+        <file>qml/pages/NewDirectMessagePage.qml</file>
         <file>qml/components/StoriesTray.qml</file>
-        <file>qml/ui/UserStoriesPage.qml</file>
+        <file>qml/pages/UserStoriesPage.qml</file>
         <file>qml/components/CircleImage.qml</file>
         <file>qml/images/circle.png</file>
 
@@ -117,12 +117,17 @@
         <file>qml/components/Feed/ListFeedDelegate.qml</file>
         <file>qml/components/Feed/GridFeedDelegate.qml</file>
         <file>qml/components/Feed/FeedImage.qml</file>
-        <file>qml/ui/FollowRequestsPage.qml</file>
+        <file>qml/viewmodels/BaseFeedViewModel.qml</file>
+        <file>qml/viewmodels/TimelineFeedViewModel.qml</file>
+        <file>qml/viewmodels/TagFeedViewModel.qml</file>
+        <file>qml/viewmodels/UserFeedViewModel.qml</file>
+        <file>qml/viewmodels/SavedMediaViewModel.qml</file>
+        <file>qml/pages/FollowRequestsPage.qml</file>
         <file>qml/images/media_save_bold.png</file>
         <file>qml/images/media_save.png</file>
         <file>qml/images/media_save_profile.svg</file>
-        <file>qml/ui/SavedMediaPage.qml</file>
-        <file>qml/ui/2FactorLoginPage.qml</file>
+        <file>qml/pages/SavedMediaPage.qml</file>
+        <file>qml/pages/2FactorLoginPage.qml</file>
         <file>qml/components/LineIcon.qml</file>
         <file>qml/fonts/Fonts.qml</file>
         <file>qml/fonts/LineIcons.ttf</file>
@@ -134,10 +139,10 @@
         <file>qml/components/Page/PageHeaderItem.qml</file>
         <file>qml/components/LoadingSpinner.qml</file>
         <file>qml/js/Workers/TimelineWorker.js</file>
-        <file>qml/ui/ActivityPage.qml</file>
+        <file>qml/pages/ActivityPage.qml</file>
         <file>qml/components/ErrorPopup.qml</file>
         <file>qml/components/User/UserHighlightsTray.qml</file>
-        <file>qml/ui/HighlightStoriesPage.qml</file>
+        <file>qml/pages/HighlightStoriesPage.qml</file>
         <file>qml/components/Style/Style.qml</file>
         <file>qml/components/Style/StyleDark.qml</file>
         <file>qml/components/Style/StyleLight.qml</file>
@@ -147,13 +152,13 @@
         <file>qml/components/MultiUserSelector.qml</file>
         <file>qml/components/MultipleAccountsSwitcher.qml</file>
         <file>qml/js/Workers/ExploreWorker.js</file>
-        <file>qml/ui/ExploreFeedPage.qml</file>
+        <file>qml/pages/ExploreFeedPage.qml</file>
         <file>qml/js/Workers/SearchWorker.js</file>
         <file>qml/js/Workers/HomeFeedWorker.js</file>
         <file>qml/js/Workers/DirectThreadWorker.js</file>
         <file>qml/components/UsersListView.qml</file>
         <file>qml/components/User/UserListItem.qml</file>
-        <file>qml/ui/ImportPhotoPageDesktop.qml</file>
+        <file>qml/pages/ImportPhotoPageDesktop.qml</file>
         
         <!-- New Constants -->
         <file>qml/components/Constants/IconsConstants.qml</file>

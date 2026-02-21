@@ -35,7 +35,7 @@ ListView {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../../ui/HighlightStoriesPage.qml"), {highlightId: id, allHighlights: allHighlights});
+                        pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../../pages/HighlightStoriesPage.qml"), {highlightId: id, allHighlights: allHighlights});
                     }
                 }
             }
@@ -51,7 +51,7 @@ ListView {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../../ui/HighlightStoriesPage.qml"), {highlightId: id, allHighlights: allHighlights});
+                        pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../../pages/HighlightStoriesPage.qml"), {highlightId: id, allHighlights: allHighlights});
                     }
                 }
             }

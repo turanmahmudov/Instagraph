@@ -1,20 +1,20 @@
 function linkClick(page, link, photoId) {
     var result = link.split("://");
     if(result[0] === "user") {
-        pageLayout.pushToCurrent(page, Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameString: result[1]});
+        pageLayout.pushToCurrent(page, Qt.resolvedUrl("../pages/OtherUserPage.qml"), {usernameString: result[1]});
     } else if(result[0] === "userid") {
-        pageLayout.pushToCurrent(page, Qt.resolvedUrl("../ui/OtherUserPage.qml"), {usernameId: result[1]});
+        pageLayout.pushToCurrent(page, Qt.resolvedUrl("../pages/OtherUserPage.qml"), {usernameId: result[1]});
     } else if(result[0] === "tag") {
-        pageLayout.pushToCurrent(page, Qt.resolvedUrl("../ui/TagFeedPage.qml"), {tag: result[1]});
+        pageLayout.pushToCurrent(page, Qt.resolvedUrl("../pages/TagFeedPage.qml"), {tag: result[1]});
     } else if(result[0] === "likes") {
-        pageLayout.pushToCurrent(page, Qt.resolvedUrl("../ui/MediaLikersPage.qml"), {photoId: photoId});
+        pageLayout.pushToCurrent(page, Qt.resolvedUrl("../pages/MediaLikersPage.qml"), {photoId: photoId});
     } else {
         Qt.openUrlExternally(link)
     }
 }
 
 function pushImageEdit(page, url) {
-    pageLayout.pushToCurrent(page, Qt.resolvedUrl("../ui/CameraEditPage.qml"))
+    pageLayout.pushToCurrent(page, Qt.resolvedUrl("../pages/CameraEditPage.qml"))
 
     var r = {
         "x": 0,
@@ -27,15 +27,15 @@ function pushImageEdit(page, url) {
 }
 
 function pushImageCaption(page, url) {
-    pageLayout.pushToCurrent(page, Qt.resolvedUrl("../ui/CameraCaptionPage.qml"), {imagePath: String(url).replace('file://', '')})
+    pageLayout.pushToCurrent(page, Qt.resolvedUrl("../pages/CameraCaptionPage.qml"), {imagePath: String(url).replace('file://', '')})
 }
 
 function pushImageCrop(page, url) {
-    pageLayout.pushToCurrent(page, Qt.resolvedUrl("../ui/CameraCropPage.qml"), {imagePath: String(url).replace('file://', '')})
+    pageLayout.pushToCurrent(page, Qt.resolvedUrl("../pages/CameraCropPage.qml"), {imagePath: String(url).replace('file://', '')})
 }
 
 function pushSingleImage(page, mediaId) {
-    pageLayout.pushToCurrent(page, Qt.resolvedUrl("../ui/SinglePhoto.qml"), {photoId: mediaId})
+    pageLayout.pushToCurrent(page, Qt.resolvedUrl("../pages/SinglePhoto.qml"), {photoId: mediaId})
 }
 
 function publishImage(url, caption, location, disableComments = false) {
@@ -44,9 +44,9 @@ function publishImage(url, caption, location, disableComments = false) {
 
 function openImportPhotoPage(currentpage, is_desktop = false) {
     if (is_desktop === true || is_desktop === "true" || parseInt(is_desktop) === 1) {
-        pageLayout.pushToCurrent(currentpage, Qt.resolvedUrl("../ui/ImportPhotoPageDesktop.qml"))
+        pageLayout.pushToCurrent(currentpage, Qt.resolvedUrl("../pages/ImportPhotoPageDesktop.qml"))
     } else {
-        pageLayout.pushToCurrent(currentpage, Qt.resolvedUrl("../ui/ImportPhotoPage.qml"))
+        pageLayout.pushToCurrent(currentpage, Qt.resolvedUrl("../pages/ImportPhotoPage.qml"))
     }
 }
 

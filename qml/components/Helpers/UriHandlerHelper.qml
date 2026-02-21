@@ -35,13 +35,13 @@ Item {
                 if (commands[3] === "") return;
 
                 if (commands[2] === "tags") {
-                    //pageStack.push(Qt.resolvedUrl("qml/ui/TagFeedPage.qml"), {tag: commands[3]});
+                    //pageStack.push(Qt.resolvedUrl("qml/pages/TagFeedPage.qml"), {tag: commands[3]});
                 } else if (commands[2] === "locations") {
                     // location
                     return;
                 }
             } else {
-                //pageStack.push(Qt.resolvedUrl("qml/ui/OtherUserPage.qml"), {usernameString: commands[1]});
+                //pageStack.push(Qt.resolvedUrl("qml/pages/OtherUserPage.qml"), {usernameString: commands[1]});
             }
 
             console.log(uri)

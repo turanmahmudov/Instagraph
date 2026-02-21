@@ -92,7 +92,7 @@ MainView {
             text: i18n.tr("New Message")
             iconName: icons.mic
             onTriggered: {
-                pageLayout.push(Qt.resolvedUrl("qml/ui/NewDirectMessagePage.qml"))
+                pageLayout.push(Qt.resolvedUrl("qml/pages/NewDirectMessagePage.qml"))
             }
         },
         Action {
@@ -150,7 +150,7 @@ MainView {
         var password = Storage.get("password");
         if (username === "" ||  password === "" || username === undefined || password === undefined || username === null || password === null ) {
             loginPageIsActive = true;
-            pageLayout.replacePageSource(Qt.resolvedUrl("qml/ui/LoginPage.qml"));
+            pageLayout.replacePageSource(Qt.resolvedUrl("qml/pages/LoginPage.qml"));
         } else {
             instagram.setUsername(username);
             instagram.setPassword(password);
@@ -183,13 +183,13 @@ MainView {
                 if (commands[3] == "") return;
 
                 if (commands[2] == "tags") {
-                    //pageStack.push(Qt.resolvedUrl("qml/ui/TagFeedPage.qml"), {tag: commands[3]});
+                    //pageStack.push(Qt.resolvedUrl("qml/pages/TagFeedPage.qml"), {tag: commands[3]});
                 } else if (commands[2] == "locations") {
                     // location
                     return;
                 }
             } else {
-                //pageStack.push(Qt.resolvedUrl("qml/ui/OtherUserPage.qml"), {usernameString: commands[1]});
+                //pageStack.push(Qt.resolvedUrl("qml/pages/OtherUserPage.qml"), {usernameString: commands[1]});
             }
 
             console.log(uri)
@@ -320,7 +320,7 @@ MainView {
         onProfileConnectedFail: {
             if (!loginPageIsActive) {
                 loginPageIsActive = true
-                pageLayout.replacePageSource(Qt.resolvedUrl("qml/ui/LoginPage.qml"))
+                pageLayout.replacePageSource(Qt.resolvedUrl("qml/pages/LoginPage.qml"))
             }
         }
     }

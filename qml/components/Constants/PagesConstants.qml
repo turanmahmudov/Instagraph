@@ -4,7 +4,7 @@ pragma Singleton
 
 QtObject {
     // Central page path constants to replace hardcoded Qt.resolvedUrl() calls
-    // All paths are relative to the ui/ directory
+    // All paths are relative to the pages/ directory
     
     // Authentication
     readonly property string login: getQtResolvedUrl("LoginPage.qml")
@@ -65,6 +65,6 @@ QtObject {
     readonly property string credits: getQtResolvedUrl("Credits.qml")
     
     function getQtResolvedUrl(page) {
-        return Qt.resolvedUrl(`../../ui/${page}`)
+        return Qt.resolvedUrl(`../../pages/${page}`)
     }
 }

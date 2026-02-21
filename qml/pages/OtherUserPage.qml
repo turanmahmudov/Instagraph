@@ -17,6 +17,7 @@ import "../components/Constants"
 import "../components/Page"
 import "../components/User"
 import "../components/Feed"
+import "../viewmodels"
 import "../components/Media"
 import "../components/Camera"
 import "../components/Actions"
@@ -56,76 +57,22 @@ PageItem {
     property bool selfProfile
     property bool isPrivate: false
 
-    property var next_max_id
-    property bool more_available: true
-    property bool next_coming: true
-    property var last_like_id
-    property var last_save_id
-    property bool clear_models: true
+    // ViewModel handles all feed logic
+    UserFeedViewModel {
+        id: feedViewModel
+        userId: usernameId
+    }
 
     property int current_user_section: 0
 
-    property bool list_loading: false
+    // Expose loading state and empty state
+    property alias list_loading: feedViewModel.isLoading
+    property alias isEmpty: feedViewModel.isEmpty
+    property alias userData: feedViewModel.userData
+    property alias allHighlight: feedViewModel.allHighlight
 
-    property bool isEmpty: false
-
-    property var allHighlight: []
-
-    property var userData
-
-    function usernameDataFinished(data) {
-        userData = data.user
-
-        otheruserpage.header.title = data.user.username;
-
-        getUserHighlightFeed();
-    }
-
-    function highlightFeedDataFinished(data) {
-        highlightsWorker.sendMessage({'feed': 'UserHighlights', 'obj': data.tray, 'model': userHighlightsModel, 'clear_model': true})
-
-        for (var i = 0; i < data.tray.length; i++) {
-            allHighlight.push(data.tray[i].id)
-        }
-    }
-
-    function userTimeLineDataFinished(data) {
-        if (data.num_results == 0) {
-            isEmpty = true;
-        } else {
-            isEmpty = false;
-        }
-
-        if (next_max_id == data.next_max_id) {
-            return false;
-        } else {
-            next_max_id = data.next_max_id;
-            more_available = data.more_available;
-            next_coming = true;
-
-            worker.sendMessage({'feed': 'userPage', 'obj': data.items, 'model': userPhotosModel, 'clear_model': clear_models})
-
-            next_coming = false;
-        }
-
-        list_loading = false
-    }
-
-    function userTagDataFinished(data) {
-        if (next_max_id == data.next_max_id) {
-            return false;
-        } else {
-            next_max_id = data.next_max_id;
-            more_available = data.more_available;
-            next_coming = true;
-
-            worker.sendMessage({'feed': 'userPage', 'obj': data.items, 'model': userTagPhotosModel, 'clear_model': clear_models})
-
-            next_coming = false;
-        }
-
-        list_loading = false
-    }
+    property var last_like_id
+    property var last_save_id
 
     function followDataFinished(data) {
         if (usernameId == latest_follow_request) {
@@ -158,41 +105,7 @@ PageItem {
         }
     }
 
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/TimelineWorker.js"
-        onMessage: {
-        }
-    }
 
-    WorkerScript {
-        id: highlightsWorker
-        source: "../js/Workers/SimpleWorker.js"
-        onMessage: {
-        }
-    }
-
-    function getUsernameInfo()
-    {
-        instagram.getInfoById(usernameId);
-    }
-
-    function getUsernameFeed(next_id)
-    {
-        clear_models = false
-        if (!next_id) {
-            userPhotosModel.clear();
-            next_max_id = 0
-            clear_models = true
-        }
-        instagram.getUserFeed(usernameId, next_id);
-    }
-
-    function getUserHighlightFeed()
-    {
-        userHighlightsModel.clear()
-        instagram.getUserHighlightFeed(usernameId);
-    }
 
     Component {
         id: userMenuComponent
@@ -244,17 +157,7 @@ PageItem {
         }
     }
 
-    ListModel {
-        id: userPhotosModel
-    }
 
-    ListModel {
-        id: userTagPhotosModel
-    }
-
-    ListModel {
-        id: userHighlightsModel
-    }
 
     Flickable {
         id: flickpage
@@ -268,9 +171,9 @@ PageItem {
         height: parent.height
         contentWidth: parent.width
         contentHeight: entry_column.height
-        onMovementEnded: {
-            if (atYEnd && more_available && !next_coming) {
-                getUsernameFeed(next_max_id);
+        onContentYChanged: {
+            if (feedViewModel.shouldLoadMore(contentY, contentHeight, height)) {
+                feedViewModel.loadMore()
             }
         }
 
@@ -363,13 +266,13 @@ PageItem {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width - units.gu(2)
                 height: width/5 + units.gu(3)
-                visible: userHighlightsModel.count > 0
-                active: userHighlightsModel.count > 0
+                visible: feedViewModel.highlightsModel.count > 0
+                active: feedViewModel.highlightsModel.count > 0
                 asynchronous: true
 
                 sourceComponent: UserHighlightsTray {
                     currentDelegatePage: otheruserpage
-                    model: userHighlightsModel
+                    model: feedViewModel.highlightsModel
                     allHighlights: allHighlight
                     width: parent.width
                     height: parent.height
@@ -503,11 +406,10 @@ PageItem {
         }
         PullToRefresh {
             parent: flickpage
-            refreshing: list_loading && userPhotosModel.count == 0
+            refreshing: list_loading && feedViewModel.feedModel.count == 0
             onRefresh: {
-                list_loading = true
-                getUsernameInfo()
-                getUsernameFeed()
+                feedViewModel.loadUserInfo()
+                feedViewModel.loadFeed(true)
             }
         }
     }
@@ -530,11 +432,11 @@ PageItem {
             width: viewLoader.width
             height: contentHeight
             interactive: false
-            model: userPhotosModel
+            model: feedViewModel.feedModel
             delegate: ListFeedDelegate {
                 id: userPhotosDelegate
                 currentPage: otheruserpage
-                currentModel: userPhotosModel
+                currentModel: feedViewModel.feedModel
             }
         }
     }
@@ -547,7 +449,7 @@ PageItem {
             spacing: units.gu(0.1)
 
             Repeater {
-                model: userPhotosModel
+                model: feedViewModel.feedModel
 
                 GridFeedDelegate {
                     currentDelegatePage: otheruserpage
@@ -566,7 +468,7 @@ PageItem {
             spacing: units.gu(0.1)
 
             Repeater {
-                model: userTagPhotosModel
+                model: feedViewModel.taggedPhotosModel
 
                 GridFeedDelegate {
                     currentDelegatePage: otheruserpage
@@ -577,20 +479,18 @@ PageItem {
         }
     }
 
-    Connections{
-        target: instagram
-        onUserFeedDataReady: {
-            var data = JSON.parse(answer);
-            if (data.status == "ok") {
-                userTimeLineDataFinished(data);
-            } else {
-                // error
+    // Update header title when user data changes
+    Connections {
+        target: feedViewModel
+        onUserDataChanged: {
+            if (userData) {
+                otheruserpage.header.title = userData.username
             }
         }
-        onInfoByIdDataReady: {
-            var data = JSON.parse(answer);
-            usernameDataFinished(data);
-        }
+    }
+
+    Connections{
+        target: instagram
         onInfoByNameDataReady: {
             var data = JSON.parse(answer);
             usernameId = data.user.pk;
@@ -598,14 +498,14 @@ PageItem {
             if (usernameId === activeUsernameId) {
                 selfProfile = true
 
-                getUsernameFeed();
+                feedViewModel.loadFeed(true)
             } else {
                 selfProfile = false
 
                 instagram.getFriendship(usernameId);
             }
 
-            getUsernameInfo();
+            feedViewModel.loadUserInfo()
         }
         onFriendshipDataReady: {
             var data = JSON.parse(answer);
@@ -615,17 +515,13 @@ PageItem {
             } else {
                 isPrivate = false
 
-                getUsernameFeed();
+                feedViewModel.loadFeed(true)
             }
 
             followingButton.visible = data.following
             unfollowingButton.visible = !data.following && !data.outgoing_request && !data.blocking
             requestedButton.visible = data.outgoing_request
             unBlockButton.visible = data.blocking
-        }
-        onUserTagsDataReady: {
-            var data = JSON.parse(answer);
-            userTagDataFinished(data);
         }
 
         onFollowDataReady: {
@@ -649,10 +545,6 @@ PageItem {
                 requestedButton.visible = false
                 unBlockButton.visible = false
             }
-        }
-        onUserHighlightFeedDataReady: {
-            var data = JSON.parse(answer)
-            highlightFeedDataFinished(data)
         }
     }
 

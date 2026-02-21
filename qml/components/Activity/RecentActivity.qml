@@ -51,7 +51,7 @@ ListItem {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            if (typeof profile_id !== 'undefined') pageLayout.pushToCurrent(pageLayout.primaryPage, Qt.resolvedUrl("../../ui/OtherUserPage.qml"), {usernameId: profile_id})
+                            if (typeof profile_id !== 'undefined') pageLayout.pushToCurrent(pageLayout.primaryPage, Qt.resolvedUrl("../../pages/OtherUserPage.qml"), {usernameId: profile_id})
                         }
                     }
                 }

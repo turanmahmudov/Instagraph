@@ -165,7 +165,7 @@ Column {
             width: units.gu(4)
             height: width
 
-            onOpenShareClicked: pageLayout.pushToCurrent(currentPage, Qt.resolvedUrl("../../ui/ShareMediaPage.qml"), {mediaId: id, mediaUser: user})
+            onOpenShareClicked: pageLayout.pushToCurrent(currentPage, Qt.resolvedUrl("../../pages/ShareMediaPage.qml"), {mediaId: id, mediaUser: user})
         }
 
         Item {
@@ -194,7 +194,7 @@ Column {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../ui/MediaLikersPage.qml"), { photoId: id })
+            onClicked: pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/MediaLikersPage.qml"), { photoId: id })
         }
     }
 

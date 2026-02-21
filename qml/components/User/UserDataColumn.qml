@@ -74,7 +74,7 @@ Column {
                             width: parent.width
                             height: parent.height
                             onClicked: {
-                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../ui/UserFollowers.qml"), {userId: currentUserId});
+                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/UserFollowers.qml"), {userId: currentUserId});
                             }
                         }
                     }
@@ -89,7 +89,7 @@ Column {
                             width: parent.width
                             height: parent.height
                             onClicked: {
-                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../ui/UserFollowers.qml"), {userId: currentUserId});
+                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/UserFollowers.qml"), {userId: currentUserId});
                             }
                         }
                     }
@@ -110,7 +110,7 @@ Column {
                             width: parent.width
                             height: parent.height
                             onClicked: {
-                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../ui/UserFollowings.qml"), {userId: currentUserId});
+                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/UserFollowings.qml"), {userId: currentUserId});
                             }
                         }
                     }
@@ -125,7 +125,7 @@ Column {
                             width: parent.width
                             height: parent.height
                             onClicked: {
-                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../ui/UserFollowings.qml"), {userId: currentUserId});
+                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/UserFollowings.qml"), {userId: currentUserId});
                             }
                         }
                     }

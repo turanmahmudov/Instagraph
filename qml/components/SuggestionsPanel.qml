@@ -53,7 +53,7 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            pageLayout.pushToNext(currentDelegatePage, Qt.resolvedUrl("../ui/SuggestionsPage.qml"));
+                            pageLayout.pushToNext(currentDelegatePage, Qt.resolvedUrl("../pages/SuggestionsPage.qml"));
                         }
                     }
                 }

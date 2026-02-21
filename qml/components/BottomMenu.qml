@@ -96,7 +96,7 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    pageLayout.addPageToCurrentColumn(pageLayout.primaryPage, Qt.resolvedUrl("../ui/CameraPage.qml"))
+                    pageLayout.addPageToCurrentColumn(pageLayout.primaryPage, Qt.resolvedUrl("../pages/CameraPage.qml"))
                 }
             }
         }
