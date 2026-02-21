@@ -20,6 +20,7 @@
         <file>qml/components/BottomMenu.qml</file>
         <file>qml/ui/CameraCaptionPage.qml</file>
         <file>qml/components/FollowComponent.qml</file>
+        <file>qml/components/FollowComponent2.qml</file>
         <file>qml/ui/OtherUserPage.qml</file>
         <file>qml/ui/SinglePhoto.qml</file>
         <file>qml/ui/MediaLikersPage.qml</file>
@@ -33,6 +34,7 @@
         <file>qml/ui/CheckpointInfo.qml</file>
         <file>qml/js/Workers/ActivityWorker.js</file>
         <file>qml/js/Workers/SimpleWorker.js</file>
+        <file>qml/js/Workers/UserWorker.js</file>
         <file>qml/ui/UserFollowings.qml</file>
         <file>qml/ui/UserFollowers.qml</file>
         <file>qml/ui/CameraCropPage.qml</file>
@@ -147,7 +149,7 @@
         <file>qml/js/Workers/ExploreWorker.js</file>
         <file>qml/ui/ExploreFeedPage.qml</file>
         <file>qml/js/Workers/SearchWorker.js</file>
-        <file>qml/js/Workers/HomeWorker.js</file>
+        <file>qml/js/Workers/HomeFeedWorker.js</file>
         <file>qml/js/Workers/DirectThreadWorker.js</file>
         <file>qml/components/UsersListView.qml</file>
         <file>qml/components/User/UserListItem.qml</file>

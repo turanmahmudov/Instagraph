@@ -79,8 +79,8 @@ PageItem {
         model: singlePhotoModel
         delegate: ListFeedDelegate {
             id: homePhotosDelegate
-            currentDelegatePage: singlephotopage
-            thismodel: singlePhotoModel
+            currentPage: singlephotopage
+            currentModel: singlePhotoModel
         }
         PullToRefresh {
             id: pullToRefresh

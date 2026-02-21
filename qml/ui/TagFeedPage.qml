@@ -98,8 +98,8 @@ PageItem {
         model: tagFeedPhotosModel
         delegate: ListFeedDelegate {
             id: homePhotosDelegate
-            currentDelegatePage: tagfeedpage
-            thismodel: tagFeedPhotosModel
+            currentPage: tagfeedpage
+            currentModel: tagFeedPhotosModel
         }
         PullToRefresh {
             refreshing: list_loading && tagFeedPhotosModel.count == 0

@@ -72,22 +72,16 @@ PageItem {
     property string next_max_id: ""
     property bool more_available: true
     property bool next_coming: true
-
-    property var last_like_id
-    property var last_save_id
-
+    property bool list_loading: false
     property bool clear_models: true
 
     property var seen_posts: []
 
-    property bool list_loading: false
-
     property bool isEmpty: false
-
     property bool isPullToRefresh: true
 
     ListModel {
-        id: homePhotosModel
+        id: homeFeedModel
     }
 
     ListModel {
@@ -95,7 +89,7 @@ PageItem {
     }
 
     ListView {
-        id: homePhotosList
+        id: homeFeedList
         visible: !isEmpty
         anchors {
             left: parent.left
@@ -103,25 +97,21 @@ PageItem {
             bottom: bottomMenu.top
             top: homepage.header.bottom
         }
-        onMovementEnded: {
-            if (atYEnd && more_available && !next_coming) {
-                getTimelineFeed(next_max_id);
-            }
-        }
-
-        model: homePhotosModel
+        model: homeFeedModel
         delegate: ListFeedDelegate {
-            id: homePhotosDelegate
-            currentDelegatePage: homepage
-            thismodel: homePhotosModel
+            id: homeFeedDelegate
+            currentPage: homepage
+            currentModel: homeFeedModel
+            suggestionsModel: homeSuggestionsModel
+        }
+        onMovementEnded: {
+            if (atYEnd && more_available && !next_coming) getHomeFeed(next_max_id)
         }
         PullToRefresh {
-            id: pullToRefresh
-            refreshing: list_loading && homePhotosModel.count == 0
+            refreshing: list_loading && homeFeedModel.count === 0
             onRefresh: {
-                list_loading = true
                 isPullToRefresh = true
-                getTimelineFeed()
+                getHomeFeed()
             }
         }
     }
@@ -145,9 +135,13 @@ PageItem {
 
     WorkerScript {
         id: worker
-        source: "../js/Workers/HomeWorker.js"
+        source: "../js/Workers/HomeFeedWorker.js"
         onMessage: {
-
+            if (messageObject.type === "seen_posts") {
+                seen_posts.push(messageObject.id)
+            } else if (messageObject.type === "pause") {
+                more_available = false
+            }
         }
     }
 
@@ -155,54 +149,54 @@ PageItem {
         target: instagram
         onTimelineFeedDataReady: {
             var data = JSON.parse(answer);
-            if (data.status == "ok") {
-                mediaDataFinished(data);
-            } else {
-                // error
-            }
+            homeFeedCompleted(data);
         }
     }
 
-    function getTimelineFeed(next_id)
-    {
+    function getHomeFeed(next_id) {
+        list_loading = true
+
         clear_models = false
         if (!next_id) {
-            homePhotosModel.clear()
+            homeFeedModel.clear()
             next_max_id = ""
             clear_models = true
         }
+
         instagram.getTimelineFeed(next_id, seen_posts.join(','), isPullToRefresh);
     }
 
-    function mediaDataFinished(data) {
+    function homeFeedCompleted(data) {
+        if (!data) return
+
         isPullToRefresh = false
-
-        if (data.num_results == 0) {
-            isEmpty = true;
-        } else {
-            isEmpty = false;
-        }
-
-        if (next_max_id == data.next_max_id) {
-            return false;
-        } else {
-            next_max_id = data.more_available == true ? data.next_max_id : "";
-            more_available = data.more_available;
-            next_coming = true;
-
-            worker.sendMessage({'obj': data.feed_items, 'model': homePhotosModel, 'suggestionsModel': homeSuggestionsModel, 'clear_model': clear_models})
-
-            for (var i = 0; i < data.feed_items.length; i++) {
-                var obj = data.feed_items[i];
-
-                if (typeof obj.media_or_ad !== 'undefined' && typeof obj.media_or_ad.media_type !== 'undefined') {
-                    seen_posts.push(obj.media_or_ad.id);
-                }
-            }
-
-            next_coming = false;
-        }
-
         list_loading = false
+        
+        isEmpty = false
+        if (data.num_results === 0) {
+            isEmpty = true
+            return
+        }
+
+        if (next_max_id === data.next_max_id) return
+
+        next_max_id = ""
+        if (data.more_available === true) {
+            next_max_id = data.next_max_id
+        }
+
+        more_available = data.more_available
+        next_coming = true
+
+        worker.sendMessage(
+            {
+                feed_items: data.feed_items,
+                feed_model: homeFeedModel,
+                suggestions_model: homeSuggestionsModel,
+                clear: clear_models
+            }
+        )
+        
+        next_coming = false
     }
 }

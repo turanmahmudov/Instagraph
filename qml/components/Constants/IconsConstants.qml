@@ -17,14 +17,14 @@ QtObject {
     
     // Actions
     readonly property string cog: "\uea3e"
-    readonly property string comments: "\ueb5f"
-    readonly property string liked: "\ueac7"
-    readonly property string unliked: "\ueac6"
+    readonly property string comments: "\uea74"
+    readonly property string liked: "\ueadf"
+    readonly property string unliked: "\ueae1"
     readonly property string save: "\uead1"
-    readonly property string share: "\uea15"
+    readonly property string share: "\ueb80"
     readonly property string plus: "\ueab8"
     readonly property string plus_circle: "\ueacf"
-    readonly property string popup: "\uf767"
+    readonly property string popup: "\ueb2e"
     readonly property string remove: "\uec81"
     readonly property string x_close: "\ueace"
     

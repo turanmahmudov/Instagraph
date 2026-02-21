@@ -235,7 +235,7 @@ MainView {
 
             // Get Data
             // Home Timeline
-            homePage.getTimelineFeed()
+            homePage.getHomeFeed()
 
             // Activity page
             activityPage.getRecentActivity();

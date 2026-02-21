@@ -101,8 +101,8 @@ PageItem {
         model: locationFeedPhotosModel
         delegate: ListFeedDelegate {
             id: homePhotosDelegate
-            currentDelegatePage: locationfeedpage
-            thismodel: locationFeedPhotosModel
+            currentPage: locationfeedpage
+            currentModel: locationFeedPhotosModel
         }
         PullToRefresh {
             refreshing: list_loading && locationFeedPhotosModel.count == 0

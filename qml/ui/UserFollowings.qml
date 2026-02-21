@@ -1,103 +1,94 @@
-// Qt imports
 import QtQuick 2.12
-import QtQuick.LocalStorage 2.12
-import QtMultimedia 5.12
-
-// Lomiri imports
 import Lomiri.Components 1.3
-import Lomiri.Content 1.1
-
-// JavaScript imports
-import "../js/Storage.js" as Storage
-import "../js/Helper.js" as Helper
-import "../js/Scripts.js" as Scripts
 
 // Component imports
 import "../components"
 import "../components/Constants"
 import "../components/Page"
 import "../components/User"
-import "../components/Feed"
-import "../components/Media"
-import "../components/Camera"
-import "../components/Actions"
 
 PageItem {
-    id: usersfollowingspage
-
-    property var userId
-
-    property bool list_loading: false
-    property bool clear_models: true
-
-    property string next_max_id: ""
-    property bool more_available: true
-    property bool next_coming: true
+    id: followingspage
 
     header: PageHeaderItem {
         title: i18n.tr("Followings")
     }
 
-    function userFollowingsDataFinished(data) {
-        if (next_max_id == data.next_max_id) {
-            return false;
-        } else {
-            next_max_id = typeof data.next_max_id != 'undefined' ? data.next_max_id : ""
-            more_available = typeof data.next_max_id != 'undefined'
-            next_coming = true;
+    property var userId
 
-            worker.sendMessage({'feed': 'UserFollowingsPage', 'obj': data.users, 'model': userFollowingsModel, 'clear_model': clear_models})
+    property string next_max_id: ""
+    property bool more_available: true
+    property bool next_coming: true
+    property bool list_loading: false
+    property bool clear_models: true
 
-            next_coming = false;
-        }
-
-        list_loading = false
-    }
-
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/SimpleWorker.js"
-        onMessage: {
-        }
-    }
-
-    Component.onCompleted: {
-        getUserFollowings();
-    }
-
-    function getUserFollowings(next_id)
-    {
-        clear_models = false
-        if (!next_id) {
-            userFollowingsModel.clear()
-            next_max_id = ""
-            clear_models = true
-        }
-        instagram.getFollowing(userId, next_id);
-    }
+    property bool isPullToRefresh: true
 
     ListModel {
         id: userFollowingsModel
     }
 
-    UsersListView {
+    ListView {
         id: userFollowingsList
-        onMovementEnded: {
-            if (atYEnd && more_available && !next_coming) getUserFollowings(next_max_id)
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+            top: followingspage.header.bottom
         }
         model: userFollowingsModel
         delegate: UserListItem {
-            onClicked: pageLayout.pushToCurrent(usersfollowingspage, PagesConstants.user, {usernameId: pk})
-            followButton: true
-            followData: {"friendship": {"following": true, "outgoing_request": false}, "pk": pk}
+            onClicked: pageLayout.pushToCurrent(followingspage, PagesConstants.user, {usernameId: user.pk})
+        }
+        onMovementEnded: {
+            if (atYEnd && more_available && !next_coming) getUserFollowings(next_max_id)
         }
         PullToRefresh {
-            refreshing: list_loading && userFollowingsModel.count == 0
+            refreshing: list_loading && userFollowingsModel.count === 0
             onRefresh: {
-                list_loading = true
-                getUserFollowings()
+                isPullToRefresh = true
+                getUserFollowings('')
             }
         }
+    }
+
+    WorkerScript {
+        id: worker
+        source: "../js/Workers/UserWorker.js"
+    }
+
+    function getUserFollowings(next_id) {
+        list_loading = true
+        clear_models = false
+
+        if (!next_id) {
+            userFollowingsModel.clear()
+            next_max_id = ""
+            clear_models = true
+        }
+
+        instagram.getFollowing(userId, next_id);
+    }
+
+    function userFollowingsDataFinished(data) {
+        if (!data) return
+
+        if (next_max_id === data.next_max_id) return
+
+        next_max_id = typeof data.next_max_id != 'undefined' ? data.next_max_id : ""
+        more_available = typeof data.next_max_id != 'undefined'
+        next_coming = true;
+
+        worker.sendMessage(
+            {
+                items: data.users,
+                model: userFollowingsModel,
+                clear: clear_models
+            }
+        )
+
+        next_coming = false
+        list_loading = false
     }
 
     Connections{
@@ -106,5 +97,9 @@ PageItem {
             var data = JSON.parse(answer);
             userFollowingsDataFinished(data);
         }
+    }
+
+    Component.onCompleted: {
+        getUserFollowings()
     }
 }

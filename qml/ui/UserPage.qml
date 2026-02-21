@@ -320,8 +320,8 @@ PageItem {
             model: userPhotosModel
             delegate: ListFeedDelegate {
                 id: userPhotosDelegate
-                currentDelegatePage: userpage
-                thismodel: userPhotosModel
+                currentPage: userpage
+                currentModel: userPhotosModel
             }
         }
     }

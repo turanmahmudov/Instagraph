@@ -1,6 +1,7 @@
 import QtQuick 2.12
-import ".."
 import Lomiri.Components 1.3
+
+import ".."
 
 Row {
     spacing: units.gu(1)
@@ -8,7 +9,7 @@ Row {
     CircleImage {
         width: units.gu(5)
         height: width
-        source: profile_pic_url
+        source: user.profile_pic_url
     }
 
     Column {
@@ -16,7 +17,7 @@ Row {
         anchors.verticalCenter: parent.verticalCenter
 
         Text {
-            text: username
+            text: user.username
             wrapMode: Text.WordWrap
             font.weight: Font.DemiBold
             width: parent.width
@@ -24,7 +25,7 @@ Row {
         }
 
         Text {
-            text: full_name
+            text: user.full_name
             wrapMode: Text.WordWrap
             width: parent.width
             textFormat: Text.RichText

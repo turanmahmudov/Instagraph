@@ -1,21 +1,27 @@
 import QtQuick 2.12
-import "../Constants"
-import ".."
 import QtQuick.Layouts 1.12
-import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 import QtMultimedia 5.12
+import QtGraphicalEffects 1.0
+import Lomiri.Components 1.3
 import Lomiri.Components.Popups 1.3
 import Lomiri.Content 1.3
-import QtGraphicalEffects 1.0
+
+import ".."
+import "../Actions"
+import "../Feed"
+import "../Constants"
 
 import "../../js/Storage.js" as Storage
-import "../../js/Helper.js" as Helper
 import "../../js/Scripts.js" as Scripts
+import "../../js/Helper.js" as Helper
 
 Column {
-    id: entry_column
+    id: mediaentry
     spacing: units.gu(1)
+
+    property var lastActionId: null
+    property var lastDeletedId: null
 
     Item {
         width: parent.width
@@ -24,15 +30,14 @@ Column {
 
     RowLayout {
         x: units.gu(1)
-        width: parent.width - units.gu(2)
         spacing: units.gu(1.5)
+        width: parent.width - units.gu(2)
         anchors.horizontalCenter: parent.horizontalCenter
 
         Loader {
             width: units.gu(5)
             height: width
             asynchronous: true
-
             Layout.minimumWidth: units.gu(5)
             Layout.preferredWidth: units.gu(5)
 
@@ -42,12 +47,8 @@ Column {
                 source: typeof user != 'undefined' && typeof user.profile_pic_url != 'undefined' ? user.profile_pic_url : "../../images/not_found_user.jpg"
 
                 MouseArea {
-                    anchors {
-                        fill: parent
-                    }
-                    onClicked: {
-                        pageLayout.pushToCurrent(pageLayout.primaryPage, PagesConstants.user, {usernameId: user.pk});
-                    }
+                    anchors.fill: parent
+                    onClicked: pageLayout.pushToCurrent(pageLayout.primaryPage, PagesConstants.user, { usernameId: user.pk })
                 }
             }
         }
@@ -64,12 +65,8 @@ Column {
                 wrapMode: Text.WordWrap
 
                 MouseArea {
-                    anchors {
-                        fill: parent
-                    }
-                    onClicked: {
-                        pageLayout.pushToCurrent(pageLayout.primaryPage, PagesConstants.user, {usernameId: user.pk});
-                    }
+                    anchors.fill: parent
+                    onClicked: pageLayout.pushToCurrent(pageLayout.primaryPage, PagesConstants.user, { usernameId: user.pk })
                 }
             }
 
@@ -81,189 +78,92 @@ Column {
             }
         }
 
-        Item {
+        PopupAction {
+            id: popupAction
             width: units.gu(3)
             height: width
 
-            Layout.minimumWidth: units.gu(3)
-            Layout.preferredWidth: units.gu(3)
-            Layout.alignment: Qt.AlignVCenter
+            Layout.alignment: Qt.AlignRight
 
-            LineIcon {
-                id: openPopupButton
-                anchors.verticalCenter: parent.verticalCenter
-                name: "\ueb2e"
-                color: styleApp.common.iconActiveColor
-                iconSize: units.gu(2)
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    PopupUtils.open(popoverComponent, openPopupButton)
-                }
-            }
+            onPopupClicked: PopupUtils.open(popupComponent, popupAction)
         }
     }
 
     Loader {
         asynchronous: true
 
-        property string mediaType: typeof carousel_media_obj.media !== 'undefined' && carousel_media_obj.media.length > 0 ? "carousel" : "single"
-
-        property var bestImage: mediaType === "carousel" ?
-                                    Helper.getBestImage(carousel_media_obj.media[0].image_versions2.candidates, parent.width) :
-                                    media_type == 1 || media_type == 2 ?
-                                        Helper.getBestImage(images_obj.candidates, parent.width) :
-                                        {"width":0, "height":0, "url":""}
-
+        property bool isCarousel: typeof carousel_media_obj.media !== 'undefined' && carousel_media_obj.media.length > 0
+        property var bestImage: calculateBestImage(isCarousel, media_type, carousel_media_obj, images_obj)
 
         width: parent.width
-        height: mediaType === "carousel" ?
-                    ((parent.width/bestImage.width*bestImage.height) + units.gu(2)) :
-                    media_type == 1 || media_type == 2 ?
-                        parent.width/bestImage.width*bestImage.height :
-                        0
+        height: calculateHeight(isCarousel, media_type)
 
-        sourceComponent: mediaType === "carousel" ? carouselMedia : singleMedia
+        function calculateHeight(isCarousel, media_type) {
+            if (isCarousel) {
+                return (parent.width/bestImage.width*bestImage.height) + units.gu(2)
+            }
+            if (media_type === 1 || media_type === 2) {
+                return parent.width/bestImage.width*bestImage.height
+            }
+            return 0
+        }
+
+        function calculateBestImage(isCarousel, media_type, carousel_media_obj, images_obj) {
+            if (isCarousel) {
+                return Helper.getBestImage(carousel_media_obj.media[0].image_versions2.candidates, parent.width)
+            }
+            if (media_type === 1 || media_type === 2) {
+                return Helper.getBestImage(images_obj.candidates, parent.width)
+            }
+            return {"width":0, "height":0, "url":""}
+        }
+
+        sourceComponent: isCarousel ? carouselMedia : singleMedia
     }
 
     RowLayout {
         x: units.gu(1)
-        width: parent.width - units.gu(2)
         spacing: units.gu(2)
+        width: parent.width - units.gu(2)
         anchors.horizontalCenter: parent.horizontalCenter
 
-        Item {
+        LikeAction {
+            id: likeAction
             width: units.gu(4)
             height: width
 
-            Layout.minimumWidth: units.gu(4)
-            Layout.preferredWidth: units.gu(4)
-
-            LineIcon {
-                id: imagelikeicon
-                anchors.verticalCenter: parent.verticalCenter
-                name: has_liked === true ? "\ueadf" : "\ueae1"
-                color: has_liked === true ? LomiriColors.red : styleApp.common.iconActiveColor
-                iconSize: units.gu(2.2)
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    if (imagelikeicon.name == "\ueae1") {
-                        last_like_id = id;
-                        instagram.like(id);
-                    } else if (imagelikeicon.name == "\ueadf") {
-                        last_like_id = id;
-                        instagram.unLike(id);
-                    }
-                }
-            }
+            onLikeClicked: mediaentry.like()
+            onUnlikeClicked: mediaentry.unlike()
         }
 
-        Item {
+        OpenCommentsAction {
+            id: openCommentsAction
             width: units.gu(4)
             height: width
 
-            Layout.minimumWidth: units.gu(4)
-            Layout.preferredWidth: units.gu(4)
-
-            LineIcon {
-                anchors.verticalCenter: parent.verticalCenter
-                name: "\uea74"
-                color: typeof comments_disabled != 'undefined' && comments_disabled == true ? LomiriColors.lightGrey : styleApp.common.iconActiveColor
-                iconSize: units.gu(2.2)
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    if (typeof comments_disabled == 'undefined' || (typeof comments_disabled != 'undefined' && comments_disabled == false)) {
-                        pageLayout.pushToNext(currentDelegatePage, PagesConstants.comments, {photoId: id, mediaUserId: user.pk});
-                    }
-                }
-            }
+            onOpenCommentsClicked: pageLayout.pushToNext(currentPage, PagesConstants.comments, { photoId: id, mediaUserId: user.pk })
         }
 
-        Item {
+        OpenShareAction {
+            id: openShareAction
             width: units.gu(4)
             height: width
 
-            Layout.minimumWidth: units.gu(4)
-            Layout.preferredWidth: units.gu(4)
-
-            LineIcon {
-                anchors.verticalCenter: parent.verticalCenter
-                name: "\ueb80"
-                iconSize: units.gu(2.2)
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../../ui/ShareMediaPage.qml"), {mediaId: id, mediaUser: user});
-                }
-            }
+            onOpenShareClicked: pageLayout.pushToCurrent(currentPage, Qt.resolvedUrl("../../ui/ShareMediaPage.qml"), {mediaId: id, mediaUser: user})
         }
 
         Item {
             Layout.fillWidth: true
         }
 
-        Item {
+        SaveAction {
+            id: saveAction
             width: units.gu(4)
             height: width
-
-            Layout.minimumWidth: units.gu(4)
-            Layout.preferredWidth: units.gu(4)
             Layout.alignment: Qt.AlignRight
 
-            Icon {
-                id: imagesaveicon
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.right: parent.right
-                width: units.gu(3)
-                height: width
-                color: styleApp.common.iconActiveColor
-                source: typeof has_viewer_saved != 'undefined' && has_viewer_saved === true ? "../../images/media_save.png" : "../../images/media_save_bold.png"
-                property var iname: typeof has_viewer_saved != 'undefined' && has_viewer_saved === true ? "save" : "unsave"
-            }
-            ColorOverlay {
-                anchors.fill: imagesaveicon
-                source: imagesaveicon
-                color: styleApp.common.iconActiveColor
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    if (imagesaveicon.iname == "unsave") {
-                        last_save_id = id;
-                        instagram.saveMedia(id)
-                    } else if (imagesaveicon.iname == "save") {
-                        last_save_id = id;
-                        instagram.unsaveMedia(id)
-                    }
-                }
-            }
-
-            Connections {
-                target: instagram
-                onSaveMediaDataReady: {
-                    if (JSON.parse(answer).status === "ok" && last_save_id === id) {
-                        imagesaveicon.source = "../../images/media_save.png";
-                        imagesaveicon.iname = "save"
-                    }
-                }
-                onUnsaveMediaDataReady: {
-                    if (JSON.parse(answer).status === "ok" && last_save_id === id) {
-                        imagesaveicon.source = "../../images/media_save_bold.png";
-                        imagesaveicon.iname = "unsave"
-                    }
-                }
-            }
+            onSaveClicked: mediaentry.save()
+            onUnsaveClicked: mediaentry.unsave()
         }
     }
 
@@ -278,9 +178,7 @@ Column {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: {
-                pageLayout.pushToNext(currentDelegatePage, Qt.resolvedUrl("../../ui/MediaLikersPage.qml"), {photoId: id});
-            }
+            onClicked: pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../ui/MediaLikersPage.qml"), { photoId: id })
         }
     }
 
@@ -293,16 +191,12 @@ Column {
             visible: typeof caption !== 'undefined' && caption !== null ?
                          (typeof caption.text !== 'undefined' ? true : false) :
                          false
-            text: typeof caption !== 'undefined' && caption !== null ?
-                      (typeof caption.text !== 'undefined' ? Helper.formatUser(caption.user.username) + ' ' + Helper.formatString(caption.text) : "") :
-                      ""
+            text: visible ? Helper.formatUser(caption.user.username) + ' ' + Helper.formatString(caption.text) : ""
             wrapMode: Text.WordWrap
             width: parent.width
             textFormat: Text.RichText
             color: styleApp.common.textColor
-            onLinkActivated: {
-                Scripts.linkClick(currentDelegatePage, link)
-            }
+            onLinkActivated: Scripts.linkClick(currentPage, link)
         }
 
         Label {
@@ -316,15 +210,13 @@ Column {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: {
-                    pageLayout.pushToNext(currentDelegatePage, PagesConstants.comments, {photoId: id});
-                }
+                onClicked: pageLayout.pushToNext(currentPage, PagesConstants.comments, { photoId: id })
             }
         }
 
         Repeater {
             enabled: typeof preview_comments.comments != 'undefined' && preview_comments.comments.length > 0
-            model: typeof preview_comments.comments != 'undefined' && preview_comments.comments.length > 0 ? preview_comments.comments : []
+            model: enabled ? preview_comments.comments : []
 
             Text {
                 width: parent.width
@@ -332,9 +224,7 @@ Column {
                 wrapMode: Text.WordWrap
                 textFormat: Text.RichText
                 color: styleApp.common.textColor
-                onLinkActivated: {
-                    Scripts.linkClick(currentDelegatePage, link)
-                }
+                onLinkActivated: Scripts.linkClick(currentPage, link)
             }
         }
 
@@ -356,131 +246,136 @@ Column {
     Component {
         id: singleMedia
 
-        MediaItem {
+        SingleMedia {
             id: mediaItem
-            Loader {
-                id: videoLoader
-                anchors.fill: parent
-                asynchronous: true
-                active: false
-                visible: false
-
-                sourceComponent: Item {
-                    anchors.fill: parent
-                    MediaPlayer {
-                        id: player
-                        source: video_url
-                        autoLoad: false
-                        autoPlay: false
-                        loops: MediaPlayer.Infinite
-                    }
-                    VideoOutput {
-                        id: videoOutput
-                        source: player
-                        fillMode: VideoOutput.PreserveAspectCrop
-                        width: 800
-                        height: 600
-                        anchors.fill: parent
-                        visible: media_type == 2
-                    }
-
-                    Component.onCompleted: {
-                        console.log('PLAY VIDEO')
-                        playPause()
-                    }
-
-                    function playPause() {
-                        if (player.playbackState == MediaPlayer.PlayingState) {
-                            player.stop()
-                        } else {
-                            player.play()
-                        }
-                    }
-                }
-            }
-
-            MouseArea {
-                anchors {
-                    fill: parent
-                }
-                onClicked: {
-                    if (media_type === 2) {
-                        videoLoader.active = true
-                        videoLoader.visible = true
-
-                        if (videoLoader.status == Loader.Ready) {
-                            videoLoader.item.playPause()
-                        }
-                    }
-                }
-                onDoubleClicked: {
-                    mediaItem.startLikeAnimation()
-
-                    last_like_id = id;
-                    instagram.like(id);
-                }
-            }
+            onDoubleClicked: like()
         }
     }
 
     Component {
         id: carouselMedia
 
-        Item {
-            CarouselSlider {
-                id: carouselSlider
-                width: parent.width
-                height: parent.height - units.gu(2)
-                dataArray: carousel_media_obj.media
+        CarouselMedia {
+            id: carouselItem
+            onDoubleClicked: like()
+        }
+    }
+
+    Component {
+        id: popupComponent
+
+        FeedActionsPopup {
+            id: actionsPopup
+
+            onOpenEditClicked: pageLayout.pushToCurrent(currentPage, PagesConstants.edit_media, {mediaId: id})
+            onCopyLinkClicked: Clipboard.push(`https://instagram.com/p/${code}`)
+            onDownloadMediaClicked: {
+                // TODO
+                //var singleDownload = downloadComponent.createObject(mainView)
+                //singleDownload.contentType = ContentType.Pictures
+                //singleDownload.download(images_obj.candidates[0].url)
             }
-
-            Row {
-                id: slideIndicator
-                height: units.gu(2)
-                spacing: units.gu(0.5)
-                anchors {
-                    bottom: parent.bottom
-                    horizontalCenter: parent.horizontalCenter
-                }
-
-                Repeater {
-                    model: carousel_media_obj.media.length
-                    delegate: Item {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(1)
-                        height: units.gu(1)
-                        Rectangle {
-                            property bool active: carouselSlider.currentIndex == index
-                            height: active ? units.gu(0.9) : units.gu(0.7)
-                            width: height
-                            radius: width/2
-                            anchors.verticalCenter: parent.verticalCenter
-                            color: active ? LomiriColors.blue : styleApp.common.iconActiveColor
-                            Behavior on color {
-                                ColorAnimation {
-                                    duration: LomiriAnimation.FastDuration
-                                }
-                            }
-                        }
-                    }
-                }
+            onDeleteMediaClicked: {
+                lastDeletedId = id
+                instagram.deleteMedia(id)
+            }
+            onEnableCommentsClicked: {
+                lastActionId = id
+                instagram.enableMediaComments(id)
+            }
+            onDisableCommentsClicked: {
+                lastActionId = id
+                instagram.disableMediaComments(id)
+            }
+            onRemoveTagClicked: {
+                lastDeletedId = id
+                instagram.removeSelftag(id)
             }
         }
     }
 
     Connections {
         target: instagram
+        
+        onMediaDeleted: {
+            if (lastDeletedId === id) {
+                var data = JSON.parse(answer)
+                if (data.did_delete) {
+                    currentModel.remove(index)
+                    if (currentModel.count === 0) pageLayout.removePages(currentPage)
+                }
+                lastDeletedId = null
+            }
+        }
+        
+        onRemoveSelftagDone: {
+            if (lastDeletedId === id) {
+                var data = JSON.parse(answer)
+                if (data.status === "ok") currentModel.get(index).photo_of_you = false
+                lastDeletedId = null
+            }
+        }
+        
+        onEnableMediaCommentsDataReady: {
+            if (lastActionId === id) {
+                var data = JSON.parse(answer)
+                if (data.status === "ok") currentModel.get(index).comments_disabled = false
+                lastActionId = null
+            }
+        }
+        
+        onDisableMediaCommentsDataReady: {
+            if (lastActionId === id) {
+                var data = JSON.parse(answer)
+                if (data.status === "ok") currentModel.get(index).comments_disabled = true
+                lastActionId = null
+            }
+        }
+
         onLikeDataReady: {
-            if (JSON.parse(answer).status === "ok" && last_like_id === id) {
-                imagelikeicon.color = LomiriColors.red;
-                imagelikeicon.name = "\ueadf";
+            if (lastActionId === id) {
+                var data = JSON.parse(answer)
+                if (data.status === "ok") likeAction.is_liked = true
+                lastActionId = null
             }
         }
         onUnLikeDataReady: {
-            if (JSON.parse(answer).status === "ok" && last_like_id === id) {
-                imagelikeicon.color = styleApp.common.iconActiveColor;
-                imagelikeicon.name = "\ueae1";
+            if (lastActionId === id) {
+                var data = JSON.parse(answer)
+                if (data.status === "ok") likeAction.is_liked = false
+                lastActionId = null
             }
         }
+        onSaveMediaDataReady: {
+            if (lastActionId === id) {
+                var data = JSON.parse(answer)
+                if (data.status === "ok") saveAction.is_saved = true
+                lastActionId = null
+            }
+        }
+        onUnsaveMediaDataReady: {
+            if (lastActionId === id) {
+                var data = JSON.parse(answer)
+                if (data.status === "ok") saveAction.is_saved = false
+                lastActionId = null
+            }
+        }
+    }
+
+    function like() {
+        lastActionId = id
+        instagram.like(id)
+    }
+    function unlike() {
+        lastActionId = id
+        instagram.unLike(id)
+    }
+    function save() {
+        lastActionId = id
+        instagram.saveMedia(id)
+    }
+    function unsave() {
+        lastActionId = id
+        instagram.unsaveMedia(id)
     }
 }
