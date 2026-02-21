@@ -25,6 +25,16 @@ Column {
     property bool showCarousel: false
     property bool enableVideoPlayback: false
 
+    // Model data with default fallbacks to prevent undefined errors
+    readonly property var userData: user || {username: "", pk: "", profile_pic_url: ""}
+    readonly property var locationData: location || {name: ""}
+    readonly property var captionData: caption || {text: "", user: {username: ""}}
+    readonly property var carouselMediaData: carousel_media_obj || {media: []}
+    readonly property var imageData: images_obj || {candidates: []}
+    readonly property var previewCommentsData: preview_comments || {comments: []}
+    readonly property bool canViewMoreComments: can_view_more_preview_comments || false
+    readonly property int commentCount: comment_count || 0
+
     Item {
         width: parent.width
         height: units.gu(0.1)
@@ -46,11 +56,11 @@ Column {
             sourceComponent: CircleImage {
                 width: parent.width
                 height: width
-                source: typeof user != 'undefined' && typeof user.profile_pic_url != 'undefined' ? user.profile_pic_url : "../../images/not_found_user.jpg"
+                source: userData.profile_pic_url || "../../images/not_found_user.jpg"
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: pageLayout.pushToCurrent(pageLayout.primaryPage, PagesConstants.user, { usernameId: user.pk })
+                    onClicked: pageLayout.pushToCurrent(pageLayout.primaryPage, PagesConstants.user, { usernameId: userData.pk })
                 }
             }
         }
@@ -62,18 +72,18 @@ Column {
             Layout.alignment: Qt.AlignVCenter
 
             Label {
-                text: typeof user != 'undefined' && typeof user.username != 'undefined' ? user.username : ''
+                text: userData.username || ''
                 font.weight: Font.DemiBold
                 wrapMode: Text.WordWrap
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: pageLayout.pushToCurrent(pageLayout.primaryPage, PagesConstants.user, { usernameId: user.pk })
+                    onClicked: pageLayout.pushToCurrent(pageLayout.primaryPage, PagesConstants.user, { usernameId: userData.pk })
                 }
             }
 
             Label {
-                text: typeof location != 'undefined' && typeof location.name != 'undefined' ? location.name : ''
+                text: locationData.name || ''
                 fontSize: "medium"
                 font.weight: Font.Light
                 wrapMode: Text.WordWrap
@@ -94,8 +104,8 @@ Column {
     Loader {
         asynchronous: true
 
-        property bool isCarousel: showCarousel && typeof carousel_media_obj.media !== 'undefined' && carousel_media_obj.media.length > 0
-        property var bestImage: calculateBestImage(isCarousel, media_type, carousel_media_obj, images_obj)
+        property bool isCarousel: showCarousel && carouselMediaData.media && carouselMediaData.media.length > 0
+        property var bestImage: calculateBestImage(isCarousel, media_type, carouselMediaData, imageData)
 
         width: parent.width
         height: calculateHeight(isCarousel, media_type)
@@ -194,10 +204,8 @@ Column {
         spacing: units.gu(0.5)
 
         Text {
-            visible: typeof caption !== 'undefined' && caption !== null ?
-                         (typeof caption.text !== 'undefined' ? true : false) :
-                         false
-            text: visible ? Helper.formatUser(caption.user.username) + ' ' + Helper.formatString(caption.text) : ""
+            visible: captionData.text && captionData.text.length > 0
+            text: visible ? Helper.formatUser(captionData.user.username) + ' ' + Helper.formatString(captionData.text) : ""
             wrapMode: Text.WordWrap
             width: parent.width
             textFormat: Text.RichText
@@ -206,8 +214,8 @@ Column {
         }
 
         Label {
-            visible: typeof has_more_comments != 'undefined' && has_more_comments === true ? true : false
-            text: i18n.tr("View all %1 comments").arg(typeof comment_count != 'undefined' ? comment_count : 0)
+            visible: canViewMoreComments
+            text: i18n.tr("View all %1 comments").arg(commentCount)
             wrapMode: Text.WordWrap
             width: parent.width
             fontSize: "medium"
@@ -221,8 +229,8 @@ Column {
         }
 
         Repeater {
-            enabled: typeof preview_comments.comments != 'undefined' && preview_comments.comments.length > 0
-            model: enabled ? preview_comments.comments : []
+            enabled: previewCommentsData.comments && previewCommentsData.comments.length > 0
+            model: enabled ? previewCommentsData.comments : []
 
             Text {
                 width: parent.width

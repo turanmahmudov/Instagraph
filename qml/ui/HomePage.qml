@@ -24,16 +24,30 @@ import "../components/Media"
 import "../components/Camera"
 import "../components/Actions"
 
-// Qt imports
-
-// Lomiri imports
-
-// JavaScript imports
-
-// Component imports
-
 PageItem {
     id: homepage
+
+    // Constants
+    readonly property real paginationThreshold: 2.0
+    readonly property real dividerHeight: units.gu(0.1)
+
+    // Feed state management
+    QtObject {
+        id: feedState
+        property string nextMaxId: ""
+        property bool moreAvailable: true
+        property bool nextComing: true
+        property bool isLoading: false
+        property bool clearModels: true
+        property var seenPosts: []
+        property bool isEmpty: false
+        property bool isPullToRefresh: true
+        property string errorMessage: ""
+        property bool hasError: false
+    }
+
+    // Expose loading state for PageItem's BouncingProgressBar
+    property alias list_loading: feedState.isLoading
 
     header: PageHeaderItem {
         noBackAction: true
@@ -69,17 +83,6 @@ PageItem {
         ]
     }
 
-    property string next_max_id: ""
-    property bool more_available: true
-    property bool next_coming: true
-    property bool list_loading: false
-    property bool clear_models: true
-
-    property var seen_posts: []
-
-    property bool isEmpty: false
-    property bool isPullToRefresh: true
-
     ListModel {
         id: homeFeedModel
     }
@@ -90,7 +93,7 @@ PageItem {
 
     ListView {
         id: homeFeedList
-        visible: !isEmpty
+        visible: !feedState.isEmpty
         anchors {
             left: parent.left
             right: parent.right
@@ -107,22 +110,22 @@ PageItem {
             suggestionsModel: homeSuggestionsModel
         }
         onContentYChanged: {
-            // Start loading next page when user is 2 screens away from bottom
-            if (contentHeight - contentY - height < height * 2 && more_available && !next_coming && !list_loading && next_max_id) {
-                getHomeFeed(next_max_id)
+            // Start loading next page when user is N screens away from bottom
+            if (contentHeight - contentY - height < height * paginationThreshold && feedState.moreAvailable && !feedState.nextComing && !feedState.isLoading && feedState.nextMaxId) {
+                getHomeFeed(feedState.nextMaxId)
             }
         }
         PullToRefresh {
-            refreshing: list_loading && homeFeedModel.count === 0
+            refreshing: feedState.isLoading && homeFeedModel.count === 0
             onRefresh: {
-                isPullToRefresh = true
+                feedState.isPullToRefresh = true
                 getHomeFeed()
             }
         }
     }
 
     EmptyBox {
-        visible: isEmpty
+        visible: feedState.isEmpty && !feedState.hasError
         width: parent.width
         anchors {
             top: homepage.header.bottom
@@ -131,6 +134,35 @@ PageItem {
 
         title: i18n.tr("Welcome to Instagraph!")
         description: i18n.tr("Follow accounts to see photos and videos here in your feed.")
+    }
+
+    // Error state
+    Column {
+        visible: feedState.hasError
+        width: parent.width
+        anchors {
+            top: homepage.header.bottom
+            topMargin: units.gu(4)
+            horizontalCenter: parent.horizontalCenter
+        }
+        spacing: units.gu(2)
+
+        Label {
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: feedState.errorMessage
+            fontSize: "large"
+            color: styleApp.common.text2Color
+        }
+
+        Button {
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: i18n.tr("Retry")
+            color: LomiriColors.green
+            onClicked: {
+                feedState.hasError = false
+                getHomeFeed()
+            }
+        }
     }
 
     BottomMenu {
@@ -143,9 +175,9 @@ PageItem {
         source: "../js/Workers/HomeFeedWorker.js"
         onMessage: {
             if (messageObject.type === "seen_posts") {
-                seen_posts.push(messageObject.id)
+                feedState.seenPosts.push(messageObject.id)
             } else if (messageObject.type === "pause") {
-                more_available = false
+                feedState.moreAvailable = false
             }
         }
     }
@@ -159,49 +191,55 @@ PageItem {
     }
 
     function getHomeFeed(next_id) {
-        list_loading = true
+        feedState.isLoading = true
+        feedState.hasError = false
 
-        clear_models = false
+        feedState.clearModels = false
         if (!next_id) {
             homeFeedModel.clear()
-            next_max_id = ""
-            clear_models = true
+            feedState.nextMaxId = ""
+            feedState.clearModels = true
         }
 
-        instagram.getTimelineFeed(next_id, seen_posts.join(','), isPullToRefresh);
+        instagram.getTimelineFeed(next_id, feedState.seenPosts.join(','), feedState.isPullToRefresh);
     }
 
     function homeFeedCompleted(data) {
-        if (!data) return
-
-        isPullToRefresh = false
-        list_loading = false
-        
-        isEmpty = false
-        if (data.num_results === 0) {
-            isEmpty = true
+        if (!data) {
+            feedState.hasError = true
+            feedState.errorMessage = i18n.tr("Failed to load feed")
+            feedState.isLoading = false
             return
         }
 
-        if (next_max_id === data.next_max_id) return
-
-        next_max_id = ""
-        if (data.more_available === true) {
-            next_max_id = data.next_max_id
+        feedState.isPullToRefresh = false
+        feedState.isLoading = false
+        
+        feedState.isEmpty = false
+        if (data.num_results === 0) {
+            feedState.isEmpty = true
+            return
         }
 
-        more_available = data.more_available
-        next_coming = true
+        if (feedState.nextMaxId === data.next_max_id) return
+
+        feedState.nextMaxId = ""
+        if (data.more_available === true) {
+            feedState.nextMaxId = data.next_max_id
+        }
+
+        feedState.moreAvailable = data.more_available
+        feedState.nextComing = true
 
         worker.sendMessage(
             {
                 feed_items: data.feed_items,
                 feed_model: homeFeedModel,
                 suggestions_model: homeSuggestionsModel,
-                clear: clear_models
+                clear: feedState.clearModels
             }
         )
         
-        next_coming = false
+        feedState.nextComing = false
     }
 }

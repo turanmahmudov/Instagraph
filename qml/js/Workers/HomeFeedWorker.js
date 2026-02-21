@@ -39,7 +39,7 @@ WorkerScript.onMessage = (message) => {
             feed_item_obj.like_count = media.like_count.toLocaleString()
             feed_item_obj.taken_at = media.taken_at
             feed_item_obj.caption = media.caption
-            feed_item_obj.has_more_comments = media.has_more_comments
+            feed_item_obj.can_view_more_preview_comments = media.can_view_more_preview_comments
             feed_item_obj.comment_count = media.comment_count
             feed_item_obj.comments_disabled = media.comments_disabled
             feed_item_obj.location = media.location
