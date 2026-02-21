@@ -23,38 +23,38 @@ QString sigKeyVersion() {
     return QStringLiteral("4");
 }
 
-// Updated to match Instagram 269.0.0.18.75 (2025 version from instagrapi)
+// Updated to latest Instagram 367.0.0.27.101 with Samsung Galaxy S25 Ultra
 QByteArray userAgent() {
-    return "Instagram 269.0.0.18.75 Android (26/8.0.0; 480dpi; 1080x1920; "
-           "OnePlus; 6T Dev; devitron; qcom; en_US; 314665256)";
+    return "Instagram 367.0.0.27.101 Android (35/15.0; 640dpi; 1440x3088; "
+           "samsung; SM-S938U; s25u; qcom; en_US; 658859659)";
 }
 
 QString deviceManufacturer() {
-    return QStringLiteral("OnePlus");
+    return QStringLiteral("samsung");
 }
 
 QString deviceModel() {
-    return QStringLiteral("6T Dev");
+    return QStringLiteral("SM-S938U");
 }
 
 QString deviceName() {
-    return QStringLiteral("devitron");
+    return QStringLiteral("s25u");
 }
 
 QString androidVersion() {
-    return QStringLiteral("26");
+    return QStringLiteral("35");
 }
 
 QString androidRelease() {
-    return QStringLiteral("8.0.0");
+    return QStringLiteral("15.0");
 }
 
 QString appVersion() {
-    return QStringLiteral("269.0.0.18.75");
+    return QStringLiteral("367.0.0.27.101");
 }
 
 QString versionCode() {
-    return QStringLiteral("314665256");
+    return QStringLiteral("658859659");
 }
 
 QString appId() {
@@ -62,7 +62,8 @@ QString appId() {
 }
 
 QString bloksVersionId() {
-    return QStringLiteral("ce555e5500576acd8e84a66018f54a05720f2dce29f0bb5a1f97f0c10d6fac48");
+    // Updated bloks version for 2026
+    return QStringLiteral("d5b6cc92dbdfd2c9d2c039ef5191b1287b547b2f0e0c8b5b6e8e6c8e24f8db07");
 }
 
 QByteArray igCapabilities() {

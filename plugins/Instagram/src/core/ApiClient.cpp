@@ -43,14 +43,26 @@ QString ApiClient::execute(const Request& request, ResponseCallback callback) {
     // Build the network request
     QNetworkRequest netRequest = buildNetworkRequest(request);
     
+    // DEBUG: Log request details
+    qDebug() << "========== API REQUEST ==========";
+    qDebug() << "URL:" << netRequest.url().toString();
+    qDebug() << "Method:" << (request.method() == HttpMethod::GET ? "GET" : "POST");
+    qDebug() << "Headers:";
+    for (const QByteArray& header : netRequest.rawHeaderList()) {
+        qDebug() << "  " << header << ":" << netRequest.rawHeader(header);
+    }
+    
     QNetworkReply* reply = nullptr;
 
     if (request.method() == HttpMethod::GET) {
         reply = m_network->get(netRequest);
     } else {
         QByteArray body = buildBody(request);
+        qDebug() << "Body:" << body;
         reply = m_network->post(netRequest, body);
     }
+    qDebug() << "=================================";
+
 
     // Track reply -> request ID mapping
     m_replyToRequestId[reply] = requestId;
@@ -163,6 +175,17 @@ void ApiClient::onReplyFinished(QNetworkReply* reply) {
     // Always read the response body first - Instagram sends useful error info even on errors
     QByteArray data = reply->readAll();
     int httpCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+
+    // DEBUG: Log response details
+    qDebug() << "========== API RESPONSE ==========";
+    qDebug() << "URL:" << reply->url().toString();
+    qDebug() << "HTTP Status:" << httpCode;
+    qDebug() << "Response Headers:";
+    for (const QByteArray& header : reply->rawHeaderList()) {
+        qDebug() << "  " << header << ":" << reply->rawHeader(header);
+    }
+    qDebug() << "Response Body:" << data;
+    qDebug() << "==================================";
 
     // Handle network errors - but still include response body in debug
     if (reply->error() != QNetworkReply::NoError) {
