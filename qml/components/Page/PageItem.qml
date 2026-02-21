@@ -8,7 +8,7 @@ Page {
 
     BouncingProgressBar {
         anchors.top: pageitem.header.bottom
-        visible: instagram.busy || (typeof pageitem.list_loading != 'undefined' && pageitem.list_loading)
+        visible: (typeof pageitem.list_loading != 'undefined' && pageitem.list_loading)
         z: 100
     }
 }

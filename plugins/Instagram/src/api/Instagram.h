@@ -39,13 +39,9 @@ class Instagram : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
-
 public:
     explicit Instagram(QObject *parent = nullptr);
     ~Instagram();
-
-    bool busy() const;
 
 public Q_SLOTS:
     Q_INVOKABLE QString photos_path();
@@ -187,8 +183,6 @@ Q_SIGNALS:
     void doLogout(QVariant answer);
     void error(QString message);
 
-    void busyChanged();
-
     // Image upload signals
     void imageConfigureDataReady(QVariant answer);
     void imageUploadProgressDataReady(double answer);
@@ -308,7 +302,6 @@ private:
     void handleLoginResponse(const QVariant& response);
 
     // State
-    bool m_busy;
     bool m_isLoggedIn;
 
     // Components (using raw pointers for Qt parent-child memory management)

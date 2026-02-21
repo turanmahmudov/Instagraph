@@ -22,7 +22,6 @@
 
 Instagram::Instagram(QObject *parent)
     : QObject(parent)
-    , m_busy(false)
     , m_isLoggedIn(false)
     , m_session(nullptr)
     , m_cookies(nullptr)
@@ -289,10 +288,6 @@ void Instagram::setupEndpointConnections() {
             this, &Instagram::error);
 }
 
-bool Instagram::busy() const {
-    return m_busy;
-}
-
 QString Instagram::photos_path() {
     return m_session->photosPath().absolutePath();
 }
@@ -486,11 +481,7 @@ void Instagram::removeProfilePicture() {
 }
 
 void Instagram::getCurrentUser() {
-    m_busy = true;
-    emit busyChanged();
     m_account->getCurrentUser();
-    m_busy = false;
-    emit busyChanged();
 }
 
 void Instagram::editProfile(QString url, QString phone, QString first_name, 
@@ -512,19 +503,11 @@ void Instagram::createAccount(QString username, QString password, QString email)
 // ============================================================================
 
 void Instagram::getInbox(QString cursorId) {
-    m_busy = true;
-    emit busyChanged();
     m_direct->getInbox(cursorId);
-    m_busy = false;
-    emit busyChanged();
 }
 
 void Instagram::getDirectThread(QString threadId, QString cursorId) {
-    m_busy = true;
-    emit busyChanged();
     m_direct->getDirectThread(threadId, cursorId);
-    m_busy = false;
-    emit busyChanged();
 }
 
 void Instagram::getPendingInbox() {
@@ -571,11 +554,7 @@ void Instagram::getSuggestions() {
 }
 
 void Instagram::getPopularFeed(QString max_id) {
-    m_busy = true;
-    emit busyChanged();
     m_feed->getPopularFeed(max_id, m_session->rankToken());
-    m_busy = false;
-    emit busyChanged();
 }
 
 // ============================================================================
@@ -723,19 +702,11 @@ void Instagram::getRecentActivityInbox() {
 }
 
 void Instagram::getFollowing(QString userId, QString max_id, QString searchQuery) {
-    m_busy = true;
-    emit busyChanged();
     m_people->getFollowing(userId, max_id, searchQuery, m_session->rankToken());
-    m_busy = false;
-    emit busyChanged();
 }
 
 void Instagram::getFollowers(QString userId, QString max_id, QString searchQuery) {
-    m_busy = true;
-    emit busyChanged();
     m_people->getFollowers(userId, max_id, searchQuery, m_session->rankToken());
-    m_busy = false;
-    emit busyChanged();
 }
 
 void Instagram::getFriendship(QString userId) {
@@ -807,20 +778,12 @@ void Instagram::getReelsMediaFeed(QString id) {
 // ============================================================================
 
 void Instagram::getTimelineFeed(QString max_id, QString seen_posts, bool pullToRefresh) {
-    m_busy = true;
-    emit busyChanged();
     m_feed->getTimelineFeed(max_id, seen_posts, pullToRefresh,
                             m_session->uuid(), m_session->deviceId(), m_session->csrfToken());
-    m_busy = false;
-    emit busyChanged();
 }
 
 void Instagram::getUserFeed(QString userID, QString max_id, QString minTimestamp) {
-    m_busy = true;
-    emit busyChanged();
     m_feed->getUserFeed(userID, max_id, minTimestamp, m_session->rankToken());
-    m_busy = false;
-    emit busyChanged();
 }
 
 // ============================================================================
