@@ -1,21 +1,19 @@
+// Qt imports
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
+
+// Lomiri imports
 import Lomiri.Components 1.3
 
+// Component imports
 import "../components"
 import "../components/Constants"
 import "../components/Page"
-import "../components/Constants"
 import "../components/User"
-import "../components/Constants"
 import "../components/Feed"
-import "../components/Constants"
 import "../components/Media"
-import "../components/Constants"
 import "../components/Camera"
-import "../components/Constants"
 import "../components/Actions"
-import "../components/Constants"
 
 PageItem {
     id: exploreFeedPage
@@ -176,7 +174,6 @@ PageItem {
         id: exploreWorker
         source: "../js/Workers/ExploreWorker.js"
         onMessage: {
-            console.log(msg)
         }
     }
 
@@ -184,7 +181,6 @@ PageItem {
         id: searchWorker
         source: "../js/Workers/SearchWorker.js"
         onMessage: {
-            console.log(msg)
         }
     }
 

@@ -1,25 +1,32 @@
+// Qt imports
 import QtQuick 2.12
-import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
-import "../components"
-import "../components/Constants"
-import "../components/Page"
-import "../components/Constants"
-import "../components/User"
-import "../components/Constants"
-import "../components/Feed"
-import "../components/Constants"
-import "../components/Media"
-import "../components/Constants"
-import "../components/Camera"
-import "../components/Constants"
-import "../components/Actions"
-import "../components/Constants"
+// Lomiri imports
+import Lomiri.Components 1.3
 
+// JavaScript imports
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
+
+// Component imports
+import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/User"
+import "../components/Feed"
+import "../components/Media"
+import "../components/Camera"
+import "../components/Actions"
+
+// Qt imports
+
+// Lomiri imports
+
+// JavaScript imports
+
+// Component imports
 
 PageItem {
     id: activitypage
@@ -40,47 +47,6 @@ PageItem {
 
     property var followRequests
     property bool hasFollowRequests: false
-
-    function recentActivityDataFinished(data) {
-        // Follow Requests
-        if (typeof data.friend_request_stories != 'undefined' && data.friend_request_stories.length > 0) {
-            if (data.friend_request_stories[0].type == '6') {
-                hasFollowRequests = true
-                followRequests = {"request_count":data.friend_request_stories[0].args.request_count, "profile_pic":data.friend_request_stories[0].args.profile_image}
-            } else {
-                console.log(data.friend_request_stories)
-            }
-        } else {
-            followRequests = {}
-            hasFollowRequests = false
-        }
-
-        // Recent Activity
-        if (data.new_stories.length) {
-            new_notifs = true
-        }
-
-        var textColor = Helper.hexToRgb(styleApp.common.textColor)
-
-        worker.sendMessage({'obj': data.new_stories, 'model': recentActivityModel, 'clear_model': true, 'hasFollowRequests': hasFollowRequests, 'textColor': textColor, 'old': false})
-        worker.sendMessage({'obj': data.old_stories, 'model': recentActivityModel, 'clear_model': false, 'hasFollowRequests': false, 'textColor': textColor, 'old': true, 'partition': data.partition})
-
-        list_loading = false
-    }
-
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/ActivityWorker.js"
-        onMessage: {
-            console.log(msg)
-        }
-    }
-
-    function getRecentActivity()
-    {
-        recentActivityModel.clear()
-        instagram.getRecentActivityInbox();
-    }
 
     ListModel {
         id: recentActivityModel
@@ -323,6 +289,19 @@ PageItem {
         }
     }
 
+    BottomMenu {
+        id: bottomMenu
+        width: parent.width
+    }
+
+    WorkerScript {
+        id: worker
+        source: "../js/Workers/ActivityWorker.js"
+        onMessage: {
+
+        }
+    }
+
     Connections{
         target: instagram
         onRecentActivityInboxDataReady: {
@@ -331,8 +310,34 @@ PageItem {
         }
     }
 
-    BottomMenu {
-        id: bottomMenu
-        width: parent.width
+    function getRecentActivity()
+    {
+        recentActivityModel.clear()
+        instagram.getRecentActivityInbox();
+    }
+
+    function recentActivityDataFinished(data) {
+        // Follow Requests
+        if (typeof data.friend_request_stories != 'undefined' && data.friend_request_stories.length > 0) {
+            if (data.friend_request_stories[0].type == '6') {
+                hasFollowRequests = true
+                followRequests = {"request_count":data.friend_request_stories[0].args.request_count, "profile_pic":data.friend_request_stories[0].args.profile_image}
+            }
+        } else {
+            followRequests = {}
+            hasFollowRequests = false
+        }
+
+        // Recent Activity
+        if (data.new_stories.length) {
+            new_notifs = true
+        }
+
+        var textColor = Helper.hexToRgb(styleApp.common.textColor)
+
+        worker.sendMessage({'obj': data.new_stories, 'model': recentActivityModel, 'clear_model': true, 'hasFollowRequests': hasFollowRequests, 'textColor': textColor, 'old': false})
+        worker.sendMessage({'obj': data.old_stories, 'model': recentActivityModel, 'clear_model': false, 'hasFollowRequests': false, 'textColor': textColor, 'old': true, 'partition': data.partition})
+
+        list_loading = false
     }
 }

@@ -1,7 +1,16 @@
+// Qt imports
 import QtQuick 2.12
-import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
+// Lomiri imports
+import Lomiri.Components 1.3
+
+// JavaScript imports
+import "../js/Storage.js" as Storage
+import "../js/Helper.js" as Helper
+import "../js/Scripts.js" as Scripts
+
+// Component imports
 import "../components"
 import "../components/Page"
 import "../components/User"
@@ -9,10 +18,6 @@ import "../components/Feed"
 import "../components/Media"
 import "../components/Camera"
 import "../components/Actions"
-
-import "../js/Storage.js" as Storage
-import "../js/Helper.js" as Helper
-import "../js/Scripts.js" as Scripts
 
 PageItem {
     id: sharemediapage
@@ -44,7 +49,6 @@ PageItem {
         id: worker
         source: "../js/Workers/SimpleWorker.js"
         onMessage: {
-            console.log(msg)
         }
     }
 

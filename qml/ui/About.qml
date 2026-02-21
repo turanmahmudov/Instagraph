@@ -1,6 +1,10 @@
+// Qt imports
 import QtQuick 2.12
+
+// Lomiri imports
 import Lomiri.Components 1.3
 
+// Component imports
 import "../components"
 import "../components/Page"
 import "../components/User"

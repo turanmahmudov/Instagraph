@@ -1,9 +1,16 @@
+// Qt imports
 import QtQuick 2.12
-import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 import QtGraphicalEffects 1.0
+
+// Lomiri imports
+import Lomiri.Components 1.3
 import Lomiri.Components.Styles 1.3
 
+// JavaScript imports
+import "../js/Storage.js" as Storage
+
+// Component imports
 import "../components"
 import "../components/Page"
 import "../components/User"
@@ -11,8 +18,6 @@ import "../components/Feed"
 import "../components/Media"
 import "../components/Camera"
 import "../components/Actions"
-
-import "../js/Storage.js" as Storage
 
 PageItem {
     id: twoFactorLoginPage
@@ -106,7 +111,6 @@ PageItem {
 
         }
         onProfileConnectedFail:{
-            console.log('login failed')
         }
         onError:{
             console.log(message);

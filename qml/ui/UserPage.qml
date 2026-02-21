@@ -1,27 +1,34 @@
+// Qt imports
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
-import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
+
+// Lomiri imports
+import Lomiri.Components 1.3
 import Lomiri.Components.Popups 1.3
 
-import "../components"
-import "../components/Constants"
-import "../components/Page"
-import "../components/Constants"
-import "../components/User"
-import "../components/Constants"
-import "../components/Feed"
-import "../components/Constants"
-import "../components/Media"
-import "../components/Constants"
-import "../components/Camera"
-import "../components/Constants"
-import "../components/Actions"
-import "../components/Constants"
-
+// JavaScript imports
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
+
+// Component imports
+import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/User"
+import "../components/Feed"
+import "../components/Media"
+import "../components/Camera"
+import "../components/Actions"
+
+// Qt imports
+
+// Lomiri imports
+
+// JavaScript imports
+
+// Component imports
 
 PageItem {
     id: userpage
@@ -74,101 +81,6 @@ PageItem {
     property var allHighlight: []
 
     property var userData
-
-    function usernameDataFinished(data) {
-        userData = data.user
-
-        userPage.header.title = userData.username
-
-        activeUserProfilePic = userData.profile_pic_url
-        Storage.updateProfilePic(activeUsername, activeUserProfilePic)
-
-        getUserHighlightFeed()
-    }
-
-    function highlightFeedDataFinished(data) {
-        highlightsWorker.sendMessage({'feed': 'UserHighlights', 'obj': data.tray, 'model': userHighlightsModel, 'clear_model': true})
-
-        for (var i = 0; i < data.tray.length; i++) {
-            allHighlight.push(data.tray[i].id)
-        }
-    }
-
-    function userTimeLineDataFinished(data) {
-        if (data.num_results == 0) {
-            isEmpty = true;
-        } else {
-            isEmpty = false;
-        }
-
-        if (next_max_id == data.next_max_id) {
-            return false;
-        } else {
-            next_max_id = data.more_available == true ? data.next_max_id : "";
-            more_available = data.more_available;
-            next_coming = true;
-
-            worker.sendMessage({'feed': 'userPage', 'obj': data.items, 'model': userPhotosModel, 'clear_model': clear_models})
-
-            next_coming = false;
-        }
-
-        list_loading = false
-    }
-
-    function userTagDataFinished(data) {
-        if (next_max_id == data.next_max_id) {
-            return false;
-        } else {
-            next_max_id = data.next_max_id;
-            more_available = data.more_available;
-            next_coming = true;
-
-            worker.sendMessage({'feed': 'userPage', 'obj': data.items, 'model': userTagPhotosModel, 'clear_model': clear_models})
-
-            next_coming = false;
-        }
-
-        list_loading = false
-    }
-
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/TimelineWorker.js"
-        onMessage: {
-            console.log(msg)
-        }
-    }
-
-    WorkerScript {
-        id: highlightsWorker
-        source: "../js/Workers/SimpleWorker.js"
-        onMessage: {
-            console.log(msg)
-        }
-    }
-
-    function getUsernameInfo()
-    {
-        instagram.getInfoById(activeUsernameId);
-    }
-
-    function getUsernameFeed(next_id)
-    {
-        clear_models = false
-        if (!next_id) {
-            userPhotosModel.clear()
-            next_max_id = 0
-            clear_models = true
-        }
-        instagram.getUserFeed(activeUsernameId, next_id);
-    }
-
-    function getUserHighlightFeed()
-    {
-        userHighlightsModel.clear()
-        instagram.getUserHighlightFeed(activeUsernameId);
-    }
 
     ListModel {
         id: userPhotosModel
@@ -467,6 +379,27 @@ PageItem {
         }
     }
 
+    BottomMenu {
+        id: bottomMenu
+        width: parent.width
+    }
+
+    WorkerScript {
+        id: worker
+        source: "../js/Workers/TimelineWorker.js"
+        onMessage: {
+
+        }
+    }
+
+    WorkerScript {
+        id: highlightsWorker
+        source: "../js/Workers/SimpleWorker.js"
+        onMessage: {
+
+        }
+    }
+
     Connections{
         target: instagram
         onUserFeedDataReady: {
@@ -493,8 +426,82 @@ PageItem {
         }
     }
 
-    BottomMenu {
-        id: bottomMenu
-        width: parent.width
+    function getUsernameInfo()
+    {
+        instagram.getInfoById(activeUsernameId);
+    }
+
+    function getUsernameFeed(next_id)
+    {
+        clear_models = false
+        if (!next_id) {
+            userPhotosModel.clear()
+            next_max_id = 0
+            clear_models = true
+        }
+        instagram.getUserFeed(activeUsernameId, next_id);
+    }
+
+    function getUserHighlightFeed()
+    {
+        userHighlightsModel.clear()
+        instagram.getUserHighlightFeed(activeUsernameId);
+    }
+
+    function usernameDataFinished(data) {
+        userData = data.user
+
+        userPage.header.title = userData.username
+
+        activeUserProfilePic = userData.profile_pic_url
+        Storage.updateProfilePic(activeUsername, activeUserProfilePic)
+
+        getUserHighlightFeed()
+    }
+
+    function highlightFeedDataFinished(data) {
+        highlightsWorker.sendMessage({'feed': 'UserHighlights', 'obj': data.tray, 'model': userHighlightsModel, 'clear_model': true})
+
+        for (var i = 0; i < data.tray.length; i++) {
+            allHighlight.push(data.tray[i].id)
+        }
+    }
+
+    function userTimeLineDataFinished(data) {
+        if (data.num_results == 0) {
+            isEmpty = true;
+        } else {
+            isEmpty = false;
+        }
+
+        if (next_max_id == data.next_max_id) {
+            return false;
+        } else {
+            next_max_id = data.more_available == true ? data.next_max_id : "";
+            more_available = data.more_available;
+            next_coming = true;
+
+            worker.sendMessage({'feed': 'userPage', 'obj': data.items, 'model': userPhotosModel, 'clear_model': clear_models})
+
+            next_coming = false;
+        }
+
+        list_loading = false
+    }
+
+    function userTagDataFinished(data) {
+        if (next_max_id == data.next_max_id) {
+            return false;
+        } else {
+            next_max_id = data.next_max_id;
+            more_available = data.more_available;
+            next_coming = true;
+
+            worker.sendMessage({'feed': 'userPage', 'obj': data.items, 'model': userTagPhotosModel, 'clear_model': clear_models})
+
+            next_coming = false;
+        }
+
+        list_loading = false
     }
 }

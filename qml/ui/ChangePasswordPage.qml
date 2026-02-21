@@ -1,23 +1,22 @@
+// Qt imports
 import QtQuick 2.12
-import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
+// Lomiri imports
+import Lomiri.Components 1.3
+
+// JavaScript imports
+import "../js/Storage.js" as Storage
+
+// Component imports
 import "../components"
 import "../components/Constants"
 import "../components/Page"
-import "../components/Constants"
 import "../components/User"
-import "../components/Constants"
 import "../components/Feed"
-import "../components/Constants"
 import "../components/Media"
-import "../components/Constants"
 import "../components/Camera"
-import "../components/Constants"
 import "../components/Actions"
-import "../components/Constants"
-
-import "../js/Storage.js" as Storage
 
 PageItem {
     id: changepasswordpage

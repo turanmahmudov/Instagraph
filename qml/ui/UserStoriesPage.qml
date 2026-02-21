@@ -1,27 +1,26 @@
+// Qt imports
 import QtQuick 2.12
-import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 import QtGraphicalEffects 1.0
 import QtMultimedia 5.12
 
-import "../components"
-import "../components/Constants"
-import "../components/Page"
-import "../components/Constants"
-import "../components/User"
-import "../components/Constants"
-import "../components/Feed"
-import "../components/Constants"
-import "../components/Media"
-import "../components/Constants"
-import "../components/Camera"
-import "../components/Constants"
-import "../components/Actions"
-import "../components/Constants"
+// Lomiri imports
+import Lomiri.Components 1.3
 
+// JavaScript imports
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
+
+// Component imports
+import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/User"
+import "../components/Feed"
+import "../components/Media"
+import "../components/Camera"
+import "../components/Actions"
 
 PageItem {
     id: userstoriespage
@@ -166,7 +165,6 @@ PageItem {
         id: worker
         source: "../js/Workers/TimelineWorker.js"
         onMessage: {
-            console.log(msg)
         }
     }
 
@@ -374,7 +372,7 @@ PageItem {
         target: instagram
         onUserReelsMediaFeedDataReady: {
             // TODO fix video playing time and destroying
-            //console.log(answer)
+            //
             var data = JSON.parse(answer);
             userReelsMediaFeedDataFinished(data)
         }

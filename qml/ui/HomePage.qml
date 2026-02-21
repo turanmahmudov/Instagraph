@@ -1,29 +1,36 @@
+// Qt imports
 import QtQuick 2.12
-import Lomiri.Components 1.3
-import Lomiri.Components.Styles 1.3
 import QtQuick.LocalStorage 2.12
 import QtMultimedia 5.12
 import QtQml.Models 2.12
 import QtGraphicalEffects 1.0
 
-import "../components"
-import "../components/Constants"
-import "../components/Page"
-import "../components/Constants"
-import "../components/User"
-import "../components/Constants"
-import "../components/Feed"
-import "../components/Constants"
-import "../components/Media"
-import "../components/Constants"
-import "../components/Camera"
-import "../components/Constants"
-import "../components/Actions"
-import "../components/Constants"
+// Lomiri imports
+import Lomiri.Components 1.3
+import Lomiri.Components.Styles 1.3
 
+// JavaScript imports
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
+
+// Component imports
+import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/User"
+import "../components/Feed"
+import "../components/Media"
+import "../components/Camera"
+import "../components/Actions"
+
+// Qt imports
+
+// Lomiri imports
+
+// JavaScript imports
+
+// Component imports
 
 PageItem {
     id: homepage
@@ -79,57 +86,6 @@ PageItem {
 
     property bool isPullToRefresh: true
 
-    function mediaDataFinished(data) {
-        isPullToRefresh = false
-
-        if (data.num_results == 0) {
-            isEmpty = true;
-        } else {
-            isEmpty = false;
-        }
-
-        if (next_max_id == data.next_max_id) {
-            return false;
-        } else {
-            next_max_id = data.more_available == true ? data.next_max_id : "";
-            more_available = data.more_available;
-            next_coming = true;
-
-            worker.sendMessage({'obj': data.feed_items, 'model': homePhotosModel, 'suggestionsModel': homeSuggestionsModel, 'clear_model': clear_models})
-
-            for (var i = 0; i < data.feed_items.length; i++) {
-                var obj = data.feed_items[i];
-
-                if (typeof obj.media_or_ad !== 'undefined' && typeof obj.media_or_ad.media_type !== 'undefined') {
-                    seen_posts.push(obj.media_or_ad.id);
-                }
-            }
-
-            next_coming = false;
-        }
-
-        list_loading = false
-    }
-
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/HomeWorker.js"
-        onMessage: {
-
-        }
-    }
-
-    function getTimelineFeed(next_id)
-    {
-        clear_models = false
-        if (!next_id) {
-            homePhotosModel.clear()
-            next_max_id = ""
-            clear_models = true
-        }
-        instagram.getTimelineFeed(next_id, seen_posts.join(','), isPullToRefresh);
-    }
-
     ListModel {
         id: homePhotosModel
     }
@@ -182,6 +138,19 @@ PageItem {
         description: i18n.tr("Follow accounts to see photos and videos here in your feed.")
     }
 
+    BottomMenu {
+        id: bottomMenu
+        width: parent.width
+    }
+
+    WorkerScript {
+        id: worker
+        source: "../js/Workers/HomeWorker.js"
+        onMessage: {
+
+        }
+    }
+
     Connections{
         target: instagram
         onTimelineFeedDataReady: {
@@ -194,8 +163,46 @@ PageItem {
         }
     }
 
-    BottomMenu {
-        id: bottomMenu
-        width: parent.width
+    function getTimelineFeed(next_id)
+    {
+        clear_models = false
+        if (!next_id) {
+            homePhotosModel.clear()
+            next_max_id = ""
+            clear_models = true
+        }
+        instagram.getTimelineFeed(next_id, seen_posts.join(','), isPullToRefresh);
+    }
+
+    function mediaDataFinished(data) {
+        isPullToRefresh = false
+
+        if (data.num_results == 0) {
+            isEmpty = true;
+        } else {
+            isEmpty = false;
+        }
+
+        if (next_max_id == data.next_max_id) {
+            return false;
+        } else {
+            next_max_id = data.more_available == true ? data.next_max_id : "";
+            more_available = data.more_available;
+            next_coming = true;
+
+            worker.sendMessage({'obj': data.feed_items, 'model': homePhotosModel, 'suggestionsModel': homeSuggestionsModel, 'clear_model': clear_models})
+
+            for (var i = 0; i < data.feed_items.length; i++) {
+                var obj = data.feed_items[i];
+
+                if (typeof obj.media_or_ad !== 'undefined' && typeof obj.media_or_ad.media_type !== 'undefined') {
+                    seen_posts.push(obj.media_or_ad.id);
+                }
+            }
+
+            next_coming = false;
+        }
+
+        list_loading = false
     }
 }

@@ -1,25 +1,32 @@
+// Qt imports
 import QtQuick 2.12
-import Lomiri.Components 1.3
 import QtQuick.LocalStorage 2.12
 
-import "../components"
-import "../components/Constants"
-import "../components/Page"
-import "../components/Constants"
-import "../components/User"
-import "../components/Constants"
-import "../components/Feed"
-import "../components/Constants"
-import "../components/Media"
-import "../components/Constants"
-import "../components/Camera"
-import "../components/Constants"
-import "../components/Actions"
-import "../components/Constants"
+// Lomiri imports
+import Lomiri.Components 1.3
 
+// JavaScript imports
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
+
+// Component imports
+import "../components"
+import "../components/Constants"
+import "../components/Page"
+import "../components/User"
+import "../components/Feed"
+import "../components/Media"
+import "../components/Camera"
+import "../components/Actions"
+
+// Qt imports
+
+// Lomiri imports
+
+// JavaScript imports
+
+// Component imports
 
 PageItem {
     id: directinboxpage
@@ -45,47 +52,6 @@ PageItem {
                 }
             }
         ]
-    }
-
-    function inboxDataFinished(data) {
-        if (data.inbox.threads.length == 0) {
-            isEmpty = true;
-        } else {
-            isEmpty = false;
-        }
-
-        if (next_oldest_cursor_id == data.inbox.oldest_cursor) {
-            return false;
-        } else {
-            next_oldest_cursor_id = data.inbox.has_older == true ? data.inbox.oldest_cursor : "";
-            more_available = data.inbox.has_older;
-            next_coming = true;
-
-            for (var i = 0; i < data.inbox.threads.length; i++) {
-                data.inbox.threads[i].user_profile_pic_url = typeof data.inbox.threads[i].users[0] != 'undefined' ? data.inbox.threads[i].users[0].profile_pic_url : data.inbox.threads[i].inviter.profile_pic_url;
-                data.inbox.threads[i].item_timestamp = data.inbox.threads[i].items[0].timestamp;
-                v2InboxModel.append(data.inbox.threads[i]);
-            }
-
-            next_coming = false;
-        }
-
-        list_loading = false
-    }
-
-    Component.onCompleted: {
-        getInbox();
-    }
-
-    function getInbox(oldest_cursor_id)
-    {
-        clear_models = false
-        if (!oldest_cursor_id) {
-            v2InboxModel.clear()
-            next_oldest_cursor_id = 0
-            clear_models = true
-        }
-        instagram.getInbox(oldest_cursor_id);
     }
 
     ListModel {
@@ -230,5 +196,46 @@ PageItem {
             var data = JSON.parse(answer);
             inboxDataFinished(data);
         }
+    }
+
+    function getInbox(oldest_cursor_id)
+    {
+        clear_models = false
+        if (!oldest_cursor_id) {
+            v2InboxModel.clear()
+            next_oldest_cursor_id = 0
+            clear_models = true
+        }
+        instagram.getInbox(oldest_cursor_id);
+    }
+
+    function inboxDataFinished(data) {
+        if (data.inbox.threads.length == 0) {
+            isEmpty = true;
+        } else {
+            isEmpty = false;
+        }
+
+        if (next_oldest_cursor_id == data.inbox.oldest_cursor) {
+            return false;
+        } else {
+            next_oldest_cursor_id = data.inbox.has_older == true ? data.inbox.oldest_cursor : "";
+            more_available = data.inbox.has_older;
+            next_coming = true;
+
+            for (var i = 0; i < data.inbox.threads.length; i++) {
+                data.inbox.threads[i].user_profile_pic_url = typeof data.inbox.threads[i].users[0] != 'undefined' ? data.inbox.threads[i].users[0].profile_pic_url : data.inbox.threads[i].inviter.profile_pic_url;
+                data.inbox.threads[i].item_timestamp = data.inbox.threads[i].items[0].timestamp;
+                v2InboxModel.append(data.inbox.threads[i]);
+            }
+
+            next_coming = false;
+        }
+
+        list_loading = false
+    }
+
+    Component.onCompleted: {
+        getInbox();
     }
 }
