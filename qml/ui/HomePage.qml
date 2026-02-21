@@ -106,8 +106,11 @@ PageItem {
             currentModel: homeFeedModel
             suggestionsModel: homeSuggestionsModel
         }
-        onMovementEnded: {
-            if (atYEnd && more_available && !next_coming) getHomeFeed(next_max_id)
+        onContentYChanged: {
+            // Start loading next page when user is 2 screens away from bottom
+            if (contentHeight - contentY - height < height * 2 && more_available && !next_coming && !list_loading && next_max_id) {
+                getHomeFeed(next_max_id)
+            }
         }
         PullToRefresh {
             refreshing: list_loading && homeFeedModel.count === 0
