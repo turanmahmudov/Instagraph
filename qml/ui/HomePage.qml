@@ -98,6 +98,8 @@ PageItem {
             top: homepage.header.bottom
         }
         model: homeFeedModel
+        cacheBuffer: height * 2
+        clip: true
         delegate: ListFeedDelegate {
             id: homeFeedDelegate
             currentPage: homepage

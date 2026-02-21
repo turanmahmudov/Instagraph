@@ -81,6 +81,8 @@ PageItem {
             id: homePhotosDelegate
             currentPage: singlephotopage
             currentModel: singlePhotoModel
+            showCarousel: true
+            enableVideoPlayback: true
         }
         PullToRefresh {
             id: pullToRefresh

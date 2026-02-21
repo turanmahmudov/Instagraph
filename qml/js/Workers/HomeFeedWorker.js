@@ -18,18 +18,15 @@ WorkerScript.onMessage = (message) => {
         if (message.clear && i === 0) {
             feed_item_obj.list_type = 'stories_feed'
             feed_model.append(feed_item_obj)
-            feed_model.sync()
         }
 
         if ("suggested_users" in feed_item && "suggestions" in feed_item.suggested_users) {
             feed_item.suggested_users.suggestions.forEach((user) => {
                 suggestions_model.append(user)
-                suggestions_model.sync()
             })
 
             feed_item_obj.list_type = 'suggested_users'
             feed_model.append(feed_item_obj)
-            feed_model.sync()
         } else if ("media_or_ad" in feed_item && !("injected" in feed_item.media_or_ad)) {
             const media = feed_item.media_or_ad
 
@@ -69,7 +66,6 @@ WorkerScript.onMessage = (message) => {
 
             feed_item_obj.list_type = 'media_entry'
             feed_model.append(feed_item_obj)
-            feed_model.sync()
 
             // Seen posts
             WorkerScript.sendMessage({ id: media.id, type: "seen_posts" })
@@ -78,4 +74,10 @@ WorkerScript.onMessage = (message) => {
             WorkerScript.sendMessage({ type: "pause" })
         }
     })
+    
+    // Sync once at the end after all items are appended
+    if (suggestions_model) {
+        suggestions_model.sync()
+    }
+    feed_model.sync()
 }

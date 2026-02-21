@@ -18,6 +18,8 @@ ListItem {
     property var currentPage: pageLayout.primaryPage
     property var currentModel
     property var suggestionsModel
+    property bool showCarousel: false
+    property bool enableVideoPlayback: false
 
     height: calculateHeight(list_type)
 
@@ -45,10 +47,12 @@ ListItem {
         }
         visible: list_type === 'media_entry'
         active: visible
-        asynchronous: false
+        asynchronous: true
 
         sourceComponent: MediaEntry {
             width: parent.width
+            showCarousel: listFeedDelegate.showCarousel
+            enableVideoPlayback: listFeedDelegate.enableVideoPlayback
         }
     }
 

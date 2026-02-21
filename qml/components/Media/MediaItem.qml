@@ -6,7 +6,6 @@ import QtQuick.LocalStorage 2.12
 import QtMultimedia 5.12
 import Lomiri.Components.Popups 1.3
 import Lomiri.Content 1.3
-import QtGraphicalEffects 1.0
 
 import "../../js/Storage.js" as Storage
 import "../../js/Helper.js" as Helper
@@ -19,14 +18,15 @@ Item {
         animatingLikeIcon.opacityAnimationFunction()
     }
 
-    property var bestImage: typeof carousel_media_obj.media !== 'undefined' && carousel_media_obj.media.length > 0 ?
+    property bool isCarousel: typeof carousel_media_obj.media !== 'undefined' && carousel_media_obj.media.length > 0
+    property var bestImage: isCarousel ?
                                 Helper.getBestImage(carousel_media_obj.media[0].image_versions2.candidates, parent.width) :
                                 Helper.getBestImage(images_obj.candidates, parent.width)
 
     FeedImage {
         id: feed_image
         width: parent.width
-        height:parent.width/bestImage.width*bestImage.height
+        height: parent.width / bestImage.width * bestImage.height
         source: bestImage.url
     }
 
@@ -81,51 +81,61 @@ Item {
         }
     }
 
-    LineIcon {
-        id: is_video_icon
+    Item {
         anchors {
             right: parent.right
             rightMargin: units.gu(2)
             top: parent.top
             topMargin: units.gu(2)
         }
-        visible: false
-        name: "\uebe2"
-        color: "#ffffff"
-        iconSize: units.gu(2.4)
-    }
-    DropShadow {
-        anchors.fill: is_video_icon
-        source: is_video_icon
-        horizontalOffset: 2
-        verticalOffset: 2
-        radius: 8.0
-        samples: 15
-        color: "#80000000"
+        width: units.gu(2.4)
+        height: units.gu(2.4)
         visible: media_type === 2
+        
+        // Simple shadow using layered icons
+        LineIcon {
+            anchors.centerIn: parent
+            anchors.horizontalCenterOffset: 1
+            anchors.verticalCenterOffset: 1
+            name: "\uebe2"
+            color: "#80000000"
+            iconSize: units.gu(2.4)
+        }
+        LineIcon {
+            id: is_video_icon
+            anchors.centerIn: parent
+            name: "\uebe2"
+            color: "#ffffff"
+            iconSize: units.gu(2.4)
+        }
     }
 
-    LineIcon {
-        id: is_carousel_icon
+    Item {
         anchors {
             right: parent.right
             rightMargin: units.gu(2)
             top: parent.top
             topMargin: units.gu(2)
         }
-        visible: false
-        name: "\ueac8"
-        color: "#ffffff"
-        iconSize: units.gu(2.4)
-    }
-    DropShadow {
-        anchors.fill: is_carousel_icon
-        source: is_carousel_icon
-        horizontalOffset: 2
-        verticalOffset: 2
-        radius: 8.0
-        samples: 15
-        color: "#80000000"
+        width: units.gu(2.4)
+        height: units.gu(2.4)
         visible: media_type === 8
+        
+        // Simple shadow using layered icons
+        LineIcon {
+            anchors.centerIn: parent
+            anchors.horizontalCenterOffset: 1
+            anchors.verticalCenterOffset: 1
+            name: "\ueac8"
+            color: "#80000000"
+            iconSize: units.gu(2.4)
+        }
+        LineIcon {
+            id: is_carousel_icon
+            anchors.centerIn: parent
+            name: "\ueac8"
+            color: "#ffffff"
+            iconSize: units.gu(2.4)
+        }
     }
 }

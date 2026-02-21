@@ -1,6 +1,5 @@
 import QtQuick 2.12
 import Lomiri.Components 1.3
-import QtGraphicalEffects 1.0
 
 Item {
     id: item
@@ -23,24 +22,24 @@ Item {
         id: image
         anchors.fill: parent
         smooth: false
-        visible: false
         mipmap: false
         fillMode: Image.PreserveAspectCrop
         sourceSize: Qt.size(width,height)
-    }
-
-    Image {
-        id: mask
-        source: Qt.resolvedUrl("../images/circle.png")
-        anchors.fill: image
-        smooth: true
-        visible: false
-        mipmap: true
-    }
-
-    OpacityMask {
-        anchors.fill: image
-        source: image
-        maskSource: mask
+        layer.enabled: true
+        layer.effect: ShaderEffect {
+            property real radius: image.width / 2
+            fragmentShader: "
+                varying highp vec2 qt_TexCoord0;
+                uniform sampler2D source;
+                uniform lowp float qt_Opacity;
+                uniform lowp float radius;
+                void main() {
+                    highp vec2 center = vec2(0.5, 0.5);
+                    highp float dist = distance(qt_TexCoord0, center);
+                    lowp float alpha = 1.0 - smoothstep(0.5 - 0.01, 0.5, dist);
+                    gl_FragColor = texture2D(source, qt_TexCoord0) * qt_Opacity * alpha;
+                }
+            "
+        }
     }
 }

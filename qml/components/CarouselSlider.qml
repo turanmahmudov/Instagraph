@@ -10,18 +10,7 @@ ListView {
     id: listViewCarousel
 
     property var bestImage
-
     property var dataArray: []
-
-    ListModel {
-        id: listModel
-
-        Component.onCompleted: {
-            for(var i = 0; i < dataArray.length; i++) {
-                listModel.append(dataArray[i]);
-            }
-        }
-    }
 
     snapMode: ListView.SnapOneItem
     orientation: Qt.Horizontal
@@ -29,56 +18,53 @@ ListView {
     highlightRangeMode: ListView.StrictlyEnforceRange
     highlightFollowsCurrentItem: true
     clip: true
-    model: listModel
+    model: dataArray
+    cacheBuffer: width * 2
 
-    delegate: MediaItem {
+    delegate: Item {
         width: listViewCarousel.width
         height: listViewCarousel.height
-
         clip: true
 
-        bestImage: Helper.getBestImage(image_versions2.candidates, parent.width)
+        property var carousel_media_obj: { "media": [] }
+        property var images_obj: modelData.image_versions2
+        property int media_type: modelData.media_type
 
         MediaItem {
-            MediaPlayer {
-                id: player
-                source: video_url
-                autoLoad: false
-                autoPlay: false
-                loops: MediaPlayer.Infinite
-            }
-            VideoOutput {
-                id: videoOutput
-                source: player
-                fillMode: VideoOutput.PreserveAspectCrop
-                width: 800
-                height: 600
-                anchors.fill: parent
-                visible: media_type == 2
-            }
+            id: mediaItem
+            anchors.fill: parent
+            bestImage: Helper.getBestImage(images_obj.candidates, width)
+        }
 
-            MouseArea {
-                anchors {
-                    fill: parent
-                }
-                onClicked: {
-                    if (media_type === 2) {
-                        console.log('PLAY VIDEO')
-                        console.log(video_url)
-                        if (player.playbackState == MediaPlayer.PlayingState) {
-                            player.stop()
-                        } else {
-                            player.play()
-                        }
+        MediaPlayer {
+            id: player
+            source: modelData.video_url || ""
+            autoLoad: false
+            autoPlay: false
+            loops: MediaPlayer.Infinite
+        }
+        
+        VideoOutput {
+            id: videoOutput
+            anchors.fill: parent
+            source: player
+            fillMode: VideoOutput.PreserveAspectCrop
+            visible: media_type === 2
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                if (media_type === 2) {
+                    if (player.playbackState === MediaPlayer.PlayingState) {
+                        player.stop()
+                    } else {
+                        player.play()
                     }
                 }
-                onDoubleClicked: {
-                    animatingLikeIcon.sizeAnimation()
-                    animatingLikeIcon.opacityAnimation()
-
-                    last_like_id = id;
-                    instagram.like(id);
-                }
+            }
+            onDoubleClicked: {
+                mediaItem.startLikeAnimation()
             }
         }
     }

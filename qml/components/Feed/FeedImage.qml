@@ -6,6 +6,6 @@ Image {
     fillMode: Image.PreserveAspectCrop
     sourceSize: Qt.size(width,height)
     asynchronous: true
-    cache: false // maybe false
+    cache: true
     smooth: false
 }

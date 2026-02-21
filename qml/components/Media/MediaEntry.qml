@@ -22,6 +22,8 @@ Column {
 
     property var lastActionId: null
     property var lastDeletedId: null
+    property bool showCarousel: false
+    property bool enableVideoPlayback: false
 
     Item {
         width: parent.width
@@ -92,7 +94,7 @@ Column {
     Loader {
         asynchronous: true
 
-        property bool isCarousel: typeof carousel_media_obj.media !== 'undefined' && carousel_media_obj.media.length > 0
+        property bool isCarousel: showCarousel && typeof carousel_media_obj.media !== 'undefined' && carousel_media_obj.media.length > 0
         property var bestImage: calculateBestImage(isCarousel, media_type, carousel_media_obj, images_obj)
 
         width: parent.width
@@ -102,7 +104,7 @@ Column {
             if (isCarousel) {
                 return (parent.width/bestImage.width*bestImage.height) + units.gu(2)
             }
-            if (media_type === 1 || media_type === 2) {
+            if (media_type === 1 || media_type === 2 || media_type === 8) {
                 return parent.width/bestImage.width*bestImage.height
             }
             return 0
@@ -112,7 +114,11 @@ Column {
             if (isCarousel) {
                 return Helper.getBestImage(carousel_media_obj.media[0].image_versions2.candidates, parent.width)
             }
-            if (media_type === 1 || media_type === 2) {
+            if (media_type === 1 || media_type === 2 || media_type === 8) {
+                // For carousel (media_type 8), show first image when not in carousel mode
+                if (media_type === 8 && typeof carousel_media_obj.media !== 'undefined' && carousel_media_obj.media.length > 0) {
+                    return Helper.getBestImage(carousel_media_obj.media[0].image_versions2.candidates, parent.width)
+                }
                 return Helper.getBestImage(images_obj.candidates, parent.width)
             }
             return {"width":0, "height":0, "url":""}
