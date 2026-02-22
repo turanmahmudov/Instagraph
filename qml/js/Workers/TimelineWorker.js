@@ -53,9 +53,8 @@ WorkerScript.onMessage = function(msg) {
 
             list_obj.list_type = 'media_entry';
 
-            // Append to model & sync
+            // Append to model
             model.append(list_obj);
-            model.sync();
         } else {
             var media = obj[i]
 
@@ -83,9 +82,10 @@ WorkerScript.onMessage = function(msg) {
 
             list_obj.list_type = 'media_entry';
 
-            // Append to model & sync
+            // Append to model
             model.append(list_obj);
-            model.sync();
         }
     }
+
+    model.sync();
 }

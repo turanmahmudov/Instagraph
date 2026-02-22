@@ -22,7 +22,7 @@ WorkerScript.onMessage = function(msg) {
         }
 
         model.append(obj[i]);
-
-        model.sync();
     }
+
+    model.sync();
 }

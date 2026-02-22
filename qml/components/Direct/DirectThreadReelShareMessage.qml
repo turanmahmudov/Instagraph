@@ -31,7 +31,7 @@ Column {
 
             Label {
                 text: reel_share.type === 'mention'
-                    ? (isOutgoing ? i18n.tr("You mentioned their in a story") : i18n.tr("Mentied you in a story"))
+                    ? (isOutgoing ? i18n.tr("You mentioned them in a story") : i18n.tr("Mentioned you in a story"))
                     : reel_share.type === ''
                         ? (isOutgoing ? i18n.tr("You replied to their story") : i18n.tr("Replied to your story"))
                         : i18n.tr("UNKNOWN")

@@ -106,6 +106,7 @@
         <file>qml/components/SuggestionsSlider.qml</file>
         <file>qml/pages/NewDirectMessagePage.qml</file>
         <file>qml/components/StoriesTray.qml</file>
+        <file>qml/components/Stories/StoryViewerPage.qml</file>
         <file>qml/pages/UserStoriesPage.qml</file>
         <file>qml/components/CircleImage.qml</file>
         <file>qml/images/circle.png</file>

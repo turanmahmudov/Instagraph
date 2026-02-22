@@ -3,6 +3,8 @@ import ".."
 import Lomiri.Components 1.3
 import QtGraphicalEffects 1.0
 
+import "../Constants"
+
 ListView {
     id: userHighlightsTray
     clip: true
@@ -35,7 +37,7 @@ ListView {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../../pages/HighlightStoriesPage.qml"), {highlightId: id, allHighlights: allHighlights});
+                        pageLayout.pushToCurrent(currentDelegatePage, PagesConstants.highlight_stories, {highlightId: id, allHighlights: allHighlights});
                     }
                 }
             }
@@ -51,7 +53,7 @@ ListView {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        pageLayout.pushToCurrent(currentDelegatePage, Qt.resolvedUrl("../../pages/HighlightStoriesPage.qml"), {highlightId: id, allHighlights: allHighlights});
+                        pageLayout.pushToCurrent(currentDelegatePage, PagesConstants.highlight_stories, {highlightId: id, allHighlights: allHighlights});
                     }
                 }
             }
