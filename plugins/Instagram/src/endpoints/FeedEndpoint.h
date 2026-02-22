@@ -39,12 +39,16 @@ public:
     // Suggestions
     void getSuggestions(const QString& uuid = "", const QString& csrfToken = "");
 
+    // Media seen
+    void mediaSeen(const QStringList& mediaIds, const QStringList& skippedMediaIds = QStringList());
+
 Q_SIGNALS:
     void timelineFeedReady(const QVariant& answer);
     void userFeedReady(const QVariant& answer);
     void popularFeedReady(const QVariant& answer);
     void exploreFeedReady(const QVariant& answer);
     void suggestionsReady(const QVariant& answer);
+    void mediaSeenReady(const QVariant& answer);
     void error(const QString& message);
 
 private:

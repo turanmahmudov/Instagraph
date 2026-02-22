@@ -18,6 +18,12 @@ BaseFeedViewModel {
     property ListModel suggestionsModel: ListModel {}
     property bool isPullToRefresh: true
     property bool clearModels: true
+    
+    // End of feed state
+    property bool isCaughtUp: false
+    property string caughtUpTitle: ""
+    property string caughtUpSubtitle: ""
+    property bool inSuggestedPostsSection: false
 
     /**
      * Load timeline feed
@@ -31,6 +37,8 @@ BaseFeedViewModel {
             feedModel.clear()
             nextMaxId = ""
             clearModels = true
+            isCaughtUp = false
+            inSuggestedPostsSection = false
         }
 
         instagram.getTimelineFeed(nextMaxId, seenPosts.join(','), isPullToRefresh)
@@ -40,6 +48,11 @@ BaseFeedViewModel {
      * Load more items (pagination)
      */
     function loadMore() {
+        // Block loading if we've reached suggestions or caught up
+        if (inSuggestedPostsSection || isCaughtUp) {
+            return
+        }
+        
         if (nextMaxId && moreAvailable && !nextComing && !isLoading) {
             loadFeed(false)
         }
@@ -52,8 +65,22 @@ BaseFeedViewModel {
         onMessage: {
             if (messageObject.type === "seen_posts") {
                 seenPosts.push(messageObject.id)
-            } else if (messageObject.type === "pause") {
-                moreAvailable = false
+                // Send media seen to Instagram API immediately
+                instagram.mediaSeen([messageObject.id], [])
+            } else if (messageObject.type === "end_of_feed") {
+                // Handle end of feed demarcator - block further loading
+                if (messageObject.style === "top_of_feed") {
+                    // Suggestions section - stop auto-loading
+                    inSuggestedPostsSection = true
+                } else if (messageObject.style === "hidden") {
+                    // Caught up - stop auto-loading
+                    isCaughtUp = true
+                    caughtUpTitle = messageObject.title
+                    caughtUpSubtitle = messageObject.subtitle
+                }
+            } else if (messageObject.type === "done") {
+                // Worker finished processing - now it's safe to allow pagination
+                nextComing = false
             }
         }
     }
@@ -98,13 +125,12 @@ BaseFeedViewModel {
         nextComing = true
 
         // Send data to worker for processing
+        // Worker will set nextComing = false when done
         worker.sendMessage({
             feed_items: data.feed_items,
             feed_model: feedModel,
             suggestions_model: suggestionsModel,
             clear: clearModels
         })
-
-        nextComing = false
     }
 }

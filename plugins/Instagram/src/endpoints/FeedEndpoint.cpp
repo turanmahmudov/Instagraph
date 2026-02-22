@@ -3,6 +3,10 @@
 #include "../core/Request.h"
 #include "../core/Response.h"
 #include <QUuid>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QDateTime>
+#include <QRandomGenerator>
 
 namespace IG {
 
@@ -155,6 +159,54 @@ void FeedEndpoint::getSuggestions(const QString& uuid, const QString& csrfToken)
     m_client->execute(request, [this](const Response& response) {
         if (response.ok()) {
             emit suggestionsReady(response.toVariant());
+        } else {
+            emit error(response.errorMessage());
+        }
+    });
+}
+
+void FeedEndpoint::mediaSeen(const QStringList& mediaIds, const QStringList& skippedMediaIds) {
+    // Helper function to generate reels format: {media_pk}_{user_id}_{user_id}: ["{begin}_{end}"]
+    auto generateReelsData = [](const QStringList& ids) -> QJsonObject {
+        QJsonObject reels;
+        for (const QString& mediaId : ids) {
+            // mediaId format: "media_pk_user_id" or just "media_pk"
+            QStringList parts = mediaId.split("_");
+            if (parts.isEmpty()) continue;
+            
+            QString mediaPk = parts[0];
+            QString userId = parts.size() > 1 ? parts[1] : "";
+            
+            // Generate random viewing time between 100-3000 seconds ago
+            qint64 currentTime = QDateTime::currentSecsSinceEpoch();
+            int randomOffset = QRandomGenerator::global()->bounded(100, 3001);
+            qint64 beginTime = currentTime - randomOffset;
+            qint64 endTime = currentTime;
+            
+            // Format: "media_pk_user_id_user_id"
+            QString key = QString("%1_%2_%2").arg(mediaPk, userId);
+            
+            // Value: ["{begin}_{end}"]
+            QJsonArray timeRange;
+            timeRange.append(QString("%1_%2").arg(beginTime).arg(endTime));
+            
+            reels[key] = timeRange;
+        }
+        return reels;
+    };
+
+    auto builder = RequestBuilder::post("media/seen/?reel=1&live_vod=0")
+        .param("container_module", "feed_timeline")
+        .param("live_vods_skipped", QJsonObject())
+        .param("nuxes_skipped", QJsonObject())
+        .param("nuxes", QJsonObject())
+        .param("reels", generateReelsData(mediaIds))
+        .param("live_vods", QJsonObject())
+        .param("reel_media_skipped", generateReelsData(skippedMediaIds));
+
+    m_client->execute(builder.build(), [this](const Response& response) {
+        if (response.ok()) {
+            emit mediaSeenReady(response.toVariant());
         } else {
             emit error(response.errorMessage());
         }

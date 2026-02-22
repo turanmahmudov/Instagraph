@@ -164,6 +164,7 @@ public Q_SLOTS:
     // Timeline
     Q_INVOKABLE void getTimelineFeed(QString max_id = "", QString seen_posts = "", bool pullToRefresh = false);
     Q_INVOKABLE void getUserFeed(QString userID, QString max_id = "", QString minTimestamp = "");
+    Q_INVOKABLE void mediaSeen(QStringList mediaIds, QStringList skippedMediaIds = QStringList());
 
     // Usertag
     Q_INVOKABLE void getUserTags(QString userId, QString max_id = "", QString minTimestamp = "");
@@ -289,6 +290,7 @@ Q_SIGNALS:
     // Timeline signals
     void userFeedDataReady(QVariant answer);
     void timelineFeedDataReady(QVariant answer);
+    void mediaSeenDataReady(QVariant answer);
 
     // Usertags signals
     void userTagsDataReady(QVariant answer);

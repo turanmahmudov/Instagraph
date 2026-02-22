@@ -105,6 +105,16 @@ PageItem {
                 feedViewModel.loadFeed(true)
             }
         }
+        
+        // "All caught up" footer
+        footer: EmptyBox {
+            visible: feedViewModel.isCaughtUp
+            width: homeFeedList.width
+            iconName: IconsConstants.check
+            iconColor: LomiriColors.green
+            title: feedViewModel.caughtUpTitle
+            description: feedViewModel.caughtUpSubtitle
+        }
     }
 
     EmptyBox {

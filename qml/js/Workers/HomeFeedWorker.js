@@ -42,7 +42,7 @@ WorkerScript.onMessage = (message) => {
             feed_item_obj.can_view_more_preview_comments = media.can_view_more_preview_comments
             feed_item_obj.comment_count = media.comment_count
             feed_item_obj.comments_disabled = media.comments_disabled
-            feed_item_obj.location = media.location
+            feed_item_obj.location = media.location || {name: ""}
             feed_item_obj.user = media.user
 
             // Preview Comments
@@ -69,9 +69,78 @@ WorkerScript.onMessage = (message) => {
 
             // Seen posts
             WorkerScript.sendMessage({ id: media.id, type: "seen_posts" })
-        } else if ("end_of_feed_demarcator" in feed_item && feed_item.end_of_feed_demarcator.pause) {
-            // Pause
-            WorkerScript.sendMessage({ type: "pause" })
+        } else if ("end_of_feed_demarcator" in feed_item) {
+            const demarcator = feed_item.end_of_feed_demarcator
+            
+            // Check if there are suggested posts in group_set
+            if (demarcator.group_set && demarcator.group_set.groups && demarcator.group_set.groups.length > 0) {
+                const group = demarcator.group_set.groups[0]
+                if (group.feed_items && group.feed_items.length > 0) {
+                    // Add a separator for suggested posts
+                    feed_model.append({
+                        list_type: 'suggested_posts_header',
+                        title: demarcator.title || "Suggested for you",
+                        subtitle: demarcator.subtitle || ""
+                    })
+                    
+                    // Process suggested posts (explore_story items)
+                    group.feed_items.forEach((suggested_item) => {
+                        if ("explore_story" in suggested_item && "media_or_ad" in suggested_item.explore_story) {
+                            const media = suggested_item.explore_story.media_or_ad
+                            
+                            let suggested_feed_item = {}
+                            suggested_feed_item.id = media.id
+                            suggested_feed_item.photo_id = media.id
+                            suggested_feed_item.code = media.code
+                            suggested_feed_item.photo_of_you = media.photo_of_you || false
+                            suggested_feed_item.media_type = media.media_type
+                            suggested_feed_item.has_liked = media.has_liked || false
+                            suggested_feed_item.like_count = media.like_count ? media.like_count.toLocaleString() : "0"
+                            suggested_feed_item.taken_at = media.taken_at
+                            suggested_feed_item.caption = media.caption || {text: "", user: {username: ""}}
+                            suggested_feed_item.can_view_more_preview_comments = media.can_view_more_preview_comments || false
+                            suggested_feed_item.comment_count = media.comment_count || 0
+                            suggested_feed_item.comments_disabled = media.comments_disabled || false
+                            suggested_feed_item.location = media.location || {name: ""}
+                            suggested_feed_item.user = media.user
+                            
+                            // Preview Comments
+                            suggested_feed_item.preview_comments = {
+                                "comments": media.preview_comments ? media.preview_comments : []
+                            }
+                            suggested_feed_item.preview_comments.comments.forEach((comment) => {
+                                comment.ctext = comment.text
+                            })
+                            
+                            // Carousel Media
+                            suggested_feed_item.carousel_media_obj = {
+                                "media": "carousel_media" in media ? media.carousel_media : []
+                            }
+                            
+                            // Images
+                            suggested_feed_item.images_obj = "image_versions2" in media ? media.image_versions2 : {}
+                            
+                            // Videos
+                            suggested_feed_item.video_url = "video_versions" in media ? media.video_versions[0].url : ''
+                            
+                            suggested_feed_item.list_type = 'media_entry'
+                            feed_model.append(suggested_feed_item)
+                            
+                            // Seen posts
+                            WorkerScript.sendMessage({ id: media.id, type: "seen_posts" })
+                        }
+                    })
+                }
+            }
+            
+            // Send end of feed info with title and subtitle
+            WorkerScript.sendMessage({ 
+                type: "end_of_feed",
+                title: demarcator.title || "",
+                subtitle: demarcator.subtitle || "",
+                pause: demarcator.pause || false,
+                style: demarcator.style || ""
+            })
         }
     })
     
@@ -80,4 +149,7 @@ WorkerScript.onMessage = (message) => {
         suggestions_model.sync()
     }
     feed_model.sync()
+    
+    // Signal that worker finished processing
+    WorkerScript.sendMessage({ type: "done" })
 }

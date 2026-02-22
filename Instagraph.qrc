@@ -117,6 +117,7 @@
         <file>qml/components/Feed/ListFeedDelegate.qml</file>
         <file>qml/components/Feed/GridFeedDelegate.qml</file>
         <file>qml/components/Feed/FeedImage.qml</file>
+        <file>qml/components/Feed/SuggestedPostsHeader.qml</file>
         <file>qml/viewmodels/BaseFeedViewModel.qml</file>
         <file>qml/viewmodels/TimelineFeedViewModel.qml</file>
         <file>qml/viewmodels/TagFeedViewModel.qml</file>

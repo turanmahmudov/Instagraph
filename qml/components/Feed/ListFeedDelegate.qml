@@ -33,6 +33,9 @@ ListItem {
         if (list_type === 'stories_feed') {
             return storiesFeedTrayLoader.height
         }
+        if (list_type === 'suggested_posts_header') {
+            return suggestedPostsHeaderLoader.height
+        }
         return 0
     }
 
@@ -83,6 +86,27 @@ ListItem {
         sourceComponent: StoriesTray {
             id: storiesFeedTray
             anchors.fill: parent
+        }
+    }
+
+    Loader {
+        id: suggestedPostsHeaderLoader
+        width: parent.width
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
+        visible: list_type === 'suggested_posts_header'
+        active: visible
+        asynchronous: true
+        
+        property string headerTitle: title || ""
+        property string headerSubtitle: subtitle || ""
+
+        sourceComponent: SuggestedPostsHeader {
+            width: parent.width
+            title: suggestedPostsHeaderLoader.headerTitle
+            subtitle: suggestedPostsHeaderLoader.headerSubtitle
         }
     }
 }

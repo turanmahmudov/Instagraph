@@ -176,6 +176,8 @@ void Instagram::setupEndpointConnections() {
             this, &Instagram::exploreFeedDataReady);
     connect(m_feed, &IG::FeedEndpoint::suggestionsReady, 
             this, &Instagram::suggestionsFeedDataReady);
+    connect(m_feed, &IG::FeedEndpoint::mediaSeenReady, 
+            this, &Instagram::mediaSeenDataReady);
     connect(m_feed, &IG::FeedEndpoint::error, 
             this, &Instagram::error);
 
@@ -784,6 +786,10 @@ void Instagram::getTimelineFeed(QString max_id, QString seen_posts, bool pullToR
 
 void Instagram::getUserFeed(QString userID, QString max_id, QString minTimestamp) {
     m_feed->getUserFeed(userID, max_id, minTimestamp, m_session->rankToken());
+}
+
+void Instagram::mediaSeen(QStringList mediaIds, QStringList skippedMediaIds) {
+    m_feed->mediaSeen(mediaIds, skippedMediaIds);
 }
 
 // ============================================================================
