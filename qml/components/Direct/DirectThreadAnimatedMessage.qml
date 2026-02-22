@@ -10,16 +10,24 @@ Item {
     property var mediaImage
     property var itemMaxWidth
 
-    width: feed_image.width
-    height: feed_image.height + units.gu(2.5)
+    visible: mediaImage !== undefined
+    width: visible ? feed_image.width : 0
+    height: visible ? feed_image.height + units.gu(2.5) : 0
 
     AnimatedImage {
-        property bool horizontal: parseInt(mediaImage.width) > parseInt(mediaImage.height)
+        property bool horizontal: mediaImage ? (parseInt(mediaImage.width || 1) > parseInt(mediaImage.height || 1)) : false
 
         id: feed_image
-        width: isSticker ? (horizontal ? (mediaImage.width*height / mediaImage.height) : units.gu(16)) : itemMaxWidth
-        height: isSticker ? (horizontal ? units.gu(8) : (mediaImage.height*width / mediaImage.width)) : (width/mediaImage.width*mediaImage.height)
-        source: mediaImage.url
+        visible: mediaImage !== undefined
+        width: {
+            if (!mediaImage) return 0
+            return isSticker ? (horizontal ? ((mediaImage.width || 1)*height / (mediaImage.height || 1)) : units.gu(16)) : itemMaxWidth
+        }
+        height: {
+            if (!mediaImage) return 0
+            return isSticker ? (horizontal ? units.gu(8) : ((mediaImage.height || 1)*width / (mediaImage.width || 1))) : (width/(mediaImage.width || 1)*(mediaImage.height || 1))
+        }
+        source: mediaImage ? (mediaImage.url || "") : ""
         smooth: true
         clip: true
     }

@@ -24,6 +24,10 @@ Row {
         anchors.verticalCenter: parent.verticalCenter
         width: units.gu(2)
         height: width
-        source: userId != activeUserId ? users[userId].profile_pic_url : ''
+        source: {
+            if (userId == activeUserId) return ''
+            if (!users || !users[userId]) return ''
+            return users[userId].profile_pic_url || ''
+        }
     }
 }

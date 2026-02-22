@@ -18,15 +18,24 @@ WorkerScript.onMessage = function(msg) {
 
         listObj.options = {}
         listObj.media = {}
+        listObj.animated_media = {}
         listObj.link = {}
         listObj.placeholder = {}
         listObj.media_share = {}
         listObj.reel_share = {}
         listObj.story_share = {}
+        listObj.xma_media_share = {}
 
         switch (obj[i].item_type) {
             case "animated_media":
-                listObj.media = obj[i].animated_media
+                var am = obj[i].animated_media || {}
+                var fh = (am.images && am.images.fixed_height) ? am.images.fixed_height : {}
+                listObj.animated_media = {
+                    is_sticker: am.is_sticker || false,
+                    url: fh.url || "",
+                    width: fh.width || "0",
+                    height: fh.height || "0"
+                }
                 break;
             case "raven_media":
                 listObj.options.raven_media_expired = !("image_versions2" in obj[i].visual_media.media)
@@ -49,6 +58,9 @@ WorkerScript.onMessage = function(msg) {
                 break;
             case "story_share":
                 listObj.story_share = obj[i].story_share
+                break;
+            case "xma_media_share":
+                listObj.xma_media_share = (obj[i].xma_media_share && obj[i].xma_media_share.length > 0) ? obj[i].xma_media_share[0] : {}
                 break;
 
             default:

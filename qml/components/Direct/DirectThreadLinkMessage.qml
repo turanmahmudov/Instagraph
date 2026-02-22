@@ -11,6 +11,7 @@ Rectangle {
     property bool isOutgoing: false
     property var itemMaxWidth
 
+    visible: typeof link !== 'undefined' && link
     width: itemMaxWidth
     height: linkColumn.height + units.gu(2.5)
     color: isOutgoing ? styleApp.directInbox.outgoingMessageBackgroundColor : styleApp.directInbox.incomingMessageBackgroundColor
@@ -37,7 +38,7 @@ Rectangle {
                 rightMargin: units.gu(1.5)
             }
             width: parent.width - units.gu(2)
-            text: Helper.makeLink(link.text)
+            text: (link && link.text) ? Helper.makeLink(link.text) : ""
             color: isOutgoing ? styleApp.directInbox.outgoingMessageTextColor : styleApp.directInbox.incomingMessageTextColor
             wrapMode: Text.WordWrap
             textFormat: Text.RichText
@@ -61,7 +62,7 @@ Rectangle {
                 rightMargin: units.gu(1.5)
             }
             width: parent.width - units.gu(2)
-            text: link.link_context.link_title
+            text: (link && link.link_context) ? (link.link_context.link_title || "") : ""
             color: isOutgoing ? styleApp.directInbox.outgoingMessageTextColor : styleApp.directInbox.incomingMessageTextColor
             wrapMode: Text.WordWrap
         }
@@ -74,7 +75,7 @@ Rectangle {
                 rightMargin: units.gu(1.5)
             }
             width: parent.width - units.gu(2)
-            text: link.link_context.link_summary
+            text: (link && link.link_context) ? (link.link_context.link_summary || "") : ""
             fontSize: "small"
             color: isOutgoing ? styleApp.directInbox.outgoingMessageTextColor : styleApp.directInbox.incomingMessageTextColor
             font.weight: Font.Light

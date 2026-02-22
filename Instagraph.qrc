@@ -157,6 +157,8 @@
         <file>qml/js/Workers/SearchWorker.js</file>
         <file>qml/js/Workers/HomeFeedWorker.js</file>
         <file>qml/js/Workers/DirectThreadWorker.js</file>
+        <file>qml/js/Workers/DirectInboxWorker.js</file>
+        <file>qml/js/DirectTypeTexts.js</file>
         <file>qml/components/UsersListView.qml</file>
         <file>qml/components/User/UserListItem.qml</file>
         <file>qml/pages/ImportPhotoPageDesktop.qml</file>
@@ -193,6 +195,7 @@
         <file>qml/components/Direct/DirectThreadReelShareMessage.qml</file>
         <file>qml/components/Direct/DirectThreadStoryShareMessage.qml</file>
         <file>qml/components/Direct/DirectThreadTextMessage.qml</file>
+        <file>qml/components/Direct/DirectThreadXmaMediaShareMessage.qml</file>
         <file>qml/components/Direct/InboxThreadItem.qml</file>
         
         <!-- Activity Components -->

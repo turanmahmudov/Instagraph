@@ -9,11 +9,15 @@ Image {
     property var itemMaxWidth
     property bool isMedia
 
+    visible: mediaImage !== undefined
     width: itemMaxWidth
-    height: width/mediaImage.width * mediaImage.height
-    source: isMedia ? mediaImage.url : ''
+    height: {
+        if (!mediaImage || !mediaImage.width || !mediaImage.height) return width
+        return width / mediaImage.width * mediaImage.height
+    }
+    source: (isMedia && mediaImage && mediaImage.url) ? mediaImage.url : ''
     fillMode: Image.PreserveAspectCrop
-    sourceSize: Qt.size(width,height)
+    sourceSize: Qt.size(width, height)
     smooth: true
     clip: true
 }
