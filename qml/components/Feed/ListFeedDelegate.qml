@@ -100,8 +100,8 @@ ListItem {
         active: visible
         asynchronous: true
         
-        property string headerTitle: title || ""
-        property string headerSubtitle: subtitle || ""
+        property string headerTitle: list_type === 'suggested_posts_header' && typeof title !== 'undefined' ? title : ""
+        property string headerSubtitle: list_type === 'suggested_posts_header' && typeof subtitle !== 'undefined' ? subtitle : ""
 
         sourceComponent: SuggestedPostsHeader {
             width: parent.width
