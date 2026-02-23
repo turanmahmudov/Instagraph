@@ -277,8 +277,8 @@ PageItem {
 
                     Loader {
                         asynchronous: true
-                        Layout.preferredWidth: (layoutFlickable.width-units.gu(0.1))*rowSpan/3
-                        Layout.preferredHeight: Layout.preferredWidth
+                        Layout.preferredWidth: (layoutFlickable.width-units.gu(0.1))*columnSpan/3
+                        Layout.preferredHeight: (layoutFlickable.width-units.gu(0.1))*rowSpan/3
                         Layout.rowSpan: rowSpan
                         Layout.columnSpan: columnSpan
                         Layout.row: row
