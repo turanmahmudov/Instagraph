@@ -172,8 +172,14 @@ PageItem {
         contentWidth: parent.width
         contentHeight: entry_column.height
         onContentYChanged: {
-            if (feedViewModel.shouldLoadMore(contentY, contentHeight, height)) {
-                feedViewModel.loadMore()
+            if (current_user_section === 3) {
+                if (feedViewModel.shouldLoadMoreTags(contentY, contentHeight, height)) {
+                    feedViewModel.loadMoreTags()
+                }
+            } else {
+                if (feedViewModel.shouldLoadMore(contentY, contentHeight, height)) {
+                    feedViewModel.loadMore()
+                }
             }
         }
 
@@ -346,10 +352,9 @@ PageItem {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                next_max_id = 0
-                                instagram.getUserTags(usernameId)
                                 current_user_section = 3
                                 viewLoader.sourceComponent = tagviewComponent
+                                feedViewModel.loadTags(true)
                             }
                         }
                     }

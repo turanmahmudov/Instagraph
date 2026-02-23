@@ -24,6 +24,12 @@ BaseFeedViewModel {
     
     property var allHighlight: []
 
+    // Separate pagination state for tagged photos
+    property string taggedNextMaxId: ""
+    property bool taggedMoreAvailable: true
+    property bool taggedNextComing: false
+    property bool taggedClearModels: true
+
     /**
      * Load user feed
      * @param refresh - If true, clears feed and loads from beginning
@@ -42,12 +48,50 @@ BaseFeedViewModel {
     }
 
     /**
-     * Load more items (pagination)
+     * Load more feed items (pagination)
      */
     function loadMore() {
         if (nextMaxId && moreAvailable && !nextComing && !isLoading) {
             loadFeed(false)
         }
+    }
+
+    /**
+     * Load tagged photos
+     * @param refresh - If true, clears model and loads from beginning
+     */
+    function loadTags(refresh) {
+        setLoadingState(true)
+        taggedClearModels = false
+
+        if (refresh || !taggedNextMaxId) {
+            taggedPhotosModel.clear()
+            taggedNextMaxId = ""
+            taggedClearModels = true
+        }
+
+        instagram.getUserTags(userId, taggedNextMaxId)
+    }
+
+    /**
+     * Load more tagged photos (pagination)
+     */
+    function loadMoreTags() {
+        if (taggedNextMaxId && taggedMoreAvailable && !taggedNextComing && !isLoading) {
+            loadTags(false)
+        }
+    }
+
+    /**
+     * Check if should load more tagged items based on scroll position
+     */
+    function shouldLoadMoreTags(contentY, contentHeight, viewHeight) {
+        var distanceFromBottom = contentHeight - contentY - viewHeight
+        return distanceFromBottom < viewHeight * paginationThreshold
+            && taggedMoreAvailable
+            && !taggedNextComing
+            && !isLoading
+            && taggedNextMaxId
     }
 
     /**
@@ -164,20 +208,20 @@ BaseFeedViewModel {
      * @param data - Parsed JSON response
      */
     function handleTaggedPhotosResponse(data) {
-        if (nextMaxId === data.next_max_id) return
+        if (taggedNextMaxId === data.next_max_id) return
 
-        nextMaxId = data.next_max_id || ""
-        moreAvailable = data.more_available === true
-        nextComing = true
+        taggedNextMaxId = data.next_max_id || ""
+        taggedMoreAvailable = data.more_available === true
+        taggedNextComing = true
 
         worker.sendMessage({
             feed: 'userPage',
             obj: data.items,
             model: taggedPhotosModel,
-            clear_model: clearModels
+            clear_model: taggedClearModels
         })
 
-        nextComing = false
+        taggedNextComing = false
         setLoadingState(false)
     }
 
