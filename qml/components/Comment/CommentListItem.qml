@@ -102,7 +102,7 @@ ListItem {
                     spacing: units.gu(2)
 
                     Label {
-                        text: Helper.millisecondsToString(created_at)
+                        text: Helper.milisecondsToString(created_at)
                         fontSize: "small"
                         color: styleApp.common.text2Color
                         font.weight: Font.Light

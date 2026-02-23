@@ -1,8 +1,8 @@
 import QtQuick 2.12
-import "../Constants"
 import Lomiri.Components 1.3
 
 import ".."
+import "../Constants"
 import "../Feed"
 
 import "../../js/Scripts.js" as Scripts
@@ -61,7 +61,7 @@ ListItem {
                     anchors.verticalCenter: parent.verticalCenter
 
                     Text {
-                        text: (story_type === 3 || story_type === 4) ? Helper.formatRichTextUsers(activity_text) : Helper.formatString(activity_text)
+                        text: Helper.formatString(Helper.formatRichTextUsers(activity_text))
                         wrapMode: Text.WordWrap
                         width: parent.width
                         textFormat: Text.RichText
@@ -73,7 +73,7 @@ ListItem {
                     }
 
                     Label {
-                        text: Helper.millisecondsToString(timestamp)
+                        text: timestamp ? Helper.milisecondsToString(timestamp) : ''
                         fontSize: "small"
                         color: styleApp.common.text2Color
                         font.weight: Font.Light
@@ -114,7 +114,7 @@ ListItem {
 
                 onClicked: {
                     if (feed_image.visible) {
-                        pageLayout.pushToNext(pageLayout.primaryPage, PagesConstants.photo, { mediaId: media.id });
+                        pageLayout.pushToNext(pageLayout.primaryPage, PagesConstants.photo, { photoId: media.id });
                     }
                 }
             }

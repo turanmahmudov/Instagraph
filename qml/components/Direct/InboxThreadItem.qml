@@ -56,7 +56,7 @@ ListItem {
                 }
 
                 Label {
-                    text: Helper.millisecondsToString(thread_time, false, true)
+                    text: Helper.milisecondsToString(thread_time, false, true)
                     fontSize: "small"
                     color: styleApp.common.text2Color
                     font.weight: Font.Light

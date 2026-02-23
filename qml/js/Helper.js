@@ -15,6 +15,7 @@ function formatRichTextUsers(string)
 
     while (match = regex.exec(string)) {
         var user_id = match[1].split('user?id=')[1]
+        if (typeof user_id != 'undefined') user_id = user_id.split('|')[0]
         var user_name = match[1].split('|')[0]
 
         if (typeof user_id != 'undefined') {

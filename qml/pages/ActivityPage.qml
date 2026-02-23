@@ -1,32 +1,11 @@
-// Qt imports
 import QtQuick 2.12
-import QtQuick.LocalStorage 2.12
-
-// Lomiri imports
 import Lomiri.Components 1.3
 
-// JavaScript imports
-import "../js/Storage.js" as Storage
-import "../js/Helper.js" as Helper
-import "../js/Scripts.js" as Scripts
-
-// Component imports
 import "../components"
-import "../components/Constants"
 import "../components/Page"
-import "../components/User"
-import "../components/Feed"
-import "../components/Media"
-import "../components/Camera"
-import "../components/Actions"
+import "../components/Activity"
 
-// Qt imports
-
-// Lomiri imports
-
-// JavaScript imports
-
-// Component imports
+import "../js/Helper.js" as Helper
 
 PageItem {
     id: activitypage
@@ -38,15 +17,9 @@ PageItem {
 
     property bool new_notifs: false
 
-    property string next_max_id: ""
-    property bool more_available: true
-    property bool next_coming: true
-    property bool clear_models: true
-
     property bool list_loading: false
 
-    property var followRequests
-    property bool hasFollowRequests: false
+    property bool isPullToRefresh: true
 
     ListModel {
         id: recentActivityModel
@@ -76,87 +49,32 @@ PageItem {
             cacheBuffer: activitypage.height
             model: recentActivityModel
             delegate: ListItem {
-                id: recentActivityDelegate
-                height: list_type === 'follow_requests' ? followRequestsActivityHeader.height : recentActivityLoader.height
                 divider.visible: false
+                height: calculateHeight(list_type)
 
-                Column {
-                    id: followRequestsActivityHeader
-                    visible: list_type === 'follow_requests'
-                    width: list_type === 'follow_requests' ? parent.width : 0
-
-                    Loader {
-                        id: followRequestsLoader
-                        width: parent.width
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                        }
-                        visible: list_type === 'follow_requests'
-                        active: list_type === 'follow_requests'
-
-                        sourceComponent: ListItem {
-                            height: layout.height
-                            divider.visible: false
-                            onClicked: {
-                                pageLayout.pushToNext(pageLayout.primaryPage, PagesConstants.follow_requests);
-                            }
-
-                            SlotsLayout {
-                                id: layout
-                                anchors.centerIn: parent
-
-                                padding.leading: 0
-                                padding.trailing: 0
-                                padding.top: units.gu(1)
-                                padding.bottom: units.gu(1)
-
-                                mainSlot: Row {
-                                    id: label
-                                    spacing: units.gu(1)
-                                    width: parent.width
-
-                                    CircleImage {
-                                        width: units.gu(5)
-                                        height: width
-                                        source: followRequests.profile_pic
-                                    }
-
-                                    Column {
-                                        width: parent.width
-                                        anchors.verticalCenter: parent.verticalCenter
-
-                                        Text {
-                                            text: i18n.tr("<span style='color:"+LomiriColors.red+";'>%1</span> Follow Requests").arg(followRequests.request_count)
-                                            wrapMode: Text.WordWrap
-                                            font.weight: Font.DemiBold
-                                            textFormat: Text.RichText
-                                            width: parent.width
-                                        }
-
-                                        Text {
-                                            text: i18n.tr("Approve or ignore requests")
-                                            wrapMode: Text.WordWrap
-                                            font.weight: Font.ExtraLight
-                                            width: parent.width
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                function calculateHeight(list_type) {
+                    if (list_type === 'follow_requests') {
+                        return followRequestsLoader.height
                     }
+                    if (list_type === 'recent_activity') {
+                        return recentActivityLoader.height
+                    }
+                    return 0
+                }
 
-                    ListItem {
-                        visible: list_type === 'follow_requests'
-                        height: list_type === 'follow_requests' ? activityHeaderLayout.height : 0
-                        divider.visible: false
+                Loader {
+                    id: followRequestsLoader
+                    width: parent.width
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                    }
+                    visible: list_type === 'follow_requests'
+                    active: visible
+                    asynchronous: true
 
-                        ListItemLayout {
-                            id: activityHeaderLayout
-
-                            title.text: i18n.tr("Activity")
-                            title.font.weight: Font.Normal
-                        }
+                    sourceComponent: FollowRequest {
+                        width: parent.width
                     }
                 }
 
@@ -168,121 +86,18 @@ PageItem {
                         right: parent.right
                     }
                     visible: list_type === 'recent_activity'
-                    active: list_type === 'recent_activity'
+                    active: visible
+                    asynchronous: false
 
-                    sourceComponent: SlotsLayout {
-                        id: layoutRecent
-                        anchors.centerIn: parent
-
-                        padding.leading: 0
-                        padding.trailing: 0
-                        padding.top: units.gu(1)
-                        padding.bottom: units.gu(1)
-
-                        mainSlot: Column {
-                            width: parent.width
-
-                            Loader {
-                                visible: header !== ""
-                                active: visible
-                                width: parent.width
-                                height: units.gu(4)
-
-                                sourceComponent: Text {
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    text: i18n.tr(header)
-                                    width: parent.width
-                                    font.weight: Font.DemiBold
-                                    color: styleApp.common.textColor
-                                }
-                            }
-
-                            Row {
-                                id: labelRecent
-                                spacing: units.gu(1)
-                                width: parent.width - (story_type === 3 ? followButton.width : feed_image.width)
-
-                                CircleImage {
-                                    width: units.gu(5)
-                                    height: width
-                                    source: story_type === 13 ? "image://theme/info" : (typeof profile_image !== 'undefined' ? profile_image : "../images/not_found_user.jpg")
-
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        onClicked: {
-                                            if (typeof profile_id !== 'undefined') pageLayout.pushToCurrent(pageLayout.primaryPage, PagesConstants.user, {usernameId: profile_id})
-                                        }
-                                    }
-                                }
-
-                                Column {
-                                    width: parent.width - units.gu(6)
-                                    anchors.verticalCenter: parent.verticalCenter
-
-                                    Text {
-                                        text: (story_type === 3 || story_type === 4) ? Helper.formatRichTextUsers(activity_text) : Helper.formatString(activity_text)
-                                        wrapMode: Text.WordWrap
-                                        width: parent.width
-                                        textFormat: Text.RichText
-                                        color: styleApp.common.textColor
-                                        font.weight: story_type == 13 ? Font.DemiBold : Font.Normal
-                                        onLinkActivated: {
-                                            Scripts.linkClick(activitypage, link, story_type === 1 ? media.id : 0)
-                                        }
-                                    }
-
-                                    Label {
-                                        text: Helper.milisecondsToString(timestamp)
-                                        fontSize: "small"
-                                        color: styleApp.common.text2Color
-                                        font.weight: Font.Light
-                                        font.capitalization: Font.AllLowercase
-                                    }
-                                }
-                            }
-                        }
-
-                        FollowComponent {
-                            id: followButton
-                            height: units.gu(3.5)
-                            visible: story_type == 3 && typeof inline_follow !== 'undefined'
-                            friendship_var: inline_follow
-                            userId: profile_id
-
-                            anchors.verticalCenter: parent.verticalCenter
-                            SlotsLayout.position: SlotsLayout.Trailing
-                            SlotsLayout.overrideVerticalPositioning: true
-                        }
-
-                        FeedImage {
-                            id: feed_image
-                            width: (story_type === 1 || story_type === 14) ? units.gu(5) : 0
-                            height: width
-                            visible: (story_type === 1 || story_type === 14)
-                            source: visible ? media.image : ""
-
-                            anchors.verticalCenter: parent.verticalCenter
-                            SlotsLayout.position: SlotsLayout.Trailing
-                            SlotsLayout.overrideVerticalPositioning: true
-
-                            MouseArea {
-                                anchors.fill: parent
-
-                                onClicked: {
-                                    if (feed_image.visible) {
-                                        pageLayout.pushToNext(pageLayout.primaryPage, PagesConstants.photo, {photoId: media.id});
-                                    }
-                                }
-                            }
-                        }
+                    sourceComponent: RecentActivity {
+                        width: parent.width
                     }
                 }
             }
             PullToRefresh {
-                id: pullToRefresh
-                refreshing: list_loading && recentActivityModel.count == 0
+                refreshing: list_loading && recentActivityModel.count === 0
                 onRefresh: {
-                    list_loading = true
+                    isPullToRefresh = true
                     getRecentActivity()
                 }
             }
@@ -297,9 +112,6 @@ PageItem {
     WorkerScript {
         id: worker
         source: "../js/Workers/ActivityWorker.js"
-        onMessage: {
-
-        }
     }
 
     Connections{
@@ -317,26 +129,51 @@ PageItem {
     }
 
     function recentActivityDataFinished(data) {
+        if (!data) return
+
+        isPullToRefresh = false
+
         // Follow Requests
-        if (typeof data.friend_request_stories != 'undefined' && data.friend_request_stories.length > 0) {
-            if (data.friend_request_stories[0].type == '6') {
-                hasFollowRequests = true
-                followRequests = {"request_count":data.friend_request_stories[0].args.request_count, "profile_pic":data.friend_request_stories[0].args.profile_image}
-            }
+        if ("friend_request_stories" in data && data.friend_request_stories.length > 0) {
+            worker.sendMessage(
+                {
+                    friend_requests: data.friend_request_stories,
+                    model: recentActivityModel,
+                    clear: true
+                }
+            )
         } else {
-            followRequests = {}
-            hasFollowRequests = false
+            recentActivityModel.clear()
         }
 
-        // Recent Activity
-        if (data.new_stories.length) {
+        // New activity stories
+        if ("new_stories" in data && data.new_stories.length > 0) {
             new_notifs = true
         }
 
-        var textColor = Helper.hexToRgb(styleApp.common.textColor)
+        let linkColor = Helper.hexToRgb(styleApp.common.textColor)
 
-        worker.sendMessage({'obj': data.new_stories, 'model': recentActivityModel, 'clear_model': true, 'hasFollowRequests': hasFollowRequests, 'textColor': textColor, 'old': false})
-        worker.sendMessage({'obj': data.old_stories, 'model': recentActivityModel, 'clear_model': false, 'hasFollowRequests': false, 'textColor': textColor, 'old': true, 'partition': data.partition})
+        // New stories
+        worker.sendMessage(
+            {
+                items: data.new_stories,
+                model: recentActivityModel,
+                partition: data.partition,
+                clear: false,
+                linkColor: linkColor
+            }
+        )
+
+        // Old stories
+        worker.sendMessage(
+            {
+                items: data.old_stories,
+                model: recentActivityModel,
+                partition: data.partition,
+                clear: false,
+                linkColor: linkColor
+            }
+        )
 
         list_loading = false
     }

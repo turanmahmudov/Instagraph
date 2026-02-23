@@ -1,83 +1,109 @@
-WorkerScript.onMessage = function(msg) {
-    // Get params from msg
-    var obj = msg.obj;
-    var model = msg.model;
+WorkerScript.onMessage = (message) => {
+  const items = message.items;
+  const friend_requests = message.friend_requests;
+  const partition = message.partition;
+  const model = message.model;
 
-    if (msg.clear_model) {
-        model.clear();
+  if (message.clear) {
+    model.clear();
+  }
+
+  if (friend_requests) {
+    let item_obj = {};
+    item_obj.list_type = "follow_requests";
+
+    item_obj.request_count = friend_requests[0].args.request_count;
+    item_obj.profile_pic_url = friend_requests[0].args.profile_image;
+
+    model.append(item_obj);
+    model.sync();
+  }
+
+  items.forEach((item, i) => {
+    let item_obj = {};
+
+    item_obj.list_type = "recent_activity";
+
+    item_obj.header = generateHeader(partition, i) || "";
+    item_obj.activity_text = generateActivityText(item.args, message.linkColor);
+
+    item_obj.story_type = item.type;
+    item_obj.profile_image =
+      "profile_image" in item.args ? item.args.profile_image : "";
+    item_obj.profile_id =
+      "profile_id" in item.args ? item.args.profile_id : "";
+    item_obj.media =
+      "media" in item.args && item.args.media.length > 0
+        ? item.args.media[0]
+        : { image: "", id: "" };
+    item_obj.inline_follow =
+      "inline_follow" in item.args ? item.args.inline_follow : undefined;
+    item_obj.timestamp = item.args.timestamp || 0;
+
+    model.append(item_obj);
+    model.sync();
+  });
+};
+
+function generateActivityText(args, linkColor) {
+  if (!args) return "";
+
+  if (!("links" in args)) {
+    if ("rich_text" in args) return args.rich_text;
+    return args.text;
+  }
+
+  if (args.links.length === 0) return "";
+
+  // links
+  let activity_text = args.text;
+  let linked_part = [];
+  let linked_part_types = [];
+  let linked_part_ids = [];
+
+  args.links.forEach((link, i) => {
+    linked_part[i] = activity_text.substring(link.start, link.end);
+    linked_part_types[i] = link.type;
+    linked_part_ids[i] = link.id;
+  });
+
+  linked_part.forEach((part, j) => {
+    let replace_with;
+    if (linked_part_types[j] === "like_count_chrono") {
+      replace_with = makeLink(`likes://${part}`, part, linkColor);
+      activity_text = activity_text.replace(part, replace_with);
+    } else if (linked_part_types[j] === "user") {
+      replace_with = makeLink(
+        `userid://${linked_part_ids[j]}`,
+        part,
+        linkColor,
+      );
+      activity_text = activity_text.replace(part, replace_with);
     }
+  });
 
-    if (msg.hasFollowRequests) {
-        model.append({"list_type": "follow_requests"});
-    }
-
-    // Object loop
-    for (var i = 0; i < obj.length; i++) {
-        // time bucket headers
-        var header = ""
-        if (msg.old === true && "time_bucket" in msg.partition) {
-            for (var h = 0; h < msg.partition.time_bucket.headers.length; h++) {
-                if (i === msg.partition.time_bucket.indices[h]) {
-                    header = msg.partition.time_bucket.headers[h]
-                }
-            }
-        }
-
-        var story = obj[i]
-
-        var list_obj = generateListObj(story)
-        list_obj.header = header
-
-        // empty
-        if (story.args && !("links" in story.args)) {
-            if ("rich_text" in story.args) {
-                list_obj.activity_text = story.args.rich_text
-            } else {
-                list_obj.activity_text = story.args.text
-            }
-        } else if (story.args && "links" in story.args && story.args.links.length > 0) {
-            var act_text = story.args.text;
-            var linked_part = [];
-            var linked_part_types = [];
-            var linked_part_ids = [];
-
-            for (var j = 0; j < story.args.links.length; j++) {
-                linked_part[j] = act_text.substring((story.args.links[j].start), (story.args.links[j].end));
-                linked_part_types[j] = story.args.links[j].type;
-                linked_part_ids[j] = story.args.links[j].id;
-            }
-
-            for (var k = 0; k < linked_part.length; k++) {
-                var rpl_with
-                if (linked_part_types[k] === "like_count_chrono") {
-                    rpl_with = '<a href="likes://'+linked_part[k]+'" style="text-decoration:none;font-weight:500;color:'+msg.textColor+';">'+linked_part[k]+'</a>';
-                    act_text = act_text.replace(linked_part[k], rpl_with);
-                } else if (linked_part_types[k] === "user") {
-                    rpl_with = '<a href="userid://'+linked_part_ids[k]+'" style="text-decoration:none;font-weight:500;color:'+msg.textColor+';">'+linked_part[k]+'</a>';
-                    act_text = act_text.replace(linked_part[k], rpl_with);
-                }
-            }
-
-            list_obj.activity_text = act_text
-
-        }
-
-        model.append(list_obj);
-        model.sync();
-    }
+  return activity_text;
 }
 
-function generateListObj(story) {
-    var list_obj = {}
+function generateHeader(partition, index) {
+  if (!partition) return "lol no partition";
+  if (!("time_bucket" in partition)) return "lol no time bucket";
 
-    list_obj.story_type = story.type
-    if ("profile_image" in story.args) list_obj.profile_image = story.args.profile_image
-    if ("profile_id" in story.args) list_obj.profile_id = story.args.profile_id
-    if ("media" in story.args) list_obj.media = story.args.media[0]
-    if ("inline_follow" in story.args) list_obj.inline_follow = story.args.inline_follow
-    list_obj.timestamp = story.args.timestamp
-    list_obj.story = story
-    list_obj.list_type = "recent_activity"
+  for (let j = 0; j < partition.time_bucket.headers.length; j++) {
+    if (partition.time_bucket.indices[j] === index) {
+      return partition.time_bucket.headers[j];
+    }
+  }
+}
 
-    return list_obj
+function makeLink(link, value, linkColor) {
+  return (
+    '<a href="' +
+    link +
+    '" style="text-decoration:none;font-weight:500;color:' +
+    linkColor +
+    ';">' +
+    (value ? value : link) +
+    "</a>"
+  );
 }
