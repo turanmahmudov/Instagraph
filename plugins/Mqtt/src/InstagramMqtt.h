@@ -8,14 +8,12 @@
 
 namespace IGMQTT {
     class FbnsClient;
-    class RealtimeClient;
 }
 
 /**
  * @brief QML-facing facade for Instagram MQTT services.
  *
- * Provides real-time push notifications (FBNS) and live activity
- * updates (Realtime IRIS + GraphQL subscriptions) to QML.
+ * Provides push notifications (FBNS) to QML.
  *
  * Usage in QML:
  *   import InstagramMqtt 1.0
@@ -29,7 +27,7 @@ namespace IGMQTT {
  *
  *   Connections {
  *       target: mqtt
- *       onDirectMessageReceived: { console.log("New DM:", JSON.stringify(message)) }
+ *       onDmNotification: { console.log("New DM:", JSON.stringify(data)) }
  *       onLikeNotification: { console.log("New like:", JSON.stringify(data)) }
  *   }
  */
@@ -37,18 +35,16 @@ class InstagramMqtt : public QObject {
     Q_OBJECT
 
     Q_PROPERTY(bool fbnsConnected READ isFbnsConnected NOTIFY fbnsConnectionChanged)
-    Q_PROPERTY(bool realtimeConnected READ isRealtimeConnected NOTIFY realtimeConnectionChanged)
 
 public:
     explicit InstagramMqtt(QObject* parent = nullptr);
     ~InstagramMqtt();
 
     bool isFbnsConnected() const;
-    bool isRealtimeConnected() const;
 
 public slots:
     /**
-     * @brief Connect both FBNS and Realtime MQTT clients.
+     * @brief Connect FBNS MQTT client for push notifications.
      * Call this after successful Instagram login.
      */
     Q_INVOKABLE void connectToMqtt(const QString& userId, const QString& sessionId,
@@ -56,27 +52,13 @@ public slots:
                                     const QString& appVersion, const QString& igCapabilities);
 
     /**
-     * @brief Disconnect both clients.
+     * @brief Disconnect FBNS client.
      */
     Q_INVOKABLE void disconnectFromMqtt();
-
-    /**
-     * @brief Start IRIS message sync for live DM delivery.
-     * @param seqId Last known sequence ID (from getInbox response)
-     * @param snapshotAtMs Snapshot timestamp in milliseconds
-     */
-    Q_INVOKABLE void startIrisSync(double seqId, double snapshotAtMs);
-
-    /**
-     * @brief Send foreground/background state to realtime server.
-     * Call when app goes to foreground or background.
-     */
-    Q_INVOKABLE void setForeground(bool inForeground);
 
 signals:
     // Connection state
     void fbnsConnectionChanged(bool connected);
-    void realtimeConnectionChanged(bool connected);
     void mqttError(const QString& message);
 
     // ============ FBNS Push Notifications ============
@@ -102,29 +84,8 @@ signals:
     /** @brief FBNS push token received (for push/register API endpoint) */
     void fbnsTokenReceived(const QString& token);
 
-    // ============ Realtime Live Updates ============
-
-    /** @brief Live direct message received (from IRIS sync) */
-    void directMessageReceived(const QVariant& message);
-
-    /** @brief Direct thread updated (member changes, read state, etc.) */
-    void directThreadUpdated(const QVariant& threadUpdate);
-
-    /** @brief Typing indicator received */
-    void typingIndicatorReceived(const QVariant& data);
-
-    /** @brief User online/offline presence event */
-    void presenceReceived(const QVariant& data);
-
-    /** @brief Skywalker user event (generic) */
-    void userEventReceived(const QVariant& data);
-
-    /** @brief Raw IRIS patch data (for advanced processing) */
-    void irisDataReceived(const QVariant& patches);
-
 private:
     IGMQTT::FbnsClient* m_fbns;
-    IGMQTT::RealtimeClient* m_realtime;
 };
 
 #endif // MQTT_INSTAGRAM_MQTT_H

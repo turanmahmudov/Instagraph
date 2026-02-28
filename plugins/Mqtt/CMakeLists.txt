@@ -21,9 +21,6 @@ set(PLUGIN_SOURCES
     
     # FBNS (Push Notifications)
     src/fbns/FbnsClient.cpp
-    
-    # Realtime (Live Updates)
-    src/realtime/RealtimeClient.cpp
 )
 
 # Build as a MODULE (shared library loaded at runtime)
