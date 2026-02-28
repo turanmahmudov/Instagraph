@@ -459,9 +459,7 @@ QString Instagram::getPhoneId() {
 }
 
 void Instagram::registerPush(QString token) {
-    qDebug() << "Instagram: registering push with token:" << token.left(20) << "...";
-
-    // Generate a random family_device_id (UUID v4) matching TypeScript reference
+    // Generate a random family_device_id (UUID v4)
     QString familyDeviceId = QUuid::createUuid().toString();
     familyDeviceId = familyDeviceId.mid(1, familyDeviceId.length() - 2);
 
@@ -479,7 +477,6 @@ void Instagram::registerPush(QString token) {
         .build();
 
     m_client->execute(request, [this](const IG::Response& response) {
-        qDebug() << "Instagram: push/register/ response:" << response.ok();
         if (response.ok()) {
             emit pushRegistered(response.toVariant());
         } else {

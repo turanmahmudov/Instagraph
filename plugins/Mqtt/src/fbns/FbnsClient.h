@@ -93,7 +93,7 @@ private:
     // Constants
     static const QString HOST;
     static const quint16 PORT;
-    static const quint16 KEEP_ALIVE;  // 900 per Python reference
+    static const quint16 KEEP_ALIVE;
     static const qint64 FBNS_APP_ID;
     static const QString PACKAGE_NAME;
     static const QString ANALYTICS_APP_ID;

@@ -4,9 +4,7 @@
 
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QUuid>
 #include <QDateTime>
-#include <QTime>
 #include <QStandardPaths>
 #include <QDir>
 #include <QFile>
@@ -85,13 +83,12 @@ bool FbnsClient::isConnected() const
 
 void FbnsClient::onMqttConnected(const QByteArray& connAckPayload)
 {
-    qDebug() << "FbnsClient: MQTT connected";
+    qDebug() << "FbnsClient: connected";
     m_connected = true;
     m_reconnectTimer->stop();
 
     // Parse CONNACK auth payload (JSON with ck, cs, di, ds)
     if (!connAckPayload.isEmpty()) {
-        qDebug() << "FbnsClient: CONNACK payload:" << connAckPayload;
         QJsonDocument doc = QJsonDocument::fromJson(connAckPayload);
         if (doc.isObject()) {
             QJsonObject obj = doc.object();
@@ -103,23 +100,16 @@ void FbnsClient::onMqttConnected(const QByteArray& connAckPayload)
             m_auth.sr = obj.value("sr").toVariant().toString();
             m_auth.rc = obj.value("rc").toVariant().toString();
 
-            qDebug() << "FbnsClient: parsed auth: ck=" << m_auth.userId
-                     << "di=" << m_auth.deviceId
-                     << "hasCs=" << !m_auth.password.isEmpty()
-                     << "hasDs=" << !m_auth.deviceSecret.isEmpty();
-
             if (!m_auth.deviceId.isEmpty()) {
                 m_auth.clientId = m_auth.deviceId.left(20);
             }
 
             saveAuth();
-            qDebug() << "FbnsClient: auth data received and saved";
         }
     }
 
-    // Explicitly subscribe to FBNS message topic (critical for receiving push notifications)
-    m_mqtt->subscribe(TOPIC_FBNS_MSG, 0);  // topic "76"
-    qDebug() << "FbnsClient: subscribed to topic" << TOPIC_FBNS_MSG;
+    // Subscribe to FBNS message topic for receiving push notifications
+    m_mqtt->subscribe(TOPIC_FBNS_MSG, 0);
 
     // Send registration request
     sendRegistrationRequest();
@@ -141,15 +131,11 @@ void FbnsClient::onMqttDisconnected()
 
 void FbnsClient::onMqttMessage(const QString& topic, const QByteArray& payload)
 {
-    qDebug() << "FbnsClient: message on topic" << topic << "payload size:" << payload.size();
-    qDebug() << "FbnsClient: payload:" << payload.left(500);
 
     if (topic == TOPIC_FBNS_MSG) {
         handleFbnsMessage(payload);
     } else if (topic == TOPIC_FBNS_REG_RESP) {
         handleRegistrationResponse(payload);
-    } else {
-        qDebug() << "FbnsClient: unhandled topic:" << topic;
     }
 }
 
@@ -178,12 +164,6 @@ void FbnsClient::onReconnectTimer()
 
 QByteArray FbnsClient::buildConnectPayload()
 {
-    qDebug() << "FbnsClient: building CONNECT payload:"
-             << "clientId=" << m_auth.clientId
-             << "userId=" << m_auth.userId
-             << "deviceId=" << m_auth.deviceId
-             << "hasPassword=" << !m_auth.password.isEmpty()
-             << "hasDeviceSecret=" << !m_auth.deviceSecret.isEmpty();
 
     Thrift::Writer w;
     w.writeStructBegin(); // Connect struct
@@ -267,9 +247,7 @@ QByteArray FbnsClient::buildConnectPayload()
 
     w.writeStructEnd(); // end Connect struct
 
-    QByteArray result = w.data();
-    qDebug() << "FbnsClient: Thrift payload hex (" << result.size() << "bytes):" << result.toHex();
-    return result;
+    return w.data();
 }
 
 void FbnsClient::sendRegistrationRequest()
@@ -280,14 +258,10 @@ void FbnsClient::sendRegistrationRequest()
 
     QByteArray json = QJsonDocument(regReq).toJson(QJsonDocument::Compact);
     m_mqtt->publish(TOPIC_FBNS_REG_REQ, json, 1);
-
-    qDebug() << "FbnsClient: registration request sent";
 }
 
 void FbnsClient::handleFbnsMessage(const QByteArray& payload)
 {
-    qDebug() << "FbnsClient: handleFbnsMessage called, payload size:" << payload.size();
-
     QJsonDocument doc = QJsonDocument::fromJson(payload);
     if (!doc.isObject()) {
         qWarning() << "FbnsClient: invalid FBNS message payload";
@@ -299,24 +273,13 @@ void FbnsClient::handleFbnsMessage(const QByteArray& payload)
 
     // Parse the nested fbpushnotif JSON
     QString fbpushnotif = push.value("fbpushnotif").toString();
-    qDebug() << "FbnsClient: fbpushnotif field length:" << fbpushnotif.length();
-
     if (!fbpushnotif.isEmpty()) {
         QJsonDocument notifDoc = QJsonDocument::fromJson(fbpushnotif.toUtf8());
         if (notifDoc.isObject()) {
             QVariantMap notifData = notifDoc.object().toVariantMap();
-            QString collapseKey = notifData.value("collapse_key").toString();
-            QString title = notifData.value("t").toString();
-            QString message = notifData.value("m").toString();
-            qDebug() << "FbnsClient: notification collapse_key:" << collapseKey
-                     << "title:" << title << "message:" << message;
             pushData["notification"] = notifData;
             parseAndEmitNotification(notifData);
-        } else {
-            qWarning() << "FbnsClient: failed to parse fbpushnotif JSON";
         }
-    } else {
-        qWarning() << "FbnsClient: fbpushnotif field is empty";
     }
 
     emit pushNotification(pushData);
@@ -324,8 +287,6 @@ void FbnsClient::handleFbnsMessage(const QByteArray& payload)
 
 void FbnsClient::handleRegistrationResponse(const QByteArray& payload)
 {
-    qDebug() << "FbnsClient: registration response:" << payload;
-
     QJsonDocument doc = QJsonDocument::fromJson(payload);
     if (!doc.isObject()) {
         qWarning() << "FbnsClient: invalid registration response";
@@ -341,10 +302,8 @@ void FbnsClient::handleRegistrationResponse(const QByteArray& payload)
 
     QString token = resp.value("token").toString();
     if (!token.isEmpty()) {
-        qDebug() << "FbnsClient: FBNS token received:" << token;
+        qDebug() << "FbnsClient: token received";
         emit tokenReceived(token);
-    } else {
-        qWarning() << "FbnsClient: registration response has no token";
     }
 }
 

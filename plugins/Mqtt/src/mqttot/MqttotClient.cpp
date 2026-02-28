@@ -54,7 +54,6 @@ void MqttotClient::connectToHost(const QString& host, quint16 port,
     // Store payload for sending after TLS handshake
     m_socket->setProperty("_connectPayload", thriftPayload);
 
-    qDebug() << "MqttotClient: connecting to" << host << ":" << port;
     m_socket->connectToHostEncrypted(host, port);
 }
 
@@ -109,7 +108,6 @@ void MqttotClient::subscribe(const QString& topic, quint8 qos)
 
 void MqttotClient::onSocketConnected()
 {
-    qDebug() << "MqttotClient: TLS handshake complete, sending CONNECT";
 
     QByteArray thriftPayload = m_socket->property("_connectPayload").toByteArray();
     sendPacket(buildConnectPacket(thriftPayload, m_keepAlive));
@@ -132,16 +130,13 @@ void MqttotClient::onSocketError(QAbstractSocket::SocketError err)
 
 void MqttotClient::onReadyRead()
 {
-    QByteArray data = m_socket->readAll();
-    qDebug() << "MqttotClient: received" << data.size() << "bytes from socket";
-    m_readBuffer.append(data);
+    m_readBuffer.append(m_socket->readAll());
     processIncomingData();
 }
 
 void MqttotClient::onPingTimer()
 {
     if (m_connected) {
-        qDebug() << "MqttotClient: sending PINGREQ";
         sendPacket(buildPingReqPacket());
     }
 }
@@ -307,7 +302,6 @@ void MqttotClient::processIncomingData()
 
 void MqttotClient::handlePacket(quint8 packetType, quint8 flags, const QByteArray& payload)
 {
-    qDebug() << "MqttotClient: received packet type:" << hex << packetType << "flags:" << flags << "size:" << payload.size();
     switch (packetType) {
     case MQTT_CONNACK:
         handleConnAck(payload);
@@ -325,7 +319,6 @@ void MqttotClient::handlePacket(quint8 packetType, quint8 flags, const QByteArra
         handlePingResp();
         break;
     default:
-        qDebug() << "MqttotClient: unhandled packet type:" << hex << packetType;
         break;
     }
 }
@@ -362,12 +355,8 @@ void MqttotClient::handleConnAck(const QByteArray& payload)
             // Fallback: use everything after the length prefix
             connAckPayload = payload.mid(4);
         }
-        qDebug() << "MqttotClient: CONNACK payload strLen=" << strLen
-                 << "actual=" << connAckPayload.size()
-                 << "total=" << payload.size();
     }
 
-    qDebug() << "MqttotClient: connected successfully";
     emit connected(connAckPayload);
 }
 
@@ -421,16 +410,11 @@ void MqttotClient::handlePubAck(const QByteArray& payload)
 
 void MqttotClient::handleSubAck(const QByteArray& payload)
 {
-    if (payload.size() < 3) return;
-    quint16 msgId = (static_cast<quint8>(payload.at(0)) << 8) |
-                     static_cast<quint8>(payload.at(1));
-    quint8 returnCode = static_cast<quint8>(payload.at(2));
-    qDebug() << "MqttotClient: SUBACK msgId=" << msgId << "rc=" << returnCode;
+    Q_UNUSED(payload);
 }
 
 void MqttotClient::handlePingResp()
 {
-    qDebug() << "MqttotClient: PINGRESP received";
 }
 
 // ============================================================

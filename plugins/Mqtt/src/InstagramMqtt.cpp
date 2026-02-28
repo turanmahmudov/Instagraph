@@ -108,7 +108,7 @@ void InstagramMqtt::connectToMqtt(const QString& userId, const QString& sessionI
                                    const QString& phoneId, const QString& userAgent,
                                    const QString& appVersion, const QString& igCapabilities)
 {
-    qDebug() << "InstagramMqtt: connecting with userId=" << userId;
+    qDebug() << "InstagramMqtt: connecting FBNS";
 
     // Connect FBNS (push notifications)
     m_fbns->connectWithSession(userId, phoneId, userAgent,
