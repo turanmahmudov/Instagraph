@@ -33,7 +33,7 @@ Rectangle {
         }
 
         Item {
-            width: parent.width/5
+            width: parent.width/6
             height: parent.height
 
             LineIcon {
@@ -53,7 +53,7 @@ Rectangle {
         }
 
         Item {
-            width: parent.width/5
+            width: parent.width/6
             height: parent.height
 
             LineIcon {
@@ -83,7 +83,7 @@ Rectangle {
         }
 
         Item {
-            width: parent.width/5
+            width: parent.width/6
             height: parent.height
 
             LineIcon {
@@ -102,7 +102,26 @@ Rectangle {
         }
 
         Item {
-            width: parent.width/5
+            width: parent.width/6
+            height: parent.height
+
+            LineIcon {
+                anchors.centerIn: parent
+                name: mqttConnected ? "\ueaf4" : "\ueaf3"
+                color: mqttConnected ? LomiriColors.green : styleApp.common.iconColor
+                iconSize: units.gu(2.4)
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    connectMqtt()
+                }
+            }
+        }
+
+        Item {
+            width: parent.width/6
             height: parent.height
 
             LineIcon {
@@ -139,7 +158,7 @@ Rectangle {
         }
 
         Item {
-            width: parent.width/5
+            width: parent.width/6
             height: parent.height
 
             CircleImage {

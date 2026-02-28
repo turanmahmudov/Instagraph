@@ -21,6 +21,7 @@ import "components/Constants"
 
 import Instagram 1.0
 import ImageProcessor 1.0
+import InstagramMqtt 1.0
 
 MainView {
     id: mainView
@@ -74,12 +75,49 @@ MainView {
     signal fileImported(var fileUrl)
     signal locationSelected(var location)
 
+    property bool mqttConnected: false
+
+    function connectMqtt() {
+        if (mqttConnected) {
+            console.log("MQTT: Already connected")
+            return
+        }
+
+        var sessionId = instagram.getSessionId()
+        var phoneId = instagram.getPhoneId()
+
+        console.log("MQTT: Connecting manually...")
+        console.log("MQTT: userId=" + activeUsernameId)
+        console.log("MQTT: sessionId=" + (sessionId ? sessionId.substring(0, 10) + "..." : "EMPTY"))
+        console.log("MQTT: phoneId=" + phoneId)
+
+        if (!sessionId || sessionId === "") {
+            console.log("MQTT: ERROR - No session cookie available, cannot connect Realtime")
+            return
+        }
+
+        mqtt.connectToMqtt(
+            activeUsernameId,
+            sessionId,
+            phoneId,
+            "Instagram 367.0.0.27.101 Android (35/15.0; 640dpi; 1440x3088; samsung; SM-S938U; s25u; qcom; en_US; 658859659)",
+            "367.0.0.27.101",
+            "3brTvx0="
+        )
+        mqttConnected = true
+    }
+
     property alias appStore: appStore
     property var activeTransfer
 
     // API
     Instagram {
         id: instagram
+    }
+
+    // MQTT - Real-time notifications and live activity
+    InstagramMqtt {
+        id: mqtt
     }
 
     // Image Filters
@@ -242,6 +280,8 @@ MainView {
 
             // User page
             userPage.getUsernameInfo();
+
+            // MQTT is connected manually via the debug button in BottomMenu
         }
         onProfileConnectedFail: {
 
@@ -254,6 +294,75 @@ MainView {
             pageLayout.primaryPageSource = Qt.resolvedUrl("pages/2FactorLoginPage.qml")
 
             loading.visible = false
+        }
+    }
+
+    // MQTT signal handlers for real-time updates
+    Connections {
+        target: mqtt
+
+        // FBNS token received — register with Instagram's push API
+        onFbnsTokenReceived: {
+            console.log("MQTT: FBNS token received, registering push...")
+            instagram.registerPush(token)
+        }
+
+        // Any push notification (catch-all)
+        onPushNotificationReceived: {
+            console.log("MQTT: RAW PUSH NOTIFICATION:", JSON.stringify(notification))
+        }
+
+        // Push notification: new DM
+        onDmNotification: {
+            console.log("MQTT: New DM notification")
+            // Refresh inbox if on DirectInboxPage
+            if (typeof directInboxPage !== "undefined") {
+                instagram.getInbox()
+            }
+        }
+
+        // Push notification: someone liked your post
+        onLikeNotification: {
+            console.log("MQTT: Like notification")
+            activityPage.getRecentActivity()
+        }
+
+        // Push notification: new comment
+        onCommentNotification: {
+            console.log("MQTT: Comment notification")
+            activityPage.getRecentActivity()
+        }
+
+        // Push notification: new follower
+        onFollowNotification: {
+            console.log("MQTT: Follow notification")
+            activityPage.getRecentActivity()
+        }
+
+        // Live: real-time direct message received (IRIS sync)
+        onDirectMessageReceived: {
+            console.log("MQTT: Live DM received - thread:", message.threadId)
+            // Refresh inbox to show new message
+            instagram.getInbox()
+        }
+
+        // Live: direct thread updated
+        onDirectThreadUpdated: {
+            console.log("MQTT: Thread updated:", threadUpdate.threadId)
+        }
+
+        // Live: typing indicator
+        onTypingIndicatorReceived: {
+            console.log("MQTT: Typing indicator")
+        }
+
+        // Connection state changes
+        onFbnsConnectionChanged: {
+            console.log("MQTT FBNS connected:", connected)
+        }
+
+        onRealtimeConnectionChanged: {
+            console.log("MQTT Realtime connected:", connected)
         }
     }
 }

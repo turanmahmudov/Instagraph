@@ -55,6 +55,9 @@ public Q_SLOTS:
     Q_INVOKABLE void setUsername(QString username);
     Q_INVOKABLE void setPassword(QString password);
     Q_INVOKABLE QString getUsernameId();
+    Q_INVOKABLE QString getSessionId();
+    Q_INVOKABLE QString getPhoneId();
+    Q_INVOKABLE void registerPush(QString token);
     Q_INVOKABLE void setProfilePic(QString userpic);
     Q_INVOKABLE QString getProfilePic();
 
@@ -295,6 +298,9 @@ Q_SIGNALS:
     // Usertags signals
     void userTagsDataReady(QVariant answer);
     void removeSelftagDone(QVariant answer);
+
+    // Push registration signals
+    void pushRegistered(QVariant answer);
 
 private:
     void initializeComponents();

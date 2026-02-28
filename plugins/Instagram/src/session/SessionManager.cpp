@@ -36,20 +36,64 @@ void SessionManager::initializePaths() {
 }
 
 void SessionManager::initializeUuid() {
-    // Generate UUID without braces
-    QString uuid = QUuid::createUuid().toString();
-    m_uuid = uuid.mid(1, uuid.length() - 2);
-    
-    // Generate phone ID (same format as UUID)
-    QString phoneId = QUuid::createUuid().toString();
-    m_phoneId = phoneId.mid(1, phoneId.length() - 2);
-    
-    // Generate advertising ID (same format as UUID)
-    QString adId = QUuid::createUuid().toString();
-    m_advertisingId = adId.mid(1, adId.length() - 2);
+    // Load persisted UUIDs, or generate new ones if not found
+    QString uuidPath = m_dataPath.absolutePath() + "/uuid.dat";
+    QString phoneIdPath = m_dataPath.absolutePath() + "/phoneId.dat";
+    QString adIdPath = m_dataPath.absolutePath() + "/advertisingId.dat";
+
+    // UUID
+    QFile uuidFile(uuidPath);
+    if (uuidFile.exists() && uuidFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        m_uuid = QTextStream(&uuidFile).readAll().trimmed();
+        uuidFile.close();
+    }
+    if (m_uuid.isEmpty()) {
+        QString uuid = QUuid::createUuid().toString();
+        m_uuid = uuid.mid(1, uuid.length() - 2);
+    }
+
+    // Phone ID
+    QFile phoneIdFile(phoneIdPath);
+    if (phoneIdFile.exists() && phoneIdFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        m_phoneId = QTextStream(&phoneIdFile).readAll().trimmed();
+        phoneIdFile.close();
+    }
+    if (m_phoneId.isEmpty()) {
+        QString phoneId = QUuid::createUuid().toString();
+        m_phoneId = phoneId.mid(1, phoneId.length() - 2);
+    }
+
+    // Advertising ID
+    QFile adIdFile(adIdPath);
+    if (adIdFile.exists() && adIdFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        m_advertisingId = QTextStream(&adIdFile).readAll().trimmed();
+        adIdFile.close();
+    }
+    if (m_advertisingId.isEmpty()) {
+        QString adId = QUuid::createUuid().toString();
+        m_advertisingId = adId.mid(1, adId.length() - 2);
+    }
+
+    // Persist all three
+    if (uuidFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream(&uuidFile) << m_uuid;
+        uuidFile.close();
+    }
+    if (phoneIdFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream(&phoneIdFile) << m_phoneId;
+        phoneIdFile.close();
+    }
+    if (adIdFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream(&adIdFile) << m_advertisingId;
+        adIdFile.close();
+    }
 }
 
 void SessionManager::regenerateUuid() {
+    // Force new UUIDs by clearing the members first
+    m_uuid.clear();
+    m_phoneId.clear();
+    m_advertisingId.clear();
     initializeUuid();
     emit sessionChanged();
 }
@@ -181,12 +225,18 @@ void SessionManager::clearSession() {
     QFile(m_dataPath.absolutePath() + "/userId.dat").remove();
     QFile(m_dataPath.absolutePath() + "/token.dat").remove();
     QFile(m_dataPath.absolutePath() + "/authorization.dat").remove();
+    QFile(m_dataPath.absolutePath() + "/uuid.dat").remove();
+    QFile(m_dataPath.absolutePath() + "/phoneId.dat").remove();
+    QFile(m_dataPath.absolutePath() + "/advertisingId.dat").remove();
 
     m_isLoggedIn = false;
     m_userId.clear();
     m_csrfToken.clear();
     m_rankToken.clear();
     m_authorizationHeader.clear();
+    m_uuid.clear();
+    m_phoneId.clear();
+    m_advertisingId.clear();
 
     emit sessionChanged();
     emit loginStateChanged(false);

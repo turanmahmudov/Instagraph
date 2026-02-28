@@ -450,6 +450,45 @@ QString Instagram::getUsernameId() {
     return m_session->userId();
 }
 
+QString Instagram::getSessionId() {
+    return m_cookies->extractSessionId();
+}
+
+QString Instagram::getPhoneId() {
+    return m_session->phoneId();
+}
+
+void Instagram::registerPush(QString token) {
+    qDebug() << "Instagram: registering push with token:" << token.left(20) << "...";
+
+    // Generate a random family_device_id (UUID v4) matching TypeScript reference
+    QString familyDeviceId = QUuid::createUuid().toString();
+    familyDeviceId = familyDeviceId.mid(1, familyDeviceId.length() - 2);
+
+    auto request = IG::RequestBuilder::post("push/register/")
+        .param("device_type", "android_mqtt")
+        .param("is_main_push_channel", "true")
+        .param("device_sub_type", "2")
+        .param("device_token", token)
+        .param("guid", m_session->uuid())
+        .param("uuid", m_session->uuid())
+        .param("users", m_session->userId())
+        .param("family_device_id", familyDeviceId)
+        .authenticated()
+        .unsigned_()
+        .build();
+
+    m_client->execute(request, [this](const IG::Response& response) {
+        qDebug() << "Instagram: push/register/ response:" << response.ok();
+        if (response.ok()) {
+            emit pushRegistered(response.toVariant());
+        } else {
+            qWarning() << "Instagram: push/register/ failed:" << response.errorMessage();
+            emit error(response.errorMessage());
+        }
+    });
+}
+
 void Instagram::setProfilePic(QString userpic) {
     m_session->setProfilePic(userpic);
 }

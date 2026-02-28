@@ -22,6 +22,7 @@ public:
     void clearCookies();
 
     QString extractCsrfToken() const;
+    QString extractSessionId() const;
     bool hasCookies() const;
 
 signals:
