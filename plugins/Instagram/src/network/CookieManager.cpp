@@ -74,11 +74,11 @@ void CookieManager::saveCookies() {
 
 void CookieManager::clearCookies() {
     QFile(m_dataPath + "/cookies.dat").remove();
-    
-    // Delete the old cookie jar immediately to prevent memory leak
-    // if clearCookies() is called multiple times before deleteLater() executes
+
     delete m_cookieJar;
     m_cookieJar = new QNetworkCookieJar(this);
+
+    emit cookieJarChanged();
 }
 
 QString CookieManager::extractCsrfToken() const {

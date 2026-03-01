@@ -29,6 +29,16 @@ ApiClient::ApiClient(SessionManager* session, CookieManager* cookies, QObject* p
         m_network->setCookieJar(m_cookies->cookieJar());
         m_cookies->cookieJar()->setParent(m_cookies);  // Keep CookieManager as owner
     }
+
+    // When the cookie jar is replaced (e.g. after logout), reassign to the network manager
+    if (m_cookies) {
+        connect(m_cookies, &CookieManager::cookieJarChanged, this, [this]() {
+            if (m_cookies->cookieJar()) {
+                m_network->setCookieJar(m_cookies->cookieJar());
+                m_cookies->cookieJar()->setParent(m_cookies);
+            }
+        });
+    }
 }
 
 ApiClient::~ApiClient() {

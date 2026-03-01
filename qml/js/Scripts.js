@@ -51,7 +51,10 @@ function openImportPhotoPage(currentpage, is_desktop = false) {
 }
 
 function logOut() {
-    instagram.logout()
+    if (loggedIn) {
+        instagram.logout()
+        pageLayout.removePages(homePage)
+    }
 
     Storage.deleteAccount(activeUsername)
 
@@ -62,25 +65,31 @@ function logOut() {
         activeUsername = ""
     }
 
-    pageLayout.removePages(homePage)
     mainView.init(true)
 }
 
-function logOutWithoutRemoving() {
-    instagram.logout()
+function goToAddAccount() {
+    if (loggedIn) {
+        pageLayout.removePages(homePage)
+    }
 
-    activeUsername = ""
-
-    pageLayout.removePages(homePage)
-    mainView.init(true)
+    loginPageActive = true
+    mainView.goLogin()
 }
 
 function switchAccount(username) {
-    instagram.logout()
+    if (username === activeUsername && loggedIn) {
+        // Already logged into this account, just go back to home
+        pageLayout.primaryPage = homePage
+        return
+    }
+
+    if (loggedIn) {
+        pageLayout.removePages(homePage)
+    }
 
     activeUsername = username
 
-    pageLayout.removePages(homePage)
     mainView.init(true)
 }
 

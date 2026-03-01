@@ -238,6 +238,9 @@ void SessionManager::clearSession() {
     m_phoneId.clear();
     m_advertisingId.clear();
 
+    // Regenerate UUIDs so subsequent login() calls have valid identifiers
+    initializeUuid();
+
     emit sessionChanged();
     emit loginStateChanged(false);
 }

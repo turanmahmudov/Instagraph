@@ -63,12 +63,11 @@ PageItem {
             height: layout.height
             divider.visible: false
             onClicked: {
+                bottomEdge.collapse()
                 if (isUser) {
                     Scripts.switchAccount(username)
-                    bottomEdge.collapse()
                 } else {
-                    Scripts.logOutWithoutRemoving()
-                    bottomEdge.collapse()
+                    Scripts.goToAddAccount()
                 }
             }
 

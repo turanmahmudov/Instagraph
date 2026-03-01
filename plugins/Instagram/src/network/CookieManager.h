@@ -27,6 +27,7 @@ public:
 
 signals:
     void cookiesSaved();
+    void cookieJarChanged();
 
 private:
     QString m_dataPath;
