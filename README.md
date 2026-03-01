@@ -1,4 +1,5 @@
 # Instagraph
+
 [![License](https://img.shields.io/badge/license-GPLv3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.en.html)
 [![GitHub release](https://img.shields.io/github/release/turanmahmudov/Instagraph.svg)](https://github.com/turanmahmudov/Instagraph)
 [![GitHub issues](https://img.shields.io/github/issues/turanmahmudov/Instagraph.svg)](https://github.com/turanmahmudov/Instagraph/issues)
@@ -14,15 +15,13 @@ Unofficial Native Instagram Client
 
 ### Snap
 
-`snap install instagraph`
-
-`snap connect instagraph:camera :camera`
-
-`snap connect instagraph:alsa :alsa`
-
-`snap connect instagraph:pulseaudio :pulseaudio`
-
-`snap connect instagraph:opengl :opengl`
+```sh
+snap install instagraph
+snap connect instagraph:camera :camera
+snap connect instagraph:alsa :alsa
+snap connect instagraph:pulseaudio :pulseaudio
+snap connect instagraph:opengl :opengl
+```
 
 ## Usage
 
@@ -31,31 +30,41 @@ Unofficial Native Instagram Client
 ## Contributing
 
 ## Translations
+
 POEditor [https://poeditor.com/join/project/wZiqQyM7ZS](https://poeditor.com/join/project/wZiqQyM7ZS)
 
 ## Credits
-- Creator & Developer: Turan Mahmudov <[turan.mahmudov@gmail.com](mailto:turan.mahmudov@gmail.com)>
-- Icons: Kevin Feyder <[kevinfeyder@gmail.com](mailto:kevinfeyder@gmail.com)>
+
+- [Turan Mahmudov (turanmahmudov)](https://github.com/turanmahmudov/) - Creator
+- [Kevin Feyder (halfsail)](https://github.com/halfsail) - Icon
+- [Rúben Carneiro (rubencarneiro)](https://gitlab.com/rubencarneiro) - Focal Update
+- [Stefano Verzegnassi (sverzegnassi)](https://github.com/sverzegnassi) - Original InstantFX App - used for Instagram Filters
+- [Chupligin Sergey (neochapay)](https://github.com/neochapay) - Original QtInstagram Library - used for the Backend
 
 ## Libraries
-- [mgp25/Instagram-API](https://github.com/mgp25/Instagram-API): Instagram's private API
-- [instantfx](http://launchpad.net/instantfx): A photo filter application for Ubuntu Devices
-- [neochapay/Prostogram](https://github.com/neochapay/Prostogram): An unoffical Instagram client for Sailfish
+
+- [sverzegnassi/instantfx](http://launchpad.net/instantfx): A photo filter application for Ubuntu Devices
+- [neochapay/QtInstagram](https://github.com/neochapay/QtInstagram): An unofficial Instagram library
 - [mitmproxy/mitmproxy](https://github.com/mitmproxy/mitmproxy): An interactive SSL-capable intercepting HTTP proxy
 
 ## Support
+
 Reach out to me at one of the following places!
 
-- Google+ at <a href="https://plus.google.com/+TuranMahmudov" target="_blank">`+TuranMahmudov`</a>
 - Twitter at <a href="http://twitter.com/turanmahmudov" target="_blank">`@turanmahmudov`</a>
 
 ## Donations
-Donate me on [PayPal](https://www.paypal.me/gturanmahmudov)
+
+Donate me on [PayPal](https://www.paypal.com/paypalme/turanmahmudov)
+
+## Disclaimer
+
+This project is an unofficial, open-source application and is not affiliated with, authorized, maintained, sponsored, or endorsed by Instagram, Meta Platforms, Inc., or any of its affiliates or subsidiaries. Instagram is a registered trademark of Meta Platforms, Inc.
+
+Use this application at your own risk. The developer assumes no responsibility for any consequences resulting from the use of this application, including but not limited to account restrictions, suspensions, or permanent bans imposed by Instagram. By using this application, you acknowledge that using third-party clients may violate Instagram's Terms of Service and that your account may be subject to action by Instagram at any time.
+
+The developer provides this software "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and noninfringement.
 
 ## License
+
 The app is open source and licensed under GNU General Public License v3.0 (http://www.gnu.org/licenses/gpl-3.0.en.html).
-
-## Support on Beerpay
-Hey dude! Help me out for a couple of :beers:!
-
-[![Beerpay](https://beerpay.io/turanmahmudov/Instagraph/badge.svg?style=beer-square)](https://beerpay.io/turanmahmudov/Instagraph)  [![Beerpay](https://beerpay.io/turanmahmudov/Instagraph/make-wish.svg?style=flat-square)](https://beerpay.io/turanmahmudov/Instagraph?focus=wish)

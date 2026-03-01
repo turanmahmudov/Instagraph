@@ -1,17 +1,8 @@
-// Qt imports
 import QtQuick 2.12
-
-// Lomiri imports
 import Lomiri.Components 1.3
 
-// Component imports
 import "../components"
 import "../components/Page"
-import "../components/User"
-import "../components/Feed"
-import "../components/Media"
-import "../components/Camera"
-import "../components/Actions"
 
 PageItem {
     id: aboutPage
@@ -37,7 +28,7 @@ PageItem {
             height: units.gu(16)
             radius: "medium"
             source: Image {
-                source: Qt.resolvedUrl("../../Instagraph.png")
+                source: Qt.resolvedUrl("../../assets/instagraph.png")
             }
         }
 
@@ -73,7 +64,7 @@ PageItem {
             }
 
             Label {
-                text: "<a href=\"mailto://turan.mahmudov@gmail.com\">turan.mahmudov@gmail.com</a>"
+                text: "<a href=\"https://github.com/turanmahmudov\">github.com/turanmahmudov</a>"
                 width: parent.width
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter

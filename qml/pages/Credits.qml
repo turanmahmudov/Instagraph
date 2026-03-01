@@ -1,17 +1,8 @@
-// Qt imports
 import QtQuick 2.12
-
-// Lomiri imports
 import Lomiri.Components 1.3
 
-// Component imports
 import "../components"
 import "../components/Page"
-import "../components/User"
-import "../components/Feed"
-import "../components/Media"
-import "../components/Camera"
-import "../components/Actions"
 
 PageItem {
     id: creditsPage
@@ -35,102 +26,81 @@ PageItem {
            width: parent.width
 
            ListItem {
-               height: creatorHeaderLayout.height
-
-               ListItemLayout {
-                   id: creatorHeaderLayout
-
-                   title.text: i18n.tr("Creator")
-                   title.font.weight: Font.Normal
-               }
-           }
-
-           ListItem {
                height: prs1Layout.height
-               divider.visible: false
                ListItemLayout {
                    id: prs1Layout
 
-                   title.text: "Turan Mahmudov"
-                   subtitle.text: "turan.mahmudov@gmail.com"
+                   title.text: "Turan Mahmudov (turanmahmudov)"
+                   subtitle.text: i18n.tr("Creator")
                }
                onClicked: {
-                   Qt.openUrlExternally("mailto:turan.mahmudov@gmail.com")
-               }
-           }
-
-           ListItem {
-               height: developersHeaderLayout.height
-
-               ListItemLayout {
-                   id: developersHeaderLayout
-
-                   title.text: i18n.tr("Developers")
-                   title.font.weight: Font.Normal
+                   Qt.openUrlExternally("https://github.com/turanmahmudov/")
                }
            }
 
            ListItem {
                height: prs2Layout.height
-               divider.visible: false
                ListItemLayout {
                    id: prs2Layout
 
-                   title.text: "Turan Mahmudov"
-                   subtitle.text: "turan.mahmudov@gmail.com"
+                   title.text: "Kevin Feyder (halfsail)"
+                   subtitle.text: i18n.tr("Icon")
                }
                onClicked: {
-                   Qt.openUrlExternally("mailto:turan.mahmudov@gmail.com")
-               }
-           }
-
-           ListItem {
-               height: iconsHeaderLayout.height
-
-               ListItemLayout {
-                   id: iconsHeaderLayout
-
-                   title.text: i18n.tr("Icons")
-                   title.font.weight: Font.Normal
+                   Qt.openUrlExternally("https://github.com/halfsail")
                }
            }
 
            ListItem {
                height: prs3Layout.height
-               divider.visible: false
                ListItemLayout {
                    id: prs3Layout
 
-                   title.text: "Kevin Feyder"
-                   subtitle.text: "kevinfeyder@gmail.com"
+                   title.text: "Rúben Carneiro (rubencarneiro)"
+                   subtitle.text: i18n.tr("Focal Update")
                }
                onClicked: {
-                   Qt.openUrlExternally("mailto:kevinfeyder@gmail.com")
+                   Qt.openUrlExternally("https://gitlab.com/rubencarneiro")
                }
            }
 
            ListItem {
-               height: focalHeaderLayout.height
-
-               ListItemLayout {
-                   id: focalHeaderLayout
-
-                   title.text: i18n.tr("Focal Update")
-                   title.font.weight: Font.Normal
-               }
-           }
-
-            ListItem {
                height: prs4Layout.height
-               divider.visible: false
                ListItemLayout {
                    id: prs4Layout
 
-                   title.text: "Rúben Carneiro"
-                   subtitle.text: "rubencarneiro01@gmail.com"
+                   title.text: "Stefano Verzegnassi (sverzegnassi)"
+                   subtitle.text: i18n.tr("Original InstantFX App - used for Instagram Filters")
                }
                onClicked: {
-                   Qt.openUrlExternally("mailto:rubencarneiro01@gmail.com")
+                   Qt.openUrlExternally("https://github.com/sverzegnassi")
+               }
+           }
+
+           ListItem {
+               height: prs5Layout.height
+               ListItemLayout {
+                   id: prs5Layout
+
+                   title.text: "Chupligin Sergey (neochapay)"
+                   subtitle.text: i18n.tr("Original QtInstagram Library - used for the Backend")
+               }
+               onClicked: {
+                   Qt.openUrlExternally("https://github.com/neochapay")
+               }
+           }
+
+           ListItem {
+               height: allContributorsLayout.height
+               divider.visible: false
+               ListItemLayout {
+                   id: allContributorsLayout
+
+                   title.text: i18n.tr("All Contributors")
+                   subtitle.text: i18n.tr("Thank you to all contributors!")
+               }
+               onClicked: {
+                   Qt.openUrlExternally("https://github.com/turanmahmudov/Instagraph/graphs/contributors")
                }
            }
         }
