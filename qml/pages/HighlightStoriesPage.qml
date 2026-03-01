@@ -40,6 +40,8 @@ StoryViewerPage {
 
     function handleReelsData(data) {
         if (!data || !data.reels || !data.reels[highlightId]) {
+            storyUnavailable = true
+            getting = false
             return
         }
 
@@ -47,8 +49,23 @@ StoryViewerPage {
         var items = reelData.items
 
         if (!items || items.length === 0) {
+            // Show highlight info in header even when unavailable
+            user = reelData.user
+            if (user) {
+                highlight = {
+                    'title': "title" in reelData ? reelData.title : user.username,
+                    'cover_url': "cover_media" in reelData ? reelData.cover_media.cropped_image_version.url : user.profile_pic_url
+                }
+                headerImageSource = highlight.cover_url
+                headerTitle = highlight.title
+                headerSubtitle = ""
+            }
+            storyUnavailable = true
+            getting = false
             return
         }
+
+        storyUnavailable = false
 
         worker.sendMessage({'feed': 'userStoriesPage', 'obj': items, 'model': storiesModel, 'clear_model': true})
 
@@ -62,6 +79,9 @@ StoryViewerPage {
         headerImageSource = highlight.cover_url
         headerTitle = highlight.title
         headerSubtitle = Helper.milisecondsToString(items[0].taken_at, true)
+
+        // Mark all stories as seen immediately
+        markStoriesSeen(items)
 
         getting = false
     }

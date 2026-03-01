@@ -65,8 +65,6 @@ BaseFeedViewModel {
         onMessage: {
             if (messageObject.type === "seen_posts") {
                 seenPosts.push(messageObject.id)
-                // Send media seen to Instagram API immediately
-                instagram.mediaSeen([messageObject.id], [])
             } else if (messageObject.type === "end_of_feed") {
                 // Handle end of feed demarcator - block further loading
                 if (messageObject.style === "top_of_feed") {

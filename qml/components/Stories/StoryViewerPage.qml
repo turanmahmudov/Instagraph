@@ -36,6 +36,7 @@ PageItem {
     property int progressTime: 0
     property bool getting: false
     property bool paused: false
+    property bool storyUnavailable: false
     property int _remainingTime: 0  // remaining ms when paused
 
     // The parent page populates this model via the worker
@@ -174,22 +175,26 @@ PageItem {
         }
     }
 
-    // -- Mark single story as seen --
+    // -- Mark stories as seen --
 
-    function markCurrentStorySeen(item) {
-        if (!item) return
+    function markStoriesSeen(items) {
+        if (!items || items.length === 0) return
 
         var reels = {}
         var now = new Date().getTime()
-        var itemTakenAt = item.taken_at
-        var seenAt = now
-        if (seenAt < itemTakenAt) {
-            seenAt = itemTakenAt + 2
-        }
 
-        var itemSourceId = item.user.pk
-        var reelId = item.id + '_' + itemSourceId
-        reels[reelId] = [itemTakenAt + '_' + seenAt]
+        for (var i = 0; i < items.length; i++) {
+            var item = items[i]
+            var itemTakenAt = item.taken_at
+            var seenAt = now
+            if (seenAt < itemTakenAt) {
+                seenAt = itemTakenAt + 2
+            }
+
+            var itemSourceId = item.user.pk
+            var reelId = item.id + '_' + itemSourceId
+            reels[reelId] = [itemTakenAt + '_' + seenAt]
+        }
 
         instagram.markStoryMediaSeen(JSON.stringify(reels))
     }
@@ -295,7 +300,6 @@ PageItem {
                         onStatusChanged: {
                             if (status === Image.Ready) {
                                 startNewStoryTimer(4000)
-                                markCurrentStorySeen(storiesModel.get(index))
                             }
                         }
                     }
@@ -327,7 +331,6 @@ PageItem {
                             if (playbackState === MediaPlayer.PlayingState && !videoContainer.timerStarted) {
                                 videoContainer.timerStarted = true
                                 startNewStoryTimer(video_duration * 1000)
-                                markCurrentStorySeen(storiesModel.get(index))
                             }
                         }
 
@@ -428,5 +431,15 @@ PageItem {
                 }
             }
         }
+    }
+
+    // -- Story unavailable message --
+    Label {
+        anchors.centerIn: parent
+        visible: storyUnavailable
+        text: i18n.tr("Story unavailable")
+        fontSize: "large"
+        font.weight: Font.DemiBold
+        color: styleApp.common.textColor
     }
 }
