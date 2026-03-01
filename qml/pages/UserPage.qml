@@ -381,7 +381,10 @@ PageItem {
     }
 
     Component.onCompleted: {
-        feedViewModel.loadUserInfo()
         feedViewModel.loadFeed(true)
+    }
+
+    function getUsernameInfo() {
+        feedViewModel.loadUserInfo()
     }
 }

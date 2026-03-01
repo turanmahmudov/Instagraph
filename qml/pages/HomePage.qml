@@ -35,8 +35,8 @@ PageItem {
 
     // Expose loading state for PageItem's BouncingProgressBar
     property alias list_loading: feedViewModel.isLoading
-    
-    Component.onCompleted: {
+
+    function getHomeFeed() {
         feedViewModel.loadFeed(true)
     }
 
@@ -105,7 +105,7 @@ PageItem {
                 feedViewModel.loadFeed(true)
             }
         }
-        
+
         // "All caught up" footer
         footer: EmptyBox {
             visible: feedViewModel.isCaughtUp
