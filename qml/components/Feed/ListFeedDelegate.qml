@@ -18,6 +18,9 @@ ListItem {
     property var currentPage: pageLayout.primaryPage
     property var currentModel
     property var suggestionsModel
+    property ListModel storiesTrayModel: ListModel {}
+    property var storiesTrayAllUsers: []
+    property bool storiesTrayLoaded: false
     property bool showCarousel: false
     property bool enableVideoPlayback: false
 
@@ -86,6 +89,9 @@ ListItem {
         sourceComponent: StoriesTray {
             id: storiesFeedTray
             anchors.fill: parent
+            model: listFeedDelegate.storiesTrayModel
+            allUsers: listFeedDelegate.storiesTrayAllUsers
+            finishedLoading: listFeedDelegate.storiesTrayLoaded
         }
     }
 

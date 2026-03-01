@@ -38,6 +38,7 @@ PageItem {
 
     function getHomeFeed() {
         feedViewModel.loadFeed(true)
+        feedViewModel.loadStoriesTray()
     }
 
     header: PageHeaderItem {
@@ -91,6 +92,9 @@ PageItem {
             currentPage: homepage
             currentModel: feedViewModel.feedModel
             suggestionsModel: feedViewModel.suggestionsModel
+            storiesTrayModel: feedViewModel.storiesTrayModel
+            storiesTrayAllUsers: feedViewModel.storiesTrayAllUsers
+            storiesTrayLoaded: feedViewModel.storiesTrayLoaded
         }
         onContentYChanged: {
             // Use ViewModel's helper to check if should load more
@@ -103,6 +107,7 @@ PageItem {
             onRefresh: {
                 feedViewModel.isPullToRefresh = true
                 feedViewModel.loadFeed(true)
+                feedViewModel.loadStoriesTray(true)
             }
         }
 

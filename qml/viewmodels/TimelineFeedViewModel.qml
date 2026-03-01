@@ -25,6 +25,11 @@ BaseFeedViewModel {
     property string caughtUpSubtitle: ""
     property bool inSuggestedPostsSection: false
 
+    // Stories tray state (persists across page navigation)
+    property ListModel storiesTrayModel: ListModel {}
+    property var storiesTrayAllUsers: []
+    property bool storiesTrayLoaded: false
+
     /**
      * Load timeline feed
      * @param refresh - If true, clears feed and loads from beginning
@@ -83,12 +88,35 @@ BaseFeedViewModel {
         }
     }
 
+    // Stories tray worker
+    WorkerScript {
+        id: trayWorker
+        source: "../js/Workers/SimpleWorker.js"
+        onMessage: {
+        }
+    }
+
+    function loadStoriesTray(force) {
+        if (!storiesTrayLoaded || force) {
+            instagram.getReelsTrayFeed()
+        }
+    }
+
     // Connection to Instagram API
     Connections {
         target: instagram
         onTimelineFeedDataReady: {
             var data = JSON.parse(answer)
             handleFeedResponse(data)
+        }
+        onReelsTrayFeedDataReady: {
+            var data = JSON.parse(answer)
+            trayWorker.sendMessage({'feed': 'StoriesTray', 'obj': data.tray, 'model': storiesTrayModel, 'clear_model': true})
+            storiesTrayLoaded = true
+            storiesTrayAllUsers = []
+            for (var i = 0; i < data.tray.length; i++) {
+                storiesTrayAllUsers.push(data.tray[i].user.pk)
+            }
         }
     }
 

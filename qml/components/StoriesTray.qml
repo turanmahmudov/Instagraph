@@ -13,29 +13,14 @@ Item {
     property var currentDelegatePage: pageLayout.primaryPage
     property var allUsers: []
     property bool finishedLoading: false
+    property ListModel model: ListModel {}
 
     function checkVisible() {
-        if (finishedLoading && storiesTrayModel.count == 0) {
+        if (finishedLoading && model.count == 0) {
             return false;
         }
 
         return true;
-    }
-
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/SimpleWorker.js"
-        onMessage: {
-        }
-    }
-
-    Component.onCompleted: {
-        finishedLoading = false
-        instagram.getReelsTrayFeed();
-    }
-
-    ListModel {
-        id: storiesTrayModel
     }
 
     Item {
@@ -73,7 +58,7 @@ Item {
         highlightRangeMode: ListView.ApplyRange
         highlightFollowsCurrentItem: true
 
-        model: storiesTrayModel
+        model: storiesTray.model
 
         delegate: ListItem {
             width: storiesTray.width/5 + units.gu(1)
@@ -115,22 +100,6 @@ Item {
                         }
                     }
                 }
-            }
-        }
-    }
-
-    Connections {
-        target: instagram
-        onReelsTrayFeedDataReady:{
-            var data = JSON.parse(answer);
-
-            worker.sendMessage({'feed': 'StoriesTray', 'obj': data.tray, 'model': storiesTrayModel, 'clear_model': true})
-            finishedLoading = true
-
-            // Reset allUsers before rebuilding to prevent unbounded growth
-            allUsers = []
-            for (var i=0; i<data.tray.length; i++) {
-                allUsers.push(data.tray[i].user.pk)
             }
         }
     }
