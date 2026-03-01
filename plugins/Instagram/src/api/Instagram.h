@@ -75,7 +75,6 @@ public Q_SLOTS:
     Q_INVOKABLE void getCurrentUser();
     Q_INVOKABLE void editProfile(QString url, QString phone, QString first_name, QString biography, QString email, bool gender);
     Q_INVOKABLE void checkUsername(QString username);
-    Q_INVOKABLE void createAccount(QString username, QString password, QString email);
 
     // Direct
     Q_INVOKABLE void getInbox(QString cursorId = "");
@@ -194,7 +193,6 @@ Q_SIGNALS:
     void currentUserDataReady(QVariant answer);
     void editDataReady(QVariant answer);
     void usernameCheckDataReady(QVariant answer);
-    void createAccountDataReady(QVariant answer);
 
     // Direct signals
     void inboxDataReady(QVariant answer);

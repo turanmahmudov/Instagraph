@@ -133,13 +133,6 @@ PageItem {
                         anchors.centerIn: parent
                         text: i18n.tr("OR")
                         font.weight: Font.DemiBold
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                pageLayout.addPageToCurrentColumn(pageLayout.primaryPage, PagesConstants.register)
-                            }
-                        }
                     }
                 }
             }
@@ -163,38 +156,7 @@ PageItem {
         }
     }
 
-    Column {
-        width: parent.width
-        height: units.gu(7)
-        anchors.bottom: parent.bottom
 
-        Rectangle {
-            width: parent.width
-            height: units.gu(0.08)
-            color: LomiriColors.ash
-        }
-
-        Item {
-            width: parent.width
-            height: parent.height
-
-            Label {
-                anchors.centerIn: parent
-                width: parent.width
-                text: i18n.tr("Don't have an account? <b>Sign Up</b>.")
-                wrapMode: Text.WordWrap
-                textFormat: Text.RichText
-                horizontalAlignment: Text.AlignHCenter
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        pageLayout.addPageToCurrentColumn(pageLayout.primaryPage, PagesConstants.register)
-                    }
-                }
-            }
-        }
-    }
 
     BottomEdge {
         id: bottomEdge

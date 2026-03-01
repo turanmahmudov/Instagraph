@@ -242,31 +242,6 @@ void AccountEndpoint::checkUsername(const QString& username, const QString& user
     });
 }
 
-void AccountEndpoint::createAccount(const QString& username, const QString& password, 
-                                    const QString& email, const QString& uuid, 
-                                    const QString& deviceId) {
-    auto request = RequestBuilder::post("accounts/create/")
-        .param("_uuid", uuid)
-        .param("_csrftoken", "missing")
-        .param("username", username)
-        .param("first_name", "")
-        .param("guid", uuid)
-        .param("device_id", deviceId)
-        .param("email", email)
-        .param("force_sign_up_code", "")
-        .param("qs_stamp", "")
-        .param("password", password)
-        .build();
-
-    m_client->execute(request, [this](const Response& response) {
-        if (response.ok()) {
-            emit accountCreated(response.toVariant());
-        } else {
-            emit error(response.errorMessage());
-        }
-    });
-}
-
 void AccountEndpoint::syncFeatures(const QString& userId, const QString& /* password */) {
     // Post-login qe/sync - does NOT send password, uses authenticated params
     // Requests are signed by default, so no need to call signed_()

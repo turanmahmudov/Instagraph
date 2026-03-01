@@ -30,7 +30,7 @@
         <file>qml/pages/Credits.qml</file>
         <file>qml/pages/DirectThreadPage.qml</file>
         <file>qml/pages/ChangePasswordPage.qml</file>
-        <file>qml/pages/RegisterPage.qml</file>
+
         <file>qml/pages/CheckpointInfo.qml</file>
         <file>qml/js/Workers/ActivityWorker.js</file>
         <file>qml/js/Workers/SimpleWorker.js</file>

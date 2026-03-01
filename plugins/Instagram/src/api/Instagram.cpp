@@ -91,8 +91,6 @@ void Instagram::setupEndpointConnections() {
             this, &Instagram::editDataReady);
     connect(m_account, &IG::AccountEndpoint::usernameCheckReady, 
             this, &Instagram::usernameCheckDataReady);
-    connect(m_account, &IG::AccountEndpoint::accountCreated, 
-            this, &Instagram::createAccountDataReady);
     connect(m_account, &IG::AccountEndpoint::logoutReady, 
             this, &Instagram::doLogout);
     connect(m_account, &IG::AccountEndpoint::error, 
@@ -515,10 +513,6 @@ void Instagram::editProfile(QString url, QString phone, QString first_name,
 
 void Instagram::checkUsername(QString username) {
     m_account->checkUsername(username, m_session->userId());
-}
-
-void Instagram::createAccount(QString username, QString password, QString email) {
-    m_account->createAccount(username, password, email, m_session->uuid(), m_session->deviceId());
 }
 
 // ============================================================================

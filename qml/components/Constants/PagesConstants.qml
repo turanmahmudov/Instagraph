@@ -8,7 +8,6 @@ QtObject {
     
     // Authentication
     readonly property string login: getQtResolvedUrl("LoginPage.qml")
-    readonly property string register: getQtResolvedUrl("RegisterPage.qml")
     readonly property string two_fa: getQtResolvedUrl("2FactorLoginPage.qml")
     readonly property string checkpoint_info: getQtResolvedUrl("CheckpointInfo.qml")
     

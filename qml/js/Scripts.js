@@ -84,9 +84,3 @@ function switchAccount(username) {
     mainView.init(true)
 }
 
-function registered() {
-    instagram.logout()
-
-    pageLayout.removePages(homePage)
-    init()
-}

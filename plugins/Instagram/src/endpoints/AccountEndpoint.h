@@ -18,7 +18,7 @@ class ApiClient;
  * - Profile privacy settings
  * - Profile picture management
  * - Profile editing
- * - Account creation
+
  */
 class AccountEndpoint : public QObject
 {
@@ -64,10 +64,8 @@ public:
                      const QString& biography, const QString& email, bool gender,
                      const QString& username);
 
-    // Username/Account management
+    // Username management
     void checkUsername(const QString& username, const QString& userId);
-    void createAccount(const QString& username, const QString& password, const QString& email,
-                       const QString& uuid, const QString& deviceId);
 
     // Feature sync (called after login)
     void syncFeatures(const QString& userId, const QString& password);
@@ -88,7 +86,6 @@ Q_SIGNALS:
     void currentUserReady(const QVariant& answer);
     void profileEdited(const QVariant& answer);
     void usernameCheckReady(const QVariant& answer);
-    void accountCreated(const QVariant& answer);
     void featuresSynced(const QVariant& answer);
 
     void error(const QString& message);
