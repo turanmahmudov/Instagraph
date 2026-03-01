@@ -12,6 +12,9 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
+// Plugin imports
+import ImageEditor 1.0
+
 // Component imports
 import "../components"
 import "../components/Constants"
@@ -28,6 +31,10 @@ PageItem {
     property int editPhotoMode: 1
 
     property var imagePath
+
+    ImageEditor {
+        id: imageEditor
+    }
 
     header: PageHeaderItem {
         title: i18n.tr("Crop")
@@ -51,9 +58,9 @@ PageItem {
 
 
                     if (toCropImage.width > toCropImage.height) {
-                        instagram.scaleImg(String(imagePath).replace('file://', ''));
+                        imageEditor.scaleImage(String(imagePath).replace('file://', ''));
                     } else {
-                        instagram.cropImg(String(imagePath).replace('file://', ''), toCropFlickable.visibleArea.yPosition);
+                        imageEditor.cropImage(String(imagePath).replace('file://', ''), toCropFlickable.visibleArea.yPosition);
                     }
                 }
             }
@@ -94,12 +101,12 @@ PageItem {
         }
     }
 
-    Connections{
-        target: instagram
-        onImgCropped: {
-            instagram.scaleImg(String(imagePath).replace('file://', ''));
+    Connections {
+        target: imageEditor
+        onCropped: {
+            imageEditor.scaleImage(String(imagePath).replace('file://', ''));
         }
-        onImgScaled: {
+        onScaled: {
             Scripts.pushImageEdit(cameracroppage, imagePath)
         }
     }

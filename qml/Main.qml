@@ -110,21 +110,7 @@ MainView {
         id: imageproc
 
         // Default filter
-        filterUrl: Qt.resolvedUrl("filters/NoFilter.qml")
-
-        // TODO: Move to C++
-        onFilterChanged: {
-            //filter.width = __output.width
-            //filter.height = __output.height
-            filter.img = __output.__clarityFilter
-            filter.parent = __output.__filterContainer
-            filter.anchors.fill = parent
-        }
-
-        onImageSaved: {
-            __output.setDefaultSize()
-            Scripts.pushImageCaption(pageLayout.primaryPage, path)
-        }
+        filterUrl: "qrc:///ImageProcessor/qml/filters/NoFilter.qml"
     }
 
     // URI Handler

@@ -12,6 +12,9 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
+// Plugin imports
+import ImageEditor 1.0
+
 // Component imports
 import "../components"
 import "../components/Constants"
@@ -28,6 +31,42 @@ PageItem {
     property int takePhotoMode: functionSelector.selectedIndex
 
     property var imagePath
+    property bool _hasBackCamera: false
+    property bool _hasFrontCamera: false
+
+    ImageEditor {
+        id: imageEditor
+    }
+
+    // Detect available cameras at startup
+    Component.onCompleted: {
+        var cameras = QtMultimedia.availableCameras
+        for (var i = 0; i < cameras.length; i++) {
+            if (cameras[i].position === Camera.BackFace) {
+                _hasBackCamera = true
+            } else if (cameras[i].position === Camera.FrontFace) {
+                _hasFrontCamera = true
+            }
+        }
+
+        // Default to back camera on phones, front camera on laptops/desktops
+        if (_hasBackCamera) {
+            camera.position = Camera.BackFace
+        } else if (_hasFrontCamera) {
+            camera.position = Camera.FrontFace
+        }
+
+        camera.start()
+    }
+
+    // Restart camera when page becomes visible again (after navigating back)
+    onVisibleChanged: {
+        if (visible) {
+            camera.start()
+        } else {
+            camera.stop()
+        }
+    }
 
     header: PageHeaderItem {
         title: functionSelector.selectedIndex == 1 ? i18n.tr("Photo") : i18n.tr("Video")
@@ -55,18 +94,28 @@ PageItem {
 
             Camera {
                 id: camera
-                position: Camera.BackFace
-                imageProcessing.whiteBalanceMode: CameraImageProcessing.WhiteBalanceFlash
+
+                imageProcessing.whiteBalanceMode: CameraImageProcessing.WhiteBalanceAuto
 
                 exposure {
-                    exposureCompensation: -1.0
-                    exposureMode: Camera.ExposurePortrait
+                    exposureMode: Camera.ExposureAuto
                 }
                 flash.mode: Camera.FlashOff
                 focus {
-                    focusMode: Camera.FocusMacro
-                    focusPointMode: Camera.FocusPointCenter
+                    focusMode: Camera.FocusContinuous
+                    focusPointMode: Camera.FocusPointAuto
                 }
+
+                onCameraStatusChanged: {
+                    if (cameraStatus === Camera.UnavailableStatus) {
+                        console.warn("Camera: unavailable")
+                    }
+                }
+
+                onError: {
+                    console.warn("Camera error:", errorString)
+                }
+
                 imageCapture {
                     onImageCaptured: {
                         camera.stop();
@@ -84,28 +133,32 @@ PageItem {
                         imagePath = path
 
                         if (camera.orientation != 0) {
-                            instagram.rotateImg(String(path).replace('file://', ''), rotation);
+                            imageEditor.rotateImage(String(path).replace('file://', ''), rotation);
                         } else {
-                            instagram.squareImg(String(path).replace('file://', ''));
+                            imageEditor.cropImage(String(path).replace('file://', ''), true);
                         }
+                    }
+                    onCaptureFailed: {
+                        console.warn("Camera capture failed:", message)
                     }
                 }
             }
 
             VideoOutput {
                 source: camera
-                orientation: camera.orientation == 0 ? 0 : 270
                 fillMode: VideoOutput.PreserveAspectCrop
                 anchors.fill: parent
-                focus : visible
+                focus: visible
+                autoOrientation: true
             }
 
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    camera.focus.focusPointMode = Camera.FocusPointCustom
-                    camera.focus.customFocusPoint = Qt.point(mouseX, mouseY)
-
+                    if (camera.focus.isFocusSupported) {
+                        camera.focus.focusPointMode = Camera.FocusPointCustom
+                        camera.focus.customFocusPoint = Qt.point(mouseX / width, mouseY / height)
+                    }
                 }
             }
 
@@ -128,6 +181,7 @@ PageItem {
                         width: units.gu(5)
                         height: width
                         iconName: "camera-flip"
+                        visible: _hasBackCamera && _hasFrontCamera
                         onClicked: {
                             if (camera.position == Camera.BackFace) {
                                 camera.position = Camera.FrontFace
@@ -186,8 +240,9 @@ PageItem {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        // Capture Image to location
-                        camera.imageCapture.captureToLocation(instagram.photos_path()+'/')
+                        if (camera.imageCapture.ready) {
+                            camera.imageCapture.captureToLocation(instagram.photos_path()+'/')
+                        }
                     }
                 }
             }
@@ -215,15 +270,15 @@ PageItem {
         }
     }
 
-    Connections{
-        target: instagram
-        onImgRotated: {
-            instagram.squareImg(String(imagePath).replace('file://', ''));
+    Connections {
+        target: imageEditor
+        onRotated: {
+            imageEditor.cropImage(String(imagePath).replace('file://', ''), true);
         }
-        onImgSquared: {
-            instagram.scaleImg(String(imagePath).replace('file://', ''));
+        onCropped: {
+            imageEditor.scaleImage(String(imagePath).replace('file://', ''));
         }
-        onImgScaled: {
+        onScaled: {
             Scripts.pushImageEdit(takephotopage, imagePath)
         }
     }

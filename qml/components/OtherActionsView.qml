@@ -17,7 +17,7 @@
 import QtQuick 2.12
 import Lomiri.Components 1.3
 
-import "../effects"
+import "qrc:///ImageProcessor/qml/effects"
 
 import ImageProcessor 1.0
 

@@ -15,7 +15,6 @@
  */
 
 import QtQuick 2.12
-import ImageProcessor 1.0
 
 Item {
     id: rootItem

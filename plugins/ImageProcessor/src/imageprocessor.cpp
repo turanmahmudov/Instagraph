@@ -110,6 +110,24 @@ void ImageProcessor::setFilterUrl(const QUrl &url)
     // It should be FilterBase
     m_filter = qobject_cast<QQuickItem*>(component.create(qmlContext(m_imageContainer)));
 
+    // Wire the filter into the offscreen scene graph
+    if (m_filter && m_imageContainer) {
+        // Get the clarity filter output and filter container from ImageContainer
+        QQuickItem* clarityFilter = qvariant_cast<QQuickItem*>(m_imageContainer->property("__clarityFilter"));
+        QQuickItem* filterContainer = qvariant_cast<QQuickItem*>(m_imageContainer->property("__filterContainer"));
+
+        if (clarityFilter && filterContainer) {
+            // Set the filter's image source to the clarity filter output
+            m_filter->setProperty("img", QVariant::fromValue(clarityFilter));
+
+            // Parent the filter into the filter container
+            m_filter->setParentItem(filterContainer);
+
+            // Fill the parent (equivalent to anchors.fill: parent in QML)
+            QQmlProperty::write(m_filter, "anchors.fill", QVariant::fromValue(filterContainer));
+        }
+    }
+
     emit filterChanged();
 }
 
@@ -290,8 +308,7 @@ void ImageProcessor::componentComplete()
 
     QQmlEngine* engine = qmlEngine(this);
 
-    // FIXME: Hackish! It would be much better to use .qrc resources.
-    QUrl containerQmlPath = QUrl(QStringLiteral("qrc:///qml/components/ImageContainer.qml"));
+    QUrl containerQmlPath = QUrl(QStringLiteral("qrc:///ImageProcessor/qml/components/ImageContainer.qml"));
     //qDebug() << containerQmlPath;
 
     QQmlComponent component(engine, containerQmlPath, m_offscreenRenderer->contentItem());

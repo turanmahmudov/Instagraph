@@ -13,7 +13,6 @@
 #include "../endpoints/SearchEndpoint.h"
 #include "../endpoints/UsertagEndpoint.h"
 #include "../endpoints/UploadEndpoint.h"
-#include "../services/ImageService.h"
 #include "../crypto/PasswordEncryptor.h"
 #include <QFile>
 #include <QJsonDocument>
@@ -37,7 +36,6 @@ Instagram::Instagram(QObject *parent)
     , m_search(nullptr)
     , m_usertag(nullptr)
     , m_upload(nullptr)
-    , m_imageService(nullptr)
     , m_passwordEncryptor(nullptr)
 {
     initializeComponents();
@@ -70,9 +68,6 @@ void Instagram::initializeComponents() {
     m_search = new IG::SearchEndpoint(m_client, this);
     m_usertag = new IG::UsertagEndpoint(m_client, this);
     m_upload = new IG::UploadEndpoint(m_client, this);
-    
-    // Create services
-    m_imageService = new IG::ImageService(this);
     
     // Create password encryptor and link it with session
     m_passwordEncryptor = new IG::PasswordEncryptor(this);
@@ -273,16 +268,6 @@ void Instagram::setupEndpointConnections() {
     connect(m_upload, &IG::UploadEndpoint::uploadProgress, 
             this, &Instagram::imageUploadProgressDataReady);
     connect(m_upload, &IG::UploadEndpoint::error, 
-            this, &Instagram::error);
-
-    // Image service connections
-    connect(m_imageService, &IG::ImageService::rotated, 
-            this, &Instagram::imgRotated);
-    connect(m_imageService, &IG::ImageService::cropped, 
-            this, &Instagram::imgCropped);
-    connect(m_imageService, &IG::ImageService::scaled, 
-            this, &Instagram::imgScaled);
-    connect(m_imageService, &IG::ImageService::error, 
             this, &Instagram::error);
 
     // Error handling from API client
@@ -838,26 +823,6 @@ void Instagram::getUserTags(QString userId, QString max_id, QString minTimestamp
 
 void Instagram::removeSelftag(QString mediaId) {
     m_usertag->removeSelfTag(mediaId);
-}
-
-// ============================================================================
-// Image manipulation
-// ============================================================================
-
-void Instagram::rotateImg(QString filename, qreal deg) {
-    m_imageService->rotateImage(filename, deg);
-}
-
-void Instagram::cropImg(QString filename, bool squared, bool isRotated) {
-    m_imageService->cropImage(filename, squared, isRotated);
-}
-
-void Instagram::cropImg(QString in_filename, QString out_filename, int topSpace, bool squared) {
-    m_imageService->cropImage(in_filename, out_filename, topSpace, squared);
-}
-
-void Instagram::scaleImg(QString filename) {
-    m_imageService->scaleImage(filename);
 }
 
 // ============================================================================

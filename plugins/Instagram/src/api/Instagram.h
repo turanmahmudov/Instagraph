@@ -24,7 +24,6 @@ namespace IG {
     class SearchEndpoint;
     class UsertagEndpoint;
     class UploadEndpoint;
-    class ImageService;
     class PasswordEncryptor;
 }
 
@@ -68,12 +67,6 @@ public Q_SLOTS:
     // Popular/Search
     Q_INVOKABLE void getPopularFeed(QString max_id = "");
     Q_INVOKABLE void searchUsername(QString username);
-
-    // Image manipulation
-    Q_INVOKABLE void rotateImg(QString filename, qreal deg);
-    Q_INVOKABLE void cropImg(QString filename, bool squared, bool isRotated = true);
-    Q_INVOKABLE void cropImg(QString in_filename, QString out_filename, int topSpace, bool squared);
-    Q_INVOKABLE void scaleImg(QString filename);
 
     // Account
     Q_INVOKABLE void setPrivateAccount();
@@ -194,12 +187,6 @@ Q_SIGNALS:
     // Popular/Search signals
     void popularFeedDataReady(QVariant answer);
     void searchUsernameDataReady(QVariant answer);
-
-    // Image manipulation signals
-    void imgSquared();
-    void imgRotated();
-    void imgCropped();
-    void imgScaled();
 
     // Account signals
     void profilePictureDeleted(QVariant answer);
@@ -330,9 +317,6 @@ private:
     IG::UsertagEndpoint* m_usertag;
     IG::UploadEndpoint* m_upload;
 
-    // Services
-    IG::ImageService* m_imageService;
-    
     // Password encryption
     IG::PasswordEncryptor* m_passwordEncryptor;
 };

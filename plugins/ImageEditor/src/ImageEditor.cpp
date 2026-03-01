@@ -1,17 +1,15 @@
-#include "ImageService.h"
+#include "ImageEditor.h"
 #include <QImage>
 #include <QFile>
 #include <QTransform>
 #include <QDebug>
 
-namespace IG {
-
-ImageService::ImageService(QObject* parent)
+ImageEditor::ImageEditor(QObject* parent)
     : QObject(parent)
 {
 }
 
-void ImageService::rotateImage(const QString& filename, qreal degrees) {
+void ImageEditor::rotateImage(const QString& filename, qreal degrees) {
     QImage image(filename);
     if (image.isNull()) {
         emit error("Failed to load image: " + filename);
@@ -38,7 +36,7 @@ void ImageService::rotateImage(const QString& filename, qreal degrees) {
     imgFile.close();
 }
 
-void ImageService::cropImage(const QString& filename, bool squared, bool isRotated) {
+void ImageEditor::cropImage(const QString& filename, bool squared, bool isRotated) {
     QImage image(filename);
     if (image.isNull()) {
         emit error("Failed to load image: " + filename);
@@ -86,7 +84,7 @@ void ImageService::cropImage(const QString& filename, bool squared, bool isRotat
     imgFile.close();
 }
 
-void ImageService::cropImage(const QString& inFilename, const QString& outFilename, int topSpace, bool squared) {
+void ImageEditor::cropImage(const QString& inFilename, const QString& outFilename, int topSpace, bool squared) {
     QImage image(inFilename);
     if (image.isNull()) {
         emit error("Failed to load image: " + inFilename);
@@ -110,7 +108,7 @@ void ImageService::cropImage(const QString& inFilename, const QString& outFilena
     }
 }
 
-void ImageService::scaleImage(const QString& filename) {
+void ImageEditor::scaleImage(const QString& filename) {
     QImage image(filename);
     if (image.isNull()) {
         emit error("Failed to load image: " + filename);
@@ -142,5 +140,3 @@ void ImageService::scaleImage(const QString& filename) {
         emit scaled();
     }
 }
-
-} // namespace IG

@@ -9,8 +9,6 @@ set(CMAKE_AUTORCC ON)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Qml REQUIRED)
 find_package(Qt5Quick REQUIRED)
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Network REQUIRED)
 
 # Get architecture for install paths
 execute_process(
@@ -58,17 +56,9 @@ install(DIRECTORY qml DESTINATION ${DATA_DIR})
 # Main executable
 set(APP_SOURCES
     main.cpp
-    src/imageprocessor.cpp
-    src/offscreenrenderer.cpp
-    src/cropimageprovider.cpp
-    src/cacheimage.cpp
 )
 
 set(APP_HEADERS
-    src/imageprocessor.h
-    src/offscreenrenderer.h
-    src/cropimageprovider.h
-    src/cacheimage.h
 )
 
 # Resources
@@ -76,17 +66,11 @@ qt5_add_resources(APP_RESOURCES Instagraph.qrc)
 
 add_executable(${PROJECT_NAME} ${APP_SOURCES} ${APP_HEADERS} ${APP_RESOURCES})
 
-target_include_directories(${PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
-)
-
 target_link_libraries(${PROJECT_NAME}
     Qt5::Core
     Qt5::Gui
     Qt5::Qml
     Qt5::Quick
-    Qt5::Widgets
-    Qt5::Network
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE -s)

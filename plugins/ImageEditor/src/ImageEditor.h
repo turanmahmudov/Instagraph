@@ -1,36 +1,34 @@
-#ifndef INSTAGRAM_IMAGESERVICE_H
-#define INSTAGRAM_IMAGESERVICE_H
+#ifndef IMAGEEDITOR_H
+#define IMAGEEDITOR_H
 
 #include <QObject>
 #include <QString>
 
-namespace IG {
-
 /**
- * @brief Image manipulation service for Instagram uploads.
+ * @brief Image manipulation service for preparing images.
  * 
- * Provides image rotation, cropping, and scaling operations
- * needed for Instagram media uploads.
+ * Provides image rotation, cropping, and scaling operations.
+ * Exposed directly to QML as a creatable type.
  */
-class ImageService : public QObject {
+class ImageEditor : public QObject {
     Q_OBJECT
 public:
-    explicit ImageService(QObject* parent = nullptr);
+    explicit ImageEditor(QObject* parent = nullptr);
 
     /**
      * @brief Rotate an image by specified degrees
      * @param filename Path to image file
      * @param degrees Rotation angle in degrees
      */
-    void rotateImage(const QString& filename, qreal degrees);
+    Q_INVOKABLE void rotateImage(const QString& filename, qreal degrees);
 
     /**
-     * @brief Crop image to square or 5:4 ratio
+     * @brief Crop image to square (squared=true) or 5:4 ratio
      * @param filename Path to image file
      * @param squared If true, crop to square; otherwise 5:4 ratio
      * @param isRotated If image was previously rotated
      */
-    void cropImage(const QString& filename, bool squared, bool isRotated = true);
+    Q_INVOKABLE void cropImage(const QString& filename, bool squared, bool isRotated = true);
 
     /**
      * @brief Crop image with custom parameters
@@ -39,13 +37,13 @@ public:
      * @param topSpace Top offset for cropping
      * @param squared If true, crop to square
      */
-    void cropImage(const QString& inFilename, const QString& outFilename, int topSpace, bool squared);
+    Q_INVOKABLE void cropImage(const QString& inFilename, const QString& outFilename, int topSpace, bool squared);
 
     /**
      * @brief Scale image if width > 800px
      * @param filename Path to image file
      */
-    void scaleImage(const QString& filename);
+    Q_INVOKABLE void scaleImage(const QString& filename);
 
 signals:
     void rotated();
@@ -55,6 +53,4 @@ signals:
     void error(const QString& message);
 };
 
-} // namespace IG
-
-#endif // INSTAGRAM_IMAGESERVICE_H
+#endif // IMAGEEDITOR_H

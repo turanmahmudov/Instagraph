@@ -39,9 +39,6 @@ set(PLUGIN_SOURCES
     src/endpoints/UploadEndpoint.cpp
     src/endpoints/UsertagEndpoint.cpp
     
-    # Services
-    src/services/ImageService.cpp
-    
     # Errors
     src/errors/ClientError.cpp
     src/errors/ErrorHandler.cpp

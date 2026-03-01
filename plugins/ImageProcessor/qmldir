@@ -1,0 +1,3 @@
+module ImageProcessor
+plugin ImageProcessorPlugin
+ImageProcessorOutput 1.0 ImageProcessorOutput.qml

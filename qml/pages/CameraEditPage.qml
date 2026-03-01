@@ -21,8 +21,8 @@ import "../components/Feed"
 import "../components/Media"
 import "../components/Camera"
 import "../components/Actions"
-import "../filters"
-import "../effects"
+import "qrc:///ImageProcessor/qml/filters"
+import "qrc:///ImageProcessor/qml/effects"
 import ImageProcessor 1.0
 
 PageItem {
@@ -31,6 +31,14 @@ PageItem {
     property int editPhotoMode: functionSelector.selectedIndex
 
     property string imageFilter: "normal"
+
+    Connections {
+        target: imageproc
+        onImageSaved: {
+            imageproc.__output.setDefaultSize()
+            Scripts.pushImageCaption(cameraeditpage, path)
+        }
+    }
 
     header: PageHeaderItem {
         title: i18n.tr("Edit")

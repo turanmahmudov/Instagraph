@@ -43,7 +43,7 @@ ListView {
     }
 
     delegate: AbstractButton {
-        property bool isSelected: imageHandler.filterUrl == Qt.resolvedUrl("../filters/") + model.fileName
+        property bool isSelected: imageHandler.filterUrl == "qrc:///ImageProcessor/qml/filters/" + model.fileName
 
         width: units.gu(12)
         height: filtersView.height
@@ -52,7 +52,7 @@ ListView {
             if (!isSelected) {
                 filtersView.currentIndex = model.index
                 imageHandler.filterOpacity = 1.0
-                imageHandler.filterUrl = Qt.resolvedUrl("../filters/") + model.fileName
+                imageHandler.filterUrl = "qrc:///ImageProcessor/qml/filters/" + model.fileName
             } else {
                 if (model.index != 0) {
                     filtersView.showLevelSettings()
@@ -94,7 +94,7 @@ ListView {
 
                 Loader {
                     anchors.fill: parent
-                    source: Qt.resolvedUrl("../filters/") + model.fileName
+                    source: "qrc:///ImageProcessor/qml/filters/" + model.fileName
                     asynchronous: true
                     onLoaded: {
                         if (item)

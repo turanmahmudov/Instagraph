@@ -19,7 +19,6 @@ import "qml/components"
 
 import Instagram 1.0
 import ImageProcessor 1.0
-import CacheImage 1.0
 
 MainView {
     id: mainView
@@ -116,7 +115,7 @@ MainView {
         id: imageproc
 
         // Default filter
-        filterUrl: Qt.resolvedUrl("qml/filters/NoFilter.qml")
+        filterUrl: "qrc:///ImageProcessor/qml/filters/NoFilter.qml"
 
         // TODO: Move to C++
         onFilterChanged: {
@@ -131,10 +130,6 @@ MainView {
             __output.setDefaultSize()
             Scripts.pushImageCaption(path)
         }
-    }
-
-    CacheImage {
-        id: cacheImage
     }
 
     Component.onCompleted: {
@@ -156,9 +151,6 @@ MainView {
             instagram.setPassword(password);
 
             instagram.login(false, username, password, true);
-
-            cacheImage.clean();
-            cacheImage.init();
         }
     }
 
