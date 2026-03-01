@@ -6,6 +6,7 @@ set(CMAKE_AUTORCC ON)
 set(PLUGIN "ImageProcessorPlugin")
 
 find_package(Qt5 REQUIRED COMPONENTS Core Qml Quick Widgets)
+set(OpenGL_GL_PREFERENCE GLVND)
 find_package(OpenGL REQUIRED)
 
 set(PLUGIN_SOURCES
