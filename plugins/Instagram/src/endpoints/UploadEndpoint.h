@@ -11,11 +11,10 @@ namespace IG {
 class ApiClient;
 
 /**
- * @brief Handles image and video uploads to Instagram
+ * @brief Handles image uploads to Instagram
  * 
  * This endpoint manages:
  * - Photo uploads with configurePhoto step
- * - Video uploads (placeholder for future implementation)
  * - Upload progress tracking
  * 
  * Note: UploadEndpoint requires special handling for file uploads
@@ -37,12 +36,6 @@ public:
      */
     void postImage(const QString& path, const QString& caption, const QVariantMap& location,
                    const QString& uploadId = "", const QString& disableComments = "0");
-
-    /**
-     * @brief Upload and post a video (placeholder)
-     * @param videoPath Local path to the video file
-     */
-    void postVideo(const QString& videoPath);
 
     /**
      * @brief Change user's profile picture
@@ -68,12 +61,6 @@ signals:
      * @param response API response
      */
     void profilePictureChanged(const QVariant& response);
-
-    /**
-     * @brief Emitted when video upload completes (placeholder)
-     * @param response API response
-     */
-    void videoConfigured(const QVariant& response);
 
     /**
      * @brief Emitted on error

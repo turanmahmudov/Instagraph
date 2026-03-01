@@ -834,12 +834,6 @@ void Instagram::postImage(QString path, QString caption, QVariantMap location,
     m_upload->postImage(path, caption, location, upload_id, disableComments);
 }
 
-void Instagram::postVideo(QFile *video) {
-    Q_UNUSED(video);
-    // Video upload not yet implemented in UploadEndpoint
-    emit error("Video upload not implemented yet");
-}
-
 // ============================================================================
 // Network access
 // ============================================================================

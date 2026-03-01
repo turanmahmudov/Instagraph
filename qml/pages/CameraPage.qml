@@ -69,7 +69,7 @@ PageItem {
     }
 
     header: PageHeaderItem {
-        title: functionSelector.selectedIndex == 1 ? i18n.tr("Photo") : i18n.tr("Video")
+        title: i18n.tr("Photo")
         leadingActions: [
             Action {
                 id: closePageAction
@@ -256,7 +256,7 @@ PageItem {
                 right: parent.right
             }
             selectedIndex: 1
-            model: [ i18n.tr("Library"), i18n.tr("Photo"), i18n.tr("Video") ]
+            model: [ i18n.tr("Library"), i18n.tr("Photo") ]
 
             onSelectedIndexChanged: {
                 if (selectedIndex == 0) {

@@ -136,11 +136,6 @@ void UploadEndpoint::configurePhoto(const QString& uploadId) {
     });
 }
 
-void UploadEndpoint::postVideo(const QString& videoPath) {
-    Q_UNUSED(videoPath);
-    emit error("Video upload not implemented yet");
-}
-
 void UploadEndpoint::changeProfilePicture(const QString& photoPath) {
     // TODO: File upload requires special handling in ApiClient
     Q_UNUSED(photoPath);

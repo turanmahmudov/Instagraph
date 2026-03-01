@@ -62,7 +62,6 @@ public Q_SLOTS:
 
     // Image upload
     Q_INVOKABLE void postImage(QString path, QString caption, QVariantMap location, QString upload_id = "", QString disableComments = "0");
-    Q_INVOKABLE void postVideo(QFile *video);
 
     // Popular/Search
     Q_INVOKABLE void getPopularFeed(QString max_id = "");
