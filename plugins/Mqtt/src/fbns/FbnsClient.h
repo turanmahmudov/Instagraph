@@ -31,21 +31,15 @@ public:
     bool isConnected() const;
 
 signals:
-    // Connection status
     void connectionStateChanged(bool connected);
     void error(const QString& message);
 
-    // Push notifications (parsed)
+    /** @brief Push notification received. Data contains: collapseKey, title, message,
+     *  igAction, optionalImage, optionalAvatarUrl, sound, pushId, pushCategory,
+     *  sourceUserId, intendedRecipientUserId, tickerText, badgeCount */
     void pushNotification(const QVariantMap& notification);
 
-    // Specific notification types for convenience
-    void directMessageNotification(const QVariantMap& data);
-    void likeNotification(const QVariantMap& data);
-    void commentNotification(const QVariantMap& data);
-    void followNotification(const QVariantMap& data);
-    void mentionNotification(const QVariantMap& data);
-
-    // FBNS token (for push/register API call)
+    /** @brief FBNS token received (pass to instagram.registerPush) */
     void tokenReceived(const QString& token);
 
 private slots:
@@ -56,12 +50,11 @@ private slots:
     void onReconnectTimer();
 
 private:
-    // Thrift payload building
     QByteArray buildConnectPayload();
     void sendRegistrationRequest();
     void handleFbnsMessage(const QByteArray& payload);
     void handleRegistrationResponse(const QByteArray& payload);
-    void parseAndEmitNotification(const QVariantMap& pushData);
+    QVariantMap parseNotification(const QVariantMap& rawData);
 
     // Auth persistence
     void saveAuth();

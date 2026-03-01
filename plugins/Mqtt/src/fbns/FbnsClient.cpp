@@ -268,21 +268,15 @@ void FbnsClient::handleFbnsMessage(const QByteArray& payload)
         return;
     }
 
-    QJsonObject push = doc.object();
-    QVariantMap pushData = push.toVariantMap();
+    // Parse the nested fbpushnotif JSON string
+    QString fbpushnotif = doc.object().value("fbpushnotif").toString();
+    if (fbpushnotif.isEmpty()) return;
 
-    // Parse the nested fbpushnotif JSON
-    QString fbpushnotif = push.value("fbpushnotif").toString();
-    if (!fbpushnotif.isEmpty()) {
-        QJsonDocument notifDoc = QJsonDocument::fromJson(fbpushnotif.toUtf8());
-        if (notifDoc.isObject()) {
-            QVariantMap notifData = notifDoc.object().toVariantMap();
-            pushData["notification"] = notifData;
-            parseAndEmitNotification(notifData);
-        }
-    }
+    QJsonDocument notifDoc = QJsonDocument::fromJson(fbpushnotif.toUtf8());
+    if (!notifDoc.isObject()) return;
 
-    emit pushNotification(pushData);
+    QVariantMap notification = parseNotification(notifDoc.object().toVariantMap());
+    emit pushNotification(notification);
 }
 
 void FbnsClient::handleRegistrationResponse(const QByteArray& payload)
@@ -307,40 +301,23 @@ void FbnsClient::handleRegistrationResponse(const QByteArray& payload)
     }
 }
 
-void FbnsClient::parseAndEmitNotification(const QVariantMap& notifData)
+QVariantMap FbnsClient::parseNotification(const QVariantMap& raw)
 {
-    // Build a structured notification
-    QVariantMap notification;
-    notification["title"] = notifData.value("t");
-    notification["message"] = notifData.value("m");
-    notification["tickerText"] = notifData.value("tt");
-    notification["igAction"] = notifData.value("ig");
-    notification["collapseKey"] = notifData.value("collapse_key");
-    notification["optionalImage"] = notifData.value("i");
-    notification["optionalAvatarUrl"] = notifData.value("a");
-    notification["sound"] = notifData.value("sound");
-    notification["pushId"] = notifData.value("pi");
-    notification["pushCategory"] = notifData.value("c");
-    notification["intendedRecipientUserId"] = notifData.value("u");
-    notification["sourceUserId"] = notifData.value("s");
-    notification["badgeCount"] = notifData.value("bc");
-
-    // Route to specific signal based on collapse_key
-    QString collapseKey = notifData.value("collapse_key").toString();
-
-    if (collapseKey == "direct_v2_message") {
-        emit directMessageNotification(notification);
-    } else if (collapseKey == "like" || collapseKey == "like_on_tag" || collapseKey == "comment_like") {
-        emit likeNotification(notification);
-    } else if (collapseKey == "comment" || collapseKey == "mentioned_comment" ||
-               collapseKey == "comment_on_tag" || collapseKey == "reply_to_comment_with_threading") {
-        emit commentNotification(notification);
-    } else if (collapseKey == "new_follower" || collapseKey == "private_user_follow_request" ||
-               collapseKey == "follow_request_approved") {
-        emit followNotification(notification);
-    } else if (collapseKey == "usertag") {
-        emit mentionNotification(notification);
-    }
+    QVariantMap n;
+    n["collapseKey"]             = raw.value("collapse_key");
+    n["title"]                   = raw.value("t");
+    n["message"]                 = raw.value("m");
+    n["tickerText"]              = raw.value("tt");
+    n["igAction"]                = raw.value("ig");
+    n["optionalImage"]           = raw.value("i");
+    n["optionalAvatarUrl"]       = raw.value("a");
+    n["sound"]                   = raw.value("sound");
+    n["pushId"]                  = raw.value("pi");
+    n["pushCategory"]            = raw.value("c");
+    n["intendedRecipientUserId"] = raw.value("u");
+    n["sourceUserId"]            = raw.value("s");
+    n["badgeCount"]              = raw.value("bc");
+    return n;
 }
 
 // ============================================================

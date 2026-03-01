@@ -79,30 +79,19 @@ MainView {
 
     function connectMqtt() {
         if (mqttConnected) {
-            console.log("MQTT: Already connected")
             return
         }
 
-        var sessionId = instagram.getSessionId()
         var phoneId = instagram.getPhoneId()
-
-        console.log("MQTT: Connecting manually...")
-        console.log("MQTT: userId=" + activeUsernameId)
-        console.log("MQTT: sessionId=" + (sessionId ? sessionId.substring(0, 10) + "..." : "EMPTY"))
-        console.log("MQTT: phoneId=" + phoneId)
-
-        if (!sessionId || sessionId === "") {
-            console.log("MQTT: ERROR - No session cookie available, cannot connect Realtime")
+        if (!phoneId || phoneId === "") {
+            console.log("MQTT: no phoneId available")
             return
         }
 
         mqtt.connectToMqtt(
             activeUsernameId,
-            sessionId,
             phoneId,
-            "Instagram 367.0.0.27.101 Android (35/15.0; 640dpi; 1440x3088; samsung; SM-S938U; s25u; qcom; en_US; 658859659)",
-            "367.0.0.27.101",
-            "3brTvx0="
+            "Instagram 367.0.0.27.101 Android (35/15.0; 640dpi; 1440x3088; samsung; SM-S938U; s25u; qcom; en_US; 658859659)"
         )
         mqttConnected = true
     }
@@ -115,7 +104,7 @@ MainView {
         id: instagram
     }
 
-    // MQTT - Real-time notifications and live activity
+    // MQTT - FBNS push notifications
     InstagramMqtt {
         id: mqtt
     }
@@ -297,72 +286,36 @@ MainView {
         }
     }
 
-    // MQTT signal handlers for real-time updates
+    // MQTT FBNS push notification handlers
     Connections {
         target: mqtt
 
-        // FBNS token received — register with Instagram's push API
         onFbnsTokenReceived: {
-            console.log("MQTT: FBNS token received, registering push...")
             instagram.registerPush(token)
         }
 
-        // Any push notification (catch-all)
-        onPushNotificationReceived: {
-            console.log("MQTT: RAW PUSH NOTIFICATION:", JSON.stringify(notification))
-        }
-
-        // Push notification: new DM
-        onDmNotification: {
-            console.log("MQTT: New DM notification")
-            // Refresh inbox if on DirectInboxPage
-            if (typeof directInboxPage !== "undefined") {
-                instagram.getInbox()
-            }
-        }
-
-        // Push notification: someone liked your post
-        onLikeNotification: {
-            console.log("MQTT: Like notification")
-            activityPage.getRecentActivity()
-        }
-
-        // Push notification: new comment
-        onCommentNotification: {
-            console.log("MQTT: Comment notification")
-            activityPage.getRecentActivity()
-        }
-
-        // Push notification: new follower
-        onFollowNotification: {
-            console.log("MQTT: Follow notification")
-            activityPage.getRecentActivity()
-        }
-
-        // Live: real-time direct message received (IRIS sync)
-        onDirectMessageReceived: {
-            console.log("MQTT: Live DM received - thread:", message.threadId)
-            // Refresh inbox to show new message
-            instagram.getInbox()
-        }
-
-        // Live: direct thread updated
-        onDirectThreadUpdated: {
-            console.log("MQTT: Thread updated:", threadUpdate.threadId)
-        }
-
-        // Live: typing indicator
-        onTypingIndicatorReceived: {
-            console.log("MQTT: Typing indicator")
-        }
-
-        // Connection state changes
         onFbnsConnectionChanged: {
             console.log("MQTT FBNS connected:", connected)
         }
 
-        onRealtimeConnectionChanged: {
-            console.log("MQTT Realtime connected:", connected)
+        onPushNotificationReceived: {
+            var ck = notification.collapseKey
+            console.log("MQTT push [" + ck + "]:", notification.message)
+
+            switch (ck) {
+                case "direct_v2_message":
+                case "like":
+                case "like_on_tag":
+                case "comment_like":
+                case "comment":
+                case "mentioned_comment":
+                case "comment_on_tag":
+                case "reply_to_comment_with_threading":
+                case "new_follower":
+                case "private_user_follow_request":
+                case "follow_request_approved":
+                case "usertag":
+            }
         }
     }
 }
