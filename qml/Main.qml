@@ -156,11 +156,11 @@ MainView {
         id: downloadDialog
         ContentDownloadDialog { }
     }
-    
+
     // Pages
     AdaptivePageLayout {
         id: pageLayout
-        
+
         anchors.fill: parent
 
         layouts: [
@@ -266,7 +266,8 @@ MainView {
             // User page
             userPage.getUsernameInfo();
 
-            // MQTT is connected manually via the debug button in BottomMenu
+            // Connect MQTT for push notifications
+            connectMqtt()
         }
         onProfileConnectedFail: {
 
