@@ -88,11 +88,7 @@ MainView {
             return
         }
 
-        mqtt.connectToMqtt(
-            activeUsernameId,
-            phoneId,
-            "Instagram 367.0.0.27.101 Android (35/15.0; 640dpi; 1440x3088; samsung; SM-S938U; s25u; qcom; en_US; 658859659)"
-        )
+        mqtt.connectToMqtt(activeUsernameId, phoneId)
         mqttConnected = true
     }
 

@@ -48,13 +48,10 @@ FbnsClient::~FbnsClient()
     disconnect();
 }
 
-void FbnsClient::connectWithSession(const QString& userId, const QString& phoneId,
-                                     const QString& userAgent, const QString& appId)
+void FbnsClient::connectWithSession(const QString& userId, const QString& phoneId)
 {
     m_igUserId = userId;
     m_igPhoneId = phoneId;
-    m_igUserAgent = userAgent;
-    m_igAppId = appId;
 
     // Generate client ID if not persisted: first 20 chars of phoneId
     if (m_auth.clientId.isEmpty()) {
@@ -154,7 +151,7 @@ void FbnsClient::onReconnectTimer()
 {
     if (!m_connected && !m_igUserId.isEmpty()) {
         qDebug() << "FbnsClient: attempting reconnect";
-        connectWithSession(m_igUserId, m_igPhoneId, m_igUserAgent, m_igAppId);
+        connectWithSession(m_igUserId, m_igPhoneId);
     }
 }
 

@@ -27,12 +27,10 @@ bool InstagramMqtt::isFbnsConnected() const
     return m_fbns->isConnected();
 }
 
-void InstagramMqtt::connectToMqtt(const QString& userId, const QString& phoneId,
-                                   const QString& userAgent)
+void InstagramMqtt::connectToMqtt(const QString& userId, const QString& phoneId)
 {
     qDebug() << "InstagramMqtt: connecting FBNS";
-    m_fbns->connectWithSession(userId, phoneId, userAgent,
-                                QStringLiteral("567310203415052"));
+    m_fbns->connectWithSession(userId, phoneId);
 }
 
 void InstagramMqtt::disconnectFromMqtt()

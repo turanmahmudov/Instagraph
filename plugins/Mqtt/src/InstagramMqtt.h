@@ -31,8 +31,7 @@ public:
     bool isFbnsConnected() const;
 
 public slots:
-    Q_INVOKABLE void connectToMqtt(const QString& userId, const QString& phoneId,
-                                    const QString& userAgent);
+    Q_INVOKABLE void connectToMqtt(const QString& userId, const QString& phoneId);
     Q_INVOKABLE void disconnectFromMqtt();
 
 signals:

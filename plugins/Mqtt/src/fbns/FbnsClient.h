@@ -24,9 +24,7 @@ public:
     explicit FbnsClient(QObject* parent = nullptr);
     ~FbnsClient();
 
-    // Connection - requires session data from Instagram plugin
-    void connectWithSession(const QString& userId, const QString& phoneId,
-                            const QString& userAgent, const QString& appId);
+    void connectWithSession(const QString& userId, const QString& phoneId);
     void disconnect();
     bool isConnected() const;
 
@@ -77,11 +75,9 @@ private:
     FbnsAuth m_auth;
     bool m_connected;
 
-    // Session data (from Instagram plugin)
+    // Session data
     QString m_igUserId;
     QString m_igPhoneId;
-    QString m_igUserAgent;
-    QString m_igAppId;
 
     // Constants
     static const QString HOST;
