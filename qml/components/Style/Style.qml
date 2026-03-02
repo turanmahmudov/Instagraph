@@ -20,6 +20,9 @@ QtObject {
 
         property color outlineButtonBorderColor: currentStyle.common.outlineButtonBorderColor
         property color outlineButtonTextColor: currentStyle.common.outlineButtonTextColor
+
+        property color backgroundColor: currentStyle.common.backgroundColor
+        property color baseBorderColor: currentStyle.common.baseBorderColor
     }
 
     property QtObject mainView: currentStyle.mainView

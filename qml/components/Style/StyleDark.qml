@@ -13,6 +13,9 @@ QtObject {
 
         property color outlineButtonBorderColor: styleApp.common.white
         property color outlineButtonTextColor: styleApp.common.white
+
+        property color backgroundColor: "#030303"
+        property color baseBorderColor: LomiriColors.darkGrey
     }
 
     property QtObject mainView: QtObject{
