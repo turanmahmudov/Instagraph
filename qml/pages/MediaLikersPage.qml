@@ -1,92 +1,62 @@
-// Qt imports
 import QtQuick 2.12
-import QtQuick.LocalStorage 2.12
-import QtMultimedia 5.12
-
-// Lomiri imports
 import Lomiri.Components 1.3
-import Lomiri.Content 1.1
 
-// JavaScript imports
-import "../js/Storage.js" as Storage
-import "../js/Helper.js" as Helper
-import "../js/Scripts.js" as Scripts
-
-// Component imports
 import "../components"
 import "../components/Constants"
 import "../components/Page"
 import "../components/User"
-import "../components/Feed"
-import "../components/Media"
-import "../components/Camera"
-import "../components/Actions"
+import "../viewmodels"
 
 PageItem {
     id: medialikerspage
-
-    property var photoId
-
-    property bool list_loading: false
-    property bool clear_models: true
 
     header: PageHeaderItem {
         title: i18n.tr("Likes")
     }
 
-    function mediaLikersDataFinished(data) {
-        mediaLikersModel.clear()
+    property var mediaId
 
-        worker.sendMessage({'feed': 'MediaLikersPage', 'obj': data.users, 'model': mediaLikersModel, 'clear_model': clear_models})
+    property alias list_loading: viewModel.isLoading
 
-        list_loading = false
+    BaseUserListViewModel {
+        id: viewModel
+        hasPagination: false
     }
 
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/SimpleWorker.js"
-        onMessage: {
-        }
-    }
-
-    Component.onCompleted: {
-        getMediaLikes();
-    }
-
-    function getMediaLikes(next_id)
-    {
-        clear_models = false
-        if (!next_id) {
-            mediaLikersModel.clear()
-            clear_models = true
-        }
-        instagram.getMediaLikers(photoId);
-    }
-
-    ListModel {
-        id: mediaLikersModel
-    }
-
-    UsersListView {
+    ListView {
         id: mediaLikersList
-        model: mediaLikersModel
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+            top: medialikerspage.header.bottom
+        }
+        model: viewModel.userListModel
         delegate: UserListItem {
-            onClicked: pageLayout.pushToCurrent(medialikerspage, PagesConstants.user, {usernameId: user_id})
+            onClicked: pageLayout.pushToCurrent(medialikerspage, PagesConstants.user, {usernameId: user.pk})
         }
         PullToRefresh {
-            refreshing: list_loading && mediaLikersModel.count == 0
+            refreshing: viewModel.isLoading && viewModel.userListModel.count === 0
             onRefresh: {
-                list_loading = true
-                getMediaLikes()
+                loadLikers()
             }
         }
     }
 
-    Connections{
+    function loadLikers() {
+        viewModel.loadData('', function() {
+            instagram.getMediaLikers(mediaId)
+        })
+    }
+
+    Connections {
         target: instagram
         onMediaLikersDataReady: {
-            var data = JSON.parse(answer);
-            mediaLikersDataFinished(data);
+            viewModel.handleResponse(answer)
         }
+    }
+
+    Component.onCompleted: {
+        loadLikers()
     }
 }

@@ -5,6 +5,7 @@ import "../components"
 import "../components/Constants"
 import "../components/Page"
 import "../components/User"
+import "../viewmodels"
 
 PageItem {
     id: followerspage
@@ -15,16 +16,11 @@ PageItem {
 
     property var userId
 
-    property string next_max_id: ""
-    property bool more_available: true
-    property bool next_coming: true
-    property bool list_loading: false
-    property bool clear_models: true
+    property alias list_loading: viewModel.isLoading
 
-    property bool isPullToRefresh: true
-
-    ListModel {
-        id: userFollowersModel
+    BaseUserListViewModel {
+        id: viewModel
+        hasPagination: true
     }
 
     ListView {
@@ -35,73 +31,35 @@ PageItem {
             bottom: parent.bottom
             top: followerspage.header.bottom
         }
-        model: userFollowersModel
+        model: viewModel.userListModel
         delegate: UserListItem {
             onClicked: pageLayout.pushToCurrent(followerspage, PagesConstants.user, {usernameId: user.pk})
         }
         onMovementEnded: {
-            if (atYEnd && more_available && !next_coming) getUserFollowers(next_max_id)
+            if (atYEnd && viewModel.canLoadMore()) loadFollowers(viewModel.nextMaxId)
         }
         PullToRefresh {
-            refreshing: list_loading && userFollowersModel.count === 0
+            refreshing: viewModel.isLoading && viewModel.userListModel.count === 0
             onRefresh: {
-                isPullToRefresh = true
-                getUserFollowers('')
+                loadFollowers('')
             }
         }
     }
 
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/UserWorker.js"
+    function loadFollowers(nextId) {
+        viewModel.loadData(nextId, function(nid) {
+            instagram.getFollowers(userId, nid)
+        })
     }
 
-    function getUserFollowers(next_id) {
-        list_loading = true
-        clear_models = false
-
-        if (!next_id) {
-            userFollowersModel.clear()
-            next_max_id = ""
-            clear_models = true
-        }
-
-        instagram.getFollowers(userId, next_id)
-    }
-
-    function userFollowersDataFinished(data) {
-        if (!data) return
-
-        isPullToRefresh = false
-        list_loading = false
-
-        if (next_max_id === data.next_max_id) return
-        
-        next_max_id = typeof data.next_max_id != 'undefined' ? data.next_max_id : ""
-        more_available = typeof data.next_max_id != 'undefined'
-        next_coming = true
-
-        worker.sendMessage(
-            {
-                items: data.users,
-                model: userFollowersModel,
-                clear: clear_models
-            }
-        )
-
-        next_coming = false
-        list_loading = false
-    }
-
-    Connections{
+    Connections {
         target: instagram
         onFollowersDataReady: {
-            var data = JSON.parse(answer)
-            userFollowersDataFinished(data)
+            viewModel.handleResponse(answer)
         }
     }
 
     Component.onCompleted: {
-        getUserFollowers()
+        loadFollowers()
     }
 }

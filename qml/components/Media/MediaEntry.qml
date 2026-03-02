@@ -194,7 +194,7 @@ Column {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/MediaLikersPage.qml"), { photoId: id })
+            onClicked: pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/MediaLikersPage.qml"), { mediaId: id })
         }
     }
 
@@ -310,7 +310,7 @@ Column {
 
     Connections {
         target: instagram
-        
+
         onMediaDeleted: {
             if (lastDeletedId === id) {
                 var data = JSON.parse(answer)
@@ -321,7 +321,7 @@ Column {
                 lastDeletedId = null
             }
         }
-        
+
         onRemoveSelftagDone: {
             if (lastDeletedId === id) {
                 var data = JSON.parse(answer)
@@ -329,7 +329,7 @@ Column {
                 lastDeletedId = null
             }
         }
-        
+
         onEnableMediaCommentsDataReady: {
             if (lastActionId === id) {
                 var data = JSON.parse(answer)
@@ -337,7 +337,7 @@ Column {
                 lastActionId = null
             }
         }
-        
+
         onDisableMediaCommentsDataReady: {
             if (lastActionId === id) {
                 var data = JSON.parse(answer)

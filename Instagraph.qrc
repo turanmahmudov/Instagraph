@@ -84,6 +84,7 @@
         <file>qml/viewmodels/TagFeedViewModel.qml</file>
         <file>qml/viewmodels/UserFeedViewModel.qml</file>
         <file>qml/viewmodels/SavedMediaViewModel.qml</file>
+        <file>qml/viewmodels/BaseUserListViewModel.qml</file>
         <file>qml/pages/FollowRequestsPage.qml</file>
         <file>qml/images/media_save_bold.png</file>
         <file>qml/images/media_save.png</file>

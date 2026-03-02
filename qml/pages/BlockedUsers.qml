@@ -5,6 +5,7 @@ import "../components"
 import "../components/Constants"
 import "../components/Page"
 import "../components/User"
+import "../viewmodels"
 
 PageItem {
     id: blockeduserspage
@@ -13,13 +14,12 @@ PageItem {
         title: i18n.tr("Blocked Users")
     }
 
-    property var userId
+    property alias list_loading: viewModel.isLoading
 
-    property bool list_loading: false
-    property bool clear_models: true
-
-    ListModel {
-        id: blockedUsersModel
+    BaseUserListViewModel {
+        id: viewModel
+        hasPagination: false
+        dataKey: "blocked_list"
     }
 
     ListView {
@@ -30,52 +30,32 @@ PageItem {
             bottom: parent.bottom
             top: blockeduserspage.header.bottom
         }
-        model: blockedUsersModel
+        model: viewModel.userListModel
         delegate: UserListItem {
             onClicked: pageLayout.pushToCurrent(blockeduserspage, PagesConstants.user, {usernameId: user.pk})
         }
         PullToRefresh {
-            refreshing: list_loading && blockedUsersModel.count == 0
+            refreshing: viewModel.isLoading && viewModel.userListModel.count === 0
             onRefresh: {
-                list_loading = true
-                getUserBlockedList()
+                loadBlockedUsers()
             }
         }
     }
 
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/UserWorker.js"
+    function loadBlockedUsers() {
+        viewModel.loadData('', function() {
+            instagram.getBlockedUserList()
+        })
     }
 
-    function getUserBlockedList()
-    {
-        instagram.getBlockedUserList();
-    }
-
-    function userBlockedListDataFinished(data) {
-        blockedUsersModel.clear()
-
-        worker.sendMessage(
-            {
-                items: data.blocked_list,
-                model: blockedUsersModel,
-                clear: true
-            }
-        )
-
-        list_loading = false
-    }
-
-    Connections{
+    Connections {
         target: instagram
         onBlockedUserListDataReady: {
-            var data = JSON.parse(answer);
-            userBlockedListDataFinished(data);
+            viewModel.handleResponse(answer)
         }
     }
 
     Component.onCompleted: {
-        getUserBlockedList();
+        loadBlockedUsers()
     }
 }
