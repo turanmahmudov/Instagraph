@@ -74,37 +74,6 @@ PageItem {
     property var last_like_id
     property var last_save_id
 
-    function followDataFinished(data) {
-        if (usernameId == latest_follow_request) {
-            if (data.friendship_status) {
-                followingButton.visible = data.friendship_status.following
-                unfollowingButton.visible = !data.friendship_status.following && !data.friendship_status.outgoing_request && !data.friendship_status.blocking
-                requestedButton.visible = data.friendship_status.outgoing_request
-                unBlockButton.visible = data.friendship_status.blocking
-
-                latest_follow_request = 0
-            }
-        }
-    }
-
-    Component.onCompleted: {
-        if (usernameId) {
-            if (usernameId == activeUsernameId) {
-                selfProfile = true
-
-                getUsernameFeed();
-            } else {
-                selfProfile = false
-
-                instagram.getFriendship(usernameId);
-            }
-
-            getUsernameInfo()
-        } else {
-            instagram.getInfoByName(usernameString)
-        }
-    }
-
 
 
     Component {
@@ -156,8 +125,6 @@ PageItem {
             }
         }
     }
-
-
 
     Flickable {
         id: flickpage
@@ -556,5 +523,40 @@ PageItem {
     BottomMenu {
         id: bottomMenu
         width: parent.width
+    }
+
+    function followDataFinished(data) {
+        if (usernameId == latest_follow_request) {
+            if (data.friendship_status) {
+                followingButton.visible = data.friendship_status.following
+                unfollowingButton.visible = !data.friendship_status.following && !data.friendship_status.outgoing_request && !data.friendship_status.blocking
+                requestedButton.visible = data.friendship_status.outgoing_request
+                unBlockButton.visible = data.friendship_status.blocking
+
+                latest_follow_request = 0
+            }
+        }
+    }
+
+    Component.onCompleted: {
+        if (usernameId) {
+            if (usernameId == activeUsernameId) {
+                selfProfile = true
+
+                feedViewModel.loadFeed(true)
+            } else {
+                selfProfile = false
+
+                instagram.getFriendship(usernameId);
+            }
+
+            getUsernameInfo()
+        } else {
+            instagram.getInfoByName(usernameString)
+        }
+    }
+
+    function getUsernameInfo() {
+        feedViewModel.loadUserInfo()
     }
 }
