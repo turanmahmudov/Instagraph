@@ -12,29 +12,30 @@ WorkerScript.onMessage = function(msg) {
         if (type === "recentSearches") {
             if ("user" in obj[i]) {
                 obj[i].search_type = "user"
-
                 obj[i].pk = obj[i].user.pk
                 obj[i].user_id = obj[i].user.pk
-                obj[i].username = obj[i].user.username
-                obj[i].full_name = obj[i].user.full_name
-                obj[i].profile_pic_url = obj[i].user.profile_pic_url
 
+                // Keep the user object intact for UserRowSlot
                 model.append(obj[i]);
             } else if ("keyword" in obj[i]) {
                 obj[i].search_type = "keyword"
-
                 obj[i].name = obj[i].keyword.name
 
                 model.append(obj[i]);
             }
         } else if (type === "searchUsers") {
-            obj[i].pk = obj[i].pk
-            obj[i].user_id = obj[i].pk
-            obj[i].username = obj[i].username
-            obj[i].full_name = obj[i].full_name
-            obj[i].profile_pic_url = obj[i].profile_pic_url
+            var user_obj = {
+                user: {
+                    pk: obj[i].pk,
+                    username: obj[i].username,
+                    full_name: obj[i].full_name,
+                    profile_pic_url: obj[i].profile_pic_url
+                }
+            }
+            user_obj.pk = obj[i].pk
+            user_obj.user_id = obj[i].pk
 
-            model.append(obj[i]);
+            model.append(user_obj);
         } else if (type === "searchTags") {
             obj[i].name = obj[i].name
             obj[i].media_count = obj[i].media_count
