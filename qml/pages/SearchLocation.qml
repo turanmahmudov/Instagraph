@@ -69,8 +69,6 @@ PageItem {
     WorkerScript {
         id: worker
         source: "../js/Workers/TimelineWorker.js"
-        onMessage: {
-        }
     }
 
     ListModel {

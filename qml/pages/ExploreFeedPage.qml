@@ -173,15 +173,11 @@ PageItem {
     WorkerScript {
         id: exploreWorker
         source: "../js/Workers/ExploreWorker.js"
-        onMessage: {
-        }
     }
 
     WorkerScript {
         id: searchWorker
         source: "../js/Workers/SearchWorker.js"
-        onMessage: {
-        }
     }
 
     ListModel {

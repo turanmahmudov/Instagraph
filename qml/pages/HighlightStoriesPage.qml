@@ -28,8 +28,6 @@ StoryViewerPage {
     WorkerScript {
         id: worker
         source: "../js/Workers/TimelineWorker.js"
-        onMessage: {
-        }
     }
 
     function getReelsMediaFeed() {

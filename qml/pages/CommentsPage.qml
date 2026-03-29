@@ -80,8 +80,6 @@ PageItem {
     WorkerScript {
         id: worker
         source: "../js/Workers/SimpleWorker.js"
-        onMessage: {
-        }
     }
 
     Component.onCompleted: {

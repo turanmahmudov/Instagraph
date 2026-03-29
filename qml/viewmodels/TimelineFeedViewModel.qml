@@ -3,7 +3,7 @@ import Instagram 1.0
 
 /**
  * TimelineFeedViewModel - ViewModel for HomePage timeline feed
- * 
+ *
  * Handles HomePage-specific logic:
  * - Timeline feed loading with seen posts tracking
  * - Stories feed tray
@@ -18,7 +18,7 @@ BaseFeedViewModel {
     property ListModel suggestionsModel: ListModel {}
     property bool isPullToRefresh: true
     property bool clearModels: true
-    
+
     // End of feed state
     property bool isCaughtUp: false
     property string caughtUpTitle: ""
@@ -57,7 +57,7 @@ BaseFeedViewModel {
         if (inSuggestedPostsSection || isCaughtUp) {
             return
         }
-        
+
         if (nextMaxId && moreAvailable && !nextComing && !isLoading) {
             loadFeed(false)
         }
@@ -92,8 +92,6 @@ BaseFeedViewModel {
     WorkerScript {
         id: trayWorker
         source: "../js/Workers/SimpleWorker.js"
-        onMessage: {
-        }
     }
 
     function loadStoriesTray(force) {

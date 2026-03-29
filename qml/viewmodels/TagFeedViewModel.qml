@@ -3,7 +3,7 @@ import Instagram 1.0
 
 /**
  * TagFeedViewModel - ViewModel for TagFeedPage
- * 
+ *
  * Handles tag feed loading logic:
  * - Tag feed loading with pagination
  * - Pull-to-refresh
@@ -45,9 +45,6 @@ BaseFeedViewModel {
     WorkerScript {
         id: worker
         source: "../js/Workers/TimelineWorker.js"
-        onMessage: {
-            // Worker processing complete
-        }
     }
 
     // Connection to Instagram API
