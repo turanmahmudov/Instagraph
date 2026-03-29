@@ -81,6 +81,7 @@
         <file>qml/viewmodels/BaseFeedViewModel.qml</file>
         <file>qml/viewmodels/TimelineFeedViewModel.qml</file>
         <file>qml/viewmodels/TagFeedViewModel.qml</file>
+        <file>qml/viewmodels/LocationFeedViewModel.qml</file>
         <file>qml/viewmodels/UserFeedViewModel.qml</file>
         <file>qml/viewmodels/SavedMediaViewModel.qml</file>
         <file>qml/viewmodels/BaseUserListViewModel.qml</file>

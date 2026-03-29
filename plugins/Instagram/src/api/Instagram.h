@@ -98,12 +98,16 @@ public Q_SLOTS:
     // Location
     Q_INVOKABLE void getGeoMedia(QString usernameId);
     Q_INVOKABLE void getLocationFeed(QString locationId, QString max_id = "");
+    Q_INVOKABLE void getLocationSectionFeed(QString locationId, QString tab, int page,
+                                            QStringList nextMediaIds, QString max_id);
 
     // Location Search
     Q_INVOKABLE void searchLocation(QString lat, QString lng, QString query = "");
 
     // Hashtag
     Q_INVOKABLE void getTagFeed(QString tag, QString max_id = "");
+    Q_INVOKABLE void getTagSectionFeed(QString tag, QString tab, int page,
+                                       QStringList nextMediaIds, QString max_id);
     Q_INVOKABLE void searchTags(QString tag);
 
     // Highlight
@@ -216,12 +220,14 @@ Q_SIGNALS:
     // Location signals
     void geoMediaDataReady(QVariant answer);
     void getLocationFeedDataReady(QVariant answer);
+    void locationSectionFeedDataReady(QVariant answer);
 
     // Location Search signals
     void searchLocationDataReady(QVariant answer);
 
     // Hashtag signals
     void tagFeedDataReady(QVariant answer);
+    void tagSectionFeedDataReady(QVariant answer);
     void searchTagsDataReady(QVariant answer);
 
     // Highlight signals

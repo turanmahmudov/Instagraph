@@ -229,6 +229,8 @@ void Instagram::setupEndpointConnections() {
     // Hashtag endpoint connections
     connect(m_hashtag, &IG::HashtagEndpoint::tagFeedReady, 
             this, &Instagram::tagFeedDataReady);
+    connect(m_hashtag, &IG::HashtagEndpoint::tagSectionFeedReady, 
+            this, &Instagram::tagSectionFeedDataReady);
     connect(m_hashtag, &IG::HashtagEndpoint::searchTagsReady, 
             this, &Instagram::searchTagsDataReady);
     connect(m_hashtag, &IG::HashtagEndpoint::error, 
@@ -239,6 +241,8 @@ void Instagram::setupEndpointConnections() {
             this, &Instagram::geoMediaDataReady);
     connect(m_location, &IG::LocationEndpoint::locationFeedReady, 
             this, &Instagram::getLocationFeedDataReady);
+    connect(m_location, &IG::LocationEndpoint::locationSectionFeedReady, 
+            this, &Instagram::locationSectionFeedDataReady);
     connect(m_location, &IG::LocationEndpoint::searchLocationReady, 
             this, &Instagram::searchLocationDataReady);
     connect(m_location, &IG::LocationEndpoint::error, 
@@ -598,6 +602,11 @@ void Instagram::getLocationFeed(QString locationId, QString max_id) {
     m_location->getLocationFeed(locationId, max_id);
 }
 
+void Instagram::getLocationSectionFeed(QString locationId, QString tab, int page,
+                                       QStringList nextMediaIds, QString max_id) {
+    m_location->getLocationSectionFeed(locationId, tab, page, nextMediaIds, max_id);
+}
+
 void Instagram::searchLocation(QString lat, QString lng, QString query) {
     m_location->searchLocation(lat, lng, query, m_session->rankToken());
 }
@@ -608,6 +617,11 @@ void Instagram::searchLocation(QString lat, QString lng, QString query) {
 
 void Instagram::getTagFeed(QString tag, QString max_id) {
     m_hashtag->getTagFeed(tag, max_id, m_session->rankToken());
+}
+
+void Instagram::getTagSectionFeed(QString tag, QString tab, int page,
+                                   QStringList nextMediaIds, QString max_id) {
+    m_hashtag->getTagSectionFeed(tag, tab, page, nextMediaIds, max_id);
 }
 
 void Instagram::searchTags(QString tag) {

@@ -4,8 +4,8 @@ import Instagram 1.0
 BaseFeedViewModel {
     id: viewModel
 
-    property string tag: ""
-    property string tab: "top"
+    property string locationId: ""
+    property string tab: "ranked"
     property int page: 1
     property var nextMediaIds: []
     property bool clearModels: true
@@ -22,7 +22,7 @@ BaseFeedViewModel {
             clearModels = true
         }
 
-        instagram.getTagSectionFeed(tag, tab, page, nextMediaIds, nextMaxId)
+        instagram.getLocationSectionFeed(locationId, tab, page, nextMediaIds, nextMaxId)
     }
 
     function loadMore() {
@@ -39,7 +39,7 @@ BaseFeedViewModel {
 
     Connections {
         target: instagram
-        onTagSectionFeedDataReady: {
+        onLocationSectionFeedDataReady: {
             var data = JSON.parse(answer)
             handleFeedResponse(data)
         }
@@ -47,7 +47,7 @@ BaseFeedViewModel {
 
     function handleFeedResponse(data) {
         if (!data) {
-            handleError(i18n.tr("Failed to load tag feed"))
+            handleError(i18n.tr("Failed to load location feed"))
             return
         }
 

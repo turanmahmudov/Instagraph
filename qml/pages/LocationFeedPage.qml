@@ -1,20 +1,17 @@
-// Qt imports
 import QtQuick 2.12
 import QtQuick.LocalStorage 2.12
 
-// Lomiri imports
 import Lomiri.Components 1.3
 
-// JavaScript imports
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
-// Component imports
 import "../components"
 import "../components/Page"
 import "../components/User"
 import "../components/Feed"
+import "../viewmodels"
 import "../components/Media"
 import "../components/Camera"
 import "../components/Actions"
@@ -29,52 +26,15 @@ PageItem {
         title: locationName
     }
 
-    property string next_max_id: ""
-    property bool more_available: true
-    property bool next_coming: true
-    property var last_like_id
-    property var last_save_id
-    property bool clear_models: true
-
-    property bool list_loading: false
-
-    function mediaDataFinished(data) {
-        if (next_max_id == data.next_max_id) {
-            return false;
-        } else {
-            next_max_id = data.next_max_id ? data.next_max_id : "";
-            more_available = data.more_available ? data.more_available : false;
-            next_coming = true;
-
-            worker.sendMessage({'feed': 'locationFeedPage', 'obj': data.items, 'model': locationFeedPhotosModel, 'clear_model': clear_models})
-
-            next_coming = false;
-        }
-
-        list_loading = false
+    LocationFeedViewModel {
+        id: feedViewModel
+        locationId: locationfeedpage.locationId
     }
 
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/TimelineWorker.js"
-    }
+    property alias list_loading: feedViewModel.isLoading
 
     Component.onCompleted: {
-        getMedia(locationId);
-    }
-
-    function getMedia(location_id, next_id)
-    {
-        if (!next_id) {
-            locationFeedPhotosModel.clear()
-            next_max_id = 0
-            clear_models = true
-        }
-        instagram.getLocationFeed(location_id, next_id);
-    }
-
-    ListModel {
-        id: locationFeedPhotosModel
+        feedViewModel.loadFeed(true)
     }
 
     ListView {
@@ -88,34 +48,25 @@ PageItem {
             bottomMargin: bottomMenu.height
             top: locationfeedpage.header.bottom
         }
-        onMovementEnded: {
-            if (atYEnd && more_available && !next_coming) {
-                getMedia(tag, next_max_id);
+        onContentYChanged: {
+            if (feedViewModel.shouldLoadMore(contentY, contentHeight, height)) {
+                feedViewModel.loadMore()
             }
         }
 
         clip: true
         cacheBuffer: parent.height*2
-        model: locationFeedPhotosModel
+        model: feedViewModel.feedModel
         delegate: ListFeedDelegate {
             id: homePhotosDelegate
             currentPage: locationfeedpage
-            currentModel: locationFeedPhotosModel
+            currentModel: feedViewModel.feedModel
         }
         PullToRefresh {
-            refreshing: list_loading && locationFeedPhotosModel.count == 0
+            refreshing: list_loading && feedViewModel.feedModel.count == 0
             onRefresh: {
-                list_loading = true
-                getMedia(locationId)
+                feedViewModel.loadFeed(true)
             }
-        }
-    }
-
-    Connections{
-        target: instagram
-        onGetLocationFeedDataReady: {
-            var data = JSON.parse(answer);
-            mediaDataFinished(data);
         }
     }
 
