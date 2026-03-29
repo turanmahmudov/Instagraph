@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>qml/Main_old.qml</file>
         <file>assets/instagraph_title.png</file>
         <file>assets/instagraph_original.png</file>
         <file>assets/instagraph.png</file>
@@ -124,12 +123,12 @@
         <file>qml/components/UsersListView.qml</file>
         <file>qml/components/User/UserListItem.qml</file>
         <file>qml/pages/ImportPhotoPageDesktop.qml</file>
-        
+
         <!-- Constants -->
         <file>qml/components/Constants/IconsConstants.qml</file>
         <file>qml/components/Constants/PagesConstants.qml</file>
         <file>qml/components/Constants/qmldir</file>
-        
+
         <!-- Components -->
         <file>qml/components/ActionsPopup.qml</file>
         <file>qml/components/Feed/FeedActionsPopup.qml</file>
@@ -138,12 +137,12 @@
         <file>qml/components/Actions/OpenCommentsAction.qml</file>
         <file>qml/components/Actions/OpenShareAction.qml</file>
         <file>qml/components/Actions/PopupAction.qml</file>
-        
+
         <!-- Comment Components -->
         <file>qml/components/Comment/AddCommentItem.qml</file>
         <file>qml/components/Comment/CommentLikeItem.qml</file>
         <file>qml/components/Comment/CommentListItem.qml</file>
-        
+
         <!-- Direct Components -->
         <file>qml/components/Direct/AddMessageItem.qml</file>
         <file>qml/components/Direct/DirectThreadActionLogMessage.qml</file>
@@ -159,11 +158,11 @@
         <file>qml/components/Direct/DirectThreadTextMessage.qml</file>
         <file>qml/components/Direct/DirectThreadXmaMediaShareMessage.qml</file>
         <file>qml/components/Direct/InboxThreadItem.qml</file>
-        
+
         <!-- Activity Components -->
         <file>qml/components/Activity/FollowRequest.qml</file>
         <file>qml/components/Activity/RecentActivity.qml</file>
-        
+
         <!-- Explore Components -->
         <file>qml/components/Explore/ExploreFeedList.qml</file>
         <file>qml/components/Explore/RecentSearchesList.qml</file>
