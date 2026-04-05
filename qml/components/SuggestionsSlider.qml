@@ -24,7 +24,7 @@ ListView {
             spacing: units.gu(1)
 
             CircleImage {
-                width: parent.width/2
+                width: parent.width / 2
                 height: width
                 anchors.horizontalCenter: parent.horizontalCenter
                 source: typeof user.profile_pic_url != 'undefined' ? user.profile_pic_url : "../images/not_found_user.jpg"
@@ -32,7 +32,9 @@ ListView {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        pageLayout.pushToCurrent(currentDelegatePage, PagesConstants.user, {usernameId: user.pk});
+                        pageLayout.pushToCurrent(currentDelegatePage, PagesConstants.user, {
+                            usernameId: user.pk
+                        });
                     }
                 }
             }
@@ -47,14 +49,19 @@ ListView {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        pageLayout.pushToCurrent(currentDelegatePage, PagesConstants.user, {usernameId: user.pk});
+                        pageLayout.pushToCurrent(currentDelegatePage, PagesConstants.user, {
+                            usernameId: user.pk
+                        });
                     }
                 }
             }
 
             FollowComponent {
                 height: units.gu(3.5)
-                friendship_var: {"following": false, "outgoing_request": false}
+                friendship_var: {
+                    "following": false,
+                    "outgoing_request": false
+                }
                 userId: user.pk
                 just_icon: false
                 anchors.horizontalCenter: parent.horizontalCenter

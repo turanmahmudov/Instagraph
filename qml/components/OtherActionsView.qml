@@ -29,14 +29,14 @@ ListView {
     property ImageProcessor imageHandler
 
     function showLevelSettings(data) {
-        levelSettingsLoader.active = true
-        levelSettingsLoader.item.modelData = data
+        levelSettingsLoader.active = true;
+        levelSettingsLoader.item.modelData = data;
     }
 
     Component.onCompleted: {
         // WORKAROUND: Fix for wrong grid unit size
-        flickDeceleration = 1500 * units.gridUnit / 8
-        maximumFlickVelocity = 2500 * units.gridUnit / 8
+        flickDeceleration = 1500 * units.gridUnit / 8;
+        maximumFlickVelocity = 2500 * units.gridUnit / 8;
     }
 
     // Keep same Y-pos for the image
@@ -69,8 +69,8 @@ ListView {
 
             property var modelData
             onModelDataChanged: {
-                sliderLoader.active = false
-                sliderLoader.active = true
+                sliderLoader.active = false;
+                sliderLoader.active = true;
             }
 
             PageHeader {
@@ -86,10 +86,10 @@ ListView {
                         width: parent.width * 0.5
                         height: parent.height
                         onClicked: {
-                            imageHandler.setProperty(modelData.prop, modelData.defaultValue)
+                            imageHandler.setProperty(modelData.prop, modelData.defaultValue);
 
                             // Close level settings
-                            levelSettingsLoader.active = false
+                            levelSettingsLoader.active = false;
                         }
 
                         Rectangle {
@@ -100,12 +100,11 @@ ListView {
 
                         Icon {
                             anchors.centerIn: parent
-                            height: parent.height*0.4
+                            height: parent.height * 0.4
                             color: "#000000"
                             name: "close"
                         }
                     }
-
 
                     AbstractButton {
                         id: button
@@ -121,7 +120,7 @@ ListView {
 
                         Icon {
                             anchors.centerIn: parent
-                            height: parent.height*0.4
+                            height: parent.height * 0.4
                             color: "#000000"
                             name: "tick"
                         }
@@ -146,7 +145,7 @@ ListView {
                     live: true
 
                     function formatValue(v) {
-                        return modelData.formatValue(v)
+                        return modelData.formatValue(v);
                     }
 
                     value: imageHandler.getProperty(modelData.prop)

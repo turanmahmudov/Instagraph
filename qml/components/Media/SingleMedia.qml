@@ -16,7 +16,7 @@ import "../../js/Helper.js" as Helper
 MediaItem {
     id: singlemedia
 
-    signal doubleClicked()
+    signal doubleClicked
 
     Loader {
         id: videoLoader
@@ -46,13 +46,13 @@ MediaItem {
                 anchors.fill: parent
                 onClicked: {
                     if (videoPlayer.playbackState === MediaPlayer.PlayingState) {
-                        videoPlayer.pause()
+                        videoPlayer.pause();
                     } else {
-                        videoPlayer.play()
+                        videoPlayer.play();
                     }
                 }
                 onDoubleClicked: {
-                    singlemedia.doubleClicked()
+                    singlemedia.doubleClicked();
                 }
             }
         }
@@ -65,16 +65,20 @@ MediaItem {
         onClicked: {
             // If it's a carousel item (media_type 8) and showCarousel is false, open SinglePhoto page
             if (media_type === 8 && !showCarousel) {
-                pageLayout.pushToNext(currentPage, PagesConstants.photo, {photoId: id})
-            }
+                pageLayout.pushToNext(currentPage, PagesConstants.photo, {
+                    photoId: id
+                });
+            } else
             // If it's a video (media_type 2) and enableVideoPlayback is false, open SinglePhoto page
-            else if (media_type === 2 && !enableVideoPlayback) {
-                pageLayout.pushToNext(currentPage, PagesConstants.photo, {photoId: id})
+            if (media_type === 2 && !enableVideoPlayback) {
+                pageLayout.pushToNext(currentPage, PagesConstants.photo, {
+                    photoId: id
+                });
             }
         }
 
         onDoubleClicked: {
-            singlemedia.doubleClicked()
+            singlemedia.doubleClicked();
         }
     }
 }

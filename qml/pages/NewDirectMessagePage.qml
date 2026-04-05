@@ -27,20 +27,28 @@ PageItem {
 
     property var threadUsers: []
 
-    signal refreshList()
+    signal refreshList
 
     header: PageHeaderItem {
         title: i18n.tr("New Message")
     }
 
-    function rankedRecipientsFinished(data)
-    {
-        worker.sendMessage({'feed': 'ShareMediaPage', 'obj': data.ranked_recipients, 'model': rankedRecipientsModel, 'clear_model': true})
+    function rankedRecipientsFinished(data) {
+        worker.sendMessage({
+            'feed': 'ShareMediaPage',
+            'obj': data.ranked_recipients,
+            'model': rankedRecipientsModel,
+            'clear_model': true
+        });
     }
 
-    function recentRecipientsFinished(data)
-    {
-        worker.sendMessage({'feed': 'ShareMediaPage', 'obj': data.ranked_recipients, 'model': rankedRecipientsModel, 'clear_model': true})
+    function recentRecipientsFinished(data) {
+        worker.sendMessage({
+            'feed': 'ShareMediaPage',
+            'obj': data.ranked_recipients,
+            'model': rankedRecipientsModel,
+            'clear_model': true
+        });
     }
 
     WorkerScript {
@@ -52,34 +60,30 @@ PageItem {
         getRankedRecipients();
     }
 
-    function getRankedRecipients()
-    {
+    function getRankedRecipients() {
         instagram.getRankedRecipients();
     }
 
-    function getRecentRecipients()
-    {
+    function getRecentRecipients() {
         instagram.getRecentRecipients();
     }
 
-    function sendMessage(text)
-    {
+    function sendMessage(text) {
         var recip_array = [];
         var recip_string = '';
         for (var i in threadUsers) {
-            recip_array.push('"'+threadUsers[i]+'"');
+            recip_array.push('"' + threadUsers[i] + '"');
         }
         recip_string = recip_array.join(',');
 
         instagram.directMessage(recip_string, text, "");
     }
 
-    function sendLike()
-    {
+    function sendLike() {
         var recip_array = [];
         var recip_string = '';
         for (var i in threadUsers) {
-            recip_array.push('"'+threadUsers[i]+'"');
+            recip_array.push('"' + threadUsers[i] + '"');
         }
         recip_string = recip_array.join(',');
 
@@ -93,7 +97,7 @@ PageItem {
     ListModel {
         id: selectedUsersModel
         onCountChanged: {
-            selectedUsersList.positionViewAtEnd()
+            selectedUsersList.positionViewAtEnd();
         }
     }
 
@@ -147,8 +151,8 @@ PageItem {
                         color: LomiriColors.blue
                         radius: units.gu(0.3)
                         Label {
-                            anchors.centerIn: parent
                             id: username_label
+                            anchors.centerIn: parent
                             text: username
                             color: "#ffffff"
                             fontSize: "small"
@@ -157,15 +161,15 @@ PageItem {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                var userId = selectedUsersModel.get(index).userId
-                                selectedUsersModel.remove(index)
+                                var userId = selectedUsersModel.get(index).userId;
+                                selectedUsersModel.remove(index);
 
                                 var ind = threadUsers.indexOf(userId);
                                 if (ind > -1) {
                                     threadUsers.splice(ind, 1);
                                 }
 
-                                refreshList()
+                                refreshList();
                             }
                         }
                     }
@@ -210,7 +214,7 @@ PageItem {
                 height: layout.height - units.gu(2)
                 divider.visible: false
                 onClicked: {
-                    selectUserCheckBox.checked = !selectUserCheckBox.checked
+                    selectUserCheckBox.checked = !selectUserCheckBox.checked;
                 }
 
                 SlotsLayout {
@@ -262,28 +266,31 @@ PageItem {
                             if (checked) {
                                 var index = threadUsers.indexOf(user_obj.pk);
                                 if (index == -1) {
-                                    threadUsers.push(user_obj.pk)
-                                    selectedUsersModel.append({"userId":user_obj.pk, "username":user_obj.username})
+                                    threadUsers.push(user_obj.pk);
+                                    selectedUsersModel.append({
+                                        "userId": user_obj.pk,
+                                        "username": user_obj.username
+                                    });
                                 }
                             } else {
                                 var index = threadUsers.indexOf(user_obj.pk);
                                 if (index > -1) {
                                     threadUsers.splice(index, 1);
 
-                                    for(var i = 0; i < selectedUsersModel.count; i++) {
-                                           if (user_obj.pk === selectedUsersModel.get(i).userId) {
-                                               selectedUsersModel.remove(i)
-                                           }
-                                       }
+                                    for (var i = 0; i < selectedUsersModel.count; i++) {
+                                        if (user_obj.pk === selectedUsersModel.get(i).userId) {
+                                            selectedUsersModel.remove(i);
+                                        }
+                                    }
                                 }
                             }
 
                             if (threadUsers.length > 0) {
                                 addMessageItem.visible = true;
-                                addMessageItem.height = units.gu(5)
+                                addMessageItem.height = units.gu(5);
                             } else {
                                 addMessageItem.visible = false;
-                                addMessageItem.height = 0
+                                addMessageItem.height = 0;
                             }
                         }
 
@@ -292,9 +299,9 @@ PageItem {
                             onRefreshList: {
                                 var index = threadUsers.indexOf(user_obj.pk);
                                 if (index == -1) {
-                                    selectUserCheckBox.checked = false
+                                    selectUserCheckBox.checked = false;
                                 } else {
-                                    selectUserCheckBox.checked = true
+                                    selectUserCheckBox.checked = true;
                                 }
                             }
                         }
@@ -326,7 +333,7 @@ PageItem {
                 anchors.verticalCenter: parent.verticalCenter
                 placeholderText: i18n.tr("Write a message...")
                 onAccepted: {
-                    sendMessage(addMessageField.text)
+                    sendMessage(addMessageField.text);
                 }
             }
 
@@ -346,7 +353,7 @@ PageItem {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        sendLike()
+                        sendLike();
                     }
                 }
             }
@@ -357,13 +364,13 @@ PageItem {
                 color: LomiriColors.green
                 text: i18n.tr("Send")
                 onClicked: {
-                    sendMessage(addMessageField.text)
+                    sendMessage(addMessageField.text);
                 }
             }
         }
     }
 
-    Connections{
+    Connections {
         target: instagram
         onRankedRecipientsDataReady: {
             var data = JSON.parse(answer);
@@ -374,15 +381,19 @@ PageItem {
             recentRecipientsFinished(data);
         }
         onDirectMessageReady: {
-            var data = JSON.parse(answer)
+            var data = JSON.parse(answer);
             if (data.status == "ok") {
-                pageLayout.pushToCurrent(newdirectmessagepage, PagesConstants.direct_thread, {threadId: data.threads[0].thread_id});
+                pageLayout.pushToCurrent(newdirectmessagepage, PagesConstants.direct_thread, {
+                    threadId: data.threads[0].thread_id
+                });
             }
         }
         onDirectLikeReady: {
-            var data = JSON.parse(answer)
+            var data = JSON.parse(answer);
             if (data.status == "ok") {
-                pageLayout.pushToCurrent(newdirectmessagepage, PagesConstants.direct_thread, {threadId: data.threads[0].thread_id});
+                pageLayout.pushToCurrent(newdirectmessagepage, PagesConstants.direct_thread, {
+                    threadId: data.threads[0].thread_id
+                });
             }
         }
     }

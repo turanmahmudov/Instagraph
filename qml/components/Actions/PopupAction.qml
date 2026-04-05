@@ -8,7 +8,7 @@ import Lomiri.Components 1.3
 import ".."
 
 Item {
-    signal popupClicked()
+    signal popupClicked
 
     Layout.minimumWidth: width
     Layout.preferredWidth: width

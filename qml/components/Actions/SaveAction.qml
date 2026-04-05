@@ -7,8 +7,8 @@ import Lomiri.Components 1.3
 import ".."
 
 Item {
-    signal saveClicked()
-    signal unsaveClicked()
+    signal saveClicked
+    signal unsaveClicked
 
     property bool is_saved: typeof has_viewer_saved != 'undefined' && has_viewer_saved === true
 
@@ -34,9 +34,9 @@ Item {
         anchors.fill: parent
         onClicked: {
             if (is_saved) {
-                unsaveClicked()
+                unsaveClicked();
             } else {
-                saveClicked()
+                saveClicked();
             }
         }
     }

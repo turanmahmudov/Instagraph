@@ -9,7 +9,7 @@ Item {
     Rectangle {
         width: parent.width
         height: width
-        radius: width/2
+        radius: width / 2
         border.color: takePhotoMode == 1 ? Qt.darker(LomiriColors.blue, 1) : Qt.darker(LomiriColors.red, 1)
 
         Rectangle {
@@ -17,7 +17,7 @@ Item {
             width: units.gu(6)
             height: width
             color: takePhotoMode == 1 ? Qt.darker(LomiriColors.blue, 1) : Qt.darker(LomiriColors.red, 1)
-            radius: width/2
+            radius: width / 2
             border.color: takePhotoMode == 1 ? Qt.darker(LomiriColors.blue, 1) : Qt.darker(LomiriColors.red, 1)
         }
     }

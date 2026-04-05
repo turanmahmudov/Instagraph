@@ -33,7 +33,10 @@ PageItem {
 
     property bool imageUploading: false
 
-    property var coord: {'latitude':positionSource.position.coordinate.latitude, 'longitude':positionSource.position.coordinate.longitude}
+    property var coord: {
+        'latitude': positionSource.position.coordinate.latitude,
+        'longitude': positionSource.position.coordinate.longitude
+    }
 
     PositionSource {
         id: positionSource
@@ -65,18 +68,22 @@ PageItem {
                 text: i18n.tr("Share")
                 iconName: IconsConstants.camera_flip
                 onTriggered: {
-                    imageUploading = true
-                    Scripts.publishImage(imagePath, caption.text, locationVar, disableCommentsSwitch.checked)
+                    imageUploading = true;
+                    Scripts.publishImage(imagePath, caption.text, locationVar, disableCommentsSwitch.checked);
                 }
             }
-
         ]
     }
 
     function searchLocationDataFinished(data) {
         searchPlacesModel.clear();
 
-        worker.sendMessage({'feed': 'searchPage', 'obj': data.venues, 'model': searchPlacesModel, 'clear_model': true})
+        worker.sendMessage({
+            'feed': 'searchPage',
+            'obj': data.venues,
+            'model': searchPlacesModel,
+            'clear_model': true
+        });
     }
 
     WorkerScript {
@@ -91,10 +98,10 @@ PageItem {
     Component.onCompleted: {
         instagram.searchLocation(coord.latitude, coord.longitude, "");
 
-        mainView.locationSelected.connect(function(location) {
-            cameracaptionpage.locationSelected = true
+        mainView.locationSelected.connect(function (location) {
+            cameracaptionpage.locationSelected = true;
             cameracaptionpage.locationVar = location;
-        })
+        });
     }
 
     Column {
@@ -160,7 +167,6 @@ PageItem {
                 width: parent.width - units.gu(9)
                 height: units.gu(8)
                 placeholderText: i18n.tr("Write a caption...")
-
             }
         }
 
@@ -204,8 +210,8 @@ PageItem {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            cameracaptionpage.locationSelected = false
-                            cameracaptionpage.locationVar = {}
+                            cameracaptionpage.locationSelected = false;
+                            cameracaptionpage.locationVar = {};
                         }
                     }
                 }
@@ -242,8 +248,8 @@ PageItem {
                             color: LomiriColors.blue
                             radius: units.gu(0.3)
                             Label {
-                                anchors.centerIn: parent
                                 id: username_label
+                                anchors.centerIn: parent
                                 text: name
                                 color: "#ffffff"
                                 fontSize: "small"
@@ -252,7 +258,14 @@ PageItem {
                             MouseArea {
                                 anchors.fill: parent
                                 onClicked: {
-                                    mainView.locationSelected({"name":name.replace("&", "%26"), "address":address.replace("&", "%26"), "lat":lat.toFixed(4), "lng":lng.toFixed(4), "external_id":external_id, "external_id_source":external_id_source})
+                                    mainView.locationSelected({
+                                        "name": name.replace("&", "%26"),
+                                        "address": address.replace("&", "%26"),
+                                        "lat": lat.toFixed(4),
+                                        "lng": lng.toFixed(4),
+                                        "external_id": external_id,
+                                        "external_id_source": external_id_source
+                                    });
                                 }
                             }
                         }
@@ -280,18 +293,18 @@ PageItem {
         }
     }
 
-    Connections{
+    Connections {
         target: instagram
         onImageConfigureDataReady: {
-            pageLayout.removePages(homePage)
-            pageLayout.primaryPage = homePage
+            pageLayout.removePages(homePage);
+            pageLayout.primaryPage = homePage;
 
             var data = JSON.parse(answer);
 
-            Scripts.pushSingleImage(pageLayout.primaryPage, data.media.id)
+            Scripts.pushSingleImage(pageLayout.primaryPage, data.media.id);
         }
         onImageUploadProgressDataReady: {
-            uploadProgressBar.value = answer
+            uploadProgressBar.value = answer;
         }
         onSearchLocationDataReady: {
             var data = JSON.parse(answer);

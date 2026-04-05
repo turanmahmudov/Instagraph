@@ -56,7 +56,6 @@ PageItem {
                 onTriggered: {
                     //Scripts.pushImageCaption(imagePath)
 
-
                     if (toCropImage.width > toCropImage.height) {
                         imageEditor.scaleImage(String(imagePath).replace('file://', ''));
                     } else {
@@ -64,7 +63,6 @@ PageItem {
                     }
                 }
             }
-
         ]
     }
 
@@ -107,7 +105,7 @@ PageItem {
             imageEditor.scaleImage(String(imagePath).replace('file://', ''));
         }
         onScaled: {
-            Scripts.pushImageEdit(cameracroppage, imagePath)
+            Scripts.pushImageEdit(cameracroppage, imagePath);
         }
     }
 }

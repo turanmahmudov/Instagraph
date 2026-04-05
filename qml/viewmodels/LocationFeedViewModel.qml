@@ -11,24 +11,24 @@ BaseFeedViewModel {
     property bool clearModels: true
 
     function loadFeed(refresh) {
-        setLoadingState(true)
-        clearModels = false
+        setLoadingState(true);
+        clearModels = false;
 
         if (refresh || page === 1) {
-            feedModel.clear()
-            nextMaxId = ""
-            nextMediaIds = []
-            page = 1
-            clearModels = true
+            feedModel.clear();
+            nextMaxId = "";
+            nextMediaIds = [];
+            page = 1;
+            clearModels = true;
         }
 
-        instagram.getLocationSectionFeed(locationId, tab, page, nextMediaIds, nextMaxId)
+        instagram.getLocationSectionFeed(locationId, tab, page, nextMediaIds, nextMaxId);
     }
 
     function loadMore() {
         if (nextMaxId && moreAvailable && !nextComing && !isLoading) {
-            page++
-            loadFeed(false)
+            page++;
+            loadFeed(false);
         }
     }
 
@@ -40,65 +40,65 @@ BaseFeedViewModel {
     Connections {
         target: instagram
         onLocationSectionFeedDataReady: {
-            var data = JSON.parse(answer)
-            handleFeedResponse(data)
+            var data = JSON.parse(answer);
+            handleFeedResponse(data);
         }
     }
 
     function handleFeedResponse(data) {
         if (!data) {
-            handleError(i18n.tr("Failed to load location feed"))
-            return
+            handleError(i18n.tr("Failed to load location feed"));
+            return;
         }
 
-        setLoadingState(false)
+        setLoadingState(false);
 
-        isEmpty = false
+        isEmpty = false;
 
-        var items = extractItemsFromSections(data)
+        var items = extractItemsFromSections(data);
         if (!items || items.length === 0) {
-            isEmpty = true
-            return
+            isEmpty = true;
+            return;
         }
 
-        if (nextMaxId === data.next_max_id) return
-
-        nextMaxId = data.next_max_id || ""
-        moreAvailable = data.more_available === true
-        nextMediaIds = data.next_media_ids || []
-        nextComing = true
+        if (nextMaxId === data.next_max_id)
+            return;
+        nextMaxId = data.next_max_id || "";
+        moreAvailable = data.more_available === true;
+        nextMediaIds = data.next_media_ids || [];
+        nextComing = true;
 
         worker.sendMessage({
             feed: 'tagFeedPage',
             obj: items,
             model: feedModel,
             clear_model: clearModels
-        })
+        });
 
-        nextComing = false
+        nextComing = false;
     }
 
     function extractItemsFromSections(data) {
         if (!data.sections || data.sections.length === 0) {
-            return []
+            return [];
         }
 
-        var items = []
+        var items = [];
         for (var i = 0; i < data.sections.length; i++) {
-            var section = data.sections[i]
+            var section = data.sections[i];
             if (section.layout_type !== "media_grid" && section.layout_type !== "one_by_two" && section.layout_type !== "two_by_two") {
-                continue
+                continue;
             }
             if (!section.layout_content || !section.layout_content.medias) {
-                continue
+                continue;
             }
             for (var j = 0; j < section.layout_content.medias.length; j++) {
-                var media = section.layout_content.medias[j]
+                var media = section.layout_content.medias[j];
                 if (media && media.media) {
-                    items.push(media.media)
+                    items.push(media.media);
                 }
             }
         }
-        return items
+        return items;
     }
 }

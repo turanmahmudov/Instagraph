@@ -32,9 +32,14 @@ PageItem {
     property var last_friendship_action_done
 
     function pendingFriendshipsDataFinished(data) {
-        worker.sendMessage({'feed': 'FollowRequestsPage', 'obj': data.users, 'model': followrequestsModel, 'clear_model': true})
+        worker.sendMessage({
+            'feed': 'FollowRequestsPage',
+            'obj': data.users,
+            'model': followrequestsModel,
+            'clear_model': true
+        });
 
-        list_loading = false
+        list_loading = false;
     }
 
     WorkerScript {
@@ -46,10 +51,9 @@ PageItem {
         followRequests();
     }
 
-    function followRequests()
-    {
-        followrequestsModel.clear()
-        list_loading = true
+    function followRequests() {
+        followrequestsModel.clear();
+        list_loading = true;
         instagram.pendingFriendships();
     }
 
@@ -68,14 +72,16 @@ PageItem {
         }
 
         clip: true
-        cacheBuffer: followrequestspage.height*2
+        cacheBuffer: followrequestspage.height * 2
         model: followrequestsModel
         delegate: ListItem {
             id: searchUsersDelegate
             height: layout.height
             divider.visible: false
             onClicked: {
-                pageLayout.pushToCurrent(followrequestspage, PagesConstants.user, {usernameId: pk});
+                pageLayout.pushToCurrent(followrequestspage, PagesConstants.user, {
+                    usernameId: pk
+                });
             }
 
             property bool is_friendship_approved: false
@@ -107,8 +113,8 @@ PageItem {
                         SlotsLayout.overrideVerticalPositioning: true
 
                         onClicked: {
-                            last_friendship_action_done = pk
-                            instagram.approveFriendship(pk)
+                            last_friendship_action_done = pk;
+                            instagram.approveFriendship(pk);
                         }
                     }
 
@@ -121,8 +127,8 @@ PageItem {
                         SlotsLayout.overrideVerticalPositioning: true
 
                         onClicked: {
-                            last_friendship_action_done = pk
-                            instagram.rejectFriendship(pk)
+                            last_friendship_action_done = pk;
+                            instagram.rejectFriendship(pk);
                         }
                     }
 
@@ -134,22 +140,22 @@ PageItem {
                 Connections {
                     target: instagram
                     onApproveFriendshipDataReady: {
-                        var data = JSON.parse(answer)
+                        var data = JSON.parse(answer);
                         if (data.status === "ok" && last_friendship_action_done === pk) {
-                            is_friendship_approved = true
+                            is_friendship_approved = true;
 
-                            buttons.width = 0
-                            buttons.visible = false
+                            buttons.width = 0;
+                            buttons.visible = false;
 
-                            followButton.friendship_var = data.friendship_status
-                            followButton.init()
-                            followButton.visible = true
+                            followButton.friendship_var = data.friendship_status;
+                            followButton.init();
+                            followButton.visible = true;
                         }
                     }
                     onRejectFriendshipDataReady: {
-                        var data = JSON.parse(answer)
+                        var data = JSON.parse(answer);
                         if (data.status === "ok" && last_friendship_action_done === pk) {
-                            followrequestsModel.remove(index)
+                            followrequestsModel.remove(index);
                         }
                     }
                 }
@@ -158,7 +164,10 @@ PageItem {
                     id: followButton
                     visible: false
                     height: units.gu(3.5)
-                    friendship_var: {"following": false, "outgoing_request": false}
+                    friendship_var: {
+                        "following": false,
+                        "outgoing_request": false
+                    }
                     userId: pk
                     just_icon: false
 
@@ -170,7 +179,7 @@ PageItem {
         }
     }
 
-    Connections{
+    Connections {
         target: instagram
         onPendingFriendshipsDataReady: {
             var data = JSON.parse(answer);

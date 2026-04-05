@@ -47,27 +47,41 @@ PageItem {
             return false;
         } else {
             next_max_id = typeof data.next_min_id != 'undefined' ? data.next_min_id : "";
-            more_available = typeof data.next_min_id != 'undefined'
+            more_available = typeof data.next_min_id != 'undefined';
             next_coming = true;
 
             if (typeof data.caption != 'undefined' && data.caption && mediaCommentsModel.count == 0) {
-                data.caption.ctext = typeof data.caption != 'undefined' && data.caption ? data.caption.text : ""
+                data.caption.ctext = typeof data.caption != 'undefined' && data.caption ? data.caption.text : "";
 
-                worker.sendMessage({'feed': 'CommentsPage', 'obj': [data.caption], 'model': mediaCommentsModel, 'clear_model': clear_models})
+                worker.sendMessage({
+                    'feed': 'CommentsPage',
+                    'obj': [data.caption],
+                    'model': mediaCommentsModel,
+                    'clear_model': clear_models
+                });
             } else {
                 data.caption = '';
 
-                worker.sendMessage({'feed': 'CommentsPage', 'obj': [], 'model': mediaCommentsModel, 'clear_model': clear_models})
+                worker.sendMessage({
+                    'feed': 'CommentsPage',
+                    'obj': [],
+                    'model': mediaCommentsModel,
+                    'clear_model': clear_models
+                });
             }
 
             commentCaption = data.caption;
 
-            worker.sendMessage({'feed': 'CommentsPage', 'obj': data.comments, 'model': mediaCommentsModel})
+            worker.sendMessage({
+                'feed': 'CommentsPage',
+                'obj': data.comments,
+                'model': mediaCommentsModel
+            });
 
             next_coming = false;
         }
 
-        list_loading = false
+        list_loading = false;
     }
 
     function commentPostedFinished(data) {
@@ -86,19 +100,17 @@ PageItem {
         getMediaComments();
     }
 
-    function getMediaComments(next_id)
-    {
-        clear_models = false
+    function getMediaComments(next_id) {
+        clear_models = false;
         if (!next_id) {
-            mediaCommentsModel.clear()
-            next_max_id = ""
-            clear_models = true
+            mediaCommentsModel.clear();
+            next_max_id = "";
+            clear_models = true;
         }
         instagram.getComments(photoId, next_id);
     }
 
-    function postComment(text)
-    {
+    function postComment(text) {
         instagram.comment(photoId, text);
     }
 
@@ -116,7 +128,7 @@ PageItem {
         }
         onMovementEnded: {
             if (atYEnd && more_available && !next_coming) {
-                getMediaComments(next_max_id)
+                getMediaComments(next_max_id);
             }
         }
 
@@ -137,7 +149,7 @@ PageItem {
                         iconName: "delete"
                         text: i18n.tr("Remove")
                         onTriggered: {
-                            last_deleted_media_comment = index
+                            last_deleted_media_comment = index;
 
                             instagram.deleteComment(photoId, pk);
                         }
@@ -148,9 +160,9 @@ PageItem {
                     target: instagram
                     onCommentDeleted: {
                         if (index === last_deleted_media_comment) {
-                            var data = JSON.parse(answer)
+                            var data = JSON.parse(answer);
 
-                            removalAnimation.start()
+                            removalAnimation.start();
                         }
                     }
                 }
@@ -210,7 +222,7 @@ PageItem {
                             textFormat: Text.RichText
                             color: styleApp.common.textColor
                             onLinkActivated: {
-                                Scripts.linkClick(commentspage, link)
+                                Scripts.linkClick(commentspage, link);
                             }
                         }
 
@@ -250,7 +262,7 @@ PageItem {
                                     anchors.fill: parent
                                     onClicked: {
                                         addCommentField.forceActiveFocus();
-                                        addCommentField.text = "@"+ user.username + " "
+                                        addCommentField.text = "@" + user.username + " ";
                                     }
                                 }
                             }
@@ -268,13 +280,13 @@ PageItem {
                     onLikedfinished: {
                         if (likedCommentId === pk) {
                             if (liked) {
-                                comment_like_c = comment_like_c + 1
-                                comment_likes_count.visible = true
-                                comment_likes_count.text = comment_like_c + i18n.tr(" likes")
+                                comment_like_c = comment_like_c + 1;
+                                comment_likes_count.visible = true;
+                                comment_likes_count.text = comment_like_c + i18n.tr(" likes");
                             } else {
-                                comment_like_c = comment_like_c - 1
-                                comment_likes_count.visible = comment_like_c == 0 ? false : true
-                                comment_likes_count.text = comment_like_c == 0 ? "" : (comment_like_c + i18n.tr(" likes"))
+                                comment_like_c = comment_like_c - 1;
+                                comment_likes_count.visible = comment_like_c == 0 ? false : true;
+                                comment_likes_count.text = comment_like_c == 0 ? "" : (comment_like_c + i18n.tr(" likes"));
                             }
                         }
                     }
@@ -286,8 +298,8 @@ PageItem {
         PullToRefresh {
             refreshing: list_loading && mediaCommentsModel.count == 0
             onRefresh: {
-                list_loading = true
-                getMediaComments()
+                list_loading = true;
+                getMediaComments();
             }
         }
     }
@@ -314,7 +326,7 @@ PageItem {
                 placeholderText: i18n.tr("Add a comment")
                 onVisibleChanged: {
                     if (visible) {
-                        forceActiveFocus()
+                        forceActiveFocus();
                     }
                 }
             }
@@ -325,13 +337,13 @@ PageItem {
                 color: LomiriColors.green
                 text: i18n.tr("Send")
                 onClicked: {
-                    postComment(addCommentField.text)
+                    postComment(addCommentField.text);
                 }
             }
         }
     }
 
-    Connections{
+    Connections {
         target: instagram
         onMediaCommentsDataReady: {
             var data = JSON.parse(answer);

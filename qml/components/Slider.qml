@@ -97,14 +97,13 @@ Toolkit.StyledItem {
     */
     signal touched(bool onThumb)
 
-
     /*!
       This function is used by the value indicator to show the current value.
       Reimplement this function if you want to show different information. By
       default, the value v is rounded to the nearest integer value.
     */
     function formatValue(v) {
-        return v.toFixed(0)
+        return v.toFixed(0);
     }
 
     // Private symbols.
@@ -129,9 +128,9 @@ Toolkit.StyledItem {
         anchors.fill: parent
 
         property Item bar: slider.__styleInstance ? slider.__styleInstance.bar : null
-        property Item thumb: slider.__styleInstance ? slider.__styleInstance.thumb :  null
+        property Item thumb: slider.__styleInstance ? slider.__styleInstance.thumb : null
         property real thumbSpacing: slider.__styleInstance ? slider.__styleInstance.thumbSpacing : 0
-        property real barMinusThumb: bar && thumb ? bar.width - (thumb.width + 2.0*thumbSpacing) : 0.0
+        property real barMinusThumb: bar && thumb ? bar.width - (thumb.width + 2.0 * thumbSpacing) : 0.0
 
         property real liveValue: 0.0
         property real normalizedValue: normalizedValueFromValue(liveValue)
@@ -160,22 +159,17 @@ Toolkit.StyledItem {
         }
         function normalizedValueFromValue(value) {
             if (Qt.application.layoutDirection == Qt.RightToLeft) {
-                return Toolkit.MathUtils.clampAndProject(value, slider.minimumValue,
-                                                 slider.maximumValue, 1.0, 0.0);
+                return Toolkit.MathUtils.clampAndProject(value, slider.minimumValue, slider.maximumValue, 1.0, 0.0);
             } else {
-                return Toolkit.MathUtils.clampAndProject(value, slider.minimumValue,
-                                                 slider.maximumValue, 0.0, 1.0);
+                return Toolkit.MathUtils.clampAndProject(value, slider.minimumValue, slider.maximumValue, 0.0, 1.0);
             }
-
         }
 
         function valueFromNormalizedValue(normalizedValue) {
             if (Qt.application.layoutDirection == Qt.RightToLeft) {
-                return Toolkit.MathUtils.lerp(Toolkit.MathUtils.clamp(normalizedValue, 0.0, 1.0),
-                                      slider.maximumValue, slider.minimumValue);
+                return Toolkit.MathUtils.lerp(Toolkit.MathUtils.clamp(normalizedValue, 0.0, 1.0), slider.maximumValue, slider.minimumValue);
             } else {
-                return Toolkit.MathUtils.lerp(Toolkit.MathUtils.clamp(normalizedValue, 0.0, 1.0),
-                                      slider.minimumValue, slider.maximumValue);
+                return Toolkit.MathUtils.lerp(Toolkit.MathUtils.clamp(normalizedValue, 0.0, 1.0), slider.minimumValue, slider.maximumValue);
             }
         }
 
@@ -210,16 +204,16 @@ Toolkit.StyledItem {
             liveValue = valueFromNormalizedValue(dragInitNormalizedValue + normalizedOffsetX);
         }
         onClicked: {
-            slider.requestFocus(Qt.MouseFocusReason)
+            slider.requestFocus(Qt.MouseFocusReason);
 
             var thumbPressed = mouse.x >= thumb.x && mouse.x <= thumb.x + thumb.width;
 
             if (!thumbPressed) {
                 __internals.adjustValue(slider.stepSize * (mouse.x < thumb.x ? -1 : 1));
             }
-
         }
-        onLiveValueChanged: if (isPressed) slider.requestFocus(Qt.MouseFocusReason)
+        onLiveValueChanged: if (isPressed)
+            slider.requestFocus(Qt.MouseFocusReason)
     }
 
     Keys.onLeftPressed: {

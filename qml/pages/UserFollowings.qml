@@ -33,33 +33,36 @@ PageItem {
         }
         model: viewModel.userListModel
         delegate: UserListItem {
-            onClicked: pageLayout.pushToCurrent(followingspage, PagesConstants.user, {usernameId: user.pk})
+            onClicked: pageLayout.pushToCurrent(followingspage, PagesConstants.user, {
+                usernameId: user.pk
+            })
         }
         onMovementEnded: {
-            if (atYEnd && viewModel.canLoadMore()) loadFollowings(viewModel.nextMaxId)
+            if (atYEnd && viewModel.canLoadMore())
+                loadFollowings(viewModel.nextMaxId);
         }
         PullToRefresh {
             refreshing: viewModel.isLoading && viewModel.userListModel.count === 0
             onRefresh: {
-                loadFollowings('')
+                loadFollowings('');
             }
         }
     }
 
     function loadFollowings(nextId) {
-        viewModel.loadData(nextId, function(nid) {
-            instagram.getFollowing(userId, nid)
-        })
+        viewModel.loadData(nextId, function (nid) {
+            instagram.getFollowing(userId, nid);
+        });
     }
 
     Connections {
         target: instagram
         onFollowingDataReady: {
-            viewModel.handleResponse(answer)
+            viewModel.handleResponse(answer);
         }
     }
 
     Component.onCompleted: {
-        loadFollowings()
+        loadFollowings();
     }
 }

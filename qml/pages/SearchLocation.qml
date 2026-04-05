@@ -23,7 +23,10 @@ import "../components/Actions"
 PageItem {
     id: searchlocationpage
 
-    property var coord: {'latitude':positionSource.position.coordinate.latitude, 'longitude':positionSource.position.coordinate.longitude}
+    property var coord: {
+        'latitude': positionSource.position.coordinate.latitude,
+        'longitude': positionSource.position.coordinate.longitude
+    }
 
     PositionSource {
         id: positionSource
@@ -48,7 +51,7 @@ PageItem {
             }
             primaryItem: LineIcon {
                 anchors.leftMargin: units.gu(0.2)
-                iconSize: parent.height*0.4
+                iconSize: parent.height * 0.4
                 active: false
                 name: "\ueb7b"
             }
@@ -63,7 +66,12 @@ PageItem {
     function searchLocationDataFinished(data) {
         searchPlacesModel.clear();
 
-        worker.sendMessage({'feed': 'searchPage', 'obj': data.venues, 'model': searchPlacesModel, 'clear_model': true})
+        worker.sendMessage({
+            'feed': 'searchPage',
+            'obj': data.venues,
+            'model': searchPlacesModel,
+            'clear_model': true
+        });
     }
 
     WorkerScript {
@@ -102,9 +110,16 @@ PageItem {
                 height: layout.height
                 divider.visible: false
                 onClicked: {
-                    mainView.locationSelected({"name":name.replace("&", "%26"), "address":address.replace("&", "%26"), "lat":lat.toFixed(4), "lng":lng.toFixed(4), "external_id":external_id, "external_id_source":external_id_source})
+                    mainView.locationSelected({
+                        "name": name.replace("&", "%26"),
+                        "address": address.replace("&", "%26"),
+                        "lat": lat.toFixed(4),
+                        "lng": lng.toFixed(4),
+                        "external_id": external_id,
+                        "external_id_source": external_id_source
+                    });
 
-                    pageLayout.removePages(searchlocationpage)
+                    pageLayout.removePages(searchlocationpage);
                 }
 
                 SlotsLayout {
@@ -130,7 +145,7 @@ PageItem {
                                 color: "transparent"
                                 border.width: units.gu(0.1)
                                 border.color: Qt.lighter(LomiriColors.lightGrey, 1.1)
-                                radius: width/2
+                                radius: width / 2
 
                                 LineIcon {
                                     anchors.centerIn: parent
@@ -165,7 +180,7 @@ PageItem {
         }
     }
 
-    Connections{
+    Connections {
         target: instagram
         onSearchLocationDataReady: {
             var data = JSON.parse(answer);

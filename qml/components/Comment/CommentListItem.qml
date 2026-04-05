@@ -9,23 +9,23 @@ ListItem {
     id: commentlistitem
     divider.visible: false
     height: layout.height
-    
+
     property var removalAnimation
 
     signal commentDeleted(string pk)
     signal commentLiked(string pk)
     signal commentUnliked(string pk)
-    
+
     function removeComment() {
-        removalAnimation.start()
+        removalAnimation.start();
     }
 
     function likeComment() {
-        commentLikeAction.is_liked = true
+        commentLikeAction.is_liked = true;
     }
 
     function unlikeComment() {
-        commentLikeAction.is_liked = false
+        commentLikeAction.is_liked = false;
     }
 
     leadingActions: ListItemActions {
@@ -93,7 +93,7 @@ ListItem {
                     textFormat: Text.RichText
                     color: styleApp.common.textColor
                     onLinkActivated: {
-                        Scripts.linkClick(commentspage, link)
+                        Scripts.linkClick(commentspage, link);
                     }
                 }
 

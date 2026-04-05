@@ -32,30 +32,32 @@ PageItem {
         }
         model: viewModel.userListModel
         delegate: UserListItem {
-            onClicked: pageLayout.pushToCurrent(blockeduserspage, PagesConstants.user, {usernameId: user.pk})
+            onClicked: pageLayout.pushToCurrent(blockeduserspage, PagesConstants.user, {
+                usernameId: user.pk
+            })
         }
         PullToRefresh {
             refreshing: viewModel.isLoading && viewModel.userListModel.count === 0
             onRefresh: {
-                loadBlockedUsers()
+                loadBlockedUsers();
             }
         }
     }
 
     function loadBlockedUsers() {
-        viewModel.loadData('', function() {
-            instagram.getBlockedUserList()
-        })
+        viewModel.loadData('', function () {
+            instagram.getBlockedUserList();
+        });
     }
 
     Connections {
         target: instagram
         onBlockedUserListDataReady: {
-            viewModel.handleResponse(answer)
+            viewModel.handleResponse(answer);
         }
     }
 
     Component.onCompleted: {
-        loadBlockedUsers()
+        loadBlockedUsers();
     }
 }

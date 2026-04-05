@@ -30,7 +30,7 @@ PageItem {
                 enabled: currentPasswordField.text.length > 0 && newPasswordField.text.length > 0 && newPasswordAgainField.text.length > 0
                 onTriggered: {
                     if (newPasswordField.text == newPasswordAgainField.text) {
-                        instagram.changePassword(currentPasswordField.text, newPasswordField.text)
+                        instagram.changePassword(currentPasswordField.text, newPasswordField.text);
                     } else {
                         // must be same error
                     }
@@ -50,115 +50,115 @@ PageItem {
         contentHeight: columnSuperior.height
 
         Column {
-           id: columnSuperior
-           width: parent.width
+            id: columnSuperior
+            width: parent.width
 
-           ListItem {
-               height: currentPasswordLayout.height
+            ListItem {
+                height: currentPasswordLayout.height
 
-               SlotsLayout {
-                   id: currentPasswordLayout
-                   anchors.centerIn: parent
+                SlotsLayout {
+                    id: currentPasswordLayout
+                    anchors.centerIn: parent
 
-                   padding.leading: 0
-                   padding.trailing: 0
+                    padding.leading: 0
+                    padding.trailing: 0
 
-                   mainSlot: Column {
-                       width: parent.width
-                       spacing: units.gu(1)
+                    mainSlot: Column {
+                        width: parent.width
+                        spacing: units.gu(1)
 
-                       Label {
-                           text: i18n.tr("Current")
-                           font.weight: Font.Normal
-                           width: parent.width
-                       }
+                        Label {
+                            text: i18n.tr("Current")
+                            font.weight: Font.Normal
+                            width: parent.width
+                        }
 
-                       TextField {
-                           id: currentPasswordField
-                           width: parent.width + units.gu(2)
-                           anchors.horizontalCenter: parent.horizontalCenter
-                           echoMode: TextInput.Password
-                           placeholderText: i18n.tr("Current password")
-                           StyleHints {
-                               borderColor: "transparent"
-                           }
-                       }
-                   }
-               }
-           }
+                        TextField {
+                            id: currentPasswordField
+                            width: parent.width + units.gu(2)
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            echoMode: TextInput.Password
+                            placeholderText: i18n.tr("Current password")
+                            StyleHints {
+                                borderColor: "transparent"
+                            }
+                        }
+                    }
+                }
+            }
 
-           ListItem {
-               height: newPasswordLayout.height
+            ListItem {
+                height: newPasswordLayout.height
 
-               SlotsLayout {
-                   id: newPasswordLayout
-                   anchors.centerIn: parent
+                SlotsLayout {
+                    id: newPasswordLayout
+                    anchors.centerIn: parent
 
-                   padding.leading: 0
-                   padding.trailing: 0
+                    padding.leading: 0
+                    padding.trailing: 0
 
-                   mainSlot: Column {
-                       width: parent.width
-                       spacing: units.gu(1)
+                    mainSlot: Column {
+                        width: parent.width
+                        spacing: units.gu(1)
 
-                       Label {
-                           text: i18n.tr("New")
-                           font.weight: Font.Normal
-                           width: parent.width
-                       }
+                        Label {
+                            text: i18n.tr("New")
+                            font.weight: Font.Normal
+                            width: parent.width
+                        }
 
-                       TextField {
-                           id: newPasswordField
-                           width: parent.width + units.gu(2)
-                           anchors.horizontalCenter: parent.horizontalCenter
-                           echoMode: TextInput.Password
-                           placeholderText: i18n.tr("New password")
-                           StyleHints {
-                               borderColor: "transparent"
-                           }
-                       }
-                   }
-               }
-           }
+                        TextField {
+                            id: newPasswordField
+                            width: parent.width + units.gu(2)
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            echoMode: TextInput.Password
+                            placeholderText: i18n.tr("New password")
+                            StyleHints {
+                                borderColor: "transparent"
+                            }
+                        }
+                    }
+                }
+            }
 
-           ListItem {
-               height: verifyLayout.height
-               divider.visible: false
+            ListItem {
+                height: verifyLayout.height
+                divider.visible: false
 
-               SlotsLayout {
-                   id: verifyLayout
-                   anchors.centerIn: parent
+                SlotsLayout {
+                    id: verifyLayout
+                    anchors.centerIn: parent
 
-                   padding.leading: 0
-                   padding.trailing: 0
+                    padding.leading: 0
+                    padding.trailing: 0
 
-                   mainSlot: Column {
-                       width: parent.width
-                       spacing: units.gu(1)
+                    mainSlot: Column {
+                        width: parent.width
+                        spacing: units.gu(1)
 
-                       Label {
-                           text: i18n.tr("Verify")
-                           font.weight: Font.Normal
-                           width: parent.width
-                       }
+                        Label {
+                            text: i18n.tr("Verify")
+                            font.weight: Font.Normal
+                            width: parent.width
+                        }
 
-                       TextField {
-                           id: newPasswordAgainField
-                           width: parent.width + units.gu(2)
-                           anchors.horizontalCenter: parent.horizontalCenter
-                           echoMode: TextInput.Password
-                           placeholderText: i18n.tr("New password, again")
-                           StyleHints {
-                               borderColor: "transparent"
-                           }
-                       }
-                   }
-               }
-           }
+                        TextField {
+                            id: newPasswordAgainField
+                            width: parent.width + units.gu(2)
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            echoMode: TextInput.Password
+                            placeholderText: i18n.tr("New password, again")
+                            StyleHints {
+                                borderColor: "transparent"
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
-    Connections{
+    Connections {
         target: instagram
         onChangePasswordReady: {
             var data = JSON.parse(answer);

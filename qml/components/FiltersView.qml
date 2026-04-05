@@ -39,7 +39,7 @@ ListView {
     property ImageProcessor imageHandler
 
     function showLevelSettings() {
-        levelSettingsLoader.active = true
+        levelSettingsLoader.active = true;
     }
 
     delegate: AbstractButton {
@@ -50,12 +50,12 @@ ListView {
 
         onClicked: {
             if (!isSelected) {
-                filtersView.currentIndex = model.index
-                imageHandler.filterOpacity = 1.0
-                imageHandler.filterUrl = "qrc:///ImageProcessor/qml/filters/" + model.fileName
+                filtersView.currentIndex = model.index;
+                imageHandler.filterOpacity = 1.0;
+                imageHandler.filterUrl = "qrc:///ImageProcessor/qml/filters/" + model.fileName;
             } else {
                 if (model.index != 0) {
-                    filtersView.showLevelSettings()
+                    filtersView.showLevelSettings();
                 }
             }
         }
@@ -98,7 +98,7 @@ ListView {
                     asynchronous: true
                     onLoaded: {
                         if (item)
-                            item.img = previewImg
+                            item.img = previewImg;
                     }
                 }
 
@@ -112,14 +112,18 @@ ListView {
                 Icon {
                     anchors.centerIn: parent
                     color: theme.palette.normal.backgroundText
-                    width: units.gu(4); height: width
+                    width: units.gu(4)
+                    height: width
                     name: "filters"
                     visible: isSelected && (model.index != 0)
                 }
             }
 
             Label {
-                anchors { left: parent.left; right: parent.right }
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
                 horizontalAlignment: Text.AlignHCenter
                 fontSize: "x-small"
                 font.weight: Font.Bold
@@ -165,10 +169,10 @@ ListView {
                         width: parent.width * 0.5
                         height: parent.height
                         onClicked: {
-                            imageHandler.filterOpacity = 1.0
+                            imageHandler.filterOpacity = 1.0;
 
                             // Close level settings
-                            levelSettingsLoader.active = false
+                            levelSettingsLoader.active = false;
                         }
 
                         Rectangle {
@@ -179,7 +183,7 @@ ListView {
 
                         Icon {
                             anchors.centerIn: parent
-                            height: parent.height*0.4
+                            height: parent.height * 0.4
                             color: "#000000"
                             name: "close"
                         }
@@ -199,7 +203,7 @@ ListView {
 
                         Icon {
                             anchors.centerIn: parent
-                            height: parent.height*0.4
+                            height: parent.height * 0.4
                             color: "#000000"
                             name: "tick"
                         }
@@ -219,7 +223,9 @@ ListView {
                 maximumValue: 1.0
                 live: true
 
-                function formatValue(v) { return (v * 100).toFixed(0) }
+                function formatValue(v) {
+                    return (v * 100).toFixed(0);
+                }
 
                 value: imageHandler.filterOpacity
                 onValueChanged: imageHandler.filterOpacity = value

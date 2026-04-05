@@ -44,7 +44,7 @@ Rectangle {
             textFormat: Text.RichText
             font.weight: Font.DemiBold
             onLinkActivated: {
-                Scripts.linkClick(directthreadpage, link)
+                Scripts.linkClick(directthreadpage, link);
             }
         }
 

@@ -9,8 +9,8 @@ Item {
         target: UriHandler
 
         onOpened: {
-            for (var i=0; i < uris.length; i++) {
-                console.debug("URI=" + uris[i])
+            for (var i = 0; i < uris.length; i++) {
+                console.debug("URI=" + uris[i]);
                 uriHandler.process(uris[i]);
             }
         }
@@ -18,21 +18,25 @@ Item {
 
     function process(uri) {
         // no process
-        if (typeof uri === "undefined") return;
+        if (typeof uri === "undefined")
+            return;
 
         if (loggedIn) {
             var commands = uri.split("://")[1].split("/");
 
             // no process
-            if (commands[1] === "") return;
+            if (commands[1] === "")
+                return;
 
             if (commands[1] === "p") {
                 // media
                 return;
             } else if (commands[1] === "explore") {
                 // no process
-                if (commands[2] === "") return;
-                if (commands[3] === "") return;
+                if (commands[2] === "")
+                    return;
+                if (commands[3] === "")
+                    return;
 
                 if (commands[2] === "tags") {
                     //pageStack.push(Qt.resolvedUrl("qml/pages/TagFeedPage.qml"), {tag: commands[3]});
@@ -44,7 +48,7 @@ Item {
                 //pageStack.push(Qt.resolvedUrl("qml/pages/OtherUserPage.qml"), {usernameString: commands[1]});
             }
 
-            console.log(uri)
+            console.log(uri);
             // https://www.instagram.com/ - main = Home
             // https://www.instagram.com/esmer_elizadeh/ - user == Users
             // https://www.instagram.com/p/BJL8VdDj60C6qZ8ovtBVzsufLIyiMNcTKZ1SBU0/ - media == Single Media

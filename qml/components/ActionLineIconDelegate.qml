@@ -4,12 +4,11 @@ import Lomiri.Components.Styles 1.3
 import QtGraphicalEffects 1.0
 
 Button {
+    id: button
     property var model
     property var iconSize: units.gu(2)
 
     property color customIconColor: styleApp.common.iconActiveColor
-
-    id: button
     width: units.gu(5)
     action: model
     enabled: model.enabled

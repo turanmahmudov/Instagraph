@@ -55,106 +55,101 @@ PageItem {
     }
 
     Component.onCompleted: {
-        firstLoad = true
-        directThread()
+        firstLoad = true;
+        directThread();
     }
 
-    function directThread(oldest_cursor_id)
-    {
-        clear_models = false
+    function directThread(oldest_cursor_id) {
+        clear_models = false;
         if (!oldest_cursor_id) {
-            directThreadModel.clear()
-            next_oldest_cursor_id = 0
-            clear_models = true
+            directThreadModel.clear();
+            next_oldest_cursor_id = 0;
+            clear_models = true;
         }
-        list_loading = true
-        instagram.getDirectThread(threadId, oldest_cursor_id)
+        list_loading = true;
+        instagram.getDirectThread(threadId, oldest_cursor_id);
     }
 
-    function sendMessage(text)
-    {
+    function sendMessage(text) {
         // Validate input - don't send empty messages
-        const trimmedText = text.trim()
+        const trimmedText = text.trim();
         if (!trimmedText || is_sending) {
-            return
+            return;
         }
 
-        is_sending = true
-        sentMessage = trimmedText
+        is_sending = true;
+        sentMessage = trimmedText;
 
-        const recip_string = getRecipientsString(threadUsers)
+        const recip_string = getRecipientsString(threadUsers);
 
-        instagram.directMessage(recip_string, trimmedText, threadId)
+        instagram.directMessage(recip_string, trimmedText, threadId);
     }
 
-    function sendLike()
-    {
-        if (is_sending) return
-        
-        is_sending = true
-        const recip_string = getRecipientsString({ [threadId]: threadId })
+    function sendLike() {
+        if (is_sending)
+            return;
+        is_sending = true;
+        const recip_string = getRecipientsString({
+            [threadId]: threadId
+        });
 
-        instagram.directLike(recip_string, threadId)
+        instagram.directLike(recip_string, threadId);
     }
 
     function directThreadFinished(data) {
         if (!data || !data.thread) {
-            console.warn("Invalid thread data received")
-            list_loading = false
-            return
+            console.warn("Invalid thread data received");
+            list_loading = false;
+            return;
         }
 
-        const thread = data.thread
+        const thread = data.thread;
 
         if (firstLoad == true) {
-            directthreadpage.header.title = thread.thread_title !== ""
-                ? thread.thread_title
-                : (thread.inviter ? thread.inviter.username : i18n.tr("Direct"))
+            directthreadpage.header.title = thread.thread_title !== "" ? thread.thread_title : (thread.inviter ? thread.inviter.username : i18n.tr("Direct"));
 
             if (thread.users && thread.users.length > 0) {
-                thread.users.forEach((user) => {
-                    threadUsers[user.pk] = user
-                })
+                thread.users.forEach(user => {
+                    threadUsers[user.pk] = user;
+                });
             }
 
             // Mark Direct Thread Item Seen
             if (thread.items && thread.items.length > 0) {
-                const thId = thread.thread_id
-                const thItemId = thread.items[0].item_id
-                instagram.markThreadSeen(thId, thItemId)
+                const thId = thread.thread_id;
+                const thItemId = thread.items[0].item_id;
+                instagram.markThreadSeen(thId, thItemId);
             }
-            
-            firstLoad = false
+
+            firstLoad = false;
         }
 
         if (next_oldest_cursor_id === thread.oldest_cursor) {
-            list_loading = false
-            return
+            list_loading = false;
+            return;
         }
 
-        next_oldest_cursor_id = thread.has_older === true ? thread.oldest_cursor : ""
-        more_available = thread.has_older
-        next_coming = true
+        next_oldest_cursor_id = thread.has_older === true ? thread.oldest_cursor : "";
+        more_available = thread.has_older;
+        next_coming = true;
 
-        directThreadWorker.sendMessage(
-            {
-                'obj': thread.items || [],
-                'model': directThreadModel,
-                'clear_model': clear_models,
-                'insert': false
-            }
-        )
+        directThreadWorker.sendMessage({
+            'obj': thread.items || [],
+            'model': directThreadModel,
+            'clear_model': clear_models,
+            'insert': false
+        });
 
-        next_coming = false
-        list_loading = false
+        next_coming = false;
+        list_loading = false;
     }
 
     function messagePostedFinished(data) {
-        is_sending = false
-        
+        is_sending = false;
+
         if (!data || !data.payload) {
-            console.warn("Failed to send message")
-            return
+            console.warn("Failed to send message");
+            return;
         }
 
         const items = [
@@ -164,27 +159,25 @@ PageItem {
                 "user_id": parseInt(activeUsernameId),
                 "item_id": data.payload.item_id
             }
-        ]
+        ];
 
-        directThreadWorker.sendMessage(
-            {
-                'obj': items,
-                'model': directThreadModel,
-                'clear_model': false,
-                'insert': true
-            }
-        )
+        directThreadWorker.sendMessage({
+            'obj': items,
+            'model': directThreadModel,
+            'clear_model': false,
+            'insert': true
+        });
 
-        sentMessage = ""
-        addMessageItem.clearTextField()
+        sentMessage = "";
+        addMessageItem.clearTextField();
     }
 
     function likePostedFinished(data) {
-        is_sending = false
-        
+        is_sending = false;
+
         if (!data || !data.payload) {
-            console.warn("Failed to send like")
-            return
+            console.warn("Failed to send like");
+            return;
         }
 
         const items = [
@@ -193,26 +186,24 @@ PageItem {
                 "user_id": parseInt(activeUsernameId),
                 "item_id": data.payload.item_id
             }
-        ]
+        ];
 
-        directThreadWorker.sendMessage(
-            {
-                'obj': items,
-                'model': directThreadModel,
-                'clear_model': false,
-                'insert': true
-            }
-        )
+        directThreadWorker.sendMessage({
+            'obj': items,
+            'model': directThreadModel,
+            'clear_model': false,
+            'insert': true
+        });
     }
 
     function getRecipientsString(recipients) {
-        let recip_array = []
+        let recip_array = [];
 
         for (let i in recipients) {
-            recip_array.push(`"${i}"`)
+            recip_array.push(`"${i}"`);
         }
 
-        return recip_array.join(',')
+        return recip_array.join(',');
     }
 
     ListView {
@@ -226,7 +217,7 @@ PageItem {
         }
         onMovementEnded: {
             if (atYBeginning && more_available && !next_coming) {
-                directThread(next_oldest_cursor_id)
+                directThread(next_oldest_cursor_id);
             }
         }
         verticalLayoutDirection: ListView.BottomToTop
@@ -239,7 +230,7 @@ PageItem {
             height: layout.height
 
             property bool outgoing_message: user_id == activeUsernameId || (user_id != activeUsernameId && item_type == "action_log")
-            property bool show_user_image: (user_id != activeUsernameId && index == 0) || (user_id != activeUsernameId && index != 0 && directThreadModel.get(index-1).user_id !== user_id)
+            property bool show_user_image: (user_id != activeUsernameId && index == 0) || (user_id != activeUsernameId && index != 0 && directThreadModel.get(index - 1).user_id !== user_id)
 
             property var max_width: width - (outgoing_message ? 0 : units.gu(5))
             property var item_max_width: max_width * 3 / 4
@@ -264,39 +255,39 @@ PageItem {
                     Loader {
                         id: messageLoader
                         asynchronous: true
-                        
+
                         sourceComponent: {
                             switch (item_type) {
-                                case "text":
-                                    return textMessageComponent
-                                case "animated_media":
-                                    return animatedMediaComponent
-                                case "media_share":
-                                    return mediaShareComponent
-                                case "like":
-                                    return likeComponent
-                                case "action_log":
-                                    return actionLogComponent
-                                case "media":
-                                    return mediaComponent
-                                case "link":
-                                    return linkComponent
-                                case "placeholder":
-                                    return placeholderComponent
-                                case "reel_share":
-                                    return reelShareComponent
-                                case "story_share":
-                                    return storyShareComponent
-                                case "raven_media":
-                                    return ravenMediaComponent
-                                case "xma_media_share":
-                                    return xmaMediaShareComponent
-                                default:
-                                    return null
+                            case "text":
+                                return textMessageComponent;
+                            case "animated_media":
+                                return animatedMediaComponent;
+                            case "media_share":
+                                return mediaShareComponent;
+                            case "like":
+                                return likeComponent;
+                            case "action_log":
+                                return actionLogComponent;
+                            case "media":
+                                return mediaComponent;
+                            case "link":
+                                return linkComponent;
+                            case "placeholder":
+                                return placeholderComponent;
+                            case "reel_share":
+                                return reelShareComponent;
+                            case "story_share":
+                                return storyShareComponent;
+                            case "raven_media":
+                                return ravenMediaComponent;
+                            case "xma_media_share":
+                                return xmaMediaShareComponent;
+                            default:
+                                return null;
                             }
                         }
                     }
-                    
+
                     // Component definitions
                     Component {
                         id: textMessageComponent
@@ -305,7 +296,7 @@ PageItem {
                             itemMaxWidth: directThreadDelegate.item_max_width
                         }
                     }
-                    
+
                     Component {
                         id: animatedMediaComponent
                         DirectThreadAnimatedMessage {
@@ -315,7 +306,7 @@ PageItem {
                             itemMaxWidth: directThreadDelegate.item_max_width
                         }
                     }
-                    
+
                     Component {
                         id: mediaShareComponent
                         DirectThreadMediaShareMessage {
@@ -323,12 +314,12 @@ PageItem {
                             itemMaxWidth: directThreadDelegate.item_max_width
                         }
                     }
-                    
+
                     Component {
                         id: likeComponent
                         DirectThreadLikeMessage {}
                     }
-                    
+
                     Component {
                         id: actionLogComponent
                         DirectThreadActionLogMessage {
@@ -336,7 +327,7 @@ PageItem {
                             users: directthreadpage.threadUsers || {}
                         }
                     }
-                    
+
                     Component {
                         id: mediaComponent
                         DirectThreadMediaMessage {
@@ -345,7 +336,7 @@ PageItem {
                             isMedia: true
                         }
                     }
-                    
+
                     Component {
                         id: linkComponent
                         DirectThreadLinkMessage {
@@ -353,7 +344,7 @@ PageItem {
                             itemMaxWidth: directThreadDelegate.item_max_width
                         }
                     }
-                    
+
                     Component {
                         id: placeholderComponent
                         DirectThreadPlaceholderMessage {
@@ -361,7 +352,7 @@ PageItem {
                             itemMaxWidth: directThreadDelegate.item_max_width
                         }
                     }
-                    
+
                     Component {
                         id: reelShareComponent
                         DirectThreadReelShareMessage {
@@ -370,7 +361,7 @@ PageItem {
                             itemSmallWidth: directThreadDelegate.item_small_width
                         }
                     }
-                    
+
                     Component {
                         id: storyShareComponent
                         DirectThreadStoryShareMessage {
@@ -379,7 +370,7 @@ PageItem {
                             itemSmallWidth: directThreadDelegate.item_small_width
                         }
                     }
-                    
+
                     Component {
                         id: ravenMediaComponent
                         DirectThreadRavenMediaMessage {
@@ -387,7 +378,7 @@ PageItem {
                             itemMaxWidth: directThreadDelegate.item_max_width
                         }
                     }
-                    
+
                     Component {
                         id: xmaMediaShareComponent
                         DirectThreadXmaMediaShareMessage {
@@ -408,9 +399,11 @@ PageItem {
                         width: parent.width
                         height: width
                         source: {
-                            if (user_id == activeUsernameId) return ''
-                            if (!threadUsers[user_id]) return ''
-                            return threadUsers[user_id].profile_pic_url || ''
+                            if (user_id == activeUsernameId)
+                                return '';
+                            if (!threadUsers[user_id])
+                                return '';
+                            return threadUsers[user_id].profile_pic_url || '';
                         }
                     }
 
@@ -429,29 +422,27 @@ PageItem {
             right: parent.right
             rightMargin: units.gu(1)
         }
-        
+
         enabled: !is_sending
 
         onSendMessageClicked: sendMessage(text)
         onSendLikeClicked: sendLike()
     }
 
-    Connections{
+    Connections {
         target: instagram
         onDirectThreadDataReady: {
-            var data = JSON.parse(answer)
-            directThreadFinished(data)
+            var data = JSON.parse(answer);
+            directThreadFinished(data);
         }
         onDirectMessageDataReady: {
-            var data = JSON.parse(answer)
-            messagePostedFinished(data)
+            var data = JSON.parse(answer);
+            messagePostedFinished(data);
         }
         onDirectLikeDataReady: {
-            var data = JSON.parse(answer)
-            likePostedFinished(data)
+            var data = JSON.parse(answer);
+            likePostedFinished(data);
         }
-        onMarkThreadSeenDataReady: {
-
-        }
+        onMarkThreadSeenDataReady: {}
     }
 }

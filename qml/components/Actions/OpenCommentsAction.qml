@@ -8,7 +8,7 @@ import Lomiri.Components 1.3
 import ".."
 
 Item {
-    signal openCommentsClicked()
+    signal openCommentsClicked
 
     property bool comments_disabled: typeof comments_disabled != 'undefined' && comments_disabled == true
 
@@ -25,7 +25,8 @@ Item {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            if (!comments_disabled) openCommentsClicked()
+            if (!comments_disabled)
+                openCommentsClicked();
         }
     }
 }

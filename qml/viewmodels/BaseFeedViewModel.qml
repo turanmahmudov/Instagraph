@@ -2,13 +2,13 @@ import QtQuick 2.12
 
 /**
  * BaseFeedViewModel - Common state and logic for all feed types
- * 
+ *
  * This base component provides shared functionality that all feed ViewModels need:
  * - Loading states (isLoading, isEmpty, hasError)
  * - Pagination state (nextMaxId, moreAvailable)
  * - Error handling
  * - Feed model
- * 
+ *
  * Child ViewModels must implement:
  * - loadFeed() function
  * - loadMore() function
@@ -41,9 +41,9 @@ Item {
      * @param message - Error message to display
      */
     function handleError(message) {
-        hasError = true
-        errorMessage = message
-        isLoading = false
+        hasError = true;
+        errorMessage = message;
+        isLoading = false;
     }
 
     /**
@@ -51,13 +51,13 @@ Item {
      * Clears all data and error states
      */
     function resetFeed() {
-        feedModel.clear()
-        nextMaxId = ""
-        moreAvailable = true
-        nextComing = true
-        isEmpty = false
-        hasError = false
-        errorMessage = ""
+        feedModel.clear();
+        nextMaxId = "";
+        moreAvailable = true;
+        nextComing = true;
+        isEmpty = false;
+        hasError = false;
+        errorMessage = "";
     }
 
     /**
@@ -65,9 +65,9 @@ Item {
      * @param loading - Whether feed is currently loading
      */
     function setLoadingState(loading) {
-        isLoading = loading
+        isLoading = loading;
         if (loading) {
-            hasError = false
+            hasError = false;
         }
     }
 
@@ -79,12 +79,8 @@ Item {
      * @returns true if should trigger pagination
      */
     function shouldLoadMore(contentY, contentHeight, viewHeight) {
-        var distanceFromBottom = contentHeight - contentY - viewHeight
-        return distanceFromBottom < viewHeight * paginationThreshold 
-            && moreAvailable 
-            && !nextComing 
-            && !isLoading 
-            && nextMaxId
+        var distanceFromBottom = contentHeight - contentY - viewHeight;
+        return distanceFromBottom < viewHeight * paginationThreshold && moreAvailable && !nextComing && !isLoading && nextMaxId;
     }
 
     // Abstract functions that child ViewModels must implement:

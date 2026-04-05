@@ -37,7 +37,7 @@ PageItem {
             folder: shortcuts.home
             selectMultiple: false
             onAccepted: {
-                mainView.fileImported(fileDialog.fileUrl)
+                mainView.fileImported(fileDialog.fileUrl);
                 pageLayout.removePages(picker);
             }
             onRejected: {

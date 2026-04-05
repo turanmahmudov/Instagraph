@@ -8,8 +8,8 @@ import Lomiri.Components 1.3
 import ".."
 
 Item {
-    signal likeClicked()
-    signal unlikeClicked()
+    signal likeClicked
+    signal unlikeClicked
 
     property bool is_liked: has_liked == true
 
@@ -28,9 +28,9 @@ Item {
         anchors.fill: parent
         onClicked: {
             if (is_liked) {
-                unlikeClicked()
+                unlikeClicked();
             } else {
-                likeClicked()
+                likeClicked();
             }
         }
     }

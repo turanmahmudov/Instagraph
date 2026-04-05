@@ -36,9 +36,15 @@ MainView {
     height: units.gu(80)
 
     // Design
-    Style { id: styleApp }
-    StyleDark { id: styleDark }
-    StyleLight { id: styleLight }
+    Style {
+        id: styleApp
+    }
+    StyleDark {
+        id: styleDark
+    }
+    StyleLight {
+        id: styleLight
+    }
 
     // Constants (used directly as singletons - no need for aliases)
     // Access via: IconsConstants.inbox, PagesConstants.home, etc.
@@ -79,17 +85,17 @@ MainView {
 
     function connectMqtt() {
         if (mqttConnected) {
-            return
+            return;
         }
 
-        var phoneId = instagram.getPhoneId()
+        var phoneId = instagram.getPhoneId();
         if (!phoneId || phoneId === "") {
-            console.log("MQTT: no phoneId available")
-            return
+            console.log("MQTT: no phoneId available");
+            return;
         }
 
-        mqtt.connectToMqtt(activeUsernameId, phoneId)
-        mqttConnected = true
+        mqtt.connectToMqtt(activeUsernameId, phoneId);
+        mqttConnected = true;
     }
 
     property alias appStore: appStore
@@ -129,18 +135,21 @@ MainView {
             autoStart: false
             property var contentType
             onDownloadIdChanged: {
-                PopupUtils.open(downloadDialog, mainView, {"contentType" : contentType, "downloadId" : downloadId})
+                PopupUtils.open(downloadDialog, mainView, {
+                    "contentType": contentType,
+                    "downloadId": downloadId
+                });
             }
 
             onFinished: {
-                destroy()
+                destroy();
             }
         }
     }
 
     Component {
         id: downloadDialog
-        ContentDownloadDialog { }
+        ContentDownloadDialog {}
     }
 
     // Pages
@@ -158,11 +167,11 @@ MainView {
         ]
 
         function pushToCurrent(source, page, properties) {
-            pageLayout.addPageToCurrentColumn(source, page, properties)
+            pageLayout.addPageToCurrentColumn(source, page, properties);
         }
 
         function pushToNext(source, page, properties) {
-            pageLayout.addPageToNextColumn(source, page, properties)
+            pageLayout.addPageToNextColumn(source, page, properties);
         }
 
         // Pages
@@ -181,34 +190,34 @@ MainView {
     }
 
     Component.onCompleted: {
-        loading.visible = true
+        loading.visible = true;
 
-        init()
+        init();
     }
 
     function init(force) {
-        tryToLogin(force)
+        tryToLogin(force);
     }
 
     function tryToLogin(force) {
-        var username = activeUsername
-        var password = Storage.getAccount(username)
+        var username = activeUsername;
+        var password = Storage.getAccount(username);
 
-        if (username === "" ||  password === "" || username === undefined || password === undefined || username === null || password === null) {
-            loginPageActive = true
-            goLogin()
+        if (username === "" || password === "" || username === undefined || password === undefined || username === null || password === null) {
+            loginPageActive = true;
+            goLogin();
         } else {
-            instagram.setUsername(username)
-            instagram.setPassword(password)
+            instagram.setUsername(username);
+            instagram.setPassword(password);
 
-            instagram.login(force === true ? true : false, username, password, true)
+            instagram.login(force === true ? true : false, username, password, true);
         }
     }
 
     function goLogin() {
-        console.log('GO LOGIN PAGE')
+        console.log('GO LOGIN PAGE');
 
-        pageLayout.primaryPageSource = Qt.resolvedUrl("pages/LoginPage.qml")
+        pageLayout.primaryPageSource = Qt.resolvedUrl("pages/LoginPage.qml");
     }
 
     LoadingSpinner {
@@ -224,27 +233,27 @@ MainView {
         }
     }
 
-    Connections{
+    Connections {
         target: instagram
         onProfileConnected: {
-            console.log('PROFILE CONNECTED')
+            console.log('PROFILE CONNECTED');
 
             if (loginPageActive && tmpUsername != "" && tmpPassword != "") {
-                Storage.insertAccount(tmpUsername, tmpPassword)
-                activeUsername = tmpUsername
+                Storage.insertAccount(tmpUsername, tmpPassword);
+                activeUsername = tmpUsername;
             }
-            loggedIn = true
-            loginPageActive = false
-            anchorToKeyboard = true
-            loading.visible = false
+            loggedIn = true;
+            loginPageActive = false;
+            anchorToKeyboard = true;
+            loading.visible = false;
 
-            activeUsernameId = instagram.getUsernameId()
+            activeUsernameId = instagram.getUsernameId();
 
-            pageLayout.primaryPage = homePage
+            pageLayout.primaryPage = homePage;
 
             // Get Data
             // Home Timeline
-            homePage.getHomeFeed()
+            homePage.getHomeFeed();
 
             // Activity page
             activityPage.getRecentActivity();
@@ -253,19 +262,17 @@ MainView {
             userPage.getUsernameInfo();
 
             // Connect MQTT for push notifications
-            connectMqtt()
+            connectMqtt();
         }
-        onProfileConnectedFail: {
-
-        }
+        onProfileConnectedFail: {}
         onTwoFactorRequired: {
-            console.log('2FACTOR REQUIRED')
+            console.log('2FACTOR REQUIRED');
 
             // Store the 2FA data and load the 2FA page as primary
-            twoFactorData = answer
-            pageLayout.primaryPageSource = Qt.resolvedUrl("pages/2FactorLoginPage.qml")
+            twoFactorData = answer;
+            pageLayout.primaryPageSource = Qt.resolvedUrl("pages/2FactorLoginPage.qml");
 
-            loading.visible = false
+            loading.visible = false;
         }
     }
 
@@ -274,30 +281,30 @@ MainView {
         target: mqtt
 
         onFbnsTokenReceived: {
-            instagram.registerPush(token)
+            instagram.registerPush(token);
         }
 
         onFbnsConnectionChanged: {
-            console.log("MQTT FBNS connected:", connected)
+            console.log("MQTT FBNS connected:", connected);
         }
 
         onPushNotificationReceived: {
-            var ck = notification.collapseKey
-            console.log("MQTT push [" + ck + "]:", notification.message)
+            var ck = notification.collapseKey;
+            console.log("MQTT push [" + ck + "]:", notification.message);
 
             switch (ck) {
-                case "direct_v2_message":
-                case "like":
-                case "like_on_tag":
-                case "comment_like":
-                case "comment":
-                case "mentioned_comment":
-                case "comment_on_tag":
-                case "reply_to_comment_with_threading":
-                case "new_follower":
-                case "private_user_follow_request":
-                case "follow_request_approved":
-                case "usertag":
+            case "direct_v2_message":
+            case "like":
+            case "like_on_tag":
+            case "comment_like":
+            case "comment":
+            case "mentioned_comment":
+            case "comment_on_tag":
+            case "reply_to_comment_with_threading":
+            case "new_follower":
+            case "private_user_follow_request":
+            case "follow_request_approved":
+            case "usertag":
             }
         }
     }

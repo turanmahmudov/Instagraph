@@ -31,81 +31,87 @@ StoryViewerPage {
     }
 
     function getReelsMediaFeed() {
-        var idsArray = []
-        idsArray.push(highlightId)
+        var idsArray = [];
+        idsArray.push(highlightId);
         instagram.getReelsMediaFeed(JSON.stringify(idsArray));
     }
 
     function handleReelsData(data) {
         if (!data || !data.reels || !data.reels[highlightId]) {
-            storyUnavailable = true
-            getting = false
-            return
+            storyUnavailable = true;
+            getting = false;
+            return;
         }
 
-        var reelData = data.reels[highlightId]
-        var items = reelData.items
+        var reelData = data.reels[highlightId];
+        var items = reelData.items;
 
         if (!items || items.length === 0) {
             // Show highlight info in header even when unavailable
-            user = reelData.user
+            user = reelData.user;
             if (user) {
                 highlight = {
                     'title': "title" in reelData ? reelData.title : user.username,
                     'cover_url': "cover_media" in reelData ? reelData.cover_media.cropped_image_version.url : user.profile_pic_url
-                }
-                headerImageSource = highlight.cover_url
-                headerTitle = highlight.title
-                headerSubtitle = ""
+                };
+                headerImageSource = highlight.cover_url;
+                headerTitle = highlight.title;
+                headerSubtitle = "";
             }
-            storyUnavailable = true
-            getting = false
-            return
+            storyUnavailable = true;
+            getting = false;
+            return;
         }
 
-        storyUnavailable = false
+        storyUnavailable = false;
 
-        worker.sendMessage({'feed': 'userStoriesPage', 'obj': items, 'model': storiesModel, 'clear_model': true})
+        worker.sendMessage({
+            'feed': 'userStoriesPage',
+            'obj': items,
+            'model': storiesModel,
+            'clear_model': true
+        });
 
-        user = reelData.user
+        user = reelData.user;
         highlight = {
             'title': "title" in reelData ? reelData.title : (user ? user.username : ""),
             'cover_url': "cover_media" in reelData ? reelData.cover_media.cropped_image_version.url : (user ? user.profile_pic_url : "")
-        }
+        };
 
         // Update header
-        headerImageSource = highlight.cover_url
-        headerTitle = highlight.title
-        headerSubtitle = Helper.milisecondsToString(items[0].taken_at, true)
+        headerImageSource = highlight.cover_url;
+        headerTitle = highlight.title;
+        headerSubtitle = Helper.milisecondsToString(items[0].taken_at, true);
 
         // Mark all stories as seen immediately
-        markStoriesSeen(items)
+        markStoriesSeen(items);
 
-        getting = false
+        getting = false;
     }
 
     Component.onCompleted: {
-        getReelsMediaFeed()
+        getReelsMediaFeed();
     }
 
     onRequestLoadEntry: {
-        highlightId = entryId
-        getReelsMediaFeed()
+        highlightId = entryId;
+        getReelsMediaFeed();
     }
 
     onHeaderClicked: {
         if (user) {
-            pageLayout.pushToCurrent(highlightStoriesPage, PagesConstants.user, {usernameId: user.pk})
+            pageLayout.pushToCurrent(highlightStoriesPage, PagesConstants.user, {
+                usernameId: user.pk
+            });
         }
     }
 
     Connections {
         target: instagram
         onReelsMediaFeedDataReady: {
-            var data = JSON.parse(answer)
-            handleReelsData(data)
+            var data = JSON.parse(answer);
+            handleReelsData(data);
         }
-        onMarkStoryMediaSeenDataReady: {
-        }
+        onMarkStoryMediaSeenDataReady: {}
     }
 }

@@ -15,17 +15,18 @@ Item {
     height: visible ? feed_image.height + units.gu(2.5) : 0
 
     AnimatedImage {
-        property bool horizontal: mediaImage ? (parseInt(mediaImage.width || 1) > parseInt(mediaImage.height || 1)) : false
-
         id: feed_image
+        property bool horizontal: mediaImage ? (parseInt(mediaImage.width || 1) > parseInt(mediaImage.height || 1)) : false
         visible: mediaImage !== undefined
         width: {
-            if (!mediaImage) return 0
-            return isSticker ? (horizontal ? ((mediaImage.width || 1)*height / (mediaImage.height || 1)) : units.gu(16)) : itemMaxWidth
+            if (!mediaImage)
+                return 0;
+            return isSticker ? (horizontal ? ((mediaImage.width || 1) * height / (mediaImage.height || 1)) : units.gu(16)) : itemMaxWidth;
         }
         height: {
-            if (!mediaImage) return 0
-            return isSticker ? (horizontal ? units.gu(8) : ((mediaImage.height || 1)*width / (mediaImage.width || 1))) : (width/(mediaImage.width || 1)*(mediaImage.height || 1))
+            if (!mediaImage)
+                return 0;
+            return isSticker ? (horizontal ? units.gu(8) : ((mediaImage.height || 1) * width / (mediaImage.width || 1))) : (width / (mediaImage.width || 1) * (mediaImage.height || 1));
         }
         source: mediaImage ? (mediaImage.url || "") : ""
         smooth: true
@@ -34,7 +35,7 @@ Item {
 
     Component.onCompleted: {
         if (isOutgoing) {
-            anchors.right = parent.right
+            anchors.right = parent.right;
         }
     }
 }

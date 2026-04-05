@@ -42,8 +42,8 @@ MouseArea {
                 width: parent.width * 0.5
                 height: parent.height
                 onClicked: {
-                    proc.clarity = 0.0
-                    claritySettingsLoader.active = false
+                    proc.clarity = 0.0;
+                    claritySettingsLoader.active = false;
                 }
 
                 Rectangle {
@@ -54,7 +54,7 @@ MouseArea {
 
                 Icon {
                     anchors.centerIn: parent
-                    height: parent.height*0.4
+                    height: parent.height * 0.4
                     color: "#000000"
                     name: "close"
                 }
@@ -74,7 +74,7 @@ MouseArea {
 
                 Icon {
                     anchors.centerIn: parent
-                    height: parent.height*0.4
+                    height: parent.height * 0.4
                     color: "#000000"
                     name: "tick"
                 }
@@ -97,7 +97,7 @@ MouseArea {
         live: true
 
         function formatValue(v) {
-            return (v * 100).toFixed(0)
+            return (v * 100).toFixed(0);
         }
 
         value: proc.clarity

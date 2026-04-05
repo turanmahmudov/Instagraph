@@ -29,17 +29,17 @@ PageItem {
         title: usernameString ? usernameString : ''
         trailingActions: [
             Action {
-                visible: usernameId !== activeUsernameId
                 id: userMenuAction
+                visible: usernameId !== activeUsernameId
                 text: i18n.tr("Options")
                 iconName: IconsConstants.user_grid
                 onTriggered: {
-                    PopupUtils.open(userMenuComponent)
+                    PopupUtils.open(userMenuComponent);
                 }
             },
             Action {
-                visible: usernameId === activeUsernameId
                 id: settingsAction
+                visible: usernameId === activeUsernameId
                 text: i18n.tr("Settings")
                 iconName: IconsConstants.settings
                 onTriggered: {
@@ -74,8 +74,6 @@ PageItem {
     property var last_like_id
     property var last_save_id
 
-
-
     Component {
         id: userMenuComponent
         ActionSelectionPopover {
@@ -100,12 +98,12 @@ PageItem {
                 }
             }
             actions: ActionList {
-                  Action {
-                      text: i18n.tr("Block")
-                      onTriggered: {
-                            instagram.block(usernameId)
-                      }
-                  }
+                Action {
+                    text: i18n.tr("Block")
+                    onTriggered: {
+                        instagram.block(usernameId);
+                    }
+                }
             }
 
             Connections {
@@ -114,12 +112,12 @@ PageItem {
                     var data = JSON.parse(answer);
 
                     if (data.friendship_status.blocking) {
-                        followingButton.visible = false
-                        unfollowingButton.visible = false
-                        requestedButton.visible = false
-                        unBlockButton.visible = true
+                        followingButton.visible = false;
+                        unfollowingButton.visible = false;
+                        requestedButton.visible = false;
+                        unBlockButton.visible = true;
 
-                        PopupUtils.close(userMenuPopup)
+                        PopupUtils.close(userMenuPopup);
                     }
                 }
             }
@@ -141,11 +139,11 @@ PageItem {
         onContentYChanged: {
             if (current_user_section === 3) {
                 if (feedViewModel.shouldLoadMoreTags(contentY, contentHeight, height)) {
-                    feedViewModel.loadMoreTags()
+                    feedViewModel.loadMoreTags();
                 }
             } else {
                 if (feedViewModel.shouldLoadMore(contentY, contentHeight, height)) {
-                    feedViewModel.loadMore()
+                    feedViewModel.loadMore();
                 }
             }
         }
@@ -175,8 +173,8 @@ PageItem {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: i18n.tr("Following")
                 onTriggered: {
-                    latest_follow_request = usernameId
-                    instagram.unFollow(usernameId)
+                    latest_follow_request = usernameId;
+                    instagram.unFollow(usernameId);
                 }
             }
 
@@ -188,8 +186,8 @@ PageItem {
                 color: LomiriColors.green
                 text: i18n.tr("Follow")
                 onTriggered: {
-                    latest_follow_request = usernameId
-                    instagram.follow(usernameId)
+                    latest_follow_request = usernameId;
+                    instagram.follow(usernameId);
                 }
             }
 
@@ -201,8 +199,8 @@ PageItem {
                 color: "#666666"
                 text: i18n.tr("Requested")
                 onTriggered: {
-                    latest_follow_request = usernameId
-                    instagram.unFollow(usernameId)
+                    latest_follow_request = usernameId;
+                    instagram.unFollow(usernameId);
                 }
             }
 
@@ -213,8 +211,8 @@ PageItem {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: i18n.tr("Unblock")
                 onTriggered: {
-                    latest_follow_request = usernameId
-                    instagram.unBlock(usernameId)
+                    latest_follow_request = usernameId;
+                    instagram.unBlock(usernameId);
                 }
             }
 
@@ -238,7 +236,7 @@ PageItem {
                 id: storiesFeedTrayLoader
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width - units.gu(2)
-                height: width/5 + units.gu(3)
+                height: width / 5 + units.gu(3)
                 visible: feedViewModel.highlightsModel.count > 0
                 active: feedViewModel.highlightsModel.count > 0
                 asynchronous: true
@@ -263,7 +261,7 @@ PageItem {
                     anchors {
                         horizontalCenter: parent.horizontalCenter
                     }
-                    spacing: (parent.width-units.gu(15))/3
+                    spacing: (parent.width - units.gu(15)) / 3
 
                     Item {
                         width: units.gu(5)
@@ -279,8 +277,8 @@ PageItem {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                current_user_section = 0
-                                viewLoader.sourceComponent = gridviewComponent
+                                current_user_section = 0;
+                                viewLoader.sourceComponent = gridviewComponent;
                             }
                         }
                     }
@@ -299,8 +297,8 @@ PageItem {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                current_user_section = 1
-                                viewLoader.sourceComponent = listviewComponent
+                                current_user_section = 1;
+                                viewLoader.sourceComponent = listviewComponent;
                             }
                         }
                     }
@@ -319,9 +317,9 @@ PageItem {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                current_user_section = 3
-                                viewLoader.sourceComponent = tagviewComponent
-                                feedViewModel.loadTags(true)
+                                current_user_section = 3;
+                                viewLoader.sourceComponent = tagviewComponent;
+                                feedViewModel.loadTags(true);
                             }
                         }
                     }
@@ -380,8 +378,8 @@ PageItem {
             parent: flickpage
             refreshing: list_loading && feedViewModel.feedModel.count == 0
             onRefresh: {
-                feedViewModel.loadUserInfo()
-                feedViewModel.loadFeed(true)
+                feedViewModel.loadUserInfo();
+                feedViewModel.loadFeed(true);
             }
         }
     }
@@ -425,7 +423,7 @@ PageItem {
 
                 GridFeedDelegate {
                     currentDelegatePage: otheruserpage
-                    width: (viewLoader.width-units.gu(0.1))/3
+                    width: (viewLoader.width - units.gu(0.1)) / 3
                     height: width
                 }
             }
@@ -444,7 +442,7 @@ PageItem {
 
                 GridFeedDelegate {
                     currentDelegatePage: otheruserpage
-                    width: (viewLoader.width-units.gu(0.1))/3
+                    width: (viewLoader.width - units.gu(0.1)) / 3
                     height: width
                 }
             }
@@ -456,44 +454,44 @@ PageItem {
         target: feedViewModel
         onUserDataChanged: {
             if (userData) {
-                otheruserpage.header.title = userData.username
+                otheruserpage.header.title = userData.username;
             }
         }
     }
 
-    Connections{
+    Connections {
         target: instagram
         onInfoByNameDataReady: {
             var data = JSON.parse(answer);
             usernameId = data.user.pk;
 
             if (usernameId === activeUsernameId) {
-                selfProfile = true
+                selfProfile = true;
 
-                feedViewModel.loadFeed(true)
+                feedViewModel.loadFeed(true);
             } else {
-                selfProfile = false
+                selfProfile = false;
 
                 instagram.getFriendship(usernameId);
             }
 
-            feedViewModel.loadUserInfo()
+            feedViewModel.loadUserInfo();
         }
         onFriendshipDataReady: {
             var data = JSON.parse(answer);
 
             if (!data.following && data.is_private) {
-                isPrivate = true
+                isPrivate = true;
             } else {
-                isPrivate = false
+                isPrivate = false;
 
-                feedViewModel.loadFeed(true)
+                feedViewModel.loadFeed(true);
             }
 
-            followingButton.visible = data.following
-            unfollowingButton.visible = !data.following && !data.outgoing_request && !data.blocking
-            requestedButton.visible = data.outgoing_request
-            unBlockButton.visible = data.blocking
+            followingButton.visible = data.following;
+            unfollowingButton.visible = !data.following && !data.outgoing_request && !data.blocking;
+            requestedButton.visible = data.outgoing_request;
+            unBlockButton.visible = data.blocking;
         }
 
         onFollowDataReady: {
@@ -512,10 +510,10 @@ PageItem {
             var data = JSON.parse(answer);
 
             if (data.status == "ok" && !data.friendship_status.blocking) {
-                followingButton.visible = false
-                unfollowingButton.visible = true
-                requestedButton.visible = false
-                unBlockButton.visible = false
+                followingButton.visible = false;
+                unfollowingButton.visible = true;
+                requestedButton.visible = false;
+                unBlockButton.visible = false;
             }
         }
     }
@@ -528,12 +526,12 @@ PageItem {
     function followDataFinished(data) {
         if (usernameId == latest_follow_request) {
             if (data.friendship_status) {
-                followingButton.visible = data.friendship_status.following
-                unfollowingButton.visible = !data.friendship_status.following && !data.friendship_status.outgoing_request && !data.friendship_status.blocking
-                requestedButton.visible = data.friendship_status.outgoing_request
-                unBlockButton.visible = data.friendship_status.blocking
+                followingButton.visible = data.friendship_status.following;
+                unfollowingButton.visible = !data.friendship_status.following && !data.friendship_status.outgoing_request && !data.friendship_status.blocking;
+                requestedButton.visible = data.friendship_status.outgoing_request;
+                unBlockButton.visible = data.friendship_status.blocking;
 
-                latest_follow_request = 0
+                latest_follow_request = 0;
             }
         }
     }
@@ -541,22 +539,22 @@ PageItem {
     Component.onCompleted: {
         if (usernameId) {
             if (usernameId == activeUsernameId) {
-                selfProfile = true
+                selfProfile = true;
 
-                feedViewModel.loadFeed(true)
+                feedViewModel.loadFeed(true);
             } else {
-                selfProfile = false
+                selfProfile = false;
 
                 instagram.getFriendship(usernameId);
             }
 
-            getUsernameInfo()
+            getUsernameInfo();
         } else {
-            instagram.getInfoByName(usernameString)
+            instagram.getInfoByName(usernameString);
         }
     }
 
     function getUsernameInfo() {
-        feedViewModel.loadUserInfo()
+        feedViewModel.loadUserInfo();
     }
 }

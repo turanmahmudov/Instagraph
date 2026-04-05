@@ -25,9 +25,11 @@ Row {
         width: units.gu(2)
         height: width
         source: {
-            if (userId == activeUserId) return ''
-            if (!users || !users[userId]) return ''
-            return users[userId].profile_pic_url || ''
+            if (userId == activeUserId)
+                return '';
+            if (!users || !users[userId])
+                return '';
+            return users[userId].profile_pic_url || '';
         }
     }
 }

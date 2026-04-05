@@ -14,10 +14,12 @@ ListView {
         divider.visible: false
         onClicked: {
             if (search_type == "user") {
-                pageLayout.pushToCurrent(explorePage, PagesConstants.user, { userId: user.pk })
+                pageLayout.pushToCurrent(explorePage, PagesConstants.user, {
+                    userId: user.pk
+                });
             } else {
-                searchInput.text = name
-                searchKeyword(name)
+                searchInput.text = name;
+                searchKeyword(name);
             }
         }
 

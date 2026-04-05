@@ -50,29 +50,21 @@ Item {
         aspect: LomiriShape.Flat
         overlayColor: sliderStyle.foregroundColor
         overlayRect: {
-            var pos = (sliderStyle.thumb.x / sliderStyle.thumb.barMinusThumbWidth)
+            var pos = (sliderStyle.thumb.x / sliderStyle.thumb.barMinusThumbWidth);
 
             if (typeof styledItem.centeredOverlay !== "undefined" && styledItem.centeredOverlay) {
                 if (pos < 0.5) {
-                    return Qt.application.layoutDirection == Qt.LeftToRight ?
-                                Qt.rect(pos, 0.0, 0.5 - pos, 1.0) :
-                                Qt.rect(0.5, 0.0, pos, 1.0)
+                    return Qt.application.layoutDirection == Qt.LeftToRight ? Qt.rect(pos, 0.0, 0.5 - pos, 1.0) : Qt.rect(0.5, 0.0, pos, 1.0);
                 } else {
-                    return Qt.application.layoutDirection == Qt.LeftToRight ?
-                                Qt.rect(0.5, 0.0, pos - 0.5, 1.0) :
-                                Qt.rect(0.5, 0.0, pos - 0.5, 1.0)
+                    return Qt.application.layoutDirection == Qt.LeftToRight ? Qt.rect(0.5, 0.0, pos - 0.5, 1.0) : Qt.rect(0.5, 0.0, pos - 0.5, 1.0);
                 }
             }
 
             if (typeof styledItem.rightAlignedOverlay !== "undefined" && styledItem.rightAlignedOverlay) {
-                return Qt.application.layoutDirection == Qt.LeftToRight ?
-                            Qt.rect(pos, 0.0, 1.0, 1.0) :
-                            Qt.rect(0.0, 0.0, 1.0 - pos, 1.0)
+                return Qt.application.layoutDirection == Qt.LeftToRight ? Qt.rect(pos, 0.0, 1.0, 1.0) : Qt.rect(0.0, 0.0, 1.0 - pos, 1.0);
             }
 
-            return Qt.application.layoutDirection == Qt.LeftToRight ?
-                        Qt.rect(0.0, 0.0, pos, 1.0) :
-                        Qt.rect(1.0 - pos, 0.0, 1.0, 1.0)
+            return Qt.application.layoutDirection == Qt.LeftToRight ? Qt.rect(0.0, 0.0, pos, 1.0) : Qt.rect(1.0 - pos, 0.0, 1.0, 1.0);
         }
     }
 
@@ -85,7 +77,7 @@ Item {
             bottomMargin: thumbSpacing
         }
 
-        property real barMinusThumbWidth: background.width - (thumb.width + 2.0*thumbSpacing)
+        property real barMinusThumbWidth: background.width - (thumb.width + 2.0 * thumbSpacing)
         property real position: thumbSpacing + SliderUtils.normalizedValue(styledItem) * barMinusThumbWidth
         x: position
 
@@ -95,7 +87,10 @@ Item {
         color: sliderStyle.foregroundColor
 
         Rectangle {
-            anchors { fill: parent; margins: units.gu(-1) }
+            anchors {
+                fill: parent
+                margins: units.gu(-1)
+            }
             radius: width * 0.5
             color: thumb.color
             visible: styledItem.pressed

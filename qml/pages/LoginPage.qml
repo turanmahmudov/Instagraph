@@ -35,9 +35,9 @@ PageItem {
     }
 
     Component.onCompleted: {
-        anchorToKeyboard = false
+        anchorToKeyboard = false;
 
-        loading.visible = false
+        loading.visible = false;
     }
 
     Column {
@@ -64,20 +64,20 @@ PageItem {
 
         TextField {
             id: usernameField
-            width: parent.width*0.8
+            width: parent.width * 0.8
             height: units.gu(5)
             anchors.horizontalCenter: parent.horizontalCenter
             placeholderText: i18n.tr("Username")
             onVisibleChanged: {
                 if (visible) {
-                    forceActiveFocus()
+                    forceActiveFocus();
                 }
             }
         }
 
         TextField {
             id: passwordField
-            width: parent.width*0.8
+            width: parent.width * 0.8
             height: units.gu(5)
             anchors.horizontalCenter: parent.horizontalCenter
             echoMode: TextInput.Password
@@ -85,15 +85,15 @@ PageItem {
         }
 
         Button {
-            width: parent.width*0.8
+            width: parent.width * 0.8
             height: units.gu(5)
             anchors.horizontalCenter: parent.horizontalCenter
             color: LomiriColors.blue
             text: i18n.tr("Log In")
             onTriggered: {
-                if(usernameField.text && passwordField.text) {
-                    tmpUsername = usernameField.text
-                    tmpPassword = passwordField.text
+                if (usernameField.text && passwordField.text) {
+                    tmpUsername = usernameField.text;
+                    tmpPassword = passwordField.text;
 
                     instagram.setUsername(tmpUsername);
                     instagram.setPassword(tmpPassword);
@@ -138,13 +138,13 @@ PageItem {
             }
 
             Button {
-                width: parent.width*0.8
+                width: parent.width * 0.8
                 height: units.gu(5)
                 anchors.horizontalCenter: parent.horizontalCenter
                 color: LomiriColors.blue
                 text: i18n.tr("Log In with Saved Accounts")
                 onTriggered: {
-                    bottomEdge.commit()
+                    bottomEdge.commit();
                 }
             }
         }
@@ -156,11 +156,9 @@ PageItem {
         }
     }
 
-
-
     BottomEdge {
         id: bottomEdge
-        height: parent.height/2
+        height: parent.height / 2
         hint.visible: false
         preloadContent: true
         contentComponent: MultipleAccountsSwitcher {
@@ -168,24 +166,21 @@ PageItem {
             height: bottomEdge.height
         }
         onCommitCompleted: {
-            bottomEdge.contentItem.init()
+            bottomEdge.contentItem.init();
         }
     }
 
-    Connections{
+    Connections {
         target: instagram
-        onProfileConnected: {
-        }
-        onTwoFactorRequired: {
-        }
-        onProfileConnectedFail: {
-        }
-        onError:{
+        onProfileConnected: {}
+        onTwoFactorRequired: {}
+        onProfileConnectedFail: {}
+        onError: {
             console.log(message);
             errorTextLabel.text = message;
         }
         onChallengeRequired: {
-            var challengeUrl = answer["url"]
+            var challengeUrl = answer["url"];
         }
     }
 }

@@ -65,7 +65,7 @@ PageItem {
                         title.text: i18n.tr("New Profile Photo")
                     }
                     onClicked: {
-                        changePhotoClicked()
+                        changePhotoClicked();
                         PopupUtils.close(popoverElement);
                     }
                 }
@@ -78,8 +78,8 @@ PageItem {
                         title.text: i18n.tr("Remove Profile Photo")
                     }
                     onClicked: {
-                        changeProfilePictureLoading = true
-                        instagram.removeProfilePicture()
+                        changeProfilePictureLoading = true;
+                        instagram.removeProfilePicture();
                         PopupUtils.close(popoverElement);
                     }
                 }
@@ -98,17 +98,17 @@ PageItem {
     }
 
     function changePhotoClicked() {
-        Scripts.openImportPhotoPage(editprofilepage, IS_DESKTOP)
+        Scripts.openImportPhotoPage(editprofilepage, IS_DESKTOP);
 
-        mainView.fileImported.connect(function(fileUrl) {
-            changeProfilePictureLoading = true
-            var pth = String(fileUrl).replace('file://', '')
-            instagram.changeProfilePicture(pth)
-        })
+        mainView.fileImported.connect(function (fileUrl) {
+            changeProfilePictureLoading = true;
+            var pth = String(fileUrl).replace('file://', '');
+            instagram.changeProfilePicture(pth);
+        });
     }
 
     Component.onCompleted: {
-        instagram.getCurrentUser()
+        instagram.getCurrentUser();
     }
 
     Flickable {
@@ -122,272 +122,271 @@ PageItem {
         contentHeight: columnSuperior.height
 
         Column {
-           id: columnSuperior
-           width: parent.width
+            id: columnSuperior
+            width: parent.width
 
-           ListItem {
-               height: changeProfilePictureLayout.height
-               divider.visible: false
+            ListItem {
+                height: changeProfilePictureLayout.height
+                divider.visible: false
 
-               SlotsLayout {
-                   id: changeProfilePictureLayout
-                   anchors.centerIn: parent
+                SlotsLayout {
+                    id: changeProfilePictureLayout
+                    anchors.centerIn: parent
 
-                   padding.leading: 0
-                   padding.trailing: 0
+                    padding.leading: 0
+                    padding.trailing: 0
 
-                   mainSlot: Column {
-                       width: parent.width
-                       spacing: units.gu(1)
+                    mainSlot: Column {
+                        width: parent.width
+                        spacing: units.gu(1)
 
-                       CircleImage {
-                           id: profilePhoto
-                           width: units.gu(12)
-                           height: width
-                           source: "../images/not_found_user.jpg"
-                           anchors.horizontalCenter: parent.horizontalCenter
+                        CircleImage {
+                            id: profilePhoto
+                            width: units.gu(12)
+                            height: width
+                            source: "../images/not_found_user.jpg"
+                            anchors.horizontalCenter: parent.horizontalCenter
 
-                           MouseArea {
-                               anchors.fill: parent
-                               onClicked: {
-                                   if (!changeProfilePictureLoading) {
-                                    PopupUtils.open(popoverComponent)
-                                   }
-                               }
-                           }
-                       }
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    if (!changeProfilePictureLoading) {
+                                        PopupUtils.open(popoverComponent);
+                                    }
+                                }
+                            }
+                        }
 
-                       Label {
-                           text: i18n.tr("Change Photo")
-                           font.weight: Font.Normal
-                           color: LomiriColors.blue
-                           anchors.horizontalCenter: parent.horizontalCenter
+                        Label {
+                            text: i18n.tr("Change Photo")
+                            font.weight: Font.Normal
+                            color: LomiriColors.blue
+                            anchors.horizontalCenter: parent.horizontalCenter
 
-                           MouseArea {
-                               anchors.fill: parent
-                               onClicked: {
-                                   if (!changeProfilePictureLoading) {
-                                    PopupUtils.open(popoverComponent)
-                                   }
-                               }
-                           }
-                       }
-                   }
-               }
-           }
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    if (!changeProfilePictureLoading) {
+                                        PopupUtils.open(popoverComponent);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
-           ListItem {
-               height: nameLayout.height
+            ListItem {
+                height: nameLayout.height
 
-               SlotsLayout {
-                   id: nameLayout
-                   anchors.centerIn: parent
+                SlotsLayout {
+                    id: nameLayout
+                    anchors.centerIn: parent
 
-                   padding.leading: 0
-                   padding.trailing: 0
+                    padding.leading: 0
+                    padding.trailing: 0
 
-                   mainSlot: Column {
-                       width: parent.width
-                       spacing: units.gu(1)
+                    mainSlot: Column {
+                        width: parent.width
+                        spacing: units.gu(1)
 
-                       Label {
-                           text: i18n.tr("Name")
-                           font.weight: Font.Normal
-                           width: parent.width
-                       }
+                        Label {
+                            text: i18n.tr("Name")
+                            font.weight: Font.Normal
+                            width: parent.width
+                        }
 
-                       TextField {
-                           id: nameField
-                           width: parent.width + units.gu(2)
-                           anchors.horizontalCenter: parent.horizontalCenter
-                           placeholderText: i18n.tr("Name")
-                           StyleHints {
-                               borderColor: "transparent"
-                           }
-                       }
-                   }
-               }
-           }
+                        TextField {
+                            id: nameField
+                            width: parent.width + units.gu(2)
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            placeholderText: i18n.tr("Name")
+                            StyleHints {
+                                borderColor: "transparent"
+                            }
+                        }
+                    }
+                }
+            }
 
-           ListItem {
-               height: webLayout.height
+            ListItem {
+                height: webLayout.height
 
-               SlotsLayout {
-                   id: webLayout
-                   anchors.centerIn: parent
+                SlotsLayout {
+                    id: webLayout
+                    anchors.centerIn: parent
 
-                   padding.leading: 0
-                   padding.trailing: 0
+                    padding.leading: 0
+                    padding.trailing: 0
 
-                   mainSlot: Column {
-                       width: parent.width
-                       spacing: units.gu(1)
+                    mainSlot: Column {
+                        width: parent.width
+                        spacing: units.gu(1)
 
-                       Label {
-                           text: i18n.tr("Website")
-                           font.weight: Font.Normal
-                           width: parent.width
-                       }
+                        Label {
+                            text: i18n.tr("Website")
+                            font.weight: Font.Normal
+                            width: parent.width
+                        }
 
-                       TextField {
-                           id: webField
-                           width: parent.width + units.gu(2)
-                           anchors.horizontalCenter: parent.horizontalCenter
-                           placeholderText: i18n.tr("Website")
-                           StyleHints {
-                               borderColor: "transparent"
-                           }
-                       }
-                   }
-               }
-           }
+                        TextField {
+                            id: webField
+                            width: parent.width + units.gu(2)
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            placeholderText: i18n.tr("Website")
+                            StyleHints {
+                                borderColor: "transparent"
+                            }
+                        }
+                    }
+                }
+            }
 
-           ListItem {
-               height: bioLayout.height
-               divider.visible: false
+            ListItem {
+                height: bioLayout.height
+                divider.visible: false
 
-               SlotsLayout {
-                   id: bioLayout
-                   anchors.centerIn: parent
+                SlotsLayout {
+                    id: bioLayout
+                    anchors.centerIn: parent
 
-                   padding.leading: 0
-                   padding.trailing: 0
+                    padding.leading: 0
+                    padding.trailing: 0
 
-                   mainSlot: Column {
-                       width: parent.width
-                       spacing: units.gu(1)
+                    mainSlot: Column {
+                        width: parent.width
+                        spacing: units.gu(1)
 
-                       Label {
-                           text: i18n.tr("Bio")
-                           font.weight: Font.Normal
-                           width: parent.width
-                       }
+                        Label {
+                            text: i18n.tr("Bio")
+                            font.weight: Font.Normal
+                            width: parent.width
+                        }
 
-                       TextArea {
-                           id: bioField
-                           width: parent.width + units.gu(2)
-                           anchors.horizontalCenter: parent.horizontalCenter
-                           placeholderText: i18n.tr("Bio")
-                           autoSize: true
-                           StyleHints {
-                               borderColor: "transparent"
-                           }
-                       }
-                   }
-               }
-           }
+                        TextArea {
+                            id: bioField
+                            width: parent.width + units.gu(2)
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            placeholderText: i18n.tr("Bio")
+                            autoSize: true
+                            StyleHints {
+                                borderColor: "transparent"
+                            }
+                        }
+                    }
+                }
+            }
 
-           ListItem {
-               height: privateHeaderLayout.height
+            ListItem {
+                height: privateHeaderLayout.height
 
-               ListItemLayout {
-                   id: privateHeaderLayout
+                ListItemLayout {
+                    id: privateHeaderLayout
 
-                   title.text: i18n.tr("Private Information")
-                   title.font.weight: Font.Normal
-               }
-           }
+                    title.text: i18n.tr("Private Information")
+                    title.font.weight: Font.Normal
+                }
+            }
 
-           ListItem {
-               height: emailLayout.height
+            ListItem {
+                height: emailLayout.height
 
-               SlotsLayout {
-                   id: emailLayout
-                   anchors.centerIn: parent
+                SlotsLayout {
+                    id: emailLayout
+                    anchors.centerIn: parent
 
-                   padding.leading: 0
-                   padding.trailing: 0
+                    padding.leading: 0
+                    padding.trailing: 0
 
-                   mainSlot: Column {
-                       width: parent.width
-                       spacing: units.gu(1)
+                    mainSlot: Column {
+                        width: parent.width
+                        spacing: units.gu(1)
 
-                       Label {
-                           text: i18n.tr("Email")
-                           font.weight: Font.Normal
-                           width: parent.width
-                       }
+                        Label {
+                            text: i18n.tr("Email")
+                            font.weight: Font.Normal
+                            width: parent.width
+                        }
 
-                       TextField {
-                           id: emailField
-                           width: parent.width + units.gu(2)
-                           anchors.horizontalCenter: parent.horizontalCenter
-                           placeholderText: i18n.tr("Email")
-                           inputMethodHints: Qt.ImhEmailCharactersOnly
-                           StyleHints {
-                               borderColor: "transparent"
-                           }
-                       }
-                   }
-               }
-           }
+                        TextField {
+                            id: emailField
+                            width: parent.width + units.gu(2)
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            placeholderText: i18n.tr("Email")
+                            inputMethodHints: Qt.ImhEmailCharactersOnly
+                            StyleHints {
+                                borderColor: "transparent"
+                            }
+                        }
+                    }
+                }
+            }
 
-           ListItem {
-               height: phoneLayout.height
+            ListItem {
+                height: phoneLayout.height
 
-               SlotsLayout {
-                   id: phoneLayout
-                   anchors.centerIn: parent
+                SlotsLayout {
+                    id: phoneLayout
+                    anchors.centerIn: parent
 
-                   padding.leading: 0
-                   padding.trailing: 0
+                    padding.leading: 0
+                    padding.trailing: 0
 
-                   mainSlot: Column {
-                       width: parent.width
-                       spacing: units.gu(1)
+                    mainSlot: Column {
+                        width: parent.width
+                        spacing: units.gu(1)
 
-                       Label {
-                           text: i18n.tr("Phone")
-                           font.weight: Font.Normal
-                           width: parent.width
-                       }
+                        Label {
+                            text: i18n.tr("Phone")
+                            font.weight: Font.Normal
+                            width: parent.width
+                        }
 
-                       TextField {
-                           id: phoneField
-                           width: parent.width + units.gu(2)
-                           anchors.horizontalCenter: parent.horizontalCenter
-                           placeholderText: i18n.tr("Phone")
-                           StyleHints {
-                               borderColor: "transparent"
-                           }
-                       }
-                   }
-               }
-           }
+                        TextField {
+                            id: phoneField
+                            width: parent.width + units.gu(2)
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            placeholderText: i18n.tr("Phone")
+                            StyleHints {
+                                borderColor: "transparent"
+                            }
+                        }
+                    }
+                }
+            }
 
-           ListItem {
-               height: genderLayout.height
+            ListItem {
+                height: genderLayout.height
 
-               SlotsLayout {
-                   id: genderLayout
-                   anchors.centerIn: parent
+                SlotsLayout {
+                    id: genderLayout
+                    anchors.centerIn: parent
 
-                   padding.leading: 0
-                   padding.trailing: 0
+                    padding.leading: 0
+                    padding.trailing: 0
 
-                   mainSlot: Column {
-                       width: parent.width
-                       spacing: units.gu(1)
+                    mainSlot: Column {
+                        width: parent.width
+                        spacing: units.gu(1)
 
-                       Label {
-                           text: i18n.tr("Gender")
-                           font.weight: Font.Normal
-                           width: parent.width
-                       }
+                        Label {
+                            text: i18n.tr("Gender")
+                            font.weight: Font.Normal
+                            width: parent.width
+                        }
 
-                       OptionSelector {
-                           id: genderField
-                           width: parent.width
-                           model: [i18n.tr("Female"),
-                               i18n.tr("Male")]
-                       }
-                   }
-               }
-           }
+                        OptionSelector {
+                            id: genderField
+                            width: parent.width
+                            model: [i18n.tr("Female"), i18n.tr("Male")]
+                        }
+                    }
+                }
+            }
         }
     }
 
-    Connections{
+    Connections {
         target: instagram
         onCurrentUserDataReady: {
             var data = JSON.parse(answer);
@@ -396,24 +395,24 @@ PageItem {
         onEditDataReady: {
             var data = JSON.parse(answer);
             if (data.status == 'ok') {
-                pageLayout.removePages(editprofilepage)
+                pageLayout.removePages(editprofilepage);
 
                 userPage.getUsernameInfo();
                 userPage.getUsernameFeed();
             }
         }
         onProfilePictureChanged: {
-            changeProfilePictureLoading = false
-            pageLayout.removePages(userPage)
-            pageLayout.primaryPage = userPage
+            changeProfilePictureLoading = false;
+            pageLayout.removePages(userPage);
+            pageLayout.primaryPage = userPage;
 
             userPage.getUsernameInfo();
             userPage.getUsernameFeed();
         }
         onProfilePictureDeleted: {
-            changeProfilePictureLoading = false
-            pageLayout.removePages(userPage)
-            pageLayout.primaryPage = userPage
+            changeProfilePictureLoading = false;
+            pageLayout.removePages(userPage);
+            pageLayout.primaryPage = userPage;
 
             userPage.getUsernameInfo();
             userPage.getUsernameFeed();

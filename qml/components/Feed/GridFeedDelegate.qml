@@ -22,6 +22,8 @@ ListItem {
     }
 
     onClicked: {
-        pageLayout.pushToNext(currentDelegatePage, PagesConstants.photo, {photoId: photo_id})
+        pageLayout.pushToNext(currentDelegatePage, PagesConstants.photo, {
+            photoId: photo_id
+        });
     }
 }

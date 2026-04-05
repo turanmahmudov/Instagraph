@@ -19,16 +19,16 @@ BaseFeedViewModel {
      * @param refresh - If true, clears feed and loads from beginning
      */
     function loadFeed(refresh) {
-        setLoadingState(true)
-        clearModels = false
+        setLoadingState(true);
+        clearModels = false;
 
         if (refresh || !nextMaxId) {
-            feedModel.clear()
-            nextMaxId = ""
-            clearModels = true
+            feedModel.clear();
+            nextMaxId = "";
+            clearModels = true;
         }
 
-        instagram.getSavedFeed(nextMaxId)
+        instagram.getSavedFeed(nextMaxId);
     }
 
     /**
@@ -36,7 +36,7 @@ BaseFeedViewModel {
      */
     function loadMore() {
         if (nextMaxId && moreAvailable && !nextComing && !isLoading) {
-            loadFeed(false)
+            loadFeed(false);
         }
     }
 
@@ -50,8 +50,8 @@ BaseFeedViewModel {
     Connections {
         target: instagram
         onSavedFeedDataReady: {
-            var data = JSON.parse(answer)
-            handleFeedResponse(data)
+            var data = JSON.parse(answer);
+            handleFeedResponse(data);
         }
     }
 
@@ -61,28 +61,28 @@ BaseFeedViewModel {
      */
     function handleFeedResponse(data) {
         if (!data) {
-            handleError(i18n.tr("Failed to load saved media"))
-            return
+            handleError(i18n.tr("Failed to load saved media"));
+            return;
         }
 
-        setLoadingState(false)
+        setLoadingState(false);
 
-        isEmpty = false
+        isEmpty = false;
         if (data.num_results === 0) {
-            isEmpty = true
-            return
+            isEmpty = true;
+            return;
         }
 
         // Prevent duplicate loading
-        if (nextMaxId === data.next_max_id) return
-
-        nextMaxId = ""
+        if (nextMaxId === data.next_max_id)
+            return;
+        nextMaxId = "";
         if (data.more_available === true) {
-            nextMaxId = data.next_max_id || ""
+            nextMaxId = data.next_max_id || "";
         }
 
-        moreAvailable = data.more_available
-        nextComing = true
+        moreAvailable = data.more_available;
+        nextComing = true;
 
         // Send data to worker for processing
         worker.sendMessage({
@@ -90,8 +90,8 @@ BaseFeedViewModel {
             obj: data.items,
             model: feedModel,
             clear_model: clearModels
-        })
+        });
 
-        nextComing = false
+        nextComing = false;
     }
 }

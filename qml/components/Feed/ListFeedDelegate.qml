@@ -28,18 +28,18 @@ ListItem {
 
     function calculateHeight(list_type) {
         if (list_type === 'suggested_users') {
-            return suggestionsPanelLoader.height + units.gu(4)
+            return suggestionsPanelLoader.height + units.gu(4);
         }
         if (list_type === 'media_entry') {
-            return mediaEntryLoader.height + units.gu(2)
+            return mediaEntryLoader.height + units.gu(2);
         }
         if (list_type === 'stories_feed') {
-            return storiesFeedTrayLoader.height
+            return storiesFeedTrayLoader.height;
         }
         if (list_type === 'suggested_posts_header') {
-            return suggestedPostsHeaderLoader.height
+            return suggestedPostsHeaderLoader.height;
         }
-        return 0
+        return 0;
     }
 
     divider.visible: false
@@ -105,7 +105,7 @@ ListItem {
         visible: list_type === 'suggested_posts_header'
         active: visible
         asynchronous: true
-        
+
         property string headerTitle: list_type === 'suggested_posts_header' && typeof title !== 'undefined' ? title : ""
         property string headerSubtitle: list_type === 'suggested_posts_header' && typeof subtitle !== 'undefined' ? subtitle : ""
 

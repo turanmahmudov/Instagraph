@@ -12,7 +12,9 @@ ListView {
         height: layout.height
         divider.visible: false
         onClicked: {
-            pageLayout.pushToCurrent(explorePage, PagesConstants.tag_feed, {tag: name})
+            pageLayout.pushToCurrent(explorePage, PagesConstants.tag_feed, {
+                tag: name
+            });
         }
 
         SlotsLayout {
@@ -37,7 +39,7 @@ ListView {
                         color: "transparent"
                         border.width: units.gu(0.1)
                         border.color: Qt.lighter(LomiriColors.lightGrey, 1.1)
-                        radius: width/2
+                        radius: width / 2
 
                         LineIcon {
                             anchors.centerIn: parent

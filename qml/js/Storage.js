@@ -50,9 +50,9 @@ function getAccount(username) {
         db.transaction(function(tx) {
             var rs = tx.executeSql('SELECT password FROM accounts WHERE username=?;', [username]);
             if (rs.rows.length > 0) {
-              res = rs.rows.item(0).password;
+                res = rs.rows.item(0).password;
             } else {
-             res = "";
+                res = "";
             }
         });
     } catch (err) {
@@ -68,9 +68,9 @@ function getAccounts() {
         db.transaction(function(tx) {
             var rs = tx.executeSql('SELECT * FROM accounts;');
             if (rs.rows.length > 0) {
-              res = rs.rows;
+                res = rs.rows;
             } else {
-             res = [];
+                res = [];
             }
         });
     } catch (err) {

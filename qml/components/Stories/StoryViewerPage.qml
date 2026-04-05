@@ -30,7 +30,7 @@ PageItem {
     // Called when we need to load the next/prev entry
     signal requestLoadEntry(var entryId)
     // Called when user taps on the header avatar/name
-    signal headerClicked()
+    signal headerClicked
 
     // -- Internal state --
     property int progressTime: 0
@@ -127,7 +127,7 @@ PageItem {
         running: false
         repeat: false
         onTriggered: {
-            storiesList.nextSlide()
+            storiesList.nextSlide();
         }
     }
 
@@ -137,72 +137,73 @@ PageItem {
         running: false
         repeat: true
         onTriggered: {
-            progressTime += 100
+            progressTime += 100;
         }
     }
 
     // Start a new story timer (resets progress)
     function startNewStoryTimer(durationMs) {
-        storyTimer.stop()
-        progressTimer.stop()
-        progressTime = 0
-        _remainingTime = 0
-        storyTimer.interval = durationMs
-        storyTimer.start()
-        progressTimer.start()
+        storyTimer.stop();
+        progressTimer.stop();
+        progressTime = 0;
+        _remainingTime = 0;
+        storyTimer.interval = durationMs;
+        storyTimer.start();
+        progressTimer.start();
     }
 
     // -- Pause / Resume helpers --
 
     function pauseStory() {
         if (storyTimer.running) {
-            paused = true
+            paused = true;
             // Calculate remaining time based on elapsed progress
-            _remainingTime = storyTimer.interval - progressTime
-            if (_remainingTime < 0) _remainingTime = 0
-            storyTimer.stop()
-            progressTimer.stop()
+            _remainingTime = storyTimer.interval - progressTime;
+            if (_remainingTime < 0)
+                _remainingTime = 0;
+            storyTimer.stop();
+            progressTimer.stop();
         }
     }
 
     function resumeStory() {
         if (paused) {
-            paused = false
+            paused = false;
             // Resume with the remaining time
-            storyTimer.interval = _remainingTime > 0 ? _remainingTime : 100
-            storyTimer.start()
-            progressTimer.start()
+            storyTimer.interval = _remainingTime > 0 ? _remainingTime : 100;
+            storyTimer.start();
+            progressTimer.start();
         }
     }
 
     // -- Mark stories as seen --
 
     function markStoriesSeen(items) {
-        if (!items || items.length === 0) return
-
-        var reels = {}
-        var now = new Date().getTime()
+        if (!items || items.length === 0)
+            return;
+        var reels = {};
+        var now = new Date().getTime();
 
         for (var i = 0; i < items.length; i++) {
-            var item = items[i]
-            var itemTakenAt = item.taken_at
-            var seenAt = now
+            var item = items[i];
+            var itemTakenAt = item.taken_at;
+            var seenAt = now;
             if (seenAt < itemTakenAt) {
-                seenAt = itemTakenAt + 2
+                seenAt = itemTakenAt + 2;
             }
 
-            var itemSourceId = item.user.pk
-            var reelId = item.id + '_' + itemSourceId
-            reels[reelId] = [itemTakenAt + '_' + seenAt]
+            var itemSourceId = item.user.pk;
+            var reelId = item.id + '_' + itemSourceId;
+            reels[reelId] = [itemTakenAt + '_' + seenAt];
         }
 
-        instagram.markStoryMediaSeen(JSON.stringify(reels))
+        instagram.markStoryMediaSeen(JSON.stringify(reels));
     }
 
     // Update the time-ago label for the current slide
     function updateTimeAgo() {
         if (storiesModel.count > 0 && storiesList.currentIndex >= 0 && storiesList.currentIndex < storiesModel.count) {
-            headerSubtitle = Helper.milisecondsToString(storiesModel.get(storiesList.currentIndex).taken_at, true)
+            headerSubtitle = Helper.milisecondsToString(storiesModel.get(storiesList.currentIndex).taken_at, true);
         }
     }
 
@@ -225,11 +226,11 @@ PageItem {
 
             ProgressBar {
                 property real maxValue: {
-                    var item = storiesModel.get(index)
+                    var item = storiesModel.get(index);
                     if (item && typeof item.video_duration !== 'undefined' && item.video_duration !== 0) {
-                        return item.video_duration * 1000
+                        return item.video_duration * 1000;
                     }
-                    return 4000
+                    return 4000;
                 }
 
                 width: (parent.width - (storiesModel.count - 1) * units.gu(0.5)) / storiesModel.count
@@ -269,9 +270,9 @@ PageItem {
             width: storyViewerPage.width
             height: {
                 if (typeof image_versions2 !== 'undefined' && image_versions2.candidates && image_versions2.candidates[0]) {
-                    return width / image_versions2.candidates[0].width * image_versions2.candidates[0].height
+                    return width / image_versions2.candidates[0].width * image_versions2.candidates[0].height;
                 }
-                return storyViewerPage.height
+                return storyViewerPage.height;
             }
 
             Loader {
@@ -299,7 +300,7 @@ PageItem {
 
                         onStatusChanged: {
                             if (status === Image.Ready) {
-                                startNewStoryTimer(4000)
+                                startNewStoryTimer(4000);
                             }
                         }
                     }
@@ -329,14 +330,14 @@ PageItem {
 
                         onPlaybackStateChanged: {
                             if (playbackState === MediaPlayer.PlayingState && !videoContainer.timerStarted) {
-                                videoContainer.timerStarted = true
-                                startNewStoryTimer(video_duration * 1000)
+                                videoContainer.timerStarted = true;
+                                startNewStoryTimer(video_duration * 1000);
                             }
                         }
 
                         onPositionChanged: {
                             if (playbackState === MediaPlayer.PlayingState && !paused) {
-                                progressTime = position
+                                progressTime = position;
                             }
                         }
                     }
@@ -355,7 +356,7 @@ PageItem {
                     }
 
                     Component.onDestruction: {
-                        player.stop()
+                        player.stop();
                     }
 
                     Connections {
@@ -363,9 +364,9 @@ PageItem {
                         onPausedChanged: {
                             if (storiesList.currentIndex === index) {
                                 if (paused) {
-                                    player.pause()
+                                    player.pause();
                                 } else {
-                                    player.play()
+                                    player.play();
                                 }
                             }
                         }
@@ -380,38 +381,38 @@ PageItem {
 
                 onClicked: {
                     if (mouse.x < parent.width / 3) {
-                        storiesList.previousSlide()
+                        storiesList.previousSlide();
                     } else {
-                        storiesList.nextSlide()
+                        storiesList.nextSlide();
                     }
                 }
 
                 onPressAndHold: {
-                    pauseStory()
+                    pauseStory();
                 }
 
                 onReleased: {
-                    resumeStory()
+                    resumeStory();
                 }
             }
         }
 
         onCurrentIndexChanged: {
-            updateTimeAgo()
+            updateTimeAgo();
         }
 
         // Go to next slide, if possible
         function nextSlide() {
             if (currentIndex < model.count - 1) {
-                currentIndex++
+                currentIndex++;
             } else {
                 // Try to advance to the next entry (next user or next highlight)
-                var currentPos = allEntries.indexOf(currentEntryId)
+                var currentPos = allEntries.indexOf(currentEntryId);
                 if (currentPos !== -1 && currentPos < allEntries.length - 1) {
-                    currentEntryId = allEntries[currentPos + 1]
-                    getting = true
-                    storyTimer.stop()
-                    requestLoadEntry(currentEntryId)
+                    currentEntryId = allEntries[currentPos + 1];
+                    getting = true;
+                    storyTimer.stop();
+                    requestLoadEntry(currentEntryId);
                 }
             }
         }
@@ -419,15 +420,15 @@ PageItem {
         // Go to previous slide, if possible
         function previousSlide() {
             if (currentIndex > 0) {
-                currentIndex--
+                currentIndex--;
             } else {
                 // Try to go to the previous entry
-                var currentPos = allEntries.indexOf(currentEntryId)
+                var currentPos = allEntries.indexOf(currentEntryId);
                 if (currentPos > 0) {
-                    currentEntryId = allEntries[currentPos - 1]
-                    getting = true
-                    storyTimer.stop()
-                    requestLoadEntry(currentEntryId)
+                    currentEntryId = allEntries[currentPos - 1];
+                    getting = true;
+                    storyTimer.stop();
+                    requestLoadEntry(currentEntryId);
                 }
             }
         }

@@ -50,12 +50,17 @@ PageItem {
             more_available = data.more_available;
             next_coming = true;
 
-            worker.sendMessage({'feed': 'searchPage', 'obj': data.items, 'model': likedMediaModel, 'clear_model': clear_models})
+            worker.sendMessage({
+                'feed': 'searchPage',
+                'obj': data.items,
+                'model': likedMediaModel,
+                'clear_model': clear_models
+            });
 
             next_coming = false;
         }
 
-        list_loading = false
+        list_loading = false;
     }
 
     WorkerScript {
@@ -67,13 +72,12 @@ PageItem {
         getLikedMedia();
     }
 
-    function getLikedMedia(next_id)
-    {
-        clear_models = false
+    function getLikedMedia(next_id) {
+        clear_models = false;
         if (!next_id) {
-            likedMediaModel.clear()
-            next_max_id = ""
-            clear_models = true
+            likedMediaModel.clear();
+            next_max_id = "";
+            clear_models = true;
         }
         instagram.getLikedMedia(next_id);
     }
@@ -93,7 +97,7 @@ PageItem {
         }
         width: parent.width
         height: parent.height
-        cellWidth: gridView.width/3
+        cellWidth: gridView.width / 3
         cellHeight: cellWidth
         onMovementEnded: {
             if (atYEnd && more_available && !next_coming) {
@@ -111,8 +115,8 @@ PageItem {
             id: pullToRefresh
             refreshing: list_loading && likedMediaModel.count == 0
             onRefresh: {
-                list_loading = true
-                getLikedMedia()
+                list_loading = true;
+                getLikedMedia();
             }
         }
     }
@@ -130,7 +134,7 @@ PageItem {
         description: i18n.tr("No photos or videos yet!")
     }
 
-    Connections{
+    Connections {
         target: instagram
         onLikedMediaDataReady: {
             var new_answer = answer.replace(/([\[:])?(\d{18,})([,\}\]])/g, "$1\"$2\"$3");

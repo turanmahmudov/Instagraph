@@ -29,11 +29,11 @@ PageItem {
                 visible: mode != "exploreFeed"
                 onTriggered: {
                     if (mode == "searchResults") {
-                        searchInput.text = ""
-                        mode = "recentSearches"
+                        searchInput.text = "";
+                        mode = "recentSearches";
                     } else if (mode == "recentSearches") {
-                        mode = "exploreFeed"
-                        searchInput.focus = false
+                        mode = "exploreFeed";
+                        searchInput.focus = false;
                     }
                 }
             }
@@ -48,17 +48,18 @@ PageItem {
             }
             primaryItem: LineIcon {
                 anchors.leftMargin: units.gu(0.2)
-                iconSize: parent.height*0.4
+                iconSize: parent.height * 0.4
                 active: false
                 name: "\ueb7b"
             }
             hasClearButton: true
             placeholderText: i18n.tr("Search")
             onActiveFocusChanged: {
-                if (searchInput.activeFocus == true && searchInput.text.length == 0) mode = "recentSearches"
+                if (searchInput.activeFocus == true && searchInput.text.length == 0)
+                    mode = "recentSearches";
             }
             onAccepted: {
-                searchKeyword(searchInput.text)
+                searchKeyword(searchInput.text);
             }
         }
         extension: Sections {
@@ -72,19 +73,19 @@ PageItem {
                 Action {
                     text: i18n.tr("Accounts")
                     onTriggered: {
-                        current_search_section = 0
+                        current_search_section = 0;
                     }
                 },
                 Action {
                     text: i18n.tr("Tags")
                     onTriggered: {
-                        current_search_section = 1
+                        current_search_section = 1;
                     }
                 },
                 Action {
                     text: i18n.tr("Places")
                     onTriggered: {
-                        current_search_section = 2
+                        current_search_section = 2;
                     }
                 }
             ]
@@ -105,7 +106,7 @@ PageItem {
     property bool list_loading: false
 
     Component.onCompleted: {
-        instagram.recentSearches()
+        instagram.recentSearches();
     }
 
     function exploreFeedDataFinished(data) {
@@ -116,52 +117,76 @@ PageItem {
             more_available = data.more_available;
             next_coming = true;
 
-            exploreWorker.sendMessage({'obj': data.sectional_items, 'model': exploreFeedModel, 'clear_model': clear_models})
+            exploreWorker.sendMessage({
+                'obj': data.sectional_items,
+                'model': exploreFeedModel,
+                'clear_model': clear_models
+            });
 
             next_coming = false;
         }
 
-        list_loading = false
+        list_loading = false;
     }
 
     function recentSearchesDataFinished(data) {
         recentSearchesModel.clear();
 
-        searchWorker.sendMessage({'type': 'recentSearches', 'obj': data.recent, 'model': recentSearchesModel, 'clear_model': true})
+        searchWorker.sendMessage({
+            'type': 'recentSearches',
+            'obj': data.recent,
+            'model': recentSearchesModel,
+            'clear_model': true
+        });
     }
 
     function searchUsersDataFinished(data) {
         searchUsersModel.clear();
 
-        searchWorker.sendMessage({'type': 'searchUsers', 'obj': data.users, 'model': searchUsersModel, 'clear_model': true})
+        searchWorker.sendMessage({
+            'type': 'searchUsers',
+            'obj': data.users,
+            'model': searchUsersModel,
+            'clear_model': true
+        });
     }
 
     function searchTagsDataFinished(data) {
         searchTagsModel.clear();
 
-        searchWorker.sendMessage({'type': 'searchTags', 'obj': data.results, 'model': searchTagsModel, 'clear_model': true})
+        searchWorker.sendMessage({
+            'type': 'searchTags',
+            'obj': data.results,
+            'model': searchTagsModel,
+            'clear_model': true
+        });
     }
 
     function searchLocationDataFinished(data) {
         searchPlacesModel.clear();
 
-        searchWorker.sendMessage({'type': 'searchLocation', 'obj': data.items, 'model': searchPlacesModel, 'clear_model': true})
+        searchWorker.sendMessage({
+            'type': 'searchLocation',
+            'obj': data.items,
+            'model': searchPlacesModel,
+            'clear_model': true
+        });
     }
 
     function searchKeyword(keyword) {
-        mode = "searchResults"
+        mode = "searchResults";
 
-        instagram.searchUser(keyword)
-        instagram.searchTags(keyword)
-        instagram.searchPlaces(keyword)
+        instagram.searchUser(keyword);
+        instagram.searchTags(keyword);
+        instagram.searchPlaces(keyword);
     }
 
     function resetSearch() {
-        searchInput.text = ""
+        searchInput.text = "";
     }
 
     function getExploreFeed(next_id) {
-        clear_models = false
+        clear_models = false;
         if (!next_id) {
             exploreFeedModel.clear();
             next_max_id = "";
@@ -273,8 +298,8 @@ PageItem {
 
                     Loader {
                         asynchronous: true
-                        Layout.preferredWidth: (layoutFlickable.width-units.gu(0.1))*columnSpan/3
-                        Layout.preferredHeight: (layoutFlickable.width-units.gu(0.1))*rowSpan/3
+                        Layout.preferredWidth: (layoutFlickable.width - units.gu(0.1)) * columnSpan / 3
+                        Layout.preferredHeight: (layoutFlickable.width - units.gu(0.1)) * rowSpan / 3
                         Layout.rowSpan: rowSpan
                         Layout.columnSpan: columnSpan
                         Layout.row: row
@@ -292,8 +317,8 @@ PageItem {
                 parent: layoutFlickable
                 refreshing: list_loading && exploreFeedModel.count == 0
                 onRefresh: {
-                    list_loading = true
-                    getExploreFeed()
+                    list_loading = true;
+                    getExploreFeed();
                 }
             }
         }
@@ -314,10 +339,12 @@ PageItem {
                 divider.visible: false
                 onClicked: {
                     if (search_type == "user") {
-                        pageLayout.pushToCurrent(exploreFeedPage, PagesConstants.user, {usernameId: pk});
+                        pageLayout.pushToCurrent(exploreFeedPage, PagesConstants.user, {
+                            usernameId: pk
+                        });
                     } else {
-                        searchInput.text = name
-                        searchKeyword(name)
+                        searchInput.text = name;
+                        searchKeyword(name);
                     }
                 }
 
@@ -399,7 +426,9 @@ PageItem {
                 height: layout.height
                 divider.visible: false
                 onClicked: {
-                    pageLayout.pushToCurrent(exploreFeedPage, PagesConstants.user, {usernameId: pk});
+                    pageLayout.pushToCurrent(exploreFeedPage, PagesConstants.user, {
+                        usernameId: pk
+                    });
                 }
 
                 SlotsLayout {
@@ -433,7 +462,9 @@ PageItem {
                 height: layout.height
                 divider.visible: false
                 onClicked: {
-                    pageLayout.pushToCurrent(exploreFeedPage, PagesConstants.tag_feed, {tag: name});
+                    pageLayout.pushToCurrent(exploreFeedPage, PagesConstants.tag_feed, {
+                        tag: name
+                    });
                 }
 
                 SlotsLayout {
@@ -459,7 +490,7 @@ PageItem {
                                 color: "transparent"
                                 border.width: units.gu(0.1)
                                 border.color: Qt.lighter(LomiriColors.lightGrey, 1.1)
-                                radius: width/2
+                                radius: width / 2
 
                                 LineIcon {
                                     anchors.centerIn: parent
@@ -509,7 +540,10 @@ PageItem {
                 height: layout.height
                 divider.visible: false
                 onClicked: {
-                    pageLayout.pushToCurrent(exploreFeedPage, PagesConstants.location_feed, {locationId: pk, locationName: title});
+                    pageLayout.pushToCurrent(exploreFeedPage, PagesConstants.location_feed, {
+                        locationId: pk,
+                        locationName: title
+                    });
                 }
 
                 SlotsLayout {
@@ -535,7 +569,7 @@ PageItem {
                                 color: "transparent"
                                 border.width: units.gu(0.1)
                                 border.color: Qt.lighter(LomiriColors.lightGrey, 1.1)
-                                radius: width/2
+                                radius: width / 2
 
                                 LineIcon {
                                     anchors.centerIn: parent
@@ -572,11 +606,11 @@ PageItem {
         }
     }
 
-    Connections{
+    Connections {
         target: instagram
         onExploreFeedDataReady: {
             var data = JSON.parse(answer);
-            exploreFeedDataFinished(data)
+            exploreFeedDataFinished(data);
         }
         onRecentSearchesDataReady: {
             var data = JSON.parse(answer);

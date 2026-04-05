@@ -1,15 +1,13 @@
-function formatString(string)
-{
+function formatString(string) {
     var textColor = hexToRgb(styleApp.common.linkColor)
 
-    string = string.replace(/@([a-zA-Z0-9._]*)/g,'<a href="user://$1" style="text-decoration:none;color:'+textColor+';">@$1</a>');
-    string = string.replace(/#(\S*)/g,'<a href="tag://$1" style="text-decoration:none;color:'+textColor+';">#$1</a>');
+    string = string.replace(/@([a-zA-Z0-9._]*)/g, '<a href="user://$1" style="text-decoration:none;color:' + textColor + ';">@$1</a>');
+    string = string.replace(/#(\S*)/g, '<a href="tag://$1" style="text-decoration:none;color:' + textColor + ';">#$1</a>');
 
     return string;
 }
 
-function formatRichTextUsers(string)
-{
+function formatRichTextUsers(string) {
     var regex = /{([a-zA-Z0-9._|?=\\%&]*)}/g;
     var match
 
@@ -19,30 +17,28 @@ function formatRichTextUsers(string)
         var user_name = match[1].split('|')[0]
 
         if (typeof user_id != 'undefined') {
-            string = string.replace(match[0], '<a href="userid://'+user_id+'" style="text-decoration:none;font-weight:500;color:'+hexToRgb(styleApp.common.textColor)+';">'+user_name+'</a>')
+            string = string.replace(match[0], '<a href="userid://' + user_id + '" style="text-decoration:none;font-weight:500;color:' + hexToRgb(styleApp.common.textColor) + ';">' + user_name + '</a>')
         } else {
-            string = string.replace(match[0], '<a href="user://'+user_name+'" style="text-decoration:none;font-weight:500;color:'+hexToRgb(styleApp.common.textColor)+';">'+user_name+'</a>')
+            string = string.replace(match[0], '<a href="user://' + user_name + '" style="text-decoration:none;font-weight:500;color:' + hexToRgb(styleApp.common.textColor) + ';">' + user_name + '</a>')
         }
     }
 
     return string
 }
 
-function formatUser(string)
-{
-    return '<a href="user://'+string+'" style="text-decoration:none;font-weight:500;color:'+styleApp.common.textColor+';">'+string+'</a>';
+function formatUser(string) {
+    return '<a href="user://' + string + '" style="text-decoration:none;font-weight:500;color:' + styleApp.common.textColor + ';">' + string + '</a>';
 }
 
-function makeLink(string)
-{
-    return '<a href="'+string+'" style="text-decoration:none;font-weight:500;color:'+styleApp.common.textColor+';">'+string+'</a>';
+function makeLink(string) {
+    return '<a href="' + string + '" style="text-decoration:none;font-weight:500;color:' + styleApp.common.textColor + ';">' + string + '</a>';
 }
 
 function getBestImage(imageObject, width) {
-    var closest = typeof imageObject[0] != 'undefined' ? imageObject[0] : {"width":0, "height":0, "url":""};
+    var closest = typeof imageObject[0] != 'undefined' ? imageObject[0] : { "width": 0, "height": 0, "url": "" };
 
-    for(var i = 0; i < imageObject.length; i++){
-        if(imageObject[i].width >= width && imageObject[i].width < closest.width) closest = imageObject[i];
+    for (var i = 0; i < imageObject.length; i++) {
+        if (imageObject[i].width >= width && imageObject[i].width < closest.width) closest = imageObject[i];
     }
 
     return closest;
@@ -50,7 +46,7 @@ function getBestImage(imageObject, width) {
 
 function milisecondsToString(miliseconds, short, timestamp) {
     if (timestamp) {
-        miliseconds = miliseconds/1000000;
+        miliseconds = miliseconds / 1000000;
     }
 
     try {
@@ -98,23 +94,23 @@ function milisecondsToString(miliseconds, short, timestamp) {
 }
 
 function numFormatter(num, digits) {
-  var si = [
-    { value: 1, symbol: "" },
-    { value: 1E3, symbol: "K" },
-    { value: 1E6, symbol: "M" },
-    { value: 1E9, symbol: "G" },
-    { value: 1E12, symbol: "T" },
-    { value: 1E15, symbol: "P" },
-    { value: 1E18, symbol: "E" }
-  ];
-  var rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-  var i;
-  for (i = si.length - 1; i > 0; i--) {
-    if (num >= si[i].value) {
-      break;
+    var si = [
+        { value: 1, symbol: "" },
+        { value: 1E3, symbol: "K" },
+        { value: 1E6, symbol: "M" },
+        { value: 1E9, symbol: "G" },
+        { value: 1E12, symbol: "T" },
+        { value: 1E15, symbol: "P" },
+        { value: 1E18, symbol: "E" }
+    ];
+    var rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+    var i;
+    for (i = si.length - 1; i > 0; i--) {
+        if (num >= si[i].value) {
+            break;
+        }
     }
-  }
-  return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
+    return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
 }
 
 function toObject(arr) {
@@ -125,17 +121,17 @@ function toObject(arr) {
 }
 
 function objectLength(obj) {
-  var result = 0;
-  for(var prop in obj) {
-    if (obj.hasOwnProperty(prop)) {
-      result++;
+    var result = 0;
+    for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+            result++;
+        }
     }
-  }
-  return result;
+    return result;
 }
 
 function hexToRgb(hex) {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 
-  return result ? "rgb("+parseInt(result[1], 16)+","+parseInt(result[2], 16)+","+parseInt(result[3], 16)+")" : null;
+    return result ? "rgb(" + parseInt(result[1], 16) + "," + parseInt(result[2], 16) + "," + parseInt(result[3], 16) + ")" : null;
 }

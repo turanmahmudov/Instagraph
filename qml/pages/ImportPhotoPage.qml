@@ -43,15 +43,15 @@ PageItem {
             handler: ContentHandler.Source
 
             onPeerSelected: {
-                peer.selectionType = ContentTransfer.Single
-                mainView.activeTransfer = peer.request(appStore)
-                mainView.activeTransfer.stateChanged.connect(function() {
+                peer.selectionType = ContentTransfer.Single;
+                mainView.activeTransfer = peer.request(appStore);
+                mainView.activeTransfer.stateChanged.connect(function () {
                     if (mainView.activeTransfer.state === ContentTransfer.Charged) {
-                        mainView.fileImported(mainView.activeTransfer.items[0].url)
-                        mainView.activeTransfer = null
+                        mainView.fileImported(mainView.activeTransfer.items[0].url);
+                        mainView.activeTransfer = null;
                         pageLayout.removePages(picker);
                     }
-                })
+                });
             }
 
             onCancelPressed: {

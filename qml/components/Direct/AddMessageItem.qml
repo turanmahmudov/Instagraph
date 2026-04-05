@@ -7,7 +7,7 @@ import ".."
 
 Item {
     signal sendMessageClicked(string text)
-    signal sendLikeClicked()
+    signal sendLikeClicked
 
     height: units.gu(5)
 
@@ -52,6 +52,6 @@ Item {
     }
 
     function clearTextField() {
-        addMessageField.text = ""
+        addMessageField.text = "";
     }
 }

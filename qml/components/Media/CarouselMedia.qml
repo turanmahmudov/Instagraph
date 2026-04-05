@@ -15,7 +15,7 @@ import "../../js/Helper.js" as Helper
 Item {
     id: carouselmedia
 
-    signal doubleClicked()
+    signal doubleClicked
 
     CarouselSlider {
         id: carouselSlider
@@ -27,7 +27,7 @@ Item {
             anchors.fill: parent
 
             onDoubleClicked: {
-                carouselmedia.doubleClicked()
+                carouselmedia.doubleClicked();
             }
         }
     }
@@ -51,7 +51,7 @@ Item {
                     property bool active: carouselSlider.currentIndex == index
                     height: active ? units.gu(0.9) : units.gu(0.7)
                     width: height
-                    radius: width/2
+                    radius: width / 2
                     anchors.verticalCenter: parent.verticalCenter
                     color: active ? LomiriColors.blue : styleApp.common.iconActiveColor
                     Behavior on color {

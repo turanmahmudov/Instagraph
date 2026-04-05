@@ -22,16 +22,16 @@ PageItem {
     }
 
     function init() {
-        allUsersModel.clear()
+        allUsersModel.clear();
 
-        var allUsers = Storage.getAccounts()
+        var allUsers = Storage.getAccounts();
         for (var i = 0; i < allUsers.length; i++) {
             var user = {
                 'username': allUsers[i].username,
                 'profile_pic_url': allUsers[i].profilePicUrl,
                 'isUser': true
-            }
-            allUsersModel.append(user)
+            };
+            allUsersModel.append(user);
         }
 
         if (showAddAccount) {
@@ -39,8 +39,8 @@ PageItem {
                 'actionName': i18n.tr("Add Account"),
                 'actionIcon': '\uea61',
                 'isUser': false
-            }
-            allUsersModel.append(action)
+            };
+            allUsersModel.append(action);
         }
     }
 
@@ -63,11 +63,11 @@ PageItem {
             height: layout.height
             divider.visible: false
             onClicked: {
-                bottomEdge.collapse()
+                bottomEdge.collapse();
                 if (isUser) {
-                    Scripts.switchAccount(username)
+                    Scripts.switchAccount(username);
                 } else {
-                    Scripts.goToAddAccount()
+                    Scripts.goToAddAccount();
                 }
             }
 
@@ -145,7 +145,7 @@ PageItem {
                     color: LomiriColors.blue
                     width: units.gu(1)
                     height: width
-                    radius: width/2
+                    radius: width / 2
 
                     visible: isUser && username == activeUsername
                 }

@@ -30,11 +30,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
 
             Label {
-                text: reel_share.type === 'mention'
-                    ? (isOutgoing ? i18n.tr("You mentioned them in a story") : i18n.tr("Mentioned you in a story"))
-                    : reel_share.type === ''
-                        ? (isOutgoing ? i18n.tr("You replied to their story") : i18n.tr("Replied to your story"))
-                        : i18n.tr("UNKNOWN")
+                text: reel_share.type === 'mention' ? (isOutgoing ? i18n.tr("You mentioned them in a story") : i18n.tr("Mentioned you in a story")) : reel_share.type === '' ? (isOutgoing ? i18n.tr("You replied to their story") : i18n.tr("Replied to your story")) : i18n.tr("UNKNOWN")
                 fontSize: "small"
                 color: LomiriColors.darkGrey
                 font.weight: Font.Light
@@ -48,17 +44,17 @@ Column {
                 active: typeof reel_share.media.image_versions2 != 'undefined'
                 sourceComponent: Image {
                     width: itemSmallWidth
-                    height: width/reel_share.media.image_versions2.candidates[0].width*reel_share.media.image_versions2.candidates[0].height
+                    height: width / reel_share.media.image_versions2.candidates[0].width * reel_share.media.image_versions2.candidates[0].height
                     source: reel_share.media.image_versions2.candidates[0].url
                     fillMode: Image.PreserveAspectCrop
-                    sourceSize: Qt.size(width,height)
+                    sourceSize: Qt.size(width, height)
                     smooth: true
                     clip: true
                 }
 
                 Component.onCompleted: {
                     if (isOutgoing) {
-                        anchors.right = parent.right
+                        anchors.right = parent.right;
                     }
                 }
             }
@@ -78,7 +74,7 @@ Column {
 
         Component.onCompleted: {
             if (isOutgoing) {
-                anchors.right = parent.right
+                anchors.right = parent.right;
             }
         }
     }
@@ -102,7 +98,7 @@ Column {
 
         Component.onCompleted: {
             if (isOutgoing) {
-                anchors.right = parent.right
+                anchors.right = parent.right;
             }
         }
     }

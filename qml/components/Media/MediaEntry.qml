@@ -26,12 +26,29 @@ Column {
     property bool enableVideoPlayback: false
 
     // Model data with default fallbacks to prevent undefined errors
-    readonly property var userData: user || {username: "", pk: "", profile_pic_url: ""}
-    readonly property var locationData: location || {name: ""}
-    readonly property var captionData: caption || {text: "", user: {username: ""}}
-    readonly property var carouselMediaData: carousel_media_obj || {media: []}
-    readonly property var imageData: images_obj || {candidates: []}
-    readonly property var previewCommentsData: preview_comments || {comments: []}
+    readonly property var userData: user || {
+        username: "",
+        pk: "",
+        profile_pic_url: ""
+    }
+    readonly property var locationData: location || {
+        name: ""
+    }
+    readonly property var captionData: caption || {
+        text: "",
+        user: {
+            username: ""
+        }
+    }
+    readonly property var carouselMediaData: carousel_media_obj || {
+        media: []
+    }
+    readonly property var imageData: images_obj || {
+        candidates: []
+    }
+    readonly property var previewCommentsData: preview_comments || {
+        comments: []
+    }
     readonly property bool canViewMoreComments: can_view_more_preview_comments || false
     readonly property int commentCount: comment_count || 0
 
@@ -60,7 +77,9 @@ Column {
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: pageLayout.pushToCurrent(pageLayout.primaryPage, PagesConstants.user, { usernameId: userData.pk })
+                    onClicked: pageLayout.pushToCurrent(pageLayout.primaryPage, PagesConstants.user, {
+                        usernameId: userData.pk
+                    })
                 }
             }
         }
@@ -78,7 +97,9 @@ Column {
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: pageLayout.pushToCurrent(pageLayout.primaryPage, PagesConstants.user, { usernameId: userData.pk })
+                    onClicked: pageLayout.pushToCurrent(pageLayout.primaryPage, PagesConstants.user, {
+                        usernameId: userData.pk
+                    })
                 }
             }
 
@@ -112,26 +133,30 @@ Column {
 
         function calculateHeight(isCarousel, media_type) {
             if (isCarousel) {
-                return (parent.width/bestImage.width*bestImage.height) + units.gu(2)
+                return (parent.width / bestImage.width * bestImage.height) + units.gu(2);
             }
             if (media_type === 1 || media_type === 2 || media_type === 8) {
-                return parent.width/bestImage.width*bestImage.height
+                return parent.width / bestImage.width * bestImage.height;
             }
-            return 0
+            return 0;
         }
 
         function calculateBestImage(isCarousel, media_type, carousel_media_obj, images_obj) {
             if (isCarousel) {
-                return Helper.getBestImage(carousel_media_obj.media[0].image_versions2.candidates, parent.width)
+                return Helper.getBestImage(carousel_media_obj.media[0].image_versions2.candidates, parent.width);
             }
             if (media_type === 1 || media_type === 2 || media_type === 8) {
                 // For carousel (media_type 8), show first image when not in carousel mode
                 if (media_type === 8 && typeof carousel_media_obj.media !== 'undefined' && carousel_media_obj.media.length > 0) {
-                    return Helper.getBestImage(carousel_media_obj.media[0].image_versions2.candidates, parent.width)
+                    return Helper.getBestImage(carousel_media_obj.media[0].image_versions2.candidates, parent.width);
                 }
-                return Helper.getBestImage(images_obj.candidates, parent.width)
+                return Helper.getBestImage(images_obj.candidates, parent.width);
             }
-            return {"width":0, "height":0, "url":""}
+            return {
+                "width": 0,
+                "height": 0,
+                "url": ""
+            };
         }
 
         sourceComponent: isCarousel ? carouselMedia : singleMedia
@@ -157,7 +182,10 @@ Column {
             width: units.gu(4)
             height: width
 
-            onOpenCommentsClicked: pageLayout.pushToNext(currentPage, PagesConstants.comments, { photoId: id, mediaUserId: user.pk })
+            onOpenCommentsClicked: pageLayout.pushToNext(currentPage, PagesConstants.comments, {
+                photoId: id,
+                mediaUserId: user.pk
+            })
         }
 
         OpenShareAction {
@@ -165,7 +193,10 @@ Column {
             width: units.gu(4)
             height: width
 
-            onOpenShareClicked: pageLayout.pushToCurrent(currentPage, Qt.resolvedUrl("../../pages/ShareMediaPage.qml"), {mediaId: id, mediaUser: user})
+            onOpenShareClicked: pageLayout.pushToCurrent(currentPage, Qt.resolvedUrl("../../pages/ShareMediaPage.qml"), {
+                mediaId: id,
+                mediaUser: user
+            })
         }
 
         Item {
@@ -194,7 +225,9 @@ Column {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/MediaLikersPage.qml"), { mediaId: id })
+            onClicked: pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/MediaLikersPage.qml"), {
+                mediaId: id
+            })
         }
     }
 
@@ -224,7 +257,9 @@ Column {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: pageLayout.pushToNext(currentPage, PagesConstants.comments, { photoId: id })
+                onClicked: pageLayout.pushToNext(currentPage, PagesConstants.comments, {
+                    photoId: id
+                })
             }
         }
 
@@ -281,7 +316,9 @@ Column {
         FeedActionsPopup {
             id: actionsPopup
 
-            onOpenEditClicked: pageLayout.pushToCurrent(currentPage, PagesConstants.edit_media, {mediaId: id})
+            onOpenEditClicked: pageLayout.pushToCurrent(currentPage, PagesConstants.edit_media, {
+                mediaId: id
+            })
             onCopyLinkClicked: Clipboard.push(`https://instagram.com/p/${code}`)
             onDownloadMediaClicked: {
                 // TODO
@@ -290,20 +327,20 @@ Column {
                 //singleDownload.download(images_obj.candidates[0].url)
             }
             onDeleteMediaClicked: {
-                lastDeletedId = id
-                instagram.deleteMedia(id)
+                lastDeletedId = id;
+                instagram.deleteMedia(id);
             }
             onEnableCommentsClicked: {
-                lastActionId = id
-                instagram.enableMediaComments(id)
+                lastActionId = id;
+                instagram.enableMediaComments(id);
             }
             onDisableCommentsClicked: {
-                lastActionId = id
-                instagram.disableMediaComments(id)
+                lastActionId = id;
+                instagram.disableMediaComments(id);
             }
             onRemoveTagClicked: {
-                lastDeletedId = id
-                instagram.removeSelftag(id)
+                lastDeletedId = id;
+                instagram.removeSelftag(id);
             }
         }
     }
@@ -313,83 +350,91 @@ Column {
 
         onMediaDeleted: {
             if (lastDeletedId === id) {
-                var data = JSON.parse(answer)
+                var data = JSON.parse(answer);
                 if (data.did_delete) {
-                    currentModel.remove(index)
-                    if (currentModel.count === 0) pageLayout.removePages(currentPage)
+                    currentModel.remove(index);
+                    if (currentModel.count === 0)
+                        pageLayout.removePages(currentPage);
                 }
-                lastDeletedId = null
+                lastDeletedId = null;
             }
         }
 
         onRemoveSelftagDone: {
             if (lastDeletedId === id) {
-                var data = JSON.parse(answer)
-                if (data.status === "ok") currentModel.get(index).photo_of_you = false
-                lastDeletedId = null
+                var data = JSON.parse(answer);
+                if (data.status === "ok")
+                    currentModel.get(index).photo_of_you = false;
+                lastDeletedId = null;
             }
         }
 
         onEnableMediaCommentsDataReady: {
             if (lastActionId === id) {
-                var data = JSON.parse(answer)
-                if (data.status === "ok") currentModel.get(index).comments_disabled = false
-                lastActionId = null
+                var data = JSON.parse(answer);
+                if (data.status === "ok")
+                    currentModel.get(index).comments_disabled = false;
+                lastActionId = null;
             }
         }
 
         onDisableMediaCommentsDataReady: {
             if (lastActionId === id) {
-                var data = JSON.parse(answer)
-                if (data.status === "ok") currentModel.get(index).comments_disabled = true
-                lastActionId = null
+                var data = JSON.parse(answer);
+                if (data.status === "ok")
+                    currentModel.get(index).comments_disabled = true;
+                lastActionId = null;
             }
         }
 
         onLikeDataReady: {
             if (lastActionId === id) {
-                var data = JSON.parse(answer)
-                if (data.status === "ok") likeAction.is_liked = true
-                lastActionId = null
+                var data = JSON.parse(answer);
+                if (data.status === "ok")
+                    likeAction.is_liked = true;
+                lastActionId = null;
             }
         }
         onUnLikeDataReady: {
             if (lastActionId === id) {
-                var data = JSON.parse(answer)
-                if (data.status === "ok") likeAction.is_liked = false
-                lastActionId = null
+                var data = JSON.parse(answer);
+                if (data.status === "ok")
+                    likeAction.is_liked = false;
+                lastActionId = null;
             }
         }
         onSaveMediaDataReady: {
             if (lastActionId === id) {
-                var data = JSON.parse(answer)
-                if (data.status === "ok") saveAction.is_saved = true
-                lastActionId = null
+                var data = JSON.parse(answer);
+                if (data.status === "ok")
+                    saveAction.is_saved = true;
+                lastActionId = null;
             }
         }
         onUnsaveMediaDataReady: {
             if (lastActionId === id) {
-                var data = JSON.parse(answer)
-                if (data.status === "ok") saveAction.is_saved = false
-                lastActionId = null
+                var data = JSON.parse(answer);
+                if (data.status === "ok")
+                    saveAction.is_saved = false;
+                lastActionId = null;
             }
         }
     }
 
     function like() {
-        lastActionId = id
-        instagram.like(id)
+        lastActionId = id;
+        instagram.like(id);
     }
     function unlike() {
-        lastActionId = id
-        instagram.unLike(id)
+        lastActionId = id;
+        instagram.unLike(id);
     }
     function save() {
-        lastActionId = id
-        instagram.saveMedia(id)
+        lastActionId = id;
+        instagram.saveMedia(id);
     }
     function unsave() {
-        lastActionId = id
-        instagram.unsaveMedia(id)
+        lastActionId = id;
+        instagram.unsaveMedia(id);
     }
 }

@@ -34,7 +34,7 @@ PageItem {
     property alias list_loading: feedViewModel.isLoading
 
     Component.onCompleted: {
-        feedViewModel.loadFeed(true)
+        feedViewModel.loadFeed(true);
     }
 
     ListView {
@@ -50,12 +50,12 @@ PageItem {
         }
         onContentYChanged: {
             if (feedViewModel.shouldLoadMore(contentY, contentHeight, height)) {
-                feedViewModel.loadMore()
+                feedViewModel.loadMore();
             }
         }
 
         clip: true
-        cacheBuffer: parent.height*2
+        cacheBuffer: parent.height * 2
         model: feedViewModel.feedModel
         delegate: ListFeedDelegate {
             id: homePhotosDelegate
@@ -65,7 +65,7 @@ PageItem {
         PullToRefresh {
             refreshing: list_loading && feedViewModel.feedModel.count == 0
             onRefresh: {
-                feedViewModel.loadFeed(true)
+                feedViewModel.loadFeed(true);
             }
         }
     }

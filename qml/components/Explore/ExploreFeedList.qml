@@ -9,7 +9,7 @@ Flickable {
     id: explorefeedlist
     contentHeight: layout.height
 
-    signal refreshRequested()
+    signal refreshRequested
 
     GridLayout {
         id: layout
@@ -22,7 +22,7 @@ Flickable {
 
             Loader {
                 asynchronous: true
-                Layout.preferredWidth: (explorefeedlist.width-units.gu(0.1))*rowSpan/3
+                Layout.preferredWidth: (explorefeedlist.width - units.gu(0.1)) * rowSpan / 3
                 Layout.preferredHeight: Layout.preferredWidth
                 Layout.rowSpan: rowSpan
                 Layout.columnSpan: columnSpan

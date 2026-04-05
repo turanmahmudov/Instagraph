@@ -21,65 +21,65 @@ Item {
         id: styles
 
         readonly property var follow: ({
-            icon: "add",
-            label: i18n.tr("Follow"),
-            textColor: "#ffffff",
-            backgroundColor: LomiriColors.green,
-            borderColor: LomiriColors.green
-        })
+                icon: "add",
+                label: i18n.tr("Follow"),
+                textColor: "#ffffff",
+                backgroundColor: LomiriColors.green,
+                borderColor: LomiriColors.green
+            })
 
         readonly property var following: ({
-            icon: "tick",
-            label: i18n.tr("Following"),
-            textColor: styleApp.common.outlineButtonTextColor,
-            backgroundColor: "transparent",
-            borderColor: styleApp.common.outlineButtonBorderColor
-        })
+                icon: "tick",
+                label: i18n.tr("Following"),
+                textColor: styleApp.common.outlineButtonTextColor,
+                backgroundColor: "transparent",
+                borderColor: styleApp.common.outlineButtonBorderColor
+            })
 
         readonly property var requested: ({
-            icon: "clock",
-            label: i18n.tr("Requested"),
-            textColor: "#ffffff",
-            backgroundColor: "#666666",
-            borderColor: "#666666"
-        })
+                icon: "clock",
+                label: i18n.tr("Requested"),
+                textColor: "#ffffff",
+                backgroundColor: "#666666",
+                borderColor: "#666666"
+            })
 
         property var current: follow
     }
 
     function updateStyles() {
         if (isFollowing) {
-            styles.current = styles.following
+            styles.current = styles.following;
         } else if (isRequested) {
-            styles.current = styles.requested
+            styles.current = styles.requested;
         } else {
-            styles.current = styles.follow
+            styles.current = styles.follow;
         }
     }
 
     function handleFollowResponse(data) {
         if (!data || !data.friendship_status || userId !== pendingRequestUserId) {
-            return
+            return;
         }
 
         if (friendship) {
-            friendship.following = data.friendship_status.following
-            friendship.outgoing_request = data.friendship_status.outgoing_request
+            friendship.following = data.friendship_status.following;
+            friendship.outgoing_request = data.friendship_status.outgoing_request;
         }
 
-        updateStyles()
-        pendingRequestUserId = 0
+        updateStyles();
+        pendingRequestUserId = 0;
     }
 
     function toggleFollow() {
-        if (!userId) return
-
-        pendingRequestUserId = userId
+        if (!userId)
+            return;
+        pendingRequestUserId = userId;
 
         if (isFollowing || isRequested) {
-            instagram.unFollow(userId)
+            instagram.unFollow(userId);
         } else {
-            instagram.follow(userId)
+            instagram.follow(userId);
         }
     }
 
@@ -133,15 +133,15 @@ Item {
 
     Connections {
         target: instagram
-        
+
         onFollowDataReady: {
-            var data = JSON.parse(answer)
-            handleFollowResponse(data)
+            var data = JSON.parse(answer);
+            handleFollowResponse(data);
         }
-        
+
         onUnfollowDataReady: {
-            var data = JSON.parse(answer)
-            handleFollowResponse(data)
+            var data = JSON.parse(answer);
+            handleFollowResponse(data);
         }
     }
 }

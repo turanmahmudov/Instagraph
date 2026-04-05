@@ -25,13 +25,13 @@ Item {
     function commentLikeDataFinished(data) {
         if (commentId == latest_like_request) {
             if (data.status == "ok") {
-                likedfinished(true, commentId)
-                has_liked = true
+                likedfinished(true, commentId);
+                has_liked = true;
 
-                commentlikeicon.name = "\ueadf"
-                commentlikeicon.color = LomiriColors.red
+                commentlikeicon.name = "\ueadf";
+                commentlikeicon.color = LomiriColors.red;
 
-                latest_like_request = 0
+                latest_like_request = 0;
             }
         }
     }
@@ -39,13 +39,13 @@ Item {
     function commentUnLikeDataFinished(data) {
         if (commentId == latest_like_request) {
             if (data.status == "ok") {
-                likedfinished(false, commentId)
-                has_liked = false
+                likedfinished(false, commentId);
+                has_liked = false;
 
-                commentlikeicon.name = "\ueae1"
-                commentlikeicon.color = styleApp.common.iconActiveColor
+                commentlikeicon.name = "\ueae1";
+                commentlikeicon.color = styleApp.common.iconActiveColor;
 
-                latest_like_request = 0
+                latest_like_request = 0;
             }
         }
     }
@@ -63,24 +63,24 @@ Item {
         anchors.fill: parent
         onClicked: {
             if (has_liked) {
-                latest_like_request = commentId
+                latest_like_request = commentId;
                 instagram.unLikeComment(commentId);
             } else {
-                latest_like_request = commentId
+                latest_like_request = commentId;
                 instagram.likeComment(commentId);
             }
         }
     }
 
-    Connections{
+    Connections {
         target: instagram
         onCommentLiked: {
             var data = JSON.parse(answer);
-            commentLikeDataFinished(data)
+            commentLikeDataFinished(data);
         }
         onCommentUnliked: {
             var data = JSON.parse(answer);
-            commentUnLikeDataFinished(data)
+            commentUnLikeDataFinished(data);
         }
     }
 }

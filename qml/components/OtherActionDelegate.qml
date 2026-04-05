@@ -36,7 +36,8 @@ AbstractButton {
         Rectangle {
             id: previewImg
             anchors.horizontalCenter: parent.horizontalCenter
-            width: units.gu(8); height: width
+            width: units.gu(8)
+            height: width
             radius: width * 0.5
 
             color: rootItem.pressed ? border.color : "transparent"
@@ -47,7 +48,8 @@ AbstractButton {
 
             Icon {
                 anchors.centerIn: parent
-                width: units.gu(4); height: width
+                width: units.gu(4)
+                height: width
                 color: theme.palette.normal.foregroundText
                 source: modelData.iconName ? "image://theme/%1".arg(modelData.iconName) : modelData.iconSource
             }
@@ -55,7 +57,10 @@ AbstractButton {
 
         Label {
             id: nameLabel
-            anchors { left: parent.left; right: parent.right }
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
             horizontalAlignment: Text.AlignHCenter
             fontSize: "x-small"
             font.weight: Font.Bold

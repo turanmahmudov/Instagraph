@@ -11,7 +11,9 @@ ListView {
         width: parent.width
         height: layout.height
         divider.visible: false
-        onClicked: pageLayout.pushToCurrent(explorePage, page.user, { userId: user.pk })
+        onClicked: pageLayout.pushToCurrent(explorePage, page.user, {
+            userId: user.pk
+        })
 
         SlotsLayout {
             id: layout

@@ -18,7 +18,7 @@ QtObject {
         property color baseBorderColor: LomiriColors.lightGrey
     }
 
-    property QtObject mainView: QtObject{
+    property QtObject mainView: QtObject {
         property color backgroundColor: styleApp.common.white
     }
 

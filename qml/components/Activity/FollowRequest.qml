@@ -31,7 +31,7 @@ ListItem {
                 anchors.verticalCenter: parent.verticalCenter
 
                 Text {
-                    text: i18n.tr("<span style='color:"+LomiriColors.red+";'>%1</span> Follow Requests").arg(request_count)
+                    text: i18n.tr("<span style='color:" + LomiriColors.red + ";'>%1</span> Follow Requests").arg(request_count)
                     wrapMode: Text.WordWrap
                     font.weight: Font.DemiBold
                     textFormat: Text.RichText

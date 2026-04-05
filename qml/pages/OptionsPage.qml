@@ -29,14 +29,14 @@ PageItem {
 
     function profileDataFinished(data) {
         if (data.user.is_private == true) {
-            privateSwitch.checked = true
+            privateSwitch.checked = true;
         } else {
-            privateSwitch.checked = false
+            privateSwitch.checked = false;
         }
     }
 
     Component.onCompleted: {
-        instagram.getCurrentUser()
+        instagram.getCurrentUser();
     }
 
     Flickable {
@@ -51,150 +51,150 @@ PageItem {
         contentHeight: columnSuperior.height
 
         Column {
-           id: columnSuperior
-           width: parent.width
+            id: columnSuperior
+            width: parent.width
 
-           ListItem {
-               height: accountHeaderLayout.height
+            ListItem {
+                height: accountHeaderLayout.height
 
-               ListItemLayout {
-                   id: accountHeaderLayout
+                ListItemLayout {
+                    id: accountHeaderLayout
 
-                   title.text: i18n.tr("Account")
-                   title.font.weight: Font.Normal
-               }
-           }
-
-           ListItem {
-               height: editProfileLayout.height
-               ListItemLayout {
-                   id: editProfileLayout
-
-                   title.text: i18n.tr("Edit Profile")
-               }
-                onClicked: {
-                   pageLayout.pushToCurrent(optionspage, PagesConstants.edit_profile)
+                    title.text: i18n.tr("Account")
+                    title.font.weight: Font.Normal
                 }
-           }
+            }
 
-           ListItem {
-               height: changePasswordLayout.height
-               ListItemLayout {
-                   id: changePasswordLayout
+            ListItem {
+                height: editProfileLayout.height
+                ListItemLayout {
+                    id: editProfileLayout
 
-                   title.text: i18n.tr("Change Password")
-               }
-                onClicked: {
-                   pageLayout.pushToCurrent(optionspage, PagesConstants.change_password)
+                    title.text: i18n.tr("Edit Profile")
                 }
-           }
-
-           ListItem {
-               height: likedMediaLayout.height
-               ListItemLayout {
-                   id: likedMediaLayout
-
-                   title.text: i18n.tr("Posts You've Liked")
-               }
                 onClicked: {
-                   pageLayout.pushToCurrent(optionspage, PagesConstants.liked_media)
+                    pageLayout.pushToCurrent(optionspage, PagesConstants.edit_profile);
                 }
-           }
+            }
 
-           ListItem {
-               height: blockedUsersLayout.height
-               ListItemLayout {
-                   id: blockedUsersLayout
+            ListItem {
+                height: changePasswordLayout.height
+                ListItemLayout {
+                    id: changePasswordLayout
 
-                   title.text: i18n.tr("Blocked Users")
-               }
+                    title.text: i18n.tr("Change Password")
+                }
                 onClicked: {
-                   pageLayout.pushToCurrent(optionspage, PagesConstants.blocked_users)
+                    pageLayout.pushToCurrent(optionspage, PagesConstants.change_password);
                 }
-           }
+            }
 
-           ListItem {
-               height: privateAccountLayout.height
-               divider.visible: false
-               ListItemLayout {
-                   id: privateAccountLayout
+            ListItem {
+                height: likedMediaLayout.height
+                ListItemLayout {
+                    id: likedMediaLayout
 
-                   title.text: i18n.tr("Private Account")
+                    title.text: i18n.tr("Posts You've Liked")
+                }
+                onClicked: {
+                    pageLayout.pushToCurrent(optionspage, PagesConstants.liked_media);
+                }
+            }
 
-                   Switch {
-                       id: privateSwitch
-                       SlotsLayout.position: SlotsLayout.Trailing
-                       checked: false
-                       onCheckedChanged: {
+            ListItem {
+                height: blockedUsersLayout.height
+                ListItemLayout {
+                    id: blockedUsersLayout
+
+                    title.text: i18n.tr("Blocked Users")
+                }
+                onClicked: {
+                    pageLayout.pushToCurrent(optionspage, PagesConstants.blocked_users);
+                }
+            }
+
+            ListItem {
+                height: privateAccountLayout.height
+                divider.visible: false
+                ListItemLayout {
+                    id: privateAccountLayout
+
+                    title.text: i18n.tr("Private Account")
+
+                    Switch {
+                        id: privateSwitch
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: false
+                        onCheckedChanged: {
                             if (checked) {
-                                instagram.setPrivateAccount()
+                                instagram.setPrivateAccount();
                             } else {
-                                instagram.setPublicAccount()
+                                instagram.setPublicAccount();
                             }
-                       }
-                   }
-               }
-           }
-
-           ListItem {
-               height: privateAccountInfoLayout.height
-               divider.visible: false
-               ListItemLayout {
-                   id: privateAccountInfoLayout
-
-                   subtitle.text: i18n.tr("When your account is private, only people you approve can see your photos and videos. Your existing followers won't be affected.")
-                   subtitle.maximumLineCount: 3
-                   subtitle.wrapMode: Text.WordWrap
-               }
-           }
-
-           ListItem {
-               height: aboutHeaderLayout.height
-
-               ListItemLayout {
-                   id: aboutHeaderLayout
-
-                   title.text: i18n.tr("About")
-                   title.font.weight: Font.Normal
-               }
-           }
-
-           ListItem {
-               height: aboutLayout.height
-               ListItemLayout {
-                   id: aboutLayout
-
-                   title.text: i18n.tr("About")
-               }
-                onClicked: {
-                   pageLayout.pushToCurrent(optionspage, PagesConstants.about)
+                        }
+                    }
                 }
-           }
+            }
 
-           ListItem {
-               height: creditsLayout.height
-               ListItemLayout {
-                   id: creditsLayout
+            ListItem {
+                height: privateAccountInfoLayout.height
+                divider.visible: false
+                ListItemLayout {
+                    id: privateAccountInfoLayout
 
-                   title.text: i18n.tr("Credits")
-               }
-                onClicked: {
-                   pageLayout.pushToCurrent(optionspage, PagesConstants.credits)
+                    subtitle.text: i18n.tr("When your account is private, only people you approve can see your photos and videos. Your existing followers won't be affected.")
+                    subtitle.maximumLineCount: 3
+                    subtitle.wrapMode: Text.WordWrap
                 }
-           }
+            }
 
-           ListItem {
-               height: logOutLayout.height
-               divider.visible: false
-               ListItemLayout {
-                   id: logOutLayout
+            ListItem {
+                height: aboutHeaderLayout.height
 
-                   title.text: i18n.tr("Log Out")
-               }
-               onClicked: {
-                   Scripts.logOut()
-               }
-           }
+                ListItemLayout {
+                    id: aboutHeaderLayout
+
+                    title.text: i18n.tr("About")
+                    title.font.weight: Font.Normal
+                }
+            }
+
+            ListItem {
+                height: aboutLayout.height
+                ListItemLayout {
+                    id: aboutLayout
+
+                    title.text: i18n.tr("About")
+                }
+                onClicked: {
+                    pageLayout.pushToCurrent(optionspage, PagesConstants.about);
+                }
+            }
+
+            ListItem {
+                height: creditsLayout.height
+                ListItemLayout {
+                    id: creditsLayout
+
+                    title.text: i18n.tr("Credits")
+                }
+                onClicked: {
+                    pageLayout.pushToCurrent(optionspage, PagesConstants.credits);
+                }
+            }
+
+            ListItem {
+                height: logOutLayout.height
+                divider.visible: false
+                ListItemLayout {
+                    id: logOutLayout
+
+                    title.text: i18n.tr("Log Out")
+                }
+                onClicked: {
+                    Scripts.logOut();
+                }
+            }
         }
     }
 
@@ -203,7 +203,7 @@ PageItem {
         width: parent.width
     }
 
-    Connections{
+    Connections {
         target: instagram
         onCurrentUserDataReady: {
             var data = JSON.parse(answer);
@@ -212,17 +212,17 @@ PageItem {
         onSetProfilePublic: {
             var data = JSON.parse(answer);
             if (data.user.is_private == true) {
-                privateSwitch.checked = true
+                privateSwitch.checked = true;
             } else {
-                privateSwitch.checked = false
+                privateSwitch.checked = false;
             }
         }
         onSetProfilePrivate: {
             var data = JSON.parse(answer);
             if (data.user.is_private == true) {
-                privateSwitch.checked = true
+                privateSwitch.checked = true;
             } else {
-                privateSwitch.checked = false
+                privateSwitch.checked = false;
             }
         }
     }

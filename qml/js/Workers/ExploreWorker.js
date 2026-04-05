@@ -133,7 +133,7 @@ function setMedia(media) {
 
 function extractMediaObjFromTwoByTwo(obj) {
     if ("channel" in obj) {
-         return setMedia(obj.channel.media)
+        return setMedia(obj.channel.media)
     } else if ("igtv" in obj) {
         return setMedia(obj.igtv.media)
     } else {

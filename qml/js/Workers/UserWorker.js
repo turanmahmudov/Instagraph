@@ -9,7 +9,7 @@ WorkerScript.onMessage = (message) => {
     items.forEach((item, i) => {
         let item_obj = {}
         item_obj.user = item
-            
+
         model.append(item_obj)
         model.sync()
     })

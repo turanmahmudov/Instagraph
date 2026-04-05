@@ -33,30 +33,32 @@ PageItem {
         }
         model: viewModel.userListModel
         delegate: UserListItem {
-            onClicked: pageLayout.pushToCurrent(medialikerspage, PagesConstants.user, {usernameId: user.pk})
+            onClicked: pageLayout.pushToCurrent(medialikerspage, PagesConstants.user, {
+                usernameId: user.pk
+            })
         }
         PullToRefresh {
             refreshing: viewModel.isLoading && viewModel.userListModel.count === 0
             onRefresh: {
-                loadLikers()
+                loadLikers();
             }
         }
     }
 
     function loadLikers() {
-        viewModel.loadData('', function() {
-            instagram.getMediaLikers(mediaId)
-        })
+        viewModel.loadData('', function () {
+            instagram.getMediaLikers(mediaId);
+        });
     }
 
     Connections {
         target: instagram
         onMediaLikersDataReady: {
-            viewModel.handleResponse(answer)
+            viewModel.handleResponse(answer);
         }
     }
 
     Component.onCompleted: {
-        loadLikers()
+        loadLikers();
     }
 }

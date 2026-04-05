@@ -50,44 +50,44 @@ Item {
     property string rectangleBorderColor: ""
 
     Component.onCompleted: {
-        init()
+        init();
     }
 
     function init() {
         if (friendship_var) {
             if (friendship_var.following) {
-                firstIconName = followingIcon
-                firstIconColor = followingColor
-                secondIconColor = followingColor
-                labelText = i18n.tr("Following")
-                labelColor = followingColor
-                rectangleColor = followingBgColor
-                rectangleBorderColor = followingBorderColor
+                firstIconName = followingIcon;
+                firstIconColor = followingColor;
+                secondIconColor = followingColor;
+                labelText = i18n.tr("Following");
+                labelColor = followingColor;
+                rectangleColor = followingBgColor;
+                rectangleBorderColor = followingBorderColor;
             } else if (friendship_var.outgoing_request) {
-                firstIconName = requestedIcon
-                firstIconColor = requestedColor
-                secondIconColor = requestedColor
-                labelText = i18n.tr("Requested")
-                labelColor = requestedColor
-                rectangleColor = requestedBgColor
-                rectangleBorderColor = requestedBorderColor
+                firstIconName = requestedIcon;
+                firstIconColor = requestedColor;
+                secondIconColor = requestedColor;
+                labelText = i18n.tr("Requested");
+                labelColor = requestedColor;
+                rectangleColor = requestedBgColor;
+                rectangleBorderColor = requestedBorderColor;
             } else {
-                firstIconName = followIcon
-                firstIconColor = followColor
-                secondIconColor = followColor
-                labelText = i18n.tr("Follow")
-                labelColor = followColor
-                rectangleColor = followBgColor
-                rectangleBorderColor = followBorderColor
+                firstIconName = followIcon;
+                firstIconColor = followColor;
+                secondIconColor = followColor;
+                labelText = i18n.tr("Follow");
+                labelColor = followColor;
+                rectangleColor = followBgColor;
+                rectangleBorderColor = followBorderColor;
             }
         } else {
-            firstIconName = followIcon
-            firstIconColor = followColor
-            secondIconColor = followColor
-            labelText = i18n.tr("Follow")
-            labelColor = followColor
-            rectangleColor = followBgColor
-            rectangleBorderColor = followBorderColor
+            firstIconName = followIcon;
+            firstIconColor = followColor;
+            secondIconColor = followColor;
+            labelText = i18n.tr("Follow");
+            labelColor = followColor;
+            rectangleColor = followBgColor;
+            rectangleBorderColor = followBorderColor;
         }
     }
 
@@ -96,43 +96,43 @@ Item {
             if (data.friendship_status) {
                 if (data.friendship_status.outgoing_request && !data.friendship_status.following) {
                     // requested
-                    friendship_var.outgoing_request = true
-                    friendship_var.following = false
+                    friendship_var.outgoing_request = true;
+                    friendship_var.following = false;
 
-                    firstIconName = requestedIcon
-                    firstIconColor = requestedColor
-                    secondIconColor = requestedColor
-                    labelText = i18n.tr("Requested")
-                    labelColor = requestedColor
-                    rectangleColor = requestedBgColor
-                    rectangleBorderColor = requestedBorderColor
+                    firstIconName = requestedIcon;
+                    firstIconColor = requestedColor;
+                    secondIconColor = requestedColor;
+                    labelText = i18n.tr("Requested");
+                    labelColor = requestedColor;
+                    rectangleColor = requestedBgColor;
+                    rectangleBorderColor = requestedBorderColor;
                 } else if (!data.friendship_status.outgoing_request && !data.friendship_status.following) {
                     // unfollow
-                    friendship_var.outgoing_request = false
-                    friendship_var.following = false
+                    friendship_var.outgoing_request = false;
+                    friendship_var.following = false;
 
-                    firstIconName = followIcon
-                    firstIconColor = followColor
-                    secondIconColor = followColor
-                    labelText = i18n.tr("Follow")
-                    labelColor = followColor
-                    rectangleColor = followBgColor
-                    rectangleBorderColor = followBorderColor
+                    firstIconName = followIcon;
+                    firstIconColor = followColor;
+                    secondIconColor = followColor;
+                    labelText = i18n.tr("Follow");
+                    labelColor = followColor;
+                    rectangleColor = followBgColor;
+                    rectangleBorderColor = followBorderColor;
                 } else if (!data.friendship_status.outgoing_request && data.friendship_status.following) {
                     // follow
-                    friendship_var.outgoing_request = false
-                    friendship_var.following = true
+                    friendship_var.outgoing_request = false;
+                    friendship_var.following = true;
 
-                    firstIconName = followingIcon
-                    firstIconColor = followingColor
-                    secondIconColor = followingColor
-                    labelText = i18n.tr("Following")
-                    labelColor = followingColor
-                    rectangleColor = followingBgColor
-                    rectangleBorderColor = followingBorderColor
+                    firstIconName = followingIcon;
+                    firstIconColor = followingColor;
+                    secondIconColor = followingColor;
+                    labelText = i18n.tr("Following");
+                    labelColor = followingColor;
+                    rectangleColor = followingBgColor;
+                    rectangleBorderColor = followingBorderColor;
                 }
 
-                latest_follow_request = 0
+                latest_follow_request = 0;
             }
         }
     }
@@ -200,18 +200,18 @@ Item {
             onClicked: {
                 if (friendship_var && (friendship_var.following || friendship_var.outgoing_request)) {
                     // unfollow
-                    latest_follow_request = userId
-                    instagram.unFollow(userId)
+                    latest_follow_request = userId;
+                    instagram.unFollow(userId);
                 } else {
                     // follow
-                    latest_follow_request = userId
-                    instagram.follow(userId)
+                    latest_follow_request = userId;
+                    instagram.follow(userId);
                 }
             }
         }
     }
 
-    Connections{
+    Connections {
         target: instagram
         onFollowDataReady: {
             if (userId == latest_follow_request) {

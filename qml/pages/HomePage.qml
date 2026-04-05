@@ -37,8 +37,8 @@ PageItem {
     property alias list_loading: feedViewModel.isLoading
 
     function getHomeFeed() {
-        feedViewModel.loadFeed(true)
-        feedViewModel.loadStoriesTray()
+        feedViewModel.loadFeed(true);
+        feedViewModel.loadStoriesTray();
     }
 
     header: PageHeaderItem {
@@ -52,7 +52,7 @@ PageItem {
                 fillMode: Image.PreserveAspectFit
                 width: units.gu(12)
                 height: units.gu(4)
-                sourceSize: Qt.size(width,height)
+                sourceSize: Qt.size(width, height)
                 source: "qrc:/assets/instagraph_title.png"
                 smooth: true
                 cache: true
@@ -69,7 +69,7 @@ PageItem {
                 text: i18n.tr("Inbox")
                 iconName: IconsConstants.inbox
                 onTriggered: {
-                    pageLayout.pushToNext(pageLayout.primaryPage, PagesConstants.direct_inbox)
+                    pageLayout.pushToNext(pageLayout.primaryPage, PagesConstants.direct_inbox);
                 }
             }
         ]
@@ -99,15 +99,15 @@ PageItem {
         onContentYChanged: {
             // Use ViewModel's helper to check if should load more
             if (feedViewModel.shouldLoadMore(contentY, contentHeight, height)) {
-                feedViewModel.loadMore()
+                feedViewModel.loadMore();
             }
         }
         PullToRefresh {
             refreshing: feedViewModel.isLoading && feedViewModel.feedModel.count === 0
             onRefresh: {
-                feedViewModel.isPullToRefresh = true
-                feedViewModel.loadFeed(true)
-                feedViewModel.loadStoriesTray(true)
+                feedViewModel.isPullToRefresh = true;
+                feedViewModel.loadFeed(true);
+                feedViewModel.loadStoriesTray(true);
             }
         }
 

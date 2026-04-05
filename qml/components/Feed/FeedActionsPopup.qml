@@ -15,13 +15,13 @@ ActionsPopup {
     id: feedactionspopup
 
     // Signals to communicate actions to parent
-    signal openEditClicked()
-    signal deleteMediaClicked()
-    signal enableCommentsClicked()
-    signal disableCommentsClicked()
-    signal removeTagClicked()
-    signal copyLinkClicked()
-    signal downloadMediaClicked()
+    signal openEditClicked
+    signal deleteMediaClicked
+    signal enableCommentsClicked
+    signal disableCommentsClicked
+    signal removeTagClicked
+    signal copyLinkClicked
+    signal downloadMediaClicked
 
     // Properties that should be set by parent
     property var currentDelegatePage: pageLayout.primaryPage
@@ -36,8 +36,8 @@ ActionsPopup {
             enabled: visible
             text: i18n.tr("Edit")
             onTriggered: {
-                PopupUtils.close(feedactionspopup)
-                openEditClicked()
+                PopupUtils.close(feedactionspopup);
+                openEditClicked();
             }
         }
         Action {
@@ -45,7 +45,7 @@ ActionsPopup {
             enabled: visible
             text: i18n.tr("Delete")
             onTriggered: {
-                deleteMediaClicked()
+                deleteMediaClicked();
             }
         }
         Action {
@@ -53,8 +53,8 @@ ActionsPopup {
             enabled: visible
             text: i18n.tr("Turn On Commenting")
             onTriggered: {
-                enableCommentsClicked()
-                PopupUtils.close(feedactionspopup)
+                enableCommentsClicked();
+                PopupUtils.close(feedactionspopup);
             }
         }
         Action {
@@ -62,8 +62,8 @@ ActionsPopup {
             enabled: visible
             text: i18n.tr("Turn Off Commenting")
             onTriggered: {
-                disableCommentsClicked()
-                PopupUtils.close(feedactionspopup)
+                disableCommentsClicked();
+                PopupUtils.close(feedactionspopup);
             }
         }
         Action {
@@ -71,8 +71,8 @@ ActionsPopup {
             enabled: visible
             text: i18n.tr("Remove Tag")
             onTriggered: {
-                removeTagClicked()
-                PopupUtils.close(feedactionspopup)
+                removeTagClicked();
+                PopupUtils.close(feedactionspopup);
             }
         }
         Action {
@@ -80,8 +80,8 @@ ActionsPopup {
             enabled: visible
             text: i18n.tr("Copy Link")
             onTriggered: {
-                copyLinkClicked()
-                PopupUtils.close(feedactionspopup)
+                copyLinkClicked();
+                PopupUtils.close(feedactionspopup);
             }
         }
         Action {
@@ -89,8 +89,8 @@ ActionsPopup {
             enabled: true
             text: i18n.tr("Download Media")
             onTriggered: {
-                downloadMediaClicked()
-                PopupUtils.close(feedactionspopup)
+                downloadMediaClicked();
+                PopupUtils.close(feedactionspopup);
             }
         }
     }

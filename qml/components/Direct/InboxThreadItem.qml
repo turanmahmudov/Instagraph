@@ -11,7 +11,9 @@ ListItem {
     height: layout.height
     divider.visible: false
     onClicked: {
-        pageLayout.pushToNext(directinboxpage, PagesConstants.direct_thread, {threadId: thread_id})
+        pageLayout.pushToNext(directinboxpage, PagesConstants.direct_thread, {
+            threadId: thread_id
+        });
     }
 
     SlotsLayout {
@@ -70,7 +72,7 @@ ListItem {
             width: unseen ? units.gu(1) : 0
             height: width
             visible: width
-            radius: width/2
+            radius: width / 2
             color: LomiriColors.blue
 
             anchors.verticalCenter: parent.verticalCenter

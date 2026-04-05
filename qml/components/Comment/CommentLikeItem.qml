@@ -7,8 +7,8 @@ import ".."
 import "../../js/Helper.js" as Helper
 
 Item {
-    signal likeClicked()
-    signal unlikeClicked()
+    signal likeClicked
+    signal unlikeClicked
 
     property bool is_liked: false
 
@@ -24,8 +24,10 @@ Item {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            if (is_liked) unlikeClicked()
-            else likeClicked()
+            if (is_liked)
+                unlikeClicked();
+            else
+                likeClicked();
         }
     }
 }

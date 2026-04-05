@@ -40,31 +40,31 @@ PageItem {
 
     // Detect available cameras at startup
     Component.onCompleted: {
-        var cameras = QtMultimedia.availableCameras
+        var cameras = QtMultimedia.availableCameras;
         for (var i = 0; i < cameras.length; i++) {
             if (cameras[i].position === Camera.BackFace) {
-                _hasBackCamera = true
+                _hasBackCamera = true;
             } else if (cameras[i].position === Camera.FrontFace) {
-                _hasFrontCamera = true
+                _hasFrontCamera = true;
             }
         }
 
         // Default to back camera on phones, front camera on laptops/desktops
         if (_hasBackCamera) {
-            camera.position = Camera.BackFace
+            camera.position = Camera.BackFace;
         } else if (_hasFrontCamera) {
-            camera.position = Camera.FrontFace
+            camera.position = Camera.FrontFace;
         }
 
-        camera.start()
+        camera.start();
     }
 
     // Restart camera when page becomes visible again (after navigating back)
     onVisibleChanged: {
         if (visible) {
-            camera.start()
+            camera.start();
         } else {
-            camera.stop()
+            camera.stop();
         }
     }
 
@@ -108,12 +108,12 @@ PageItem {
 
                 onCameraStatusChanged: {
                     if (cameraStatus === Camera.UnavailableStatus) {
-                        console.warn("Camera: unavailable")
+                        console.warn("Camera: unavailable");
                     }
                 }
 
                 onError: {
-                    console.warn("Camera error:", errorString)
+                    console.warn("Camera error:", errorString);
                 }
 
                 imageCapture {
@@ -130,7 +130,7 @@ PageItem {
                         }
 
                         // Store captured image location to the variable
-                        imagePath = path
+                        imagePath = path;
 
                         if (camera.orientation != 0) {
                             imageEditor.rotateImage(String(path).replace('file://', ''), rotation);
@@ -139,7 +139,7 @@ PageItem {
                         }
                     }
                     onCaptureFailed: {
-                        console.warn("Camera capture failed:", message)
+                        console.warn("Camera capture failed:", message);
                     }
                 }
             }
@@ -156,8 +156,8 @@ PageItem {
                 anchors.fill: parent
                 onClicked: {
                     if (camera.focus.isFocusSupported) {
-                        camera.focus.focusPointMode = Camera.FocusPointCustom
-                        camera.focus.customFocusPoint = Qt.point(mouseX / width, mouseY / height)
+                        camera.focus.focusPointMode = Camera.FocusPointCustom;
+                        camera.focus.customFocusPoint = Qt.point(mouseX / width, mouseY / height);
                     }
                 }
             }
@@ -174,7 +174,7 @@ PageItem {
                     anchors {
                         centerIn: parent
                     }
-                    spacing: (parent.width-units.gu(12))
+                    spacing: (parent.width - units.gu(12))
 
                     CameraToolButton {
                         id: cameraTool_position
@@ -184,9 +184,9 @@ PageItem {
                         visible: _hasBackCamera && _hasFrontCamera
                         onClicked: {
                             if (camera.position == Camera.BackFace) {
-                                camera.position = Camera.FrontFace
+                                camera.position = Camera.FrontFace;
                             } else if (camera.position == Camera.FrontFace) {
-                                camera.position = Camera.BackFace
+                                camera.position = Camera.BackFace;
                             }
                         }
                     }
@@ -198,11 +198,11 @@ PageItem {
                         iconName: camera.flash.mode == Camera.FlashOff ? "flash-off" : camera.flash.mode == Camera.FlashOn ? "flash-on" : "flash-auto"
                         onClicked: {
                             if (camera.flash.mode == Camera.FlashOff) {
-                                camera.flash.mode = Camera.FlashAuto
+                                camera.flash.mode = Camera.FlashAuto;
                             } else if (camera.flash.mode == Camera.FlashAuto) {
-                                camera.flash.mode = Camera.FlashOn
+                                camera.flash.mode = Camera.FlashOn;
                             } else if (camera.flash.mode == Camera.FlashOn) {
-                                camera.flash.mode = Camera.FlashOff
+                                camera.flash.mode = Camera.FlashOff;
                             }
                         }
                     }
@@ -241,7 +241,7 @@ PageItem {
                     anchors.fill: parent
                     onClicked: {
                         if (camera.imageCapture.ready) {
-                            camera.imageCapture.captureToLocation(instagram.photos_path()+'/')
+                            camera.imageCapture.captureToLocation(instagram.photos_path() + '/');
                         }
                     }
                 }
@@ -256,15 +256,15 @@ PageItem {
                 right: parent.right
             }
             selectedIndex: 1
-            model: [ i18n.tr("Library"), i18n.tr("Photo") ]
+            model: [i18n.tr("Library"), i18n.tr("Photo")]
 
             onSelectedIndexChanged: {
                 if (selectedIndex == 0) {
-                    Scripts.openImportPhotoPage(takephotopage, IS_DESKTOP)
+                    Scripts.openImportPhotoPage(takephotopage, IS_DESKTOP);
 
-                    mainView.fileImported.connect(function(fileUrl) {
-                        Scripts.pushImageCrop(takephotopage, fileUrl)
-                    })
+                    mainView.fileImported.connect(function (fileUrl) {
+                        Scripts.pushImageCrop(takephotopage, fileUrl);
+                    });
                 }
             }
         }
@@ -279,7 +279,7 @@ PageItem {
             imageEditor.scaleImage(String(imagePath).replace('file://', ''));
         }
         onScaled: {
-            Scripts.pushImageEdit(takephotopage, imagePath)
+            Scripts.pushImageEdit(takephotopage, imagePath);
         }
     }
 }

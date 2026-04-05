@@ -54,16 +54,16 @@ Item {
      *                  Receives nextId as argument: function(nextId) { instagram.getFollowers(userId, nextId) }
      */
     function loadData(nextId, apiCall) {
-        isLoading = true
-        clearModels = false
+        isLoading = true;
+        clearModels = false;
 
         if (!nextId) {
-            userListModel.clear()
-            nextMaxId = ""
-            clearModels = true
+            userListModel.clear();
+            nextMaxId = "";
+            clearModels = true;
         }
 
-        apiCall(nextId)
+        apiCall(nextId);
     }
 
     /**
@@ -71,32 +71,32 @@ Item {
      * @param answer - Raw JSON string from the Instagram API signal
      */
     function handleResponse(answer) {
-        var data = JSON.parse(answer)
-        if (!data) return
-
-        isPullToRefresh = false
-        isLoading = false
+        var data = JSON.parse(answer);
+        if (!data)
+            return;
+        isPullToRefresh = false;
+        isLoading = false;
 
         if (hasPagination) {
             // Prevent duplicate loading
-            if (nextMaxId === data.next_max_id) return
-
-            nextMaxId = typeof data.next_max_id !== 'undefined' ? data.next_max_id : ""
-            moreAvailable = typeof data.next_max_id !== 'undefined'
-            nextComing = true
+            if (nextMaxId === data.next_max_id)
+                return;
+            nextMaxId = typeof data.next_max_id !== 'undefined' ? data.next_max_id : "";
+            moreAvailable = typeof data.next_max_id !== 'undefined';
+            nextComing = true;
         }
 
-        var items = data[dataKey]
-        if (!items) return
-
+        var items = data[dataKey];
+        if (!items)
+            return;
         worker.sendMessage({
             items: items,
             model: userListModel,
             clear: clearModels
-        })
+        });
 
-        nextComing = false
-        isLoading = false
+        nextComing = false;
+        isLoading = false;
     }
 
     /**
@@ -104,19 +104,19 @@ Item {
      * @returns true if pagination should be triggered
      */
     function canLoadMore() {
-        return hasPagination && moreAvailable && !nextComing
+        return hasPagination && moreAvailable && !nextComing;
     }
 
     /**
      * Reset to initial state
      */
     function reset() {
-        userListModel.clear()
-        nextMaxId = ""
-        moreAvailable = true
-        nextComing = true
-        isLoading = false
-        isPullToRefresh = true
-        clearModels = true
+        userListModel.clear();
+        nextMaxId = "";
+        moreAvailable = true;
+        nextComing = true;
+        isLoading = false;
+        isPullToRefresh = true;
+        clearModels = true;
     }
 }

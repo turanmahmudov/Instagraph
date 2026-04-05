@@ -49,7 +49,9 @@ Column {
                             fill: parent
                         }
                         onClicked: {
-                            pageLayout.pushToCurrent(directthreadpage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: media_share.user.pk});
+                            pageLayout.pushToCurrent(directthreadpage, Qt.resolvedUrl("OtherUserPage.qml"), {
+                                usernameId: media_share.user.pk
+                            });
                         }
                     }
                 }
@@ -71,7 +73,9 @@ Column {
                                 fill: parent
                             }
                             onClicked: {
-                                pageLayout.pushToCurrent(directthreadpage, Qt.resolvedUrl("OtherUserPage.qml"), {usernameId: media_share.user.pk});
+                                pageLayout.pushToCurrent(directthreadpage, Qt.resolvedUrl("OtherUserPage.qml"), {
+                                    usernameId: media_share.user.pk
+                                });
                             }
                         }
                     }
@@ -81,42 +85,40 @@ Column {
             FeedImage {
                 id: feed_image
                 width: parent.width
-                height: width/bestImage.width*bestImage.height
+                height: width / bestImage.width * bestImage.height
                 source: bestImage.url
                 smooth: true
                 clip: true
 
-                property var bestImage: typeof media_share.carousel_media !== 'undefined' && media_share.carousel_media.length > 0 ?
-                                            Helper.getBestImage(media_share.carousel_media[0].image_versions2.candidates, parent.width) :
-                                            Helper.getBestImage(media_share.image_versions2.candidates, parent.width)
+                property var bestImage: typeof media_share.carousel_media !== 'undefined' && media_share.carousel_media.length > 0 ? Helper.getBestImage(media_share.carousel_media[0].image_versions2.candidates, parent.width) : Helper.getBestImage(media_share.image_versions2.candidates, parent.width)
 
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        pageLayout.pushToNext(directthreadpage, Qt.resolvedUrl("SinglePhoto.qml"), {photoId: media_share.id})
+                        pageLayout.pushToNext(directthreadpage, Qt.resolvedUrl("SinglePhoto.qml"), {
+                            photoId: media_share.id
+                        });
                     }
                 }
             }
 
             Text {
                 anchors.horizontalCenter: parent.horizontalCenter
-                visible: typeof media_share.caption !== 'undefined' ?
-                                (typeof media_share.caption.text !== 'undefined' ? true : false) :
-                                false
+                visible: typeof media_share.caption !== 'undefined' ? (typeof media_share.caption.text !== 'undefined' ? true : false) : false
                 text: visible ? (Helper.formatUser(media_share.caption.user.username) + ' ' + media_share.caption.text.substring(0, 45) + '...') : ""
                 wrapMode: Text.WordWrap
                 width: parent.width - units.gu(2)
                 textFormat: Text.RichText
                 color: isOutgoing ? styleApp.directInbox.outgoingMessageTextColor : styleApp.directInbox.incomingMessageTextColor
                 onLinkActivated: {
-                    Scripts.linkClick(directthreadpage, link)
+                    Scripts.linkClick(directthreadpage, link);
                 }
             }
         }
 
         Component.onCompleted: {
             if (isOutgoing) {
-                anchors.right = parent.right
+                anchors.right = parent.right;
             }
         }
     }
@@ -141,7 +143,7 @@ Column {
 
         Component.onCompleted: {
             if (isOutgoing) {
-                anchors.right = parent.right
+                anchors.right = parent.right;
             }
         }
     }

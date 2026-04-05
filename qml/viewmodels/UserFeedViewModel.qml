@@ -20,16 +20,16 @@ BaseFeedViewModel {
 
     onUserIdChanged: {
         if (userId) {
-            nextMaxId = ""
-            moreAvailable = true
-            nextComing = true
-            feedModel.clear()
-            taggedPhotosModel.clear()
-            taggedNextMaxId = ""
-            taggedMoreAvailable = true
-            taggedClearModels = true
-            highlightsModel.clear()
-            allHighlight = []
+            nextMaxId = "";
+            moreAvailable = true;
+            nextComing = true;
+            feedModel.clear();
+            taggedPhotosModel.clear();
+            taggedNextMaxId = "";
+            taggedMoreAvailable = true;
+            taggedClearModels = true;
+            highlightsModel.clear();
+            allHighlight = [];
         }
     }
 
@@ -50,16 +50,16 @@ BaseFeedViewModel {
      * @param refresh - If true, clears feed and loads from beginning
      */
     function loadFeed(refresh) {
-        setLoadingState(true)
-        clearModels = false
+        setLoadingState(true);
+        clearModels = false;
 
         if (refresh || !nextMaxId) {
-            feedModel.clear()
-            nextMaxId = ""
-            clearModels = true
+            feedModel.clear();
+            nextMaxId = "";
+            clearModels = true;
         }
 
-        instagram.getUserFeed(userId, nextMaxId)
+        instagram.getUserFeed(userId, nextMaxId);
     }
 
     /**
@@ -67,7 +67,7 @@ BaseFeedViewModel {
      */
     function loadMore() {
         if (nextMaxId && moreAvailable && !nextComing && !isLoading) {
-            loadFeed(false)
+            loadFeed(false);
         }
     }
 
@@ -76,16 +76,16 @@ BaseFeedViewModel {
      * @param refresh - If true, clears model and loads from beginning
      */
     function loadTags(refresh) {
-        setLoadingState(true)
-        taggedClearModels = false
+        setLoadingState(true);
+        taggedClearModels = false;
 
         if (refresh || !taggedNextMaxId) {
-            taggedPhotosModel.clear()
-            taggedNextMaxId = ""
-            taggedClearModels = true
+            taggedPhotosModel.clear();
+            taggedNextMaxId = "";
+            taggedClearModels = true;
         }
 
-        instagram.getUserTags(userId, taggedNextMaxId)
+        instagram.getUserTags(userId, taggedNextMaxId);
     }
 
     /**
@@ -93,7 +93,7 @@ BaseFeedViewModel {
      */
     function loadMoreTags() {
         if (taggedNextMaxId && taggedMoreAvailable && !taggedNextComing && !isLoading) {
-            loadTags(false)
+            loadTags(false);
         }
     }
 
@@ -101,27 +101,23 @@ BaseFeedViewModel {
      * Check if should load more tagged items based on scroll position
      */
     function shouldLoadMoreTags(contentY, contentHeight, viewHeight) {
-        var distanceFromBottom = contentHeight - contentY - viewHeight
-        return distanceFromBottom < viewHeight * paginationThreshold
-            && taggedMoreAvailable
-            && !taggedNextComing
-            && !isLoading
-            && taggedNextMaxId
+        var distanceFromBottom = contentHeight - contentY - viewHeight;
+        return distanceFromBottom < viewHeight * paginationThreshold && taggedMoreAvailable && !taggedNextComing && !isLoading && taggedNextMaxId;
     }
 
     /**
      * Load user info
      */
     function loadUserInfo() {
-        instagram.getInfoById(userId)
+        instagram.getInfoById(userId);
     }
 
     /**
      * Load user highlights
      */
     function loadHighlights() {
-        highlightsModel.clear()
-        instagram.getUserHighlightFeed(userId)
+        highlightsModel.clear();
+        instagram.getUserHighlightFeed(userId);
     }
 
     // Worker for processing user feed data
@@ -141,30 +137,30 @@ BaseFeedViewModel {
         target: instagram
 
         onUserFeedDataReady: {
-            var data = JSON.parse(answer)
+            var data = JSON.parse(answer);
             if (data.status === "ok" && (!data.user || data.user.pk == userId)) {
-                handleFeedResponse(data)
+                handleFeedResponse(data);
             }
         }
 
         onInfoByIdDataReady: {
-            var data = JSON.parse(answer)
+            var data = JSON.parse(answer);
             if (data.user.pk == userId) {
-                handleUserInfoResponse(data)
+                handleUserInfoResponse(data);
             }
         }
 
         onUserTagsDataReady: {
-            var data = JSON.parse(answer)
+            var data = JSON.parse(answer);
             if (!userId || !data || !data.user || data.user.pk == userId) {
-                handleTaggedPhotosResponse(data)
+                handleTaggedPhotosResponse(data);
             }
         }
 
         onUserHighlightFeedDataReady: {
-            var data = JSON.parse(answer)
+            var data = JSON.parse(answer);
             if (!userId || !data || !data.user || data.user.pk == userId) {
-                handleHighlightsResponse(data)
+                handleHighlightsResponse(data);
             }
         }
     }
@@ -175,28 +171,28 @@ BaseFeedViewModel {
      */
     function handleFeedResponse(data) {
         if (!data) {
-            handleError(i18n.tr("Failed to load user feed"))
-            return
+            handleError(i18n.tr("Failed to load user feed"));
+            return;
         }
 
         if (data.user && data.user.pk != userId) {
-            return
+            return;
         }
 
-        setLoadingState(false)
+        setLoadingState(false);
 
-        isEmpty = false
+        isEmpty = false;
         if (data.num_results === 0) {
-            isEmpty = true
-            return
+            isEmpty = true;
+            return;
         }
 
         // Prevent duplicate loading
-        if (nextMaxId === data.next_max_id) return
-
-        nextMaxId = data.next_max_id || ""
-        moreAvailable = data.more_available === true
-        nextComing = true
+        if (nextMaxId === data.next_max_id)
+            return;
+        nextMaxId = data.next_max_id || "";
+        moreAvailable = data.more_available === true;
+        nextComing = true;
 
         // Send data to worker for processing
         worker.sendMessage({
@@ -204,9 +200,9 @@ BaseFeedViewModel {
             obj: data.items,
             model: feedModel,
             clear_model: clearModels
-        })
+        });
 
-        nextComing = false
+        nextComing = false;
     }
 
     /**
@@ -214,8 +210,8 @@ BaseFeedViewModel {
      * @param data - Parsed JSON response
      */
     function handleUserInfoResponse(data) {
-        userData = data.user
-        loadHighlights()
+        userData = data.user;
+        loadHighlights();
     }
 
     /**
@@ -223,21 +219,21 @@ BaseFeedViewModel {
      * @param data - Parsed JSON response
      */
     function handleTaggedPhotosResponse(data) {
-        if (taggedNextMaxId === data.next_max_id) return
-
-        taggedNextMaxId = data.next_max_id || ""
-        taggedMoreAvailable = data.more_available === true
-        taggedNextComing = true
+        if (taggedNextMaxId === data.next_max_id)
+            return;
+        taggedNextMaxId = data.next_max_id || "";
+        taggedMoreAvailable = data.more_available === true;
+        taggedNextComing = true;
 
         worker.sendMessage({
             feed: 'userPage',
             obj: data.items,
             model: taggedPhotosModel,
             clear_model: taggedClearModels
-        })
+        });
 
-        taggedNextComing = false
-        setLoadingState(false)
+        taggedNextComing = false;
+        setLoadingState(false);
     }
 
     /**
@@ -250,11 +246,11 @@ BaseFeedViewModel {
             obj: data.tray,
             model: highlightsModel,
             clear_model: true
-        })
+        });
 
-        allHighlight = []
+        allHighlight = [];
         for (var i = 0; i < data.tray.length; i++) {
-            allHighlight.push(data.tray[i].id)
+            allHighlight.push(data.tray[i].id);
         }
     }
 }

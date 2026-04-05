@@ -34,27 +34,25 @@ PageItem {
     property bool list_loading: false
 
     function suggestionsDataFinished(data) {
-        more_available = data.more_available
-        next_coming = true
+        more_available = data.more_available;
+        next_coming = true;
 
         for (var i = 0; i < data.suggested_users.suggestions.length; i++) {
-
             suggestionsModel.append(data.suggested_users.suggestions[i].user);
         }
 
         next_coming = false;
 
-        list_loading = false
+        list_loading = false;
     }
 
     Component.onCompleted: {
         suggestions();
     }
 
-    function suggestions()
-    {
-        suggestionsModel.clear()
-        list_loading = true
+    function suggestions() {
+        suggestionsModel.clear();
+        list_loading = true;
         instagram.getSuggestions();
     }
 
@@ -66,9 +64,17 @@ PageItem {
         id: suggestionsList
         model: suggestionsModel
         delegate: UserListItem {
-            onClicked: pageLayout.pushToCurrent(suggestionspage, PagesConstants.user, {usernameId: pk})
+            onClicked: pageLayout.pushToCurrent(suggestionspage, PagesConstants.user, {
+                usernameId: pk
+            })
             followButton: true
-            followData: {"friendship": {"following": false, "outgoing_request": false}, "pk": pk}
+            followData: {
+                "friendship": {
+                    "following": false,
+                    "outgoing_request": false
+                },
+                "pk": pk
+            }
         }
         PullToRefresh {
             refreshing: list_loading && suggestionsModel.count == 0
@@ -76,7 +82,7 @@ PageItem {
         }
     }
 
-    Connections{
+    Connections {
         target: instagram
         onSuggestionsFeedDataReady: {
             var data = JSON.parse(answer);

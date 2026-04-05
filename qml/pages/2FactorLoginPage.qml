@@ -37,11 +37,11 @@ PageItem {
     Component.onCompleted: {
         if (answer && answer.two_factor_info) {
             if (answer.two_factor_info.sms_two_factor_on == true) {
-                has_sms = true
+                has_sms = true;
                 phoneEnding = answer.two_factor_info.obfuscated_phone_number;
             }
             if (answer.two_factor_info.totp_two_factor_on == true) {
-                has_totp = true
+                has_totp = true;
             }
         }
     }
@@ -70,19 +70,19 @@ PageItem {
 
         TextField {
             id: codeField
-            width: parent.width*0.8
+            width: parent.width * 0.8
             height: units.gu(5)
             anchors.horizontalCenter: parent.horizontalCenter
             placeholderText: i18n.tr("6-digit code")
             onVisibleChanged: {
                 if (visible) {
-                    forceActiveFocus()
+                    forceActiveFocus();
                 }
             }
         }
 
         Button {
-            width: parent.width*0.8
+            width: parent.width * 0.8
             height: units.gu(5)
             anchors.horizontalCenter: parent.horizontalCenter
             color: LomiriColors.blue
@@ -105,14 +105,11 @@ PageItem {
         }
     }
 
-    Connections{
+    Connections {
         target: instagram
-        onProfileConnected:{
-
-        }
-        onProfileConnectedFail:{
-        }
-        onError:{
+        onProfileConnected: {}
+        onProfileConnectedFail: {}
+        onError: {
             console.log(message);
             errorTextLabel.text = message;
         }

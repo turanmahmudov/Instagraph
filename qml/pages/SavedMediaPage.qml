@@ -37,7 +37,7 @@ PageItem {
     property alias isEmpty: feedViewModel.isEmpty
 
     Component.onCompleted: {
-        feedViewModel.loadFeed(true)
+        feedViewModel.loadFeed(true);
     }
 
     GridView {
@@ -50,11 +50,11 @@ PageItem {
         }
         width: parent.width
         height: parent.height
-        cellWidth: gridView.width/3
+        cellWidth: gridView.width / 3
         cellHeight: cellWidth
         onContentYChanged: {
             if (feedViewModel.shouldLoadMore(contentY, contentHeight, height)) {
-                feedViewModel.loadMore()
+                feedViewModel.loadMore();
             }
         }
         model: feedViewModel.feedModel
@@ -68,7 +68,7 @@ PageItem {
             id: pullToRefresh
             refreshing: list_loading && feedViewModel.feedModel.count == 0
             onRefresh: {
-                feedViewModel.loadFeed(true)
+                feedViewModel.loadFeed(true);
             }
         }
     }

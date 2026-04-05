@@ -14,14 +14,12 @@ import "../../js/Scripts.js" as Scripts
 Item {
 
     function startLikeAnimation() {
-        animatingLikeIcon.sizeAnimationFunction()
-        animatingLikeIcon.opacityAnimationFunction()
+        animatingLikeIcon.sizeAnimationFunction();
+        animatingLikeIcon.opacityAnimationFunction();
     }
 
     property bool isCarousel: typeof carousel_media_obj.media !== 'undefined' && carousel_media_obj.media.length > 0
-    property var bestImage: isCarousel ?
-                                Helper.getBestImage(carousel_media_obj.media[0].image_versions2.candidates, parent.width) :
-                                Helper.getBestImage(images_obj.candidates, parent.width)
+    property var bestImage: isCarousel ? Helper.getBestImage(carousel_media_obj.media[0].image_versions2.candidates, parent.width) : Helper.getBestImage(images_obj.candidates, parent.width)
 
     FeedImage {
         id: feed_image
@@ -57,7 +55,7 @@ Item {
 
             onRunningChanged: {
                 if (!running) {
-                    destroyTimer.start()
+                    destroyTimer.start();
                 }
             }
         }
@@ -68,16 +66,16 @@ Item {
             running: false
             repeat: false
             onTriggered: {
-                animatingLikeIcon.opacity = 0
+                animatingLikeIcon.opacity = 0;
             }
         }
 
         function sizeAnimationFunction() {
-            sizeAnimation.start()
+            sizeAnimation.start();
         }
 
         function opacityAnimationFunction() {
-            opacityAnimation.start()
+            opacityAnimation.start();
         }
     }
 
@@ -91,7 +89,7 @@ Item {
         width: units.gu(2.4)
         height: units.gu(2.4)
         visible: media_type === 2
-        
+
         // Simple shadow using layered icons
         LineIcon {
             anchors.centerIn: parent
@@ -120,7 +118,7 @@ Item {
         width: units.gu(2.4)
         height: units.gu(2.4)
         visible: media_type === 8
-        
+
         // Simple shadow using layered icons
         LineIcon {
             anchors.centerIn: parent

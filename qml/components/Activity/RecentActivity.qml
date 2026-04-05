@@ -51,7 +51,10 @@ ListItem {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            if (typeof profile_id !== 'undefined') pageLayout.pushToCurrent(pageLayout.primaryPage, Qt.resolvedUrl("../../pages/OtherUserPage.qml"), {usernameId: profile_id})
+                            if (typeof profile_id !== 'undefined')
+                                pageLayout.pushToCurrent(pageLayout.primaryPage, Qt.resolvedUrl("../../pages/OtherUserPage.qml"), {
+                                    usernameId: profile_id
+                                });
                         }
                     }
                 }
@@ -68,7 +71,7 @@ ListItem {
                         color: styleApp.common.textColor
                         font.weight: story_type == 13 ? Font.DemiBold : Font.Normal
                         onLinkActivated: {
-                            Scripts.linkClick(activitypage, link, story_type === 1 ? media.id : 0)
+                            Scripts.linkClick(activitypage, link, story_type === 1 ? media.id : 0);
                         }
                     }
 
@@ -114,7 +117,9 @@ ListItem {
 
                 onClicked: {
                     if (feed_image.visible) {
-                        pageLayout.pushToNext(pageLayout.primaryPage, PagesConstants.photo, { photoId: media.id });
+                        pageLayout.pushToNext(pageLayout.primaryPage, PagesConstants.photo, {
+                            photoId: media.id
+                        });
                     }
                 }
             }

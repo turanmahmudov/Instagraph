@@ -12,8 +12,9 @@ Image {
     visible: mediaImage !== undefined
     width: itemMaxWidth
     height: {
-        if (!mediaImage || !mediaImage.width || !mediaImage.height) return width
-        return width / mediaImage.width * mediaImage.height
+        if (!mediaImage || !mediaImage.width || !mediaImage.height)
+            return width;
+        return width / mediaImage.width * mediaImage.height;
     }
     source: (isMedia && mediaImage && mediaImage.url) ? mediaImage.url : ''
     fillMode: Image.PreserveAspectCrop

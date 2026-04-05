@@ -41,7 +41,7 @@ Column {
 
                 Column {
                     Layout.fillWidth: true
-                    Layout.preferredWidth: parent.width/3
+                    Layout.preferredWidth: parent.width / 3
 
                     Label {
                         text: userData.media_count
@@ -61,7 +61,7 @@ Column {
 
                 Column {
                     Layout.fillWidth: true
-                    Layout.preferredWidth: parent.width/3
+                    Layout.preferredWidth: parent.width / 3
 
                     Label {
                         text: Helper.numFormatter(userData.follower_count)
@@ -74,7 +74,9 @@ Column {
                             width: parent.width
                             height: parent.height
                             onClicked: {
-                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/UserFollowers.qml"), {userId: currentUserId});
+                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/UserFollowers.qml"), {
+                                    userId: currentUserId
+                                });
                             }
                         }
                     }
@@ -89,7 +91,9 @@ Column {
                             width: parent.width
                             height: parent.height
                             onClicked: {
-                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/UserFollowers.qml"), {userId: currentUserId});
+                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/UserFollowers.qml"), {
+                                    userId: currentUserId
+                                });
                             }
                         }
                     }
@@ -97,7 +101,7 @@ Column {
 
                 Column {
                     Layout.fillWidth: true
-                    Layout.preferredWidth: parent.width/3
+                    Layout.preferredWidth: parent.width / 3
 
                     Label {
                         text: Helper.numFormatter(userData.following_count)
@@ -110,7 +114,9 @@ Column {
                             width: parent.width
                             height: parent.height
                             onClicked: {
-                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/UserFollowings.qml"), {userId: currentUserId});
+                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/UserFollowings.qml"), {
+                                    userId: currentUserId
+                                });
                             }
                         }
                     }
@@ -125,7 +131,9 @@ Column {
                             width: parent.width
                             height: parent.height
                             onClicked: {
-                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/UserFollowings.qml"), {userId: currentUserId});
+                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/UserFollowings.qml"), {
+                                    userId: currentUserId
+                                });
                             }
                         }
                     }
@@ -163,7 +171,7 @@ Column {
             wrapMode: Text.WordWrap
             textFormat: Text.RichText
             onLinkActivated: {
-                Scripts.linkClick(currentPage, link)
+                Scripts.linkClick(currentPage, link);
             }
         }
 
@@ -173,12 +181,12 @@ Column {
             active: visible
 
             sourceComponent: Text {
-                text: '<a href="'+userData.external_url+'" style="text-decoration:none;color:'+Helper.hexToRgb(styleApp.common.linkColor)+';">'+userData.external_url+'</a>'
+                text: '<a href="' + userData.external_url + '" style="text-decoration:none;color:' + Helper.hexToRgb(styleApp.common.linkColor) + ';">' + userData.external_url + '</a>'
                 wrapMode: Text.WordWrap
                 width: parent.width
                 textFormat: Text.RichText
                 onLinkActivated: {
-                    Scripts.linkClick(currentPage, link)
+                    Scripts.linkClick(currentPage, link);
                 }
             }
         }

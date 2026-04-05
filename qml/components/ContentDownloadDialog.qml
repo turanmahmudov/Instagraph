@@ -18,14 +18,14 @@ PopupBase {
             visible: parent.visible
 
             onPeerSelected: {
-                activeTransfer = peer.request()
-                activeTransfer.downloadId = downloadDialog.downloadId
-                activeTransfer.state = ContentTransfer.Downloading
-                PopupUtils.close(downloadDialog)
+                activeTransfer = peer.request();
+                activeTransfer.downloadId = downloadDialog.downloadId;
+                activeTransfer.state = ContentTransfer.Downloading;
+                PopupUtils.close(downloadDialog);
             }
 
             onCancelPressed: {
-                PopupUtils.close(downloadDialog)
+                PopupUtils.close(downloadDialog);
             }
         }
     }

@@ -54,12 +54,12 @@ PageItem {
 
                 function calculateHeight(list_type) {
                     if (list_type === 'follow_requests') {
-                        return followRequestsLoader.height
+                        return followRequestsLoader.height;
                     }
                     if (list_type === 'recent_activity') {
-                        return recentActivityLoader.height
+                        return recentActivityLoader.height;
                     }
-                    return 0
+                    return 0;
                 }
 
                 Loader {
@@ -97,8 +97,8 @@ PageItem {
             PullToRefresh {
                 refreshing: list_loading && recentActivityModel.count === 0
                 onRefresh: {
-                    isPullToRefresh = true
-                    getRecentActivity()
+                    isPullToRefresh = true;
+                    getRecentActivity();
                 }
             }
         }
@@ -114,7 +114,7 @@ PageItem {
         source: "../js/Workers/ActivityWorker.js"
     }
 
-    Connections{
+    Connections {
         target: instagram
         onRecentActivityInboxDataReady: {
             var data = JSON.parse(answer);
@@ -122,59 +122,52 @@ PageItem {
         }
     }
 
-    function getRecentActivity()
-    {
-        recentActivityModel.clear()
+    function getRecentActivity() {
+        recentActivityModel.clear();
         instagram.getRecentActivityInbox();
     }
 
     function recentActivityDataFinished(data) {
-        if (!data) return
-
-        isPullToRefresh = false
+        if (!data)
+            return;
+        isPullToRefresh = false;
 
         // Follow Requests
         if ("friend_request_stories" in data && data.friend_request_stories.length > 0) {
-            worker.sendMessage(
-                {
-                    friend_requests: data.friend_request_stories,
-                    model: recentActivityModel,
-                    clear: true
-                }
-            )
+            worker.sendMessage({
+                friend_requests: data.friend_request_stories,
+                model: recentActivityModel,
+                clear: true
+            });
         } else {
-            recentActivityModel.clear()
+            recentActivityModel.clear();
         }
 
         // New activity stories
         if ("new_stories" in data && data.new_stories.length > 0) {
-            new_notifs = true
+            new_notifs = true;
         }
 
-        let linkColor = Helper.hexToRgb(styleApp.common.textColor)
+        let linkColor = Helper.hexToRgb(styleApp.common.textColor);
 
         // New stories
-        worker.sendMessage(
-            {
-                items: data.new_stories,
-                model: recentActivityModel,
-                partition: data.partition,
-                clear: false,
-                linkColor: linkColor
-            }
-        )
+        worker.sendMessage({
+            items: data.new_stories,
+            model: recentActivityModel,
+            partition: data.partition,
+            clear: false,
+            linkColor: linkColor
+        });
 
         // Old stories
-        worker.sendMessage(
-            {
-                items: data.old_stories,
-                model: recentActivityModel,
-                partition: data.partition,
-                clear: false,
-                linkColor: linkColor
-            }
-        )
+        worker.sendMessage({
+            items: data.old_stories,
+            model: recentActivityModel,
+            partition: data.partition,
+            clear: false,
+            linkColor: linkColor
+        });
 
-        list_loading = false
+        list_loading = false;
     }
 }

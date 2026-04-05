@@ -8,8 +8,8 @@ Item {
     signal commentPosted(string text)
 
     function prepareReply(username) {
-        addCommentField.forceActiveFocus()
-        addCommentField.text = `@${username} `
+        addCommentField.forceActiveFocus();
+        addCommentField.text = `@${username} `;
     }
 
     Row {
@@ -22,7 +22,8 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             placeholderText: i18n.tr("Add a comment")
             onVisibleChanged: {
-                if (visible) forceActiveFocus()
+                if (visible)
+                    forceActiveFocus();
             }
         }
 

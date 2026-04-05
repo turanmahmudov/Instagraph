@@ -35,10 +35,9 @@ PageItem {
                 text: i18n.tr("Done")
                 iconName: IconsConstants.camera_flip
                 onTriggered: {
-                    instagram.editMedia(mediaId, mediaCaption.text)
+                    instagram.editMedia(mediaId, mediaCaption.text);
                 }
             }
-
         ]
     }
 
@@ -50,7 +49,7 @@ PageItem {
     function mediaEditFinished(data) {
         if (data.status == 'ok') {
             pageStack.pop();
-            Scripts.pushSingleImage(editpagepage, mediaId)
+            Scripts.pushSingleImage(editpagepage, mediaId);
         }
     }
 
@@ -92,11 +91,11 @@ PageItem {
         }
     }
 
-    Connections{
+    Connections {
         target: instagram
         onMediaInfoReady: {
             var data = JSON.parse(answer);
-            mediaDataFinished(data)
+            mediaDataFinished(data);
         }
         onMediaEdited: {
             var data = JSON.parse(answer);

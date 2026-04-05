@@ -61,7 +61,7 @@ Item {
         model: storiesTray.model
 
         delegate: ListItem {
-            width: storiesTray.width/5 + units.gu(1)
+            width: storiesTray.width / 5 + units.gu(1)
             height: storyColumn.height
             divider.visible: false
 
@@ -80,7 +80,10 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            pageLayout.pushToCurrent(currentDelegatePage, PagesConstants.user_stories, {userId: user.pk, allUsers: allUsers});
+                            pageLayout.pushToCurrent(currentDelegatePage, PagesConstants.user_stories, {
+                                userId: user.pk,
+                                allUsers: allUsers
+                            });
                         }
                     }
                 }
@@ -90,13 +93,16 @@ Item {
                     color: styleApp.common.textColor
                     fontSize: "x-small"
                     anchors.horizontalCenter: parent.horizontalCenter
-                    width: Math.min((parent.width+2), contentWidth)
+                    width: Math.min((parent.width + 2), contentWidth)
                     clip: true
 
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            pageLayout.pushToCurrent(currentDelegatePage, PagesConstants.user_stories, {userId: user.pk, allUsers: allUsers});
+                            pageLayout.pushToCurrent(currentDelegatePage, PagesConstants.user_stories, {
+                                userId: user.pk,
+                                allUsers: allUsers
+                            });
                         }
                     }
                 }

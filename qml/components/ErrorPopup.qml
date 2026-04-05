@@ -33,7 +33,7 @@ Dialog {
         anchors.horizontalCenter: parent.horizontalCenter
         text: i18n.tr("OK")
         onClicked: {
-            PopupUtils.close(dialog)
+            PopupUtils.close(dialog);
         }
     }
 }

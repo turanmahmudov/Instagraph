@@ -26,14 +26,14 @@ Rectangle {
 
     Row {
         width: parent.width
-        height: parent.height-units.gu(0.2)
+        height: parent.height - units.gu(0.2)
         anchors {
             centerIn: parent
             bottom: parent.bottom
         }
 
         Item {
-            width: parent.width/5
+            width: parent.width / 5
             height: parent.height
 
             LineIcon {
@@ -46,14 +46,14 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    pageLayout.removePages(homePage)
-                    pageLayout.primaryPage = homePage
+                    pageLayout.removePages(homePage);
+                    pageLayout.primaryPage = homePage;
                 }
             }
         }
 
         Item {
-            width: parent.width/5
+            width: parent.width / 5
             height: parent.height
 
             LineIcon {
@@ -67,23 +67,23 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    pageLayout.removePages(exploreFeedPage)
-                    pageLayout.primaryPage = exploreFeedPage
+                    pageLayout.removePages(exploreFeedPage);
+                    pageLayout.primaryPage = exploreFeedPage;
 
-                    exploreFeedPage.mode = "exploreFeed"
-                    exploreFeedPage.current_search_section = 0
-                    exploreFeedPage.resetSearch()
+                    exploreFeedPage.mode = "exploreFeed";
+                    exploreFeedPage.current_search_section = 0;
+                    exploreFeedPage.resetSearch();
 
                     if (exploreFeedPage.firstOpen) {
-                        exploreFeedPage.getExploreFeed()
-                        exploreFeedPage.firstOpen = false
+                        exploreFeedPage.getExploreFeed();
+                        exploreFeedPage.firstOpen = false;
                     }
                 }
             }
         }
 
         Item {
-            width: parent.width/5
+            width: parent.width / 5
             height: parent.height
 
             LineIcon {
@@ -96,13 +96,13 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    pageLayout.addPageToCurrentColumn(pageLayout.primaryPage, Qt.resolvedUrl("../pages/CameraPage.qml"))
+                    pageLayout.addPageToCurrentColumn(pageLayout.primaryPage, Qt.resolvedUrl("../pages/CameraPage.qml"));
                 }
             }
         }
 
         Item {
-            width: parent.width/5
+            width: parent.width / 5
             height: parent.height
 
             LineIcon {
@@ -118,28 +118,28 @@ Rectangle {
                 anchors.bottom: parent.bottom
                 width: units.gu(0.8)
                 height: width
-                radius: width/2
+                radius: width / 2
                 color: LomiriColors.orange
             }
 
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    pageLayout.removePages(activityPage)
-                    pageLayout.primaryPage = activityPage
+                    pageLayout.removePages(activityPage);
+                    pageLayout.primaryPage = activityPage;
 
-                    activityPage.new_notifs = false
+                    activityPage.new_notifs = false;
 
                     if (activityPage.firstOpen) {
-                        activityPage.getRecentActivity()
-                        activityPage.firstOpen = false
+                        activityPage.getRecentActivity();
+                        activityPage.firstOpen = false;
                     }
                 }
             }
         }
 
         Item {
-            width: parent.width/5
+            width: parent.width / 5
             height: parent.height
 
             CircleImage {
@@ -153,8 +153,8 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     if (loggedIn) {
-                        pageLayout.removePages(userPage)
-                        pageLayout.primaryPage = userPage
+                        pageLayout.removePages(userPage);
+                        pageLayout.primaryPage = userPage;
 
                         userPage.getUsernameInfo();
                         userPage.getUsernameFeed();

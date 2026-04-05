@@ -35,12 +35,17 @@ PageItem {
 
     function mediaDataFinished(data) {
         if (!("items" in data) || ("items" in data && data.items.length === 0)) {
-            pageLayout.removePages(singlephotopage)
+            pageLayout.removePages(singlephotopage);
         }
 
-        worker.sendMessage({'feed': 'singlePhotoPage', 'obj': data.items, 'model': singlePhotoModel, 'clear_model': true})
+        worker.sendMessage({
+            'feed': 'singlePhotoPage',
+            'obj': data.items,
+            'model': singlePhotoModel,
+            'clear_model': true
+        });
 
-        list_loading = false
+        list_loading = false;
     }
 
     WorkerScript {
@@ -52,9 +57,8 @@ PageItem {
         instagram.getInfoMedia(photoId);
     }
 
-    function getMedia()
-    {
-        singlePhotoModel.clear()
+    function getMedia() {
+        singlePhotoModel.clear();
         instagram.getInfoMedia(photoId);
     }
 
@@ -73,7 +77,7 @@ PageItem {
         }
 
         clip: true
-        cacheBuffer: parent.height*2
+        cacheBuffer: parent.height * 2
         model: singlePhotoModel
         delegate: ListFeedDelegate {
             id: homePhotosDelegate
@@ -86,8 +90,8 @@ PageItem {
             id: pullToRefresh
             refreshing: list_loading && singlePhotoModel.count == 0
             onRefresh: {
-                list_loading = true
-                getMedia()
+                list_loading = true;
+                getMedia();
             }
         }
     }
@@ -97,11 +101,11 @@ PageItem {
         width: parent.width
     }
 
-    Connections{
+    Connections {
         target: instagram
         onMediaInfoReady: {
             var data = JSON.parse(answer);
-            mediaDataFinished(data)
+            mediaDataFinished(data);
         }
     }
 }

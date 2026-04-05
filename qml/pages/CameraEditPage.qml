@@ -35,8 +35,8 @@ PageItem {
     Connections {
         target: imageproc
         onImageSaved: {
-            imageproc.__output.setDefaultSize()
-            Scripts.pushImageCaption(cameraeditpage, path)
+            imageproc.__output.setDefaultSize();
+            Scripts.pushImageCaption(cameraeditpage, path);
         }
     }
 
@@ -59,7 +59,7 @@ PageItem {
                 iconName: IconsConstants.flash_off
                 onTriggered: {
                     if (!imageproc.saveToDisk(instagram.photos_path() + "/" + new Date().valueOf() + ".jpg", 100)) {
-                        return
+                        return;
                     }
                 }
             }
@@ -72,9 +72,9 @@ PageItem {
             width: units.gu(6)
 
             onClicked: {
-                imageproc.clarity = 0.5
+                imageproc.clarity = 0.5;
 
-                claritySettingsLoader.active = !claritySettingsLoader.active
+                claritySettingsLoader.active = !claritySettingsLoader.active;
             }
 
             Rectangle {
@@ -97,7 +97,8 @@ PageItem {
             Icon {
                 id: clarityIcon
                 anchors.centerIn: parent
-                width: units.gu(3); height: width
+                width: units.gu(3)
+                height: width
                 name: "display-brightness-symbolic"
                 color: theme.palette.normal.backgroundText
             }
@@ -186,12 +187,14 @@ PageItem {
             onActiveChanged: {
                 if (active) {
                     // Close any filter setting panel from filters or other actions.
-                    functionViewLoader.active = false
-                    functionViewLoader.active = true
+                    functionViewLoader.active = false;
+                    functionViewLoader.active = true;
                 }
             }
 
-            sourceComponent: ClaritySettingsPanel { proc: imageproc }
+            sourceComponent: ClaritySettingsPanel {
+                proc: imageproc
+            }
         }
 
         FunctionSelector {
@@ -202,7 +205,7 @@ PageItem {
                 right: parent.right
             }
             selectedIndex: 0
-            model: [ i18n.tr("Filters"), i18n.tr("Tools") ]
+            model: [i18n.tr("Filters"), i18n.tr("Tools")]
         }
     }
 }

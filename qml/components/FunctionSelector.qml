@@ -38,7 +38,7 @@ PageHeader {
                 height: parent.height
 
                 onClicked: {
-                    functionSelector.selectedIndex = model.index
+                    functionSelector.selectedIndex = model.index;
                 }
 
                 Label {

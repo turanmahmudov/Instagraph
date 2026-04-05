@@ -26,7 +26,9 @@ ListView {
         height: listViewCarousel.height
         clip: true
 
-        property var carousel_media_obj: { "media": [] }
+        property var carousel_media_obj: {
+            "media": []
+        }
         property var images_obj: modelData.image_versions2
         property int media_type: modelData.media_type
 
@@ -43,7 +45,7 @@ ListView {
             autoPlay: false
             loops: MediaPlayer.Infinite
         }
-        
+
         VideoOutput {
             id: videoOutput
             anchors.fill: parent
@@ -57,14 +59,14 @@ ListView {
             onClicked: {
                 if (media_type === 2) {
                     if (player.playbackState === MediaPlayer.PlayingState) {
-                        player.stop()
+                        player.stop();
                     } else {
-                        player.play()
+                        player.play();
                     }
                 }
             }
             onDoubleClicked: {
-                mediaItem.startLikeAnimation()
+                mediaItem.startLikeAnimation();
             }
         }
     }

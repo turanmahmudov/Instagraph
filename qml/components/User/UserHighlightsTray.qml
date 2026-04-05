@@ -19,7 +19,7 @@ ListView {
     highlightFollowsCurrentItem: true
 
     delegate: ListItem {
-        width: userHighlightsTray.width/5 + units.gu(1)
+        width: userHighlightsTray.width / 5 + units.gu(1)
         height: storyColumn.height
         divider.visible: false
 
@@ -37,7 +37,10 @@ ListView {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        pageLayout.pushToCurrent(currentDelegatePage, PagesConstants.highlight_stories, {highlightId: id, allHighlights: allHighlights});
+                        pageLayout.pushToCurrent(currentDelegatePage, PagesConstants.highlight_stories, {
+                            highlightId: id,
+                            allHighlights: allHighlights
+                        });
                     }
                 }
             }
@@ -47,13 +50,16 @@ ListView {
                 color: styleApp.common.textColor
                 fontSize: "x-small"
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: Math.min((parent.width+2), contentWidth)
+                width: Math.min((parent.width + 2), contentWidth)
                 clip: true
 
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        pageLayout.pushToCurrent(currentDelegatePage, PagesConstants.highlight_stories, {highlightId: id, allHighlights: allHighlights});
+                        pageLayout.pushToCurrent(currentDelegatePage, PagesConstants.highlight_stories, {
+                            highlightId: id,
+                            allHighlights: allHighlights
+                        });
                     }
                 }
             }

@@ -42,7 +42,7 @@ PageItem {
                 text: i18n.tr("New Message")
                 iconName: IconsConstants.mic
                 onTriggered: {
-                    pageLayout.pushToNext(pageLayout.primaryPage, PagesConstants.new_direct_message)
+                    pageLayout.pushToNext(pageLayout.primaryPage, PagesConstants.new_direct_message);
                 }
             }
         ]
@@ -68,7 +68,7 @@ PageItem {
         }
         onMovementEnded: {
             if (atYEnd && more_available && !next_coming) {
-                getInbox(next_oldest_cursor_id)
+                getInbox(next_oldest_cursor_id);
             }
         }
 
@@ -82,8 +82,8 @@ PageItem {
         PullToRefresh {
             refreshing: list_loading && directInboxModel.count == 0
             onRefresh: {
-                list_loading = true
-                getInbox()
+                list_loading = true;
+                getInbox();
             }
         }
     }
@@ -102,62 +102,59 @@ PageItem {
         description: i18n.tr("Tap the + icon to send a photo, video or message.")
     }
 
-    Connections{
+    Connections {
         target: instagram
         onInboxDataReady: {
-            var data = JSON.parse(answer)
-            inboxDataFinished(data)
+            var data = JSON.parse(answer);
+            inboxDataFinished(data);
         }
     }
 
-    function getInbox(oldest_cursor_id)
-    {
-        list_loading = true
+    function getInbox(oldest_cursor_id) {
+        list_loading = true;
 
-        clear_models = false
+        clear_models = false;
         if (!oldest_cursor_id) {
-            directInboxModel.clear()
-            next_oldest_cursor_id = ""
-            clear_models = true
+            directInboxModel.clear();
+            next_oldest_cursor_id = "";
+            clear_models = true;
         }
-        instagram.getInbox(oldest_cursor_id)
+        instagram.getInbox(oldest_cursor_id);
     }
 
     function inboxDataFinished(data) {
-        if (!data || !data.inbox) return
+        if (!data || !data.inbox)
+            return;
+        list_loading = false;
 
-        list_loading = false
-
-        isEmpty = false
+        isEmpty = false;
         if (data.inbox.threads.length === 0) {
-            isEmpty = true
-            return
+            isEmpty = true;
+            return;
         }
 
-        if (next_oldest_cursor_id === data.inbox.oldest_cursor) return
-
-        next_oldest_cursor_id = ""
+        if (next_oldest_cursor_id === data.inbox.oldest_cursor)
+            return;
+        next_oldest_cursor_id = "";
         if (data.inbox.has_older === true) {
-            next_oldest_cursor_id = data.inbox.oldest_cursor
+            next_oldest_cursor_id = data.inbox.oldest_cursor;
         }
 
-        more_available = data.inbox.has_older
-        next_coming = true
+        more_available = data.inbox.has_older;
+        next_coming = true;
 
-        directInboxWorker.sendMessage(
-            {
-                items: data.inbox.threads,
-                model: directInboxModel,
-                clear: clear_models,
-                activeUserId: activeUsernameId,
-                typeTexts: DirectTypeTexts.getDirectTypeTexts()
-            }
-        )
+        directInboxWorker.sendMessage({
+            items: data.inbox.threads,
+            model: directInboxModel,
+            clear: clear_models,
+            activeUserId: activeUsernameId,
+            typeTexts: DirectTypeTexts.getDirectTypeTexts()
+        });
 
-        next_coming = false
+        next_coming = false;
     }
 
     Component.onCompleted: {
-        getInbox()
+        getInbox();
     }
 }

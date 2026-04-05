@@ -19,7 +19,7 @@ Column {
 
         Component.onCompleted: {
             if (isOutgoing) {
-                anchors.right = parent.right
+                anchors.right = parent.right;
             }
         }
     }
@@ -63,16 +63,16 @@ Column {
 
                     Image {
                         width: itemSmallWidth
-                        height: width/story_share.media.image_versions2.candidates[0].width*story_share.media.image_versions2.candidates[0].height
+                        height: width / story_share.media.image_versions2.candidates[0].width * story_share.media.image_versions2.candidates[0].height
                         source: story_share.media.image_versions2.candidates[0].url
                         fillMode: Image.PreserveAspectCrop
-                        sourceSize: Qt.size(width,height)
+                        sourceSize: Qt.size(width, height)
                         smooth: true
                         clip: true
 
                         Component.onCompleted: {
                             if (isOutgoing) {
-                                anchors.right = parent.right
+                                anchors.right = parent.right;
                             }
                         }
                     }
@@ -92,7 +92,7 @@ Column {
 
                 Component.onCompleted: {
                     if (isOutgoing) {
-                        anchors.right = parent.right
+                        anchors.right = parent.right;
                     }
                 }
             }
@@ -100,7 +100,9 @@ Column {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    pageLayout.pushToCurrent(directthreadpage, Qt.resolvedUrl("HighlightStoriesPage.qml"), {highlightId: story_share.reel_id});
+                    pageLayout.pushToCurrent(directthreadpage, Qt.resolvedUrl("HighlightStoriesPage.qml"), {
+                        highlightId: story_share.reel_id
+                    });
                 }
             }
         }
@@ -134,7 +136,7 @@ Column {
                     wrapMode: Text.WordWrap
                     textFormat: Text.RichText
                     onLinkActivated: {
-                        Scripts.linkClick(directthreadpage, link)
+                        Scripts.linkClick(directthreadpage, link);
                     }
 
                     horizontalAlignment: Text.AlignRight
@@ -165,7 +167,7 @@ Column {
 
             Component.onCompleted: {
                 if (isOutgoing) {
-                    anchors.right = parent.right
+                    anchors.right = parent.right;
                 }
             }
         }
@@ -190,7 +192,7 @@ Column {
 
         Component.onCompleted: {
             if (isOutgoing) {
-                anchors.right = parent.right
+                anchors.right = parent.right;
             }
         }
     }

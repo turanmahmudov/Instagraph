@@ -57,15 +57,13 @@ Column {
                 id: previewImage
                 width: parent.width
                 height: {
-                    if (typeof xma_media_share.preview_url_info == 'undefined'
-                        || typeof xma_media_share.preview_url_info.width == 'undefined'
-                        || typeof xma_media_share.preview_url_info.height == 'undefined')
-                        return 0
+                    if (typeof xma_media_share.preview_url_info == 'undefined' || typeof xma_media_share.preview_url_info.width == 'undefined' || typeof xma_media_share.preview_url_info.height == 'undefined')
+                        return 0;
 
-                    var ratio = xma_media_share.preview_url_info.height / xma_media_share.preview_url_info.width
-                    var computed = width * ratio
+                    var ratio = xma_media_share.preview_url_info.height / xma_media_share.preview_url_info.width;
+                    var computed = width * ratio;
                     // Cap the height so tall images don't blow up the bubble
-                    return Math.min(computed, width)
+                    return Math.min(computed, width);
                 }
                 source: typeof xma_media_share.preview_url_info != 'undefined' && typeof xma_media_share.preview_url_info.url != 'undefined' ? xma_media_share.preview_url_info.url : ""
                 fillMode: Image.PreserveAspectCrop
@@ -81,11 +79,12 @@ Column {
                 width: parent.width - units.gu(2)
                 visible: typeof xma_media_share.title_text != 'undefined' && xma_media_share.title_text !== ""
                 text: {
-                    if (!visible) return ""
-                    var title = xma_media_share.title_text
-                    var lines = title.split('\n')
-                    var firstLine = lines[0] || ""
-                    return firstLine.length > 100 ? firstLine.substring(0, 97) + "..." : firstLine
+                    if (!visible)
+                        return "";
+                    var title = xma_media_share.title_text;
+                    var lines = title.split('\n');
+                    var firstLine = lines[0] || "";
+                    return firstLine.length > 100 ? firstLine.substring(0, 97) + "..." : firstLine;
                 }
                 wrapMode: Text.WordWrap
                 color: isOutgoing ? styleApp.directInbox.outgoingMessageTextColor : styleApp.directInbox.incomingMessageTextColor
@@ -100,7 +99,7 @@ Column {
 
         Component.onCompleted: {
             if (isOutgoing) {
-                anchors.right = parent.right
+                anchors.right = parent.right;
             }
         }
     }
