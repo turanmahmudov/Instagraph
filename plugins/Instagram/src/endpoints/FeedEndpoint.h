@@ -10,7 +10,7 @@ class ApiClient;
 
 /**
  * @brief Handles all feed-related API operations.
- * 
+ *
  * This endpoint manages:
  * - Timeline feed
  * - User feed
@@ -18,41 +18,41 @@ class ApiClient;
  * - Explore/discover feed
  * - Suggestions
  */
-class FeedEndpoint : public QObject
-{
+class FeedEndpoint : public QObject {
     Q_OBJECT
 
 public:
-    explicit FeedEndpoint(ApiClient* client, QObject* parent = nullptr);
+    explicit FeedEndpoint(ApiClient * client, QObject * parent = nullptr);
 
     // Timeline
-    void getTimelineFeed(const QString& maxId = "", const QString& seenPosts = "", 
-                         bool pullToRefresh = false, const QString& uuid = "",
-                         const QString& deviceId = "", const QString& csrfToken = "");
-    void getUserFeed(const QString& userId, const QString& maxId = "", 
-                     const QString& minTimestamp = "", const QString& rankToken = "");
+    void getTimelineFeed(const QString & maxId = "", const QString & seenPosts = "",
+                         bool pullToRefresh = false, const QString & uuid = "",
+                         const QString & deviceId = "", const QString & csrfToken = "");
+    void getUserFeed(const QString & userId, const QString & maxId = "",
+                     const QString & minTimestamp = "", const QString & rankToken = "");
 
     // Popular/Explore
-    void getPopularFeed(const QString& maxId = "", const QString& rankToken = "");
-    void getExploreFeed(const QString& maxId = "", const QString& sessionId = "");
+    void getPopularFeed(const QString & maxId = "", const QString & rankToken = "");
+    void getExploreFeed(const QString & maxId = "", const QString & sessionId = "");
 
     // Suggestions
-    void getSuggestions(const QString& uuid = "", const QString& csrfToken = "");
+    void getSuggestions(const QString & uuid = "", const QString & csrfToken = "");
 
     // Media seen
-    void mediaSeen(const QStringList& mediaIds, const QStringList& skippedMediaIds = QStringList());
+    void mediaSeen(const QStringList & mediaIds,
+                   const QStringList & skippedMediaIds = QStringList());
 
 Q_SIGNALS:
-    void timelineFeedReady(const QVariant& answer);
-    void userFeedReady(const QVariant& answer);
-    void popularFeedReady(const QVariant& answer);
-    void exploreFeedReady(const QVariant& answer);
-    void suggestionsReady(const QVariant& answer);
-    void mediaSeenReady(const QVariant& answer);
-    void error(const QString& message);
+    void timelineFeedReady(const QVariant & answer);
+    void userFeedReady(const QVariant & answer);
+    void popularFeedReady(const QVariant & answer);
+    void exploreFeedReady(const QVariant & answer);
+    void suggestionsReady(const QVariant & answer);
+    void mediaSeenReady(const QVariant & answer);
+    void error(const QString & message);
 
 private:
-    ApiClient* m_client;
+    ApiClient * m_client;
 };
 
 } // namespace IG

@@ -6,23 +6,20 @@
 
 namespace IG {
 
-MediaEndpoint::MediaEndpoint(ApiClient* client, QObject* parent)
-    : QObject(parent)
-    , m_client(client)
-{
-}
+MediaEndpoint::MediaEndpoint(ApiClient * client, QObject * parent)
+    : QObject(parent), m_client(client) {}
 
-void MediaEndpoint::like(const QString& mediaId, const QString& module) {
+void MediaEndpoint::like(const QString & mediaId, const QString & module) {
     auto request = RequestBuilder::post("media/{media_id}/like/")
-        .pathParam("media_id", mediaId)
-        .param("media_id", mediaId)
-        .param("module_name", module)
-        .param("radio_type", "wifi-none")
-        .queryParam("d", "1")
-        .authenticated()
-        .build();
+                       .pathParam("media_id", mediaId)
+                       .param("media_id", mediaId)
+                       .param("module_name", module)
+                       .param("radio_type", "wifi-none")
+                       .queryParam("d", "1")
+                       .authenticated()
+                       .build();
 
-    m_client->execute(request, [this](const Response& response) {
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit likeReady(response.toVariant());
         } else {
@@ -31,16 +28,16 @@ void MediaEndpoint::like(const QString& mediaId, const QString& module) {
     });
 }
 
-void MediaEndpoint::unlike(const QString& mediaId, const QString& module) {
+void MediaEndpoint::unlike(const QString & mediaId, const QString & module) {
     auto request = RequestBuilder::post("media/{media_id}/unlike/")
-        .pathParam("media_id", mediaId)
-        .param("media_id", mediaId)
-        .param("module_name", module)
-        .param("radio_type", "wifi-none")
-        .authenticated()
-        .build();
+                       .pathParam("media_id", mediaId)
+                       .param("media_id", mediaId)
+                       .param("module_name", module)
+                       .param("radio_type", "wifi-none")
+                       .authenticated()
+                       .build();
 
-    m_client->execute(request, [this](const Response& response) {
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit unlikeReady(response.toVariant());
         } else {
@@ -49,13 +46,13 @@ void MediaEndpoint::unlike(const QString& mediaId, const QString& module) {
     });
 }
 
-void MediaEndpoint::getLikedFeed(const QString& maxId) {
+void MediaEndpoint::getLikedFeed(const QString & maxId) {
     auto builder = RequestBuilder::get("feed/liked/");
     if (!maxId.isEmpty()) {
         builder.queryParam("max_id", maxId);
     }
 
-    m_client->execute(builder.build(), [this](const Response& response) {
+    m_client->execute(builder.build(), [this](const Response & response) {
         if (response.ok()) {
             emit likedFeedReady(response.toVariant());
         } else {
@@ -64,13 +61,13 @@ void MediaEndpoint::getLikedFeed(const QString& maxId) {
     });
 }
 
-void MediaEndpoint::getLikedMedia(const QString& maxId) {
+void MediaEndpoint::getLikedMedia(const QString & maxId) {
     auto builder = RequestBuilder::get("feed/liked/");
     if (!maxId.isEmpty()) {
         builder.queryParam("max_id", maxId);
     }
 
-    m_client->execute(builder.build(), [this](const Response& response) {
+    m_client->execute(builder.build(), [this](const Response & response) {
         if (response.ok()) {
             emit likedMediaReady(response.toVariant());
         } else {
@@ -79,12 +76,11 @@ void MediaEndpoint::getLikedMedia(const QString& maxId) {
     });
 }
 
-void MediaEndpoint::getMediaLikers(const QString& mediaId) {
-    auto request = RequestBuilder::get("media/{media_id}/likers/")
-        .pathParam("media_id", mediaId)
-        .build();
+void MediaEndpoint::getMediaLikers(const QString & mediaId) {
+    auto request =
+        RequestBuilder::get("media/{media_id}/likers/").pathParam("media_id", mediaId).build();
 
-    m_client->execute(request, [this](const Response& response) {
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit mediaLikersReady(response.toVariant());
         } else {
@@ -93,12 +89,11 @@ void MediaEndpoint::getMediaLikers(const QString& mediaId) {
     });
 }
 
-void MediaEndpoint::getInfo(const QString& mediaId) {
-    auto request = RequestBuilder::get("media/{media_id}/info/")
-        .pathParam("media_id", mediaId)
-        .build();
+void MediaEndpoint::getInfo(const QString & mediaId) {
+    auto request =
+        RequestBuilder::get("media/{media_id}/info/").pathParam("media_id", mediaId).build();
 
-    m_client->execute(request, [this](const Response& response) {
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit mediaInfoReady(response.toVariant());
         } else {
@@ -107,17 +102,17 @@ void MediaEndpoint::getInfo(const QString& mediaId) {
     });
 }
 
-void MediaEndpoint::edit(const QString& mediaId, const QString& captionText, 
-                         const QString& mediaType) {
+void MediaEndpoint::edit(const QString & mediaId, const QString & captionText,
+                         const QString & mediaType) {
     Q_UNUSED(mediaType);
-    
-    auto request = RequestBuilder::post("media/{media_id}/edit_media/")
-        .pathParam("media_id", mediaId)
-        .param("caption_text", captionText)
-        .authenticated()
-        .build();
 
-    m_client->execute(request, [this](const Response& response) {
+    auto request = RequestBuilder::post("media/{media_id}/edit_media/")
+                       .pathParam("media_id", mediaId)
+                       .param("caption_text", captionText)
+                       .authenticated()
+                       .build();
+
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit mediaEdited(response.toVariant());
         } else {
@@ -126,15 +121,15 @@ void MediaEndpoint::edit(const QString& mediaId, const QString& captionText,
     });
 }
 
-void MediaEndpoint::deleteMedia(const QString& mediaId, const QString& mediaType) {
+void MediaEndpoint::deleteMedia(const QString & mediaId, const QString & mediaType) {
     auto request = RequestBuilder::post("media/{media_id}/delete/")
-        .pathParam("media_id", mediaId)
-        .queryParam("media_type", mediaType)
-        .param("media_id", mediaId)
-        .authenticated()
-        .build();
+                       .pathParam("media_id", mediaId)
+                       .queryParam("media_type", mediaType)
+                       .param("media_id", mediaId)
+                       .authenticated()
+                       .build();
 
-    m_client->execute(request, [this](const Response& response) {
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit mediaDeleted(response.toVariant());
         } else {
@@ -143,24 +138,24 @@ void MediaEndpoint::deleteMedia(const QString& mediaId, const QString& mediaType
     });
 }
 
-void MediaEndpoint::postComment(const QString& mediaId, const QString& commentText,
-                                const QString& replyCommentId, const QString& module) {
+void MediaEndpoint::postComment(const QString & mediaId, const QString & commentText,
+                                const QString & replyCommentId, const QString & module) {
     QString idempotenceToken = QUuid::createUuid().toString();
     idempotenceToken = idempotenceToken.mid(1, idempotenceToken.length() - 2);
 
     auto builder = RequestBuilder::post("media/{media_id}/comment/")
-        .pathParam("media_id", mediaId)
-        .param("comment_text", commentText)
-        .param("containermodule", module)
-        .param("idempotence_token", idempotenceToken)
-        .param("radio_type", "wifi-none")
-        .authenticated();
+                       .pathParam("media_id", mediaId)
+                       .param("comment_text", commentText)
+                       .param("containermodule", module)
+                       .param("idempotence_token", idempotenceToken)
+                       .param("radio_type", "wifi-none")
+                       .authenticated();
 
     if (!replyCommentId.isEmpty() && replyCommentId.at(0) == '@') {
         builder.param("replied_to_comment_id", replyCommentId);
     }
 
-    m_client->execute(builder.build(), [this](const Response& response) {
+    m_client->execute(builder.build(), [this](const Response & response) {
         if (response.ok()) {
             emit commentPosted(response.toVariant());
         } else {
@@ -169,14 +164,14 @@ void MediaEndpoint::postComment(const QString& mediaId, const QString& commentTe
     });
 }
 
-void MediaEndpoint::deleteComment(const QString& mediaId, const QString& commentId) {
+void MediaEndpoint::deleteComment(const QString & mediaId, const QString & commentId) {
     auto request = RequestBuilder::post("media/{media_id}/comment/{comment_id}/delete/")
-        .pathParam("media_id", mediaId)
-        .pathParam("comment_id", commentId)
-        .authenticated()
-        .build();
+                       .pathParam("media_id", mediaId)
+                       .pathParam("comment_id", commentId)
+                       .authenticated()
+                       .build();
 
-    m_client->execute(request, [this](const Response& response) {
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit commentDeleted(response.toVariant());
         } else {
@@ -185,13 +180,13 @@ void MediaEndpoint::deleteComment(const QString& mediaId, const QString& comment
     });
 }
 
-void MediaEndpoint::likeComment(const QString& commentId) {
+void MediaEndpoint::likeComment(const QString & commentId) {
     auto request = RequestBuilder::post("media/{comment_id}/comment_like/")
-        .pathParam("comment_id", commentId)
-        .authenticated()
-        .build();
+                       .pathParam("comment_id", commentId)
+                       .authenticated()
+                       .build();
 
-    m_client->execute(request, [this](const Response& response) {
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit commentLiked(response.toVariant());
         } else {
@@ -200,13 +195,13 @@ void MediaEndpoint::likeComment(const QString& commentId) {
     });
 }
 
-void MediaEndpoint::unlikeComment(const QString& commentId) {
+void MediaEndpoint::unlikeComment(const QString & commentId) {
     auto request = RequestBuilder::post("media/{comment_id}/comment_unlike/")
-        .pathParam("comment_id", commentId)
-        .authenticated()
-        .build();
+                       .pathParam("comment_id", commentId)
+                       .authenticated()
+                       .build();
 
-    m_client->execute(request, [this](const Response& response) {
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit commentUnliked(response.toVariant());
         } else {
@@ -215,16 +210,16 @@ void MediaEndpoint::unlikeComment(const QString& commentId) {
     });
 }
 
-void MediaEndpoint::getComments(const QString& mediaId, const QString& maxId) {
+void MediaEndpoint::getComments(const QString & mediaId, const QString & maxId) {
     auto builder = RequestBuilder::get("media/{media_id}/comments/")
-        .pathParam("media_id", mediaId)
-        .queryParam("can_support_threading", "true");
-    
+                       .pathParam("media_id", mediaId)
+                       .queryParam("can_support_threading", "true");
+
     if (!maxId.isEmpty()) {
         builder.queryParam("min_id", maxId);
     }
 
-    m_client->execute(builder.build(), [this](const Response& response) {
+    m_client->execute(builder.build(), [this](const Response & response) {
         if (response.ok()) {
             emit commentsReady(response.toVariant());
         } else {
@@ -233,13 +228,13 @@ void MediaEndpoint::getComments(const QString& mediaId, const QString& maxId) {
     });
 }
 
-void MediaEndpoint::enableComments(const QString& mediaId) {
+void MediaEndpoint::enableComments(const QString & mediaId) {
     auto request = RequestBuilder::post("media/{media_id}/enable_comments/")
-        .pathParam("media_id", mediaId)
-        .unsigned_()
-        .build();
+                       .pathParam("media_id", mediaId)
+                       .unsigned_()
+                       .build();
 
-    m_client->execute(request, [this](const Response& response) {
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit commentsEnabled(response.toVariant());
         } else {
@@ -248,13 +243,13 @@ void MediaEndpoint::enableComments(const QString& mediaId) {
     });
 }
 
-void MediaEndpoint::disableComments(const QString& mediaId) {
+void MediaEndpoint::disableComments(const QString & mediaId) {
     auto request = RequestBuilder::post("media/{media_id}/disable_comments/")
-        .pathParam("media_id", mediaId)
-        .unsigned_()
-        .build();
+                       .pathParam("media_id", mediaId)
+                       .unsigned_()
+                       .build();
 
-    m_client->execute(request, [this](const Response& response) {
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit commentsDisabled(response.toVariant());
         } else {
@@ -263,13 +258,13 @@ void MediaEndpoint::disableComments(const QString& mediaId) {
     });
 }
 
-void MediaEndpoint::save(const QString& mediaId) {
+void MediaEndpoint::save(const QString & mediaId) {
     auto request = RequestBuilder::post("media/{media_id}/save/")
-        .pathParam("media_id", mediaId)
-        .authenticated()
-        .build();
+                       .pathParam("media_id", mediaId)
+                       .authenticated()
+                       .build();
 
-    m_client->execute(request, [this](const Response& response) {
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit mediaSaved(response.toVariant());
         } else {
@@ -278,13 +273,13 @@ void MediaEndpoint::save(const QString& mediaId) {
     });
 }
 
-void MediaEndpoint::unsave(const QString& mediaId) {
+void MediaEndpoint::unsave(const QString & mediaId) {
     auto request = RequestBuilder::post("media/{media_id}/unsave/")
-        .pathParam("media_id", mediaId)
-        .authenticated()
-        .build();
+                       .pathParam("media_id", mediaId)
+                       .authenticated()
+                       .build();
 
-    m_client->execute(request, [this](const Response& response) {
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit mediaUnsaved(response.toVariant());
         } else {
@@ -293,13 +288,13 @@ void MediaEndpoint::unsave(const QString& mediaId) {
     });
 }
 
-void MediaEndpoint::getSavedFeed(const QString& maxId) {
+void MediaEndpoint::getSavedFeed(const QString & maxId) {
     auto builder = RequestBuilder::get("feed/saved/");
     if (!maxId.isEmpty()) {
         builder.queryParam("max_id", maxId);
     }
 
-    m_client->execute(builder.build(), [this](const Response& response) {
+    m_client->execute(builder.build(), [this](const Response & response) {
         if (response.ok()) {
             emit savedFeedReady(response.toVariant());
         } else {

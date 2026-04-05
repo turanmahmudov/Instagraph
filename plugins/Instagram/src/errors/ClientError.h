@@ -26,19 +26,33 @@ public:
     };
 
     ClientError();
-    ClientError(Type type, const QString& message, int httpCode = 0);
-    ClientError(Type type, const QString& message, const QString& rawResponse, int httpCode = 0);
+    ClientError(Type type, const QString & message, int httpCode = 0);
+    ClientError(Type type, const QString & message, const QString & rawResponse, int httpCode = 0);
 
-    bool isError() const { return m_type != Type::None; }
-    Type type() const { return m_type; }
-    int httpCode() const { return m_httpCode; }
-    QString message() const { return m_message; }
-    QString rawResponse() const { return m_rawResponse; }
-    QVariantMap details() const { return m_details; }
+    bool isError() const {
+        return m_type != Type::None;
+    }
+    Type type() const {
+        return m_type;
+    }
+    int httpCode() const {
+        return m_httpCode;
+    }
+    QString message() const {
+        return m_message;
+    }
+    QString rawResponse() const {
+        return m_rawResponse;
+    }
+    QVariantMap details() const {
+        return m_details;
+    }
 
-    void setDetails(const QVariantMap& details) { m_details = details; }
-    void setTwoFactorInfo(const QVariantMap& info);
-    void setChallengeInfo(const QVariantMap& info);
+    void setDetails(const QVariantMap & details) {
+        m_details = details;
+    }
+    void setTwoFactorInfo(const QVariantMap & info);
+    void setChallengeInfo(const QVariantMap & info);
 
     static QString typeToString(Type type);
 

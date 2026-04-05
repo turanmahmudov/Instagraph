@@ -3,13 +3,10 @@
 
 namespace IG {
 
-Response::Response(const QByteArray& data, int httpCode)
-    : m_rawData(data)
-    , m_httpCode(httpCode)
-{
+Response::Response(const QByteArray & data, int httpCode) : m_rawData(data), m_httpCode(httpCode) {
     QJsonParseError parseError;
     QJsonDocument doc = QJsonDocument::fromJson(data, &parseError);
-    
+
     if (parseError.error == QJsonParseError::NoError) {
         m_json = doc.object();
     } else {
@@ -17,14 +14,11 @@ Response::Response(const QByteArray& data, int httpCode)
     }
 }
 
-Response::Response(const QJsonObject& json, int httpCode)
-    : m_json(json)
-    , m_httpCode(httpCode)
-{
+Response::Response(const QJsonObject & json, int httpCode) : m_json(json), m_httpCode(httpCode) {
     m_rawData = QJsonDocument(json).toJson(QJsonDocument::Compact);
 }
 
-Response Response::error(const QString& message, int code) {
+Response Response::error(const QString & message, int code) {
     Response response(QByteArray(), code);
     response.m_errorMessage = message;
     return response;
@@ -45,7 +39,7 @@ QString Response::errorMessage() const {
     if (!m_errorMessage.isEmpty()) {
         return m_errorMessage;
     }
-    
+
     // Try to get error from JSON response
     if (m_json.contains("message")) {
         return m_json["message"].toString();
@@ -53,11 +47,11 @@ QString Response::errorMessage() const {
     if (m_json.contains("error_message")) {
         return m_json["error_message"].toString();
     }
-    
+
     if (!ok()) {
         return "Unknown error";
     }
-    
+
     return QString();
 }
 
@@ -79,8 +73,7 @@ bool Response::isChallengeRequired() const {
 bool Response::isCheckpointRequired() const {
     QString msg = m_json["message"].toString();
     QString errorType = m_json["error_type"].toString();
-    return msg == "checkpoint_required" || 
-           errorType == "checkpoint_challenge_required" ||
+    return msg == "checkpoint_required" || errorType == "checkpoint_challenge_required" ||
            errorType == "checkpoint_logged_out";
 }
 

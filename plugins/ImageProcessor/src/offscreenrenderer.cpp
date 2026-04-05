@@ -17,24 +17,21 @@
 #include "offscreenrenderer.h"
 
 #include <QImage>
-#include <QSurfaceFormat>
 #include <QOpenGLFramebufferObject>
 #include <QOpenGLFunctions>
 #include <QQuickItem>
+#include <QSurfaceFormat>
 
 #include <QDebug>
 
 #include <QQuickItemGrabResult>
 
-// This *should* be the minimum amount of code necessary to render a QML Item offscreen
-// (required by QQuickItem::grabToImage()) without showing any QWindow to the user.
+// This *should* be the minimum amount of code necessary to render a QML Item
+// offscreen (required by QQuickItem::grabToImage()) without showing any QWindow
+// to the user.
 
-OffscreenRenderer::OffscreenRenderer(QObject *parent)
-    : QObject(parent)
-    , m_renderControl(0)
-    , m_window(0)
-    , m_qmlEngine(0)
-{
+OffscreenRenderer::OffscreenRenderer(QObject * parent)
+    : QObject(parent), m_renderControl(0), m_window(0), m_qmlEngine(0) {
     qDebug() << Q_FUNC_INFO;
 
     m_renderControl = new QQuickRenderControl(this);
@@ -47,15 +44,13 @@ OffscreenRenderer::OffscreenRenderer(QObject *parent)
     emit contentItemChanged();
 }
 
-OffscreenRenderer::~OffscreenRenderer()
-{
+OffscreenRenderer::~OffscreenRenderer() {
     delete m_renderControl;
     delete m_window;
     delete m_qmlEngine;
 }
 
-QQuickItem *OffscreenRenderer::contentItem() const
-{
+QQuickItem * OffscreenRenderer::contentItem() const {
     if (!m_window)
         return 0;
 

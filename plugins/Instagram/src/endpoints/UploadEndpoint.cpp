@@ -2,25 +2,23 @@
 #include "../core/ApiClient.h"
 #include "../core/Request.h"
 #include "../core/Response.h"
+#include <QDateTime>
+#include <QDebug>
 #include <QFile>
 #include <QFileInfo>
-#include <QDateTime>
+#include <QImage>
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QJsonArray>
-#include <QImage>
-#include <QDebug>
 
 namespace IG {
 
-UploadEndpoint::UploadEndpoint(ApiClient* client, QObject* parent)
-    : QObject(parent)
-    , m_client(client)
-{
-}
+UploadEndpoint::UploadEndpoint(ApiClient * client, QObject * parent)
+    : QObject(parent), m_client(client) {}
 
-void UploadEndpoint::postImage(const QString& path, const QString& caption, const QVariantMap& location,
-                               const QString& uploadId, const QString& disableComments) {
+void UploadEndpoint::postImage(const QString & path, const QString & caption,
+                               const QVariantMap & location, const QString & uploadId,
+                               const QString & disableComments) {
     // Store upload state
     m_caption = caption;
     m_imagePath = path;
@@ -45,10 +43,11 @@ void UploadEndpoint::postImage(const QString& path, const QString& caption, cons
 
     // TODO: File upload requires special handling in ApiClient
     // For now, emit error indicating this needs implementation
-    emit error("File upload not yet implemented in new ApiClient pattern. Use legacy upload method.");
+    emit error("File upload not yet implemented in new ApiClient pattern. Use "
+               "legacy upload method.");
 }
 
-void UploadEndpoint::configurePhoto(const QString& uploadId) {
+void UploadEndpoint::configurePhoto(const QString & uploadId) {
     QImage image(m_imagePath);
     if (image.isNull()) {
         emit error("Failed to load image for configuration: " + m_imagePath);
@@ -83,16 +82,17 @@ void UploadEndpoint::configurePhoto(const QString& uploadId) {
 
     // Build request
     auto builder = RequestBuilder::post("media/configure/")
-        .param("upload_id", uploadId)
-        .param("camera_model", "HM1S")
-        .param("source_type", 4)
-        .param("date_time_original", QDateTime::currentDateTime().toString("yyyy:MM:dd HH:mm:ss"))
-        .param("camera_make", "XIAOMI")
-        .param("edits", edits)
-        .param("extra", extra)
-        .param("device", device)
-        .param("caption", m_caption)
-        .authenticated();
+                       .param("upload_id", uploadId)
+                       .param("camera_model", "HM1S")
+                       .param("source_type", 4)
+                       .param("date_time_original",
+                              QDateTime::currentDateTime().toString("yyyy:MM:dd HH:mm:ss"))
+                       .param("camera_make", "XIAOMI")
+                       .param("edits", edits)
+                       .param("extra", extra)
+                       .param("device", device)
+                       .param("caption", m_caption)
+                       .authenticated();
 
     // Add location if provided
     if (m_location.count() > 0 && m_location["name"].toString().length() > 0) {
@@ -109,12 +109,12 @@ void UploadEndpoint::configurePhoto(const QString& uploadId) {
         QString strJson(doc.toJson(QJsonDocument::Compact));
 
         builder.param("location", strJson)
-               .param("geotag_enabled", true)
-               .param("media_latitude", m_location["lat"].toString())
-               .param("posting_latitude", m_location["lat"].toString())
-               .param("media_longitude", m_location["lng"].toString())
-               .param("posting_longitude", m_location["lng"].toString())
-               .param("altitude", QString::number(rand() % 10 + 800));
+            .param("geotag_enabled", true)
+            .param("media_latitude", m_location["lat"].toString())
+            .param("posting_latitude", m_location["lat"].toString())
+            .param("media_longitude", m_location["lng"].toString())
+            .param("posting_longitude", m_location["lng"].toString())
+            .param("altitude", QString::number(rand() % 10 + 800));
     }
 
     // Add disable comments if set
@@ -122,7 +122,7 @@ void UploadEndpoint::configurePhoto(const QString& uploadId) {
         builder.param("disable_comments", "1");
     }
 
-    m_client->execute(builder.build(), [this](const Response& response) {
+    m_client->execute(builder.build(), [this](const Response & response) {
         // Clear state
         m_caption.clear();
         m_imagePath.clear();
@@ -136,7 +136,7 @@ void UploadEndpoint::configurePhoto(const QString& uploadId) {
     });
 }
 
-void UploadEndpoint::changeProfilePicture(const QString& photoPath) {
+void UploadEndpoint::changeProfilePicture(const QString & photoPath) {
     // TODO: File upload requires special handling in ApiClient
     Q_UNUSED(photoPath);
     emit error("Profile picture upload not yet implemented in new ApiClient pattern");

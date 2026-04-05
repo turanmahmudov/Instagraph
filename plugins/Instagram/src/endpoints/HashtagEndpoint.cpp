@@ -5,23 +5,21 @@
 
 namespace IG {
 
-HashtagEndpoint::HashtagEndpoint(ApiClient* client, QObject* parent)
-    : QObject(parent)
-    , m_client(client)
-{
-}
+HashtagEndpoint::HashtagEndpoint(ApiClient * client, QObject * parent)
+    : QObject(parent), m_client(client) {}
 
-void HashtagEndpoint::getTagFeed(const QString& tag, const QString& maxId, const QString& rankToken) {
+void HashtagEndpoint::getTagFeed(const QString & tag, const QString & maxId,
+                                 const QString & rankToken) {
     auto builder = RequestBuilder::get("feed/tag/{tag}/")
-        .pathParam("tag", tag)
-        .queryParam("rank_token", rankToken)
-        .queryParam("ranked_content", "true");
-    
+                       .pathParam("tag", tag)
+                       .queryParam("rank_token", rankToken)
+                       .queryParam("ranked_content", "true");
+
     if (!maxId.isEmpty()) {
         builder.queryParam("max_id", maxId);
     }
 
-    m_client->execute(builder.build(), [this](const Response& response) {
+    m_client->execute(builder.build(), [this](const Response & response) {
         if (response.ok()) {
             emit tagFeedReady(response.toVariant());
         } else {
@@ -30,12 +28,12 @@ void HashtagEndpoint::getTagFeed(const QString& tag, const QString& maxId, const
     });
 }
 
-void HashtagEndpoint::getTagSectionFeed(const QString& tag, const QString& tab, int page,
-                                         const QStringList& nextMediaIds, const QString& maxId) {
+void HashtagEndpoint::getTagSectionFeed(const QString & tag, const QString & tab, int page,
+                                        const QStringList & nextMediaIds, const QString & maxId) {
     auto builder = RequestBuilder::post("tags/{tag}/sections/")
-        .pathParam("tag", tag)
-        .param("tab", tab)
-        .param("page", page);
+                       .pathParam("tag", tag)
+                       .param("tab", tab)
+                       .param("page", page);
 
     if (!nextMediaIds.isEmpty()) {
         builder.param("next_media_ids", "[" + nextMediaIds.join(",") + "]");
@@ -45,7 +43,7 @@ void HashtagEndpoint::getTagSectionFeed(const QString& tag, const QString& tab, 
         builder.param("max_id", maxId);
     }
 
-    m_client->execute(builder.build(), [this](const Response& response) {
+    m_client->execute(builder.build(), [this](const Response & response) {
         if (response.ok()) {
             emit tagSectionFeedReady(response.toVariant());
         } else {
@@ -54,13 +52,13 @@ void HashtagEndpoint::getTagSectionFeed(const QString& tag, const QString& tab, 
     });
 }
 
-void HashtagEndpoint::searchTags(const QString& tag, const QString& rankToken) {
+void HashtagEndpoint::searchTags(const QString & tag, const QString & rankToken) {
     auto request = RequestBuilder::get("tags/search/")
-        .queryParam("q", tag)
-        .queryParam("rank_token", rankToken)
-        .build();
+                       .queryParam("q", tag)
+                       .queryParam("rank_token", rankToken)
+                       .build();
 
-    m_client->execute(request, [this](const Response& response) {
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit searchTagsReady(response.toVariant());
         } else {

@@ -3,8 +3,8 @@
 
 #include <QObject>
 #include <QString>
-#include <QVariantMap>
 #include <QTimer>
+#include <QVariantMap>
 
 namespace IGMQTT {
 
@@ -21,38 +21,39 @@ class FbnsClient : public QObject {
     Q_OBJECT
 
 public:
-    explicit FbnsClient(QObject* parent = nullptr);
+    explicit FbnsClient(QObject * parent = nullptr);
     ~FbnsClient();
 
-    void connectWithSession(const QString& userId, const QString& phoneId);
+    void connectWithSession(const QString & userId, const QString & phoneId);
     void disconnect();
     bool isConnected() const;
 
 signals:
     void connectionStateChanged(bool connected);
-    void error(const QString& message);
+    void error(const QString & message);
 
-    /** @brief Push notification received. Data contains: collapseKey, title, message,
-     *  igAction, optionalImage, optionalAvatarUrl, sound, pushId, pushCategory,
-     *  sourceUserId, intendedRecipientUserId, tickerText, badgeCount */
-    void pushNotification(const QVariantMap& notification);
+    /** @brief Push notification received. Data contains: collapseKey, title,
+     * message, igAction, optionalImage, optionalAvatarUrl, sound, pushId,
+     * pushCategory, sourceUserId, intendedRecipientUserId, tickerText, badgeCount
+     */
+    void pushNotification(const QVariantMap & notification);
 
     /** @brief FBNS token received (pass to instagram.registerPush) */
-    void tokenReceived(const QString& token);
+    void tokenReceived(const QString & token);
 
 private slots:
-    void onMqttConnected(const QByteArray& connAckPayload);
+    void onMqttConnected(const QByteArray & connAckPayload);
     void onMqttDisconnected();
-    void onMqttMessage(const QString& topic, const QByteArray& payload);
-    void onMqttError(const QString& message);
+    void onMqttMessage(const QString & topic, const QByteArray & payload);
+    void onMqttError(const QString & message);
     void onReconnectTimer();
 
 private:
     QByteArray buildConnectPayload();
     void sendRegistrationRequest();
-    void handleFbnsMessage(const QByteArray& payload);
-    void handleRegistrationResponse(const QByteArray& payload);
-    QVariantMap parseNotification(const QVariantMap& rawData);
+    void handleFbnsMessage(const QByteArray & payload);
+    void handleRegistrationResponse(const QByteArray & payload);
+    QVariantMap parseNotification(const QVariantMap & rawData);
 
     // Auth persistence
     void saveAuth();
@@ -61,17 +62,17 @@ private:
 
     // FBNS auth credentials (persisted across sessions)
     struct FbnsAuth {
-        QString userId;      // "ck" - connection key
-        QString password;    // "cs" - connection secret
-        QString deviceId;    // "di"
+        QString userId;       // "ck" - connection key
+        QString password;     // "cs" - connection secret
+        QString deviceId;     // "di"
         QString deviceSecret; // "ds"
-        QString clientId;    // derived from deviceId
-        QString sr;          // "sr" - session reset
-        QString rc;          // "rc" - reconnect count
+        QString clientId;     // derived from deviceId
+        QString sr;           // "sr" - session reset
+        QString rc;           // "rc" - reconnect count
     };
 
-    MqttotClient* m_mqtt;
-    QTimer* m_reconnectTimer;
+    MqttotClient * m_mqtt;
+    QTimer * m_reconnectTimer;
     FbnsAuth m_auth;
     bool m_connected;
 
@@ -88,8 +89,8 @@ private:
     static const QString ANALYTICS_APP_ID;
 
     // Topic IDs
-    static const QString TOPIC_FBNS_MSG;     // "76"
-    static const QString TOPIC_FBNS_REG_REQ; // "79"
+    static const QString TOPIC_FBNS_MSG;      // "76"
+    static const QString TOPIC_FBNS_REG_REQ;  // "79"
     static const QString TOPIC_FBNS_REG_RESP; // "80"
 };
 

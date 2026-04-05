@@ -10,43 +10,43 @@ class QFile;
 class QNetworkAccessManager;
 
 namespace IG {
-    class SessionManager;
-    class CookieManager;
-    class ApiClient;
-    class AccountEndpoint;
-    class MediaEndpoint;
-    class DirectEndpoint;
-    class FeedEndpoint;
-    class PeopleEndpoint;
-    class StoryEndpoint;
-    class HashtagEndpoint;
-    class LocationEndpoint;
-    class SearchEndpoint;
-    class UsertagEndpoint;
-    class UploadEndpoint;
-    class PasswordEncryptor;
-}
+class SessionManager;
+class CookieManager;
+class ApiClient;
+class AccountEndpoint;
+class MediaEndpoint;
+class DirectEndpoint;
+class FeedEndpoint;
+class PeopleEndpoint;
+class StoryEndpoint;
+class HashtagEndpoint;
+class LocationEndpoint;
+class SearchEndpoint;
+class UsertagEndpoint;
+class UploadEndpoint;
+class PasswordEncryptor;
+} // namespace IG
 
 /**
  * @brief Main Instagram API facade class - 100% backward compatible with QML.
- * 
+ *
  * This class maintains the exact same API as the original v2/instagram.h
  * to ensure all existing QML code continues to work unchanged.
  * Internally, it delegates to specialized endpoint classes.
  */
-class Instagram : public QObject
-{
+class Instagram : public QObject {
     Q_OBJECT
 
 public:
-    explicit Instagram(QObject *parent = nullptr);
+    explicit Instagram(QObject * parent = nullptr);
     ~Instagram();
 
 public Q_SLOTS:
     Q_INVOKABLE QString photos_path();
 
     // Authentication
-    Q_INVOKABLE void login(bool forse = false, QString username = "", QString password = "", bool set = false);
+    Q_INVOKABLE void login(bool forse = false, QString username = "", QString password = "",
+                           bool set = false);
     Q_INVOKABLE void logout();
     Q_INVOKABLE void confirm2Factor(QString code, QString identifier, QString method);
 
@@ -61,7 +61,8 @@ public Q_SLOTS:
     Q_INVOKABLE QString getProfilePic();
 
     // Image upload
-    Q_INVOKABLE void postImage(QString path, QString caption, QVariantMap location, QString upload_id = "", QString disableComments = "0");
+    Q_INVOKABLE void postImage(QString path, QString caption, QVariantMap location,
+                               QString upload_id = "", QString disableComments = "0");
 
     // Popular/Search
     Q_INVOKABLE void getPopularFeed(QString max_id = "");
@@ -70,10 +71,11 @@ public Q_SLOTS:
     // Account
     Q_INVOKABLE void setPrivateAccount();
     Q_INVOKABLE void setPublicAccount();
-    Q_INVOKABLE void changeProfilePicture(QFile *photo);
+    Q_INVOKABLE void changeProfilePicture(QFile * photo);
     Q_INVOKABLE void removeProfilePicture();
     Q_INVOKABLE void getCurrentUser();
-    Q_INVOKABLE void editProfile(QString url, QString phone, QString first_name, QString biography, QString email, bool gender);
+    Q_INVOKABLE void editProfile(QString url, QString phone, QString first_name, QString biography,
+                                 QString email, bool gender);
     Q_INVOKABLE void checkUsername(QString username);
 
     // Direct
@@ -106,8 +108,8 @@ public Q_SLOTS:
 
     // Hashtag
     Q_INVOKABLE void getTagFeed(QString tag, QString max_id = "");
-    Q_INVOKABLE void getTagSectionFeed(QString tag, QString tab, int page,
-                                       QStringList nextMediaIds, QString max_id);
+    Q_INVOKABLE void getTagSectionFeed(QString tag, QString tab, int page, QStringList nextMediaIds,
+                                       QString max_id);
     Q_INVOKABLE void searchTags(QString tag);
 
     // Highlight
@@ -115,12 +117,14 @@ public Q_SLOTS:
 
     // Media
     Q_INVOKABLE void getInfoMedia(QString mediaId);
-    Q_INVOKABLE void editMedia(QString mediaId, QString captionText = "", QString mediaType = "PHOTO");
+    Q_INVOKABLE void editMedia(QString mediaId, QString captionText = "",
+                               QString mediaType = "PHOTO");
     Q_INVOKABLE void deleteMedia(QString mediaId, QString mediaType = "PHOTO");
     Q_INVOKABLE void like(QString mediaId, QString module = "feed_contextual_post");
     Q_INVOKABLE void unLike(QString mediaId, QString module = "feed_contextual_post");
     Q_INVOKABLE void getLikedFeed(QString max_id = "");
-    Q_INVOKABLE void comment(QString mediaId, QString commentText, QString replyCommentId = "", QString module = "coments_feed_timeline");
+    Q_INVOKABLE void comment(QString mediaId, QString commentText, QString replyCommentId = "",
+                             QString module = "coments_feed_timeline");
     Q_INVOKABLE void deleteComment(QString mediaId, QString commentId);
     Q_INVOKABLE void likeComment(QString commentId);
     Q_INVOKABLE void unlikeComment(QString commentId);
@@ -160,7 +164,8 @@ public Q_SLOTS:
     Q_INVOKABLE void getReelsMediaFeed(QString id);
 
     // Timeline
-    Q_INVOKABLE void getTimelineFeed(QString max_id = "", QString seen_posts = "", bool pullToRefresh = false);
+    Q_INVOKABLE void getTimelineFeed(QString max_id = "", QString seen_posts = "",
+                                     bool pullToRefresh = false);
     Q_INVOKABLE void getUserFeed(QString userID, QString max_id = "", QString minTimestamp = "");
     Q_INVOKABLE void mediaSeen(QStringList mediaIds, QStringList skippedMediaIds = QStringList());
 
@@ -169,8 +174,8 @@ public Q_SLOTS:
     Q_INVOKABLE void removeSelftag(QString mediaId);
 
     // Network access
-    void setNetworkAccessManager(QNetworkAccessManager *nam);
-    QNetworkAccessManager *networkAccessManager() const;
+    void setNetworkAccessManager(QNetworkAccessManager * nam);
+    QNetworkAccessManager * networkAccessManager() const;
 
 Q_SIGNALS:
     // Authentication signals
@@ -296,32 +301,32 @@ private:
     void initializeComponents();
     void setupEndpointConnections();
     void doPreLoginFlow();
-    void doLogin(const QString& encryptedPassword);
-    void handleLoginResponse(const QVariant& response);
+    void doLogin(const QString & encryptedPassword);
+    void handleLoginResponse(const QVariant & response);
 
     // State
     bool m_isLoggedIn;
 
     // Components (using raw pointers for Qt parent-child memory management)
-    IG::SessionManager* m_session;
-    IG::CookieManager* m_cookies;
-    IG::ApiClient* m_client;
+    IG::SessionManager * m_session;
+    IG::CookieManager * m_cookies;
+    IG::ApiClient * m_client;
 
     // Endpoints
-    IG::AccountEndpoint* m_account;
-    IG::MediaEndpoint* m_media;
-    IG::DirectEndpoint* m_direct;
-    IG::FeedEndpoint* m_feed;
-    IG::PeopleEndpoint* m_people;
-    IG::StoryEndpoint* m_story;
-    IG::HashtagEndpoint* m_hashtag;
-    IG::LocationEndpoint* m_location;
-    IG::SearchEndpoint* m_search;
-    IG::UsertagEndpoint* m_usertag;
-    IG::UploadEndpoint* m_upload;
+    IG::AccountEndpoint * m_account;
+    IG::MediaEndpoint * m_media;
+    IG::DirectEndpoint * m_direct;
+    IG::FeedEndpoint * m_feed;
+    IG::PeopleEndpoint * m_people;
+    IG::StoryEndpoint * m_story;
+    IG::HashtagEndpoint * m_hashtag;
+    IG::LocationEndpoint * m_location;
+    IG::SearchEndpoint * m_search;
+    IG::UsertagEndpoint * m_usertag;
+    IG::UploadEndpoint * m_upload;
 
     // Password encryption
-    IG::PasswordEncryptor* m_passwordEncryptor;
+    IG::PasswordEncryptor * m_passwordEncryptor;
 };
 
 #endif // INSTAGRAM_API_INSTAGRAM_H

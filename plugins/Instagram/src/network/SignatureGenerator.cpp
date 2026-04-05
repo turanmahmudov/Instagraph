@@ -6,7 +6,7 @@
 
 namespace IG {
 
-QString SignatureGenerator::generate(const QJsonObject& data, bool useHmac) {
+QString SignatureGenerator::generate(const QJsonObject & data, bool useHmac) {
     QJsonDocument doc(data);
     QString dataString(doc.toJson(QJsonDocument::Compact));
 
@@ -27,7 +27,7 @@ QString SignatureGenerator::generate(const QJsonObject& data, bool useHmac) {
     }
 }
 
-QByteArray SignatureGenerator::hmacSha256(const QByteArray& data, const QByteArray& key) {
+QByteArray SignatureGenerator::hmacSha256(const QByteArray & data, const QByteArray & key) {
     return QMessageAuthenticationCode::hash(data, key, QCryptographicHash::Sha256);
 }
 

@@ -2,13 +2,13 @@
 #include "../mqttot/MqttotClient.h"
 #include "../thrift/ThriftCompact.h"
 
-#include <QJsonDocument>
-#include <QJsonObject>
 #include <QDateTime>
-#include <QStandardPaths>
+#include <QDebug>
 #include <QDir>
 #include <QFile>
-#include <QDebug>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QStandardPaths>
 
 namespace IGMQTT {
 
@@ -16,7 +16,7 @@ namespace IGMQTT {
 const QString FbnsClient::HOST = QStringLiteral("mqtt-mini.facebook.com");
 const quint16 FbnsClient::PORT = 443;
 const quint16 FbnsClient::KEEP_ALIVE = 60;
-const qint64  FbnsClient::FBNS_APP_ID = 567310203415052LL;
+const qint64 FbnsClient::FBNS_APP_ID = 567310203415052LL;
 const QString FbnsClient::PACKAGE_NAME = QStringLiteral("com.instagram.android");
 const QString FbnsClient::ANALYTICS_APP_ID = QStringLiteral("567067343352427");
 
@@ -25,12 +25,9 @@ const QString FbnsClient::TOPIC_FBNS_MSG = QStringLiteral("76");
 const QString FbnsClient::TOPIC_FBNS_REG_REQ = QStringLiteral("79");
 const QString FbnsClient::TOPIC_FBNS_REG_RESP = QStringLiteral("80");
 
-FbnsClient::FbnsClient(QObject* parent)
-    : QObject(parent)
-    , m_mqtt(new MqttotClient(this))
-    , m_reconnectTimer(new QTimer(this))
-    , m_connected(false)
-{
+FbnsClient::FbnsClient(QObject * parent)
+    : QObject(parent), m_mqtt(new MqttotClient(this)), m_reconnectTimer(new QTimer(this)),
+      m_connected(false) {
     m_reconnectTimer->setInterval(30000); // 30s reconnect delay
     m_reconnectTimer->setSingleShot(true);
 
@@ -43,13 +40,11 @@ FbnsClient::FbnsClient(QObject* parent)
     loadAuth();
 }
 
-FbnsClient::~FbnsClient()
-{
+FbnsClient::~FbnsClient() {
     disconnect();
 }
 
-void FbnsClient::connectWithSession(const QString& userId, const QString& phoneId)
-{
+void FbnsClient::connectWithSession(const QString & userId, const QString & phoneId) {
     m_igUserId = userId;
     m_igPhoneId = phoneId;
 
@@ -62,15 +57,13 @@ void FbnsClient::connectWithSession(const QString& userId, const QString& phoneI
     m_mqtt->connectToHost(HOST, PORT, payload, KEEP_ALIVE);
 }
 
-void FbnsClient::disconnect()
-{
+void FbnsClient::disconnect() {
     m_reconnectTimer->stop();
     m_mqtt->disconnectFromHost();
     m_connected = false;
 }
 
-bool FbnsClient::isConnected() const
-{
+bool FbnsClient::isConnected() const {
     return m_connected;
 }
 
@@ -78,8 +71,7 @@ bool FbnsClient::isConnected() const
 // MQTT signal handlers
 // ============================================================
 
-void FbnsClient::onMqttConnected(const QByteArray& connAckPayload)
-{
+void FbnsClient::onMqttConnected(const QByteArray & connAckPayload) {
     qDebug() << "FbnsClient: connected";
     m_connected = true;
     m_reconnectTimer->stop();
@@ -114,8 +106,7 @@ void FbnsClient::onMqttConnected(const QByteArray& connAckPayload)
     emit connectionStateChanged(true);
 }
 
-void FbnsClient::onMqttDisconnected()
-{
+void FbnsClient::onMqttDisconnected() {
     qDebug() << "FbnsClient: MQTT disconnected";
     m_connected = false;
     emit connectionStateChanged(false);
@@ -126,8 +117,7 @@ void FbnsClient::onMqttDisconnected()
     }
 }
 
-void FbnsClient::onMqttMessage(const QString& topic, const QByteArray& payload)
-{
+void FbnsClient::onMqttMessage(const QString & topic, const QByteArray & payload) {
 
     if (topic == TOPIC_FBNS_MSG) {
         handleFbnsMessage(payload);
@@ -136,8 +126,7 @@ void FbnsClient::onMqttMessage(const QString& topic, const QByteArray& payload)
     }
 }
 
-void FbnsClient::onMqttError(const QString& message)
-{
+void FbnsClient::onMqttError(const QString & message) {
     qWarning() << "FbnsClient: error:" << message;
     emit error(message);
 
@@ -147,8 +136,7 @@ void FbnsClient::onMqttError(const QString& message)
     }
 }
 
-void FbnsClient::onReconnectTimer()
-{
+void FbnsClient::onReconnectTimer() {
     if (!m_connected && !m_igUserId.isEmpty()) {
         qDebug() << "FbnsClient: attempting reconnect";
         connectWithSession(m_igUserId, m_igPhoneId);
@@ -159,8 +147,7 @@ void FbnsClient::onReconnectTimer()
 // Thrift payload building
 // ============================================================
 
-QByteArray FbnsClient::buildConnectPayload()
-{
+QByteArray FbnsClient::buildConnectPayload() {
 
     Thrift::Writer w;
     w.writeStructBegin(); // Connect struct
@@ -178,13 +165,12 @@ QByteArray FbnsClient::buildConnectPayload()
 
         // userAgent (field 2, string)
         // Build FBNS-specific user agent
-        QString fbnsUA = QStringLiteral(
-            "[FBAN/MQTT;FBAV/%1;FBBV/%2;"
-            "FBDM/{density=4.0,width=1440,height=2560};"
-            "FBLC/en_US;FBCR/;FBMF/samsung;FBBD/samsung;"
-            "FBPN/com.instagram.android;FBDV/SM-S938U;"
-            "FBSV/15.0;FBLR/0;FBBK/1;FBCA/arm64-v8a;]"
-        ).arg("367.0.0.27.101", "658859659");
+        QString fbnsUA = QStringLiteral("[FBAN/MQTT;FBAV/%1;FBBV/%2;"
+                                        "FBDM/{density=4.0,width=1440,height=2560};"
+                                        "FBLC/en_US;FBCR/;FBMF/samsung;FBBD/samsung;"
+                                        "FBPN/com.instagram.android;FBDV/SM-S938U;"
+                                        "FBSV/15.0;FBLR/0;FBBK/1;FBCA/arm64-v8a;]")
+                             .arg("367.0.0.27.101", "658859659");
         w.writeString(2, fbnsUA);
 
         // clientCapabilities (field 3, i64) = 183
@@ -202,7 +188,8 @@ QByteArray FbnsClient::buildConnectPayload()
         // makeUserAvailableInForeground (field 7, bool) = false
         w.writeBool(7, false);
 
-        // deviceId (field 8, string) - empty on first connect, server returns it in CONNACK
+        // deviceId (field 8, string) - empty on first connect, server returns it in
+        // CONNACK
         w.writeString(8, m_auth.deviceId);
 
         // isInitiallyForeground (field 9, bool) = false
@@ -247,8 +234,7 @@ QByteArray FbnsClient::buildConnectPayload()
     return w.data();
 }
 
-void FbnsClient::sendRegistrationRequest()
-{
+void FbnsClient::sendRegistrationRequest() {
     QJsonObject regReq;
     regReq["pkg_name"] = PACKAGE_NAME;
     regReq["appid"] = ANALYTICS_APP_ID;
@@ -257,8 +243,7 @@ void FbnsClient::sendRegistrationRequest()
     m_mqtt->publish(TOPIC_FBNS_REG_REQ, json, 1);
 }
 
-void FbnsClient::handleFbnsMessage(const QByteArray& payload)
-{
+void FbnsClient::handleFbnsMessage(const QByteArray & payload) {
     QJsonDocument doc = QJsonDocument::fromJson(payload);
     if (!doc.isObject()) {
         qWarning() << "FbnsClient: invalid FBNS message payload";
@@ -267,17 +252,18 @@ void FbnsClient::handleFbnsMessage(const QByteArray& payload)
 
     // Parse the nested fbpushnotif JSON string
     QString fbpushnotif = doc.object().value("fbpushnotif").toString();
-    if (fbpushnotif.isEmpty()) return;
+    if (fbpushnotif.isEmpty())
+        return;
 
     QJsonDocument notifDoc = QJsonDocument::fromJson(fbpushnotif.toUtf8());
-    if (!notifDoc.isObject()) return;
+    if (!notifDoc.isObject())
+        return;
 
     QVariantMap notification = parseNotification(notifDoc.object().toVariantMap());
     emit pushNotification(notification);
 }
 
-void FbnsClient::handleRegistrationResponse(const QByteArray& payload)
-{
+void FbnsClient::handleRegistrationResponse(const QByteArray & payload) {
     QJsonDocument doc = QJsonDocument::fromJson(payload);
     if (!doc.isObject()) {
         qWarning() << "FbnsClient: invalid registration response";
@@ -298,22 +284,21 @@ void FbnsClient::handleRegistrationResponse(const QByteArray& payload)
     }
 }
 
-QVariantMap FbnsClient::parseNotification(const QVariantMap& raw)
-{
+QVariantMap FbnsClient::parseNotification(const QVariantMap & raw) {
     QVariantMap n;
-    n["collapseKey"]             = raw.value("collapse_key");
-    n["title"]                   = raw.value("t");
-    n["message"]                 = raw.value("m");
-    n["tickerText"]              = raw.value("tt");
-    n["igAction"]                = raw.value("ig");
-    n["optionalImage"]           = raw.value("i");
-    n["optionalAvatarUrl"]       = raw.value("a");
-    n["sound"]                   = raw.value("sound");
-    n["pushId"]                  = raw.value("pi");
-    n["pushCategory"]            = raw.value("c");
+    n["collapseKey"] = raw.value("collapse_key");
+    n["title"] = raw.value("t");
+    n["message"] = raw.value("m");
+    n["tickerText"] = raw.value("tt");
+    n["igAction"] = raw.value("ig");
+    n["optionalImage"] = raw.value("i");
+    n["optionalAvatarUrl"] = raw.value("a");
+    n["sound"] = raw.value("sound");
+    n["pushId"] = raw.value("pi");
+    n["pushCategory"] = raw.value("c");
     n["intendedRecipientUserId"] = raw.value("u");
-    n["sourceUserId"]            = raw.value("s");
-    n["badgeCount"]              = raw.value("bc");
+    n["sourceUserId"] = raw.value("s");
+    n["badgeCount"] = raw.value("bc");
     return n;
 }
 
@@ -321,15 +306,13 @@ QVariantMap FbnsClient::parseNotification(const QVariantMap& raw)
 // Auth persistence
 // ============================================================
 
-QString FbnsClient::authFilePath() const
-{
+QString FbnsClient::authFilePath() const {
     QString cachePath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
     QDir().mkpath(cachePath);
     return cachePath + "/fbns_auth.json";
 }
 
-void FbnsClient::saveAuth()
-{
+void FbnsClient::saveAuth() {
     QJsonObject obj;
     obj["ck"] = m_auth.userId;
     obj["cs"] = m_auth.password;
@@ -346,15 +329,16 @@ void FbnsClient::saveAuth()
     }
 }
 
-void FbnsClient::loadAuth()
-{
+void FbnsClient::loadAuth() {
     QFile file(authFilePath());
-    if (!file.open(QIODevice::ReadOnly)) return;
+    if (!file.open(QIODevice::ReadOnly))
+        return;
 
     QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
     file.close();
 
-    if (!doc.isObject()) return;
+    if (!doc.isObject())
+        return;
 
     QJsonObject obj = doc.object();
     m_auth.userId = obj.value("ck").toString();

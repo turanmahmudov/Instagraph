@@ -1,30 +1,25 @@
 #include "MqttotClient.h"
-#include <QSslConfiguration>
 #include <QDebug>
-#include <zlib.h>
+#include <QSslConfiguration>
 #include <cstring>
+#include <zlib.h>
 
 namespace IGMQTT {
 
 // MQTT command types
-static const quint8 MQTT_CONNECT     = 0x10;
-static const quint8 MQTT_CONNACK     = 0x20;
-static const quint8 MQTT_PUBLISH     = 0x30;
-static const quint8 MQTT_PUBACK      = 0x40;
-static const quint8 MQTT_SUBSCRIBE   = 0x80;
-static const quint8 MQTT_SUBACK      = 0x90;
-static const quint8 MQTT_PINGREQ     = 0xC0;
-static const quint8 MQTT_PINGRESP    = 0xD0;
-static const quint8 MQTT_DISCONNECT  = 0xE0;
+static const quint8 MQTT_CONNECT = 0x10;
+static const quint8 MQTT_CONNACK = 0x20;
+static const quint8 MQTT_PUBLISH = 0x30;
+static const quint8 MQTT_PUBACK = 0x40;
+static const quint8 MQTT_SUBSCRIBE = 0x80;
+static const quint8 MQTT_SUBACK = 0x90;
+static const quint8 MQTT_PINGREQ = 0xC0;
+static const quint8 MQTT_PINGRESP = 0xD0;
+static const quint8 MQTT_DISCONNECT = 0xE0;
 
-MqttotClient::MqttotClient(QObject* parent)
-    : QObject(parent)
-    , m_socket(new QSslSocket(this))
-    , m_pingTimer(new QTimer(this))
-    , m_nextMsgId(1)
-    , m_keepAlive(60)
-    , m_connected(false)
-{
+MqttotClient::MqttotClient(QObject * parent)
+    : QObject(parent), m_socket(new QSslSocket(this)), m_pingTimer(new QTimer(this)),
+      m_nextMsgId(1), m_keepAlive(60), m_connected(false) {
     // Configure TLS -- accept Instagram/Facebook certificates
     QSslConfiguration sslConfig = m_socket->sslConfiguration();
     sslConfig.setPeerVerifyMode(QSslSocket::VerifyPeer);
@@ -33,20 +28,20 @@ MqttotClient::MqttotClient(QObject* parent)
 
     connect(m_socket, &QSslSocket::encrypted, this, &MqttotClient::onSocketConnected);
     connect(m_socket, &QSslSocket::disconnected, this, &MqttotClient::onSocketDisconnected);
-    connect(m_socket, static_cast<void(QAbstractSocket::*)(QAbstractSocket::SocketError)>(&QSslSocket::error),
-            this, &MqttotClient::onSocketError);
+    connect(
+        m_socket,
+        static_cast<void (QAbstractSocket::*)(QAbstractSocket::SocketError)>(&QSslSocket::error),
+        this, &MqttotClient::onSocketError);
     connect(m_socket, &QSslSocket::readyRead, this, &MqttotClient::onReadyRead);
     connect(m_pingTimer, &QTimer::timeout, this, &MqttotClient::onPingTimer);
 }
 
-MqttotClient::~MqttotClient()
-{
+MqttotClient::~MqttotClient() {
     disconnectFromHost();
 }
 
-void MqttotClient::connectToHost(const QString& host, quint16 port,
-                                  const QByteArray& thriftPayload, quint16 keepAlive)
-{
+void MqttotClient::connectToHost(const QString & host, quint16 port,
+                                 const QByteArray & thriftPayload, quint16 keepAlive) {
     m_keepAlive = keepAlive;
     m_readBuffer.clear();
     m_connected = false;
@@ -57,8 +52,7 @@ void MqttotClient::connectToHost(const QString& host, quint16 port,
     m_socket->connectToHostEncrypted(host, port);
 }
 
-void MqttotClient::disconnectFromHost()
-{
+void MqttotClient::disconnectFromHost() {
     m_pingTimer->stop();
     if (m_connected) {
         sendPacket(buildDisconnectPacket());
@@ -69,13 +63,11 @@ void MqttotClient::disconnectFromHost()
     }
 }
 
-bool MqttotClient::isConnected() const
-{
+bool MqttotClient::isConnected() const {
     return m_connected;
 }
 
-void MqttotClient::publish(const QString& topic, const QByteArray& payload, quint8 qos)
-{
+void MqttotClient::publish(const QString & topic, const QByteArray & payload, quint8 qos) {
     if (!m_connected) {
         qWarning() << "MqttotClient::publish: not connected";
         return;
@@ -92,8 +84,7 @@ void MqttotClient::publish(const QString& topic, const QByteArray& payload, quin
     sendPacket(buildPublishPacket(topic, compressed, qos, msgId));
 }
 
-void MqttotClient::subscribe(const QString& topic, quint8 qos)
-{
+void MqttotClient::subscribe(const QString & topic, quint8 qos) {
     if (!m_connected) {
         qWarning() << "MqttotClient::subscribe: not connected";
         return;
@@ -106,36 +97,31 @@ void MqttotClient::subscribe(const QString& topic, quint8 qos)
 // Socket signal handlers
 // ============================================================
 
-void MqttotClient::onSocketConnected()
-{
+void MqttotClient::onSocketConnected() {
 
     QByteArray thriftPayload = m_socket->property("_connectPayload").toByteArray();
     sendPacket(buildConnectPacket(thriftPayload, m_keepAlive));
 }
 
-void MqttotClient::onSocketDisconnected()
-{
+void MqttotClient::onSocketDisconnected() {
     m_pingTimer->stop();
     m_connected = false;
     emit disconnected();
 }
 
-void MqttotClient::onSocketError(QAbstractSocket::SocketError err)
-{
+void MqttotClient::onSocketError(QAbstractSocket::SocketError err) {
     Q_UNUSED(err);
     QString msg = m_socket->errorString();
     qWarning() << "MqttotClient: socket error:" << msg;
     emit error(msg);
 }
 
-void MqttotClient::onReadyRead()
-{
+void MqttotClient::onReadyRead() {
     m_readBuffer.append(m_socket->readAll());
     processIncomingData();
 }
 
-void MqttotClient::onPingTimer()
-{
+void MqttotClient::onPingTimer() {
     if (m_connected) {
         sendPacket(buildPingReqPacket());
     }
@@ -145,8 +131,7 @@ void MqttotClient::onPingTimer()
 // Packet building
 // ============================================================
 
-QByteArray MqttotClient::buildConnectPacket(const QByteArray& thriftPayload, quint16 keepAlive)
-{
+QByteArray MqttotClient::buildConnectPacket(const QByteArray & thriftPayload, quint16 keepAlive) {
     // Compress the thrift payload
     QByteArray compressed = zlibCompress(thriftPayload);
 
@@ -176,9 +161,8 @@ QByteArray MqttotClient::buildConnectPacket(const QByteArray& thriftPayload, qui
     return packet;
 }
 
-QByteArray MqttotClient::buildPublishPacket(const QString& topic, const QByteArray& payload,
-                                             quint8 qos, quint16 msgId)
-{
+QByteArray MqttotClient::buildPublishPacket(const QString & topic, const QByteArray & payload,
+                                            quint8 qos, quint16 msgId) {
     QByteArray topicUtf8 = topic.toUtf8();
 
     QByteArray variableHeader;
@@ -203,8 +187,7 @@ QByteArray MqttotClient::buildPublishPacket(const QString& topic, const QByteArr
     return packet;
 }
 
-QByteArray MqttotClient::buildSubscribePacket(const QString& topic, quint8 qos, quint16 msgId)
-{
+QByteArray MqttotClient::buildSubscribePacket(const QString & topic, quint8 qos, quint16 msgId) {
     QByteArray topicUtf8 = topic.toUtf8();
 
     QByteArray payload;
@@ -226,24 +209,21 @@ QByteArray MqttotClient::buildSubscribePacket(const QString& topic, quint8 qos, 
     return packet;
 }
 
-QByteArray MqttotClient::buildPingReqPacket()
-{
+QByteArray MqttotClient::buildPingReqPacket() {
     QByteArray packet;
     packet.append(static_cast<char>(MQTT_PINGREQ));
     packet.append(static_cast<char>(0x00));
     return packet;
 }
 
-QByteArray MqttotClient::buildDisconnectPacket()
-{
+QByteArray MqttotClient::buildDisconnectPacket() {
     QByteArray packet;
     packet.append(static_cast<char>(MQTT_DISCONNECT));
     packet.append(static_cast<char>(0x00));
     return packet;
 }
 
-QByteArray MqttotClient::buildPubAckPacket(quint16 msgId)
-{
+QByteArray MqttotClient::buildPubAckPacket(quint16 msgId) {
     QByteArray packet;
     packet.append(static_cast<char>(MQTT_PUBACK));
     packet.append(static_cast<char>(0x02));
@@ -256,8 +236,7 @@ QByteArray MqttotClient::buildPubAckPacket(quint16 msgId)
 // Packet parsing
 // ============================================================
 
-void MqttotClient::processIncomingData()
-{
+void MqttotClient::processIncomingData() {
     while (m_readBuffer.size() >= 2) {
         // Parse fixed header
         quint8 byte0 = static_cast<quint8>(m_readBuffer.at(0));
@@ -300,8 +279,7 @@ void MqttotClient::processIncomingData()
     }
 }
 
-void MqttotClient::handlePacket(quint8 packetType, quint8 flags, const QByteArray& payload)
-{
+void MqttotClient::handlePacket(quint8 packetType, quint8 flags, const QByteArray & payload) {
     switch (packetType) {
     case MQTT_CONNACK:
         handleConnAck(payload);
@@ -323,8 +301,7 @@ void MqttotClient::handlePacket(quint8 packetType, quint8 flags, const QByteArra
     }
 }
 
-void MqttotClient::handleConnAck(const QByteArray& payload)
-{
+void MqttotClient::handleConnAck(const QByteArray & payload) {
     if (payload.size() < 2) {
         emit error("Invalid CONNACK packet");
         return;
@@ -343,12 +320,13 @@ void MqttotClient::handleConnAck(const QByteArray& payload)
 
     // Extract additional payload (beyond standard 2-byte CONNACK)
     // Instagram's CONNACK contains a 2-byte length-prefixed string after the
-    // standard ack flags + return code bytes (matching TypeScript readStringAsBuffer)
+    // standard ack flags + return code bytes (matching TypeScript
+    // readStringAsBuffer)
     QByteArray connAckPayload;
     if (payload.size() > 4) {
         // Read 2-byte big-endian length at offset 2
-        quint16 strLen = (static_cast<quint8>(payload.at(2)) << 8) |
-                          static_cast<quint8>(payload.at(3));
+        quint16 strLen =
+            (static_cast<quint8>(payload.at(2)) << 8) | static_cast<quint8>(payload.at(3));
         if (payload.size() >= 4 + strLen) {
             connAckPayload = payload.mid(4, strLen);
         } else {
@@ -360,18 +338,19 @@ void MqttotClient::handleConnAck(const QByteArray& payload)
     emit connected(connAckPayload);
 }
 
-void MqttotClient::handlePublish(quint8 flags, const QByteArray& payload)
-{
-    if (payload.size() < 2) return;
+void MqttotClient::handlePublish(quint8 flags, const QByteArray & payload) {
+    if (payload.size() < 2)
+        return;
 
     int pos = 0;
 
     // Read topic (2-byte length prefix)
-    quint16 topicLen = (static_cast<quint8>(payload.at(pos)) << 8) |
-                        static_cast<quint8>(payload.at(pos + 1));
+    quint16 topicLen =
+        (static_cast<quint8>(payload.at(pos)) << 8) | static_cast<quint8>(payload.at(pos + 1));
     pos += 2;
 
-    if (pos + topicLen > payload.size()) return;
+    if (pos + topicLen > payload.size())
+        return;
     QString topic = QString::fromUtf8(payload.mid(pos, topicLen));
     pos += topicLen;
 
@@ -379,9 +358,10 @@ void MqttotClient::handlePublish(quint8 flags, const QByteArray& payload)
     quint8 qos = (flags >> 1) & 0x03;
     quint16 msgId = 0;
     if (qos > 0) {
-        if (pos + 2 > payload.size()) return;
-        msgId = (static_cast<quint8>(payload.at(pos)) << 8) |
-                 static_cast<quint8>(payload.at(pos + 1));
+        if (pos + 2 > payload.size())
+            return;
+        msgId =
+            (static_cast<quint8>(payload.at(pos)) << 8) | static_cast<quint8>(payload.at(pos + 1));
         pos += 2;
 
         // Send PUBACK
@@ -400,29 +380,24 @@ void MqttotClient::handlePublish(quint8 flags, const QByteArray& payload)
     emit messageReceived(topic, msgPayload);
 }
 
-void MqttotClient::handlePubAck(const QByteArray& payload)
-{
-    if (payload.size() < 2) return;
-    quint16 msgId = (static_cast<quint8>(payload.at(0)) << 8) |
-                     static_cast<quint8>(payload.at(1));
+void MqttotClient::handlePubAck(const QByteArray & payload) {
+    if (payload.size() < 2)
+        return;
+    quint16 msgId = (static_cast<quint8>(payload.at(0)) << 8) | static_cast<quint8>(payload.at(1));
     emit publishAcknowledged(msgId);
 }
 
-void MqttotClient::handleSubAck(const QByteArray& payload)
-{
+void MqttotClient::handleSubAck(const QByteArray & payload) {
     Q_UNUSED(payload);
 }
 
-void MqttotClient::handlePingResp()
-{
-}
+void MqttotClient::handlePingResp() {}
 
 // ============================================================
 // Helpers
 // ============================================================
 
-QByteArray MqttotClient::encodeVariableByteInt(quint32 value)
-{
+QByteArray MqttotClient::encodeVariableByteInt(quint32 value) {
     QByteArray result;
     do {
         quint8 encodedByte = value % 128;
@@ -435,8 +410,7 @@ QByteArray MqttotClient::encodeVariableByteInt(quint32 value)
     return result;
 }
 
-quint32 MqttotClient::decodeVariableByteInt(const QByteArray& data, int& bytesUsed)
-{
+quint32 MqttotClient::decodeVariableByteInt(const QByteArray & data, int & bytesUsed) {
     quint32 value = 0;
     quint32 multiplier = 1;
     bytesUsed = 0;
@@ -446,31 +420,31 @@ quint32 MqttotClient::decodeVariableByteInt(const QByteArray& data, int& bytesUs
         value += (encodedByte & 0x7F) * multiplier;
         multiplier *= 128;
         bytesUsed = i + 1;
-        if ((encodedByte & 0x80) == 0) break;
+        if ((encodedByte & 0x80) == 0)
+            break;
     }
 
     return value;
 }
 
-void MqttotClient::sendPacket(const QByteArray& packet)
-{
+void MqttotClient::sendPacket(const QByteArray & packet) {
     if (m_socket && m_socket->state() == QAbstractSocket::ConnectedState) {
         m_socket->write(packet);
         m_socket->flush();
     }
 }
 
-quint16 MqttotClient::nextMessageId()
-{
+quint16 MqttotClient::nextMessageId() {
     quint16 id = m_nextMsgId;
     m_nextMsgId++;
-    if (m_nextMsgId == 0) m_nextMsgId = 1;
+    if (m_nextMsgId == 0)
+        m_nextMsgId = 1;
     return id;
 }
 
-QByteArray MqttotClient::zlibCompress(const QByteArray& data)
-{
-    if (data.isEmpty()) return QByteArray();
+QByteArray MqttotClient::zlibCompress(const QByteArray & data) {
+    if (data.isEmpty())
+        return QByteArray();
 
     z_stream zs;
     memset(&zs, 0, sizeof(zs));
@@ -480,14 +454,14 @@ QByteArray MqttotClient::zlibCompress(const QByteArray& data)
         return QByteArray();
     }
 
-    zs.next_in = reinterpret_cast<Bytef*>(const_cast<char*>(data.constData()));
+    zs.next_in = reinterpret_cast<Bytef *>(const_cast<char *>(data.constData()));
     zs.avail_in = static_cast<uInt>(data.size());
 
     QByteArray result;
     char outBuffer[32768];
 
     do {
-        zs.next_out = reinterpret_cast<Bytef*>(outBuffer);
+        zs.next_out = reinterpret_cast<Bytef *>(outBuffer);
         zs.avail_out = sizeof(outBuffer);
 
         int ret = deflate(&zs, Z_FINISH);
@@ -503,9 +477,9 @@ QByteArray MqttotClient::zlibCompress(const QByteArray& data)
     return result;
 }
 
-QByteArray MqttotClient::zlibDecompress(const QByteArray& data)
-{
-    if (data.isEmpty()) return QByteArray();
+QByteArray MqttotClient::zlibDecompress(const QByteArray & data) {
+    if (data.isEmpty())
+        return QByteArray();
 
     // Check zlib magic byte
     if (static_cast<quint8>(data.at(0)) != 0x78) {
@@ -520,14 +494,14 @@ QByteArray MqttotClient::zlibDecompress(const QByteArray& data)
         return QByteArray();
     }
 
-    zs.next_in = reinterpret_cast<Bytef*>(const_cast<char*>(data.constData()));
+    zs.next_in = reinterpret_cast<Bytef *>(const_cast<char *>(data.constData()));
     zs.avail_in = static_cast<uInt>(data.size());
 
     QByteArray result;
     char outBuffer[32768];
 
     do {
-        zs.next_out = reinterpret_cast<Bytef*>(outBuffer);
+        zs.next_out = reinterpret_cast<Bytef *>(outBuffer);
         zs.avail_out = sizeof(outBuffer);
 
         int ret = inflate(&zs, Z_NO_FLUSH);
@@ -538,7 +512,8 @@ QByteArray MqttotClient::zlibDecompress(const QByteArray& data)
 
         result.append(outBuffer, static_cast<int>(sizeof(outBuffer) - zs.avail_out));
 
-        if (ret == Z_STREAM_END) break;
+        if (ret == Z_STREAM_END)
+            break;
     } while (zs.avail_out == 0);
 
     inflateEnd(&zs);

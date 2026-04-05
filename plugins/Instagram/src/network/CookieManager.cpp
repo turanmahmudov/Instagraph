@@ -1,23 +1,19 @@
 #include "CookieManager.h"
 #include "../utils/Constants.h"
-#include <QFile>
 #include <QDataStream>
-#include <QUrl>
+#include <QFile>
 #include <QRegExp>
 #include <QTextStream>
+#include <QUrl>
 
 namespace IG {
 
-CookieManager::CookieManager(const QString& dataPath, QObject* parent)
-    : QObject(parent)
-    , m_dataPath(dataPath)
-    , m_cookieJar(new QNetworkCookieJar(this))
-{
+CookieManager::CookieManager(const QString & dataPath, QObject * parent)
+    : QObject(parent), m_dataPath(dataPath), m_cookieJar(new QNetworkCookieJar(this)) {
     loadCookies();
 }
 
-CookieManager::~CookieManager() {
-}
+CookieManager::~CookieManager() {}
 
 void CookieManager::loadCookies() {
     QFile f(m_dataPath + "/cookies.dat");
@@ -40,14 +36,14 @@ void CookieManager::loadCookies() {
 void CookieManager::saveCookies() {
     // Try multiple URL variants to get all cookies
     QList<QNetworkCookie> list = m_cookieJar->cookiesForUrl(QUrl(Constants::apiUrl() + "/"));
-    
+
     // Also get cookies from i.instagram.com
     QList<QNetworkCookie> iCookies = m_cookieJar->cookiesForUrl(QUrl("https://i.instagram.com/"));
-    
+
     // Merge cookies
-    for (const QNetworkCookie& cookie : iCookies) {
+    for (const QNetworkCookie & cookie : iCookies) {
         bool found = false;
-        for (const QNetworkCookie& existing : list) {
+        for (const QNetworkCookie & existing : list) {
             if (existing.name() == cookie.name()) {
                 found = true;
                 break;
@@ -84,21 +80,22 @@ void CookieManager::clearCookies() {
 QString CookieManager::extractCsrfToken() const {
     // First try to get from cookie jar directly
     QList<QNetworkCookie> cookies = m_cookieJar->cookiesForUrl(QUrl("https://i.instagram.com/"));
-    
-    for (const QNetworkCookie& cookie : cookies) {
+
+    for (const QNetworkCookie & cookie : cookies) {
         if (cookie.name() == "csrftoken") {
             return QString::fromUtf8(cookie.value());
         }
     }
-    
+
     // Also try with different URL variants
-    QList<QNetworkCookie> allCookies = m_cookieJar->cookiesForUrl(QUrl("https://www.instagram.com/"));
-    for (const QNetworkCookie& cookie : allCookies) {
+    QList<QNetworkCookie> allCookies =
+        m_cookieJar->cookiesForUrl(QUrl("https://www.instagram.com/"));
+    for (const QNetworkCookie & cookie : allCookies) {
         if (cookie.name() == "csrftoken") {
             return QString::fromUtf8(cookie.value());
         }
     }
-    
+
     // Fallback: try from file
     QFile f(m_dataPath + "/cookies.dat");
     if (!f.open(QIODevice::ReadOnly)) {
@@ -118,14 +115,15 @@ QString CookieManager::extractCsrfToken() const {
 
 QString CookieManager::extractSessionId() const {
     QList<QNetworkCookie> cookies = m_cookieJar->cookiesForUrl(QUrl("https://i.instagram.com/"));
-    for (const QNetworkCookie& cookie : cookies) {
+    for (const QNetworkCookie & cookie : cookies) {
         if (cookie.name() == "sessionid") {
             return QString::fromUtf8(cookie.value());
         }
     }
 
-    QList<QNetworkCookie> allCookies = m_cookieJar->cookiesForUrl(QUrl("https://www.instagram.com/"));
-    for (const QNetworkCookie& cookie : allCookies) {
+    QList<QNetworkCookie> allCookies =
+        m_cookieJar->cookiesForUrl(QUrl("https://www.instagram.com/"));
+    for (const QNetworkCookie & cookie : allCookies) {
         if (cookie.name() == "sessionid") {
             return QString::fromUtf8(cookie.value());
         }

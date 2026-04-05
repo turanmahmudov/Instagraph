@@ -1,43 +1,71 @@
 #ifndef INSTAGRAM_SESSIONMANAGER_H
 #define INSTAGRAM_SESSIONMANAGER_H
 
+#include <QDir>
 #include <QObject>
 #include <QString>
 #include <QVariantMap>
-#include <QDir>
 
 namespace IG {
 
 class SessionManager : public QObject {
     Q_OBJECT
 public:
-    explicit SessionManager(QObject* parent = nullptr);
+    explicit SessionManager(QObject * parent = nullptr);
     ~SessionManager();
 
     // Getters
-    bool isLoggedIn() const { return m_isLoggedIn; }
-    QString userId() const { return m_userId; }
-    QString username() const { return m_username; }
-    QString password() const { return m_password; }
-    QString csrfToken() const { return m_csrfToken; }
-    QString uuid() const { return m_uuid; }
-    QString deviceId() const { return m_deviceId; }
-    QString phoneId() const { return m_phoneId; }
-    QString advertisingId() const { return m_advertisingId; }
-    QString rankToken() const { return m_rankToken; }
-    QString profilePic() const { return m_profilePic; }
-    QString authorizationHeader() const { return m_authorizationHeader; }
-    QDir dataPath() const { return m_dataPath; }
-    QDir photosPath() const { return m_photosPath; }
+    bool isLoggedIn() const {
+        return m_isLoggedIn;
+    }
+    QString userId() const {
+        return m_userId;
+    }
+    QString username() const {
+        return m_username;
+    }
+    QString password() const {
+        return m_password;
+    }
+    QString csrfToken() const {
+        return m_csrfToken;
+    }
+    QString uuid() const {
+        return m_uuid;
+    }
+    QString deviceId() const {
+        return m_deviceId;
+    }
+    QString phoneId() const {
+        return m_phoneId;
+    }
+    QString advertisingId() const {
+        return m_advertisingId;
+    }
+    QString rankToken() const {
+        return m_rankToken;
+    }
+    QString profilePic() const {
+        return m_profilePic;
+    }
+    QString authorizationHeader() const {
+        return m_authorizationHeader;
+    }
+    QDir dataPath() const {
+        return m_dataPath;
+    }
+    QDir photosPath() const {
+        return m_photosPath;
+    }
 
     // Setters
-    void setUsername(const QString& username);
-    void setPassword(const QString& password);
-    void setUserId(const QString& userId);
-    void setCsrfToken(const QString& token);
-    void setProfilePic(const QString& pic);
+    void setUsername(const QString & username);
+    void setPassword(const QString & password);
+    void setUserId(const QString & userId);
+    void setCsrfToken(const QString & token);
+    void setProfilePic(const QString & pic);
     void setLoggedIn(bool loggedIn);
-    void setAuthorizationHeader(const QString& header);
+    void setAuthorizationHeader(const QString & header);
 
     // Authenticated params for API requests (SOLID: Single Responsibility)
     QVariantMap authenticatedParams() const;
@@ -50,7 +78,7 @@ public:
     // Device ID generation
     QString generateDeviceId();
     void regenerateUuid();
-    
+
     // CSRF token generation (fallback when Instagram doesn't send cookies)
     static QString generateCsrfToken();
     void ensureCsrfToken();

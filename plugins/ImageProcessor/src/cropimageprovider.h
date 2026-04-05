@@ -22,10 +22,10 @@
 
 #include <QImage>
 
-class CropImageResponse : public QQuickImageResponse
-{
+class CropImageResponse : public QQuickImageResponse {
 public:
-    CropImageResponse(const QString &filePath, const QRectF &cropRect, const QString &errorString);
+    CropImageResponse(const QString & filePath, const QRectF & cropRect,
+                      const QString & errorString);
 
     QString errorString() const override;
     QQuickTextureFactory * textureFactory() const override;
@@ -35,10 +35,9 @@ private:
     QImage m_image;
 };
 
-class CropImageProvider : public QQuickAsyncImageProvider
-{
+class CropImageProvider : public QQuickAsyncImageProvider {
 public:
-    QQuickImageResponse *requestImageResponse(const QString & id, const QSize & requestedSize);
+    QQuickImageResponse * requestImageResponse(const QString & id, const QSize & requestedSize);
 };
 
 #endif // CROPIMAGEPROVIDER_H

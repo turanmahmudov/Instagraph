@@ -6,23 +6,20 @@
 
 namespace IG {
 
-DirectEndpoint::DirectEndpoint(ApiClient* client, QObject* parent)
-    : QObject(parent)
-    , m_client(client)
-{
-}
+DirectEndpoint::DirectEndpoint(ApiClient * client, QObject * parent)
+    : QObject(parent), m_client(client) {}
 
-void DirectEndpoint::getInbox(const QString& cursorId) {
+void DirectEndpoint::getInbox(const QString & cursorId) {
     auto builder = RequestBuilder::get("direct_v2/inbox/")
-        .queryParam("visual_message_return_type", "unseen")
-        .queryParam("persistentBadging", "true")
-        .queryParam("use_unified_inbox", "true");
-    
+                       .queryParam("visual_message_return_type", "unseen")
+                       .queryParam("persistentBadging", "true")
+                       .queryParam("use_unified_inbox", "true");
+
     if (!cursorId.isEmpty()) {
         builder.queryParam("cursor", cursorId);
     }
 
-    m_client->execute(builder.build(), [this](const Response& response) {
+    m_client->execute(builder.build(), [this](const Response & response) {
         if (response.ok()) {
             emit inboxReady(response.toVariant());
         } else {
@@ -33,11 +30,11 @@ void DirectEndpoint::getInbox(const QString& cursorId) {
 
 void DirectEndpoint::getPendingInbox() {
     auto request = RequestBuilder::get("direct_v2/pending_inbox/")
-        .queryParam("persistentBadging", "true")
-        .queryParam("use_unified_inbox", "true")
-        .build();
+                       .queryParam("persistentBadging", "true")
+                       .queryParam("use_unified_inbox", "true")
+                       .build();
 
-    m_client->execute(request, [this](const Response& response) {
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit pendingInboxReady(response.toVariant());
         } else {
@@ -46,16 +43,16 @@ void DirectEndpoint::getPendingInbox() {
     });
 }
 
-void DirectEndpoint::getDirectThread(const QString& threadId, const QString& cursorId) {
+void DirectEndpoint::getDirectThread(const QString & threadId, const QString & cursorId) {
     auto builder = RequestBuilder::get("direct_v2/threads/{thread_id}/")
-        .pathParam("thread_id", threadId)
-        .queryParam("use_unified_inbox", "true");
-    
+                       .pathParam("thread_id", threadId)
+                       .queryParam("use_unified_inbox", "true");
+
     if (!cursorId.isEmpty()) {
         builder.queryParam("cursor", cursorId);
     }
 
-    m_client->execute(builder.build(), [this](const Response& response) {
+    m_client->execute(builder.build(), [this](const Response & response) {
         if (response.ok()) {
             emit directThreadReady(response.toVariant());
         } else {
@@ -65,10 +62,9 @@ void DirectEndpoint::getDirectThread(const QString& threadId, const QString& cur
 }
 
 void DirectEndpoint::getRecentRecipients() {
-    auto request = RequestBuilder::get("direct_share/recent_recipients/")
-        .build();
+    auto request = RequestBuilder::get("direct_share/recent_recipients/").build();
 
-    m_client->execute(request, [this](const Response& response) {
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit recentRecipientsReady(response.toVariant());
         } else {
@@ -77,17 +73,17 @@ void DirectEndpoint::getRecentRecipients() {
     });
 }
 
-void DirectEndpoint::getRankedRecipients(const QString& query) {
+void DirectEndpoint::getRankedRecipients(const QString & query) {
     auto builder = RequestBuilder::get("direct_v2/ranked_recipients/")
-        .queryParam("mode", "raven")
-        .queryParam("show_threads", "true")
-        .queryParam("use_unified_inbox", "false");
-    
+                       .queryParam("mode", "raven")
+                       .queryParam("show_threads", "true")
+                       .queryParam("use_unified_inbox", "false");
+
     if (!query.isEmpty()) {
         builder.queryParam("query", query);
     }
 
-    m_client->execute(builder.build(), [this](const Response& response) {
+    m_client->execute(builder.build(), [this](const Response & response) {
         if (response.ok()) {
             emit rankedRecipientsReady(response.toVariant());
         } else {
@@ -96,21 +92,21 @@ void DirectEndpoint::getRankedRecipients(const QString& query) {
     });
 }
 
-void DirectEndpoint::markThreadSeen(const QString& threadId, const QString& threadItemId,
-                                    const QString& uuid, const QString& csrfToken) {
+void DirectEndpoint::markThreadSeen(const QString & threadId, const QString & threadItemId,
+                                    const QString & uuid, const QString & csrfToken) {
     auto request = RequestBuilder::post("direct_v2/threads/{thread_id}/items/{item_id}/seen/")
-        .pathParam("thread_id", threadId)
-        .pathParam("item_id", threadItemId)
-        .param("_uuid", uuid)
-        .param("_csrftoken", csrfToken)
-        .param("use_unified_inbox", "true")
-        .param("action", "mark_seen")
-        .param("thread_id", threadId)
-        .param("item_id", threadItemId)
-        .unsigned_()
-        .build();
+                       .pathParam("thread_id", threadId)
+                       .pathParam("item_id", threadItemId)
+                       .param("_uuid", uuid)
+                       .param("_csrftoken", csrfToken)
+                       .param("use_unified_inbox", "true")
+                       .param("action", "mark_seen")
+                       .param("thread_id", threadId)
+                       .param("item_id", threadItemId)
+                       .unsigned_()
+                       .build();
 
-    m_client->execute(request, [this](const Response& response) {
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit threadMarkedSeen(response.toVariant());
         } else {
@@ -119,8 +115,8 @@ void DirectEndpoint::markThreadSeen(const QString& threadId, const QString& thre
     });
 }
 
-void DirectEndpoint::sendMessage(const QString& recipients, const QString& text, 
-                                 const QString& threadId, const QString& uuid) {
+void DirectEndpoint::sendMessage(const QString & recipients, const QString & text,
+                                 const QString & threadId, const QString & uuid) {
     QString boundary = uuid;
     QString clientContext = QUuid::createUuid().toString();
     clientContext = clientContext.mid(1, clientContext.length() - 2);
@@ -147,11 +143,11 @@ void DirectEndpoint::sendMessage(const QString& recipients, const QString& text,
     body += "--" + boundary.toUtf8() + "--";
 
     auto request = RequestBuilder::post("direct_v2/threads/broadcast/text/")
-        .multipart(boundary)
-        .rawBody(body)
-        .build();
+                       .multipart(boundary)
+                       .rawBody(body)
+                       .build();
 
-    m_client->execute(request, [this](const Response& response) {
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit messageReady(response.toVariant());
         } else {
@@ -160,8 +156,8 @@ void DirectEndpoint::sendMessage(const QString& recipients, const QString& text,
     });
 }
 
-void DirectEndpoint::sendLike(const QString& recipients, const QString& threadId, 
-                              const QString& uuid) {
+void DirectEndpoint::sendLike(const QString & recipients, const QString & threadId,
+                              const QString & uuid) {
     QString boundary = uuid;
     QString clientContext = QUuid::createUuid().toString();
     clientContext = clientContext.mid(1, clientContext.length() - 2);
@@ -194,11 +190,11 @@ void DirectEndpoint::sendLike(const QString& recipients, const QString& threadId
     body += "--" + boundary.toUtf8() + "--";
 
     auto request = RequestBuilder::post("direct_v2/threads/broadcast/like/")
-        .multipart(boundary)
-        .rawBody(body)
-        .build();
+                       .multipart(boundary)
+                       .rawBody(body)
+                       .build();
 
-    m_client->execute(request, [this](const Response& response) {
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit likeReady(response.toVariant());
         } else {
@@ -207,8 +203,8 @@ void DirectEndpoint::sendLike(const QString& recipients, const QString& threadId
     });
 }
 
-void DirectEndpoint::shareMedia(const QString& mediaId, const QString& recipients, 
-                                const QString& text, const QString& uuid) {
+void DirectEndpoint::shareMedia(const QString & mediaId, const QString & recipients,
+                                const QString & text, const QString & uuid) {
     QString boundary = uuid;
     QString clientContext = QUuid::createUuid().toString();
     clientContext = clientContext.mid(1, clientContext.length() - 2);
@@ -233,12 +229,12 @@ void DirectEndpoint::shareMedia(const QString& mediaId, const QString& recipient
     body += "--" + boundary.toUtf8() + "--";
 
     auto request = RequestBuilder::post("direct_v2/threads/broadcast/media_share/")
-        .queryParam("media_type", "photo")
-        .multipart(boundary)
-        .rawBody(body)
-        .build();
+                       .queryParam("media_type", "photo")
+                       .multipart(boundary)
+                       .rawBody(body)
+                       .build();
 
-    m_client->execute(request, [this](const Response& response) {
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit shareReady(response.toVariant());
         } else {

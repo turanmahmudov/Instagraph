@@ -1,8 +1,8 @@
 #ifndef INSTAGRAM_CONSTANTS_H
 #define INSTAGRAM_CONSTANTS_H
 
-#include <QString>
 #include <QByteArray>
+#include <QString>
 
 namespace IG {
 namespace Constants {

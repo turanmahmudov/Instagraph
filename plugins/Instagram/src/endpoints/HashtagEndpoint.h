@@ -11,26 +11,26 @@ class ApiClient;
 /**
  * @brief Handles all hashtag-related API operations.
  */
-class HashtagEndpoint : public QObject
-{
+class HashtagEndpoint : public QObject {
     Q_OBJECT
 
 public:
-    explicit HashtagEndpoint(ApiClient* client, QObject* parent = nullptr);
+    explicit HashtagEndpoint(ApiClient * client, QObject * parent = nullptr);
 
-    void getTagFeed(const QString& tag, const QString& maxId = "", const QString& rankToken = "");
-    void getTagSectionFeed(const QString& tag, const QString& tab, int page,
-                           const QStringList& nextMediaIds, const QString& maxId);
-    void searchTags(const QString& tag, const QString& rankToken = "");
+    void getTagFeed(const QString & tag, const QString & maxId = "",
+                    const QString & rankToken = "");
+    void getTagSectionFeed(const QString & tag, const QString & tab, int page,
+                           const QStringList & nextMediaIds, const QString & maxId);
+    void searchTags(const QString & tag, const QString & rankToken = "");
 
 Q_SIGNALS:
-    void tagFeedReady(const QVariant& answer);
-    void tagSectionFeedReady(const QVariant& answer);
-    void searchTagsReady(const QVariant& answer);
-    void error(const QString& message);
+    void tagFeedReady(const QVariant & answer);
+    void tagSectionFeedReady(const QVariant & answer);
+    void searchTagsReady(const QVariant & answer);
+    void error(const QString & message);
 
 private:
-    ApiClient* m_client;
+    ApiClient * m_client;
 };
 
 } // namespace IG

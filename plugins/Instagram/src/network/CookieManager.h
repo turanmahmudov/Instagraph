@@ -1,10 +1,10 @@
 #ifndef INSTAGRAM_COOKIEMANAGER_H
 #define INSTAGRAM_COOKIEMANAGER_H
 
-#include <QObject>
-#include <QNetworkCookieJar>
-#include <QNetworkCookie>
 #include <QList>
+#include <QNetworkCookie>
+#include <QNetworkCookieJar>
+#include <QObject>
 #include <QString>
 
 namespace IG {
@@ -12,10 +12,12 @@ namespace IG {
 class CookieManager : public QObject {
     Q_OBJECT
 public:
-    explicit CookieManager(const QString& dataPath, QObject* parent = nullptr);
+    explicit CookieManager(const QString & dataPath, QObject * parent = nullptr);
     ~CookieManager();
 
-    QNetworkCookieJar* cookieJar() const { return m_cookieJar; }
+    QNetworkCookieJar * cookieJar() const {
+        return m_cookieJar;
+    }
 
     void loadCookies();
     void saveCookies();
@@ -31,7 +33,7 @@ signals:
 
 private:
     QString m_dataPath;
-    QNetworkCookieJar* m_cookieJar;
+    QNetworkCookieJar * m_cookieJar;
 };
 
 } // namespace IG

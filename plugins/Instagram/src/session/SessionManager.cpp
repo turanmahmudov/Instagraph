@@ -1,26 +1,22 @@
 #include "SessionManager.h"
-#include <QStandardPaths>
 #include <QCryptographicHash>
-#include <QUuid>
-#include <QFile>
-#include <QTextStream>
-#include <QFileInfo>
 #include <QDateTime>
+#include <QFile>
+#include <QFileInfo>
 #include <QRandomGenerator>
+#include <QStandardPaths>
+#include <QTextStream>
+#include <QUuid>
 
 namespace IG {
 
-SessionManager::SessionManager(QObject* parent)
-    : QObject(parent)
-    , m_isLoggedIn(false)
-{
+SessionManager::SessionManager(QObject * parent) : QObject(parent), m_isLoggedIn(false) {
     initializePaths();
     initializeUuid();
     loadSession();
 }
 
-SessionManager::~SessionManager() {
-}
+SessionManager::~SessionManager() {}
 
 void SessionManager::initializePaths() {
     m_dataPath = QDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
@@ -98,7 +94,7 @@ void SessionManager::regenerateUuid() {
     emit sessionChanged();
 }
 
-void SessionManager::setUsername(const QString& username) {
+void SessionManager::setUsername(const QString & username) {
     if (m_username != username) {
         m_username = username;
         m_deviceId = generateDeviceId();
@@ -106,7 +102,7 @@ void SessionManager::setUsername(const QString& username) {
     }
 }
 
-void SessionManager::setPassword(const QString& password) {
+void SessionManager::setPassword(const QString & password) {
     if (m_password != password) {
         m_password = password;
         m_deviceId = generateDeviceId();
@@ -114,7 +110,7 @@ void SessionManager::setPassword(const QString& password) {
     }
 }
 
-void SessionManager::setUserId(const QString& userId) {
+void SessionManager::setUserId(const QString & userId) {
     if (m_userId != userId) {
         m_userId = userId;
         updateRankToken();
@@ -122,14 +118,14 @@ void SessionManager::setUserId(const QString& userId) {
     }
 }
 
-void SessionManager::setCsrfToken(const QString& token) {
+void SessionManager::setCsrfToken(const QString & token) {
     if (m_csrfToken != token) {
         m_csrfToken = token;
         emit sessionChanged();
     }
 }
 
-void SessionManager::setProfilePic(const QString& pic) {
+void SessionManager::setProfilePic(const QString & pic) {
     if (m_profilePic != pic) {
         m_profilePic = pic;
         emit sessionChanged();
@@ -144,7 +140,7 @@ void SessionManager::setLoggedIn(bool loggedIn) {
     }
 }
 
-void SessionManager::setAuthorizationHeader(const QString& header) {
+void SessionManager::setAuthorizationHeader(const QString & header) {
     if (m_authorizationHeader != header) {
         m_authorizationHeader = header;
         emit sessionChanged();
@@ -212,7 +208,8 @@ void SessionManager::loadSession() {
             tokenFile.close();
         }
 
-        // Session is valid if we have userId AND either authorization header or CSRF token
+        // Session is valid if we have userId AND either authorization header or
+        // CSRF token
         if (!m_userId.isEmpty() && (!m_authorizationHeader.isEmpty() || !m_csrfToken.isEmpty())) {
             m_isLoggedIn = true;
             updateRankToken();
@@ -249,13 +246,13 @@ QString SessionManager::generateDeviceId() {
     QFileInfo fi(m_dataPath.absolutePath());
     QByteArray volatileSeed = QString::number(fi.birthTime().toMSecsSinceEpoch()).toUtf8();
 
-    QByteArray data1 = QCryptographicHash::hash(
-        QString(m_username + m_password).toUtf8(),
-        QCryptographicHash::Md5).toHex();
+    QByteArray data1 =
+        QCryptographicHash::hash(QString(m_username + m_password).toUtf8(), QCryptographicHash::Md5)
+            .toHex();
 
-    QString data2 = QString(QCryptographicHash::hash(
-        QString(data1 + volatileSeed).toUtf8(),
-        QCryptographicHash::Md5).toHex());
+    QString data2 = QString(
+        QCryptographicHash::hash(QString(data1 + volatileSeed).toUtf8(), QCryptographicHash::Md5)
+            .toHex());
 
     return "android-" + data2.left(16);
 }
@@ -265,16 +262,17 @@ void SessionManager::updateRankToken() {
 }
 
 QString SessionManager::generateCsrfToken() {
-    // Generate a random 64-character alphanumeric token (following instagrapi approach)
+    // Generate a random 64-character alphanumeric token (following instagrapi
+    // approach)
     const QString chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     QString token;
     token.reserve(64);
-    
+
     for (int i = 0; i < 64; ++i) {
         int index = QRandomGenerator::global()->bounded(chars.length());
         token.append(chars.at(index));
     }
-    
+
     return token;
 }
 

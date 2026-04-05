@@ -4,19 +4,20 @@
 
 namespace IG {
 
-ClientError ErrorHandler::parseResponse(const QString& response, int httpCode) {
+ClientError ErrorHandler::parseResponse(const QString & response, int httpCode) {
     if (response.isEmpty()) {
         return ClientError(ClientError::Type::InvalidResponse, "Empty response", httpCode);
     }
 
     QJsonDocument doc = QJsonDocument::fromJson(response.toUtf8());
     if (doc.isNull() || !doc.isObject()) {
-        return ClientError(ClientError::Type::InvalidResponse, "Invalid JSON response", response, httpCode);
+        return ClientError(ClientError::Type::InvalidResponse, "Invalid JSON response", response,
+                           httpCode);
     }
 
     QJsonObject obj = doc.object();
     QString status = obj.value("status").toString();
-    
+
     if (status == "ok") {
         return ClientError(); // No error
     }
@@ -66,23 +67,23 @@ ClientError ErrorHandler::parseResponse(const QString& response, int httpCode) {
     return ClientError(errorType, message, response, httpCode);
 }
 
-ClientError ErrorHandler::fromNetworkError(QNetworkReply::NetworkError error, const QString& errorString) {
+ClientError ErrorHandler::fromNetworkError(QNetworkReply::NetworkError error,
+                                           const QString & errorString) {
     ClientError::Type type = ClientError::Type::Network;
-    
-    if (error == QNetworkReply::TimeoutError || 
-        error == QNetworkReply::OperationCanceledError) {
+
+    if (error == QNetworkReply::TimeoutError || error == QNetworkReply::OperationCanceledError) {
         type = ClientError::Type::Timeout;
     }
-    
+
     return ClientError(type, errorString, 0);
 }
 
-bool ErrorHandler::isSuccess(const QJsonObject& response) {
+bool ErrorHandler::isSuccess(const QJsonObject & response) {
     QString status = response.value("status").toString();
     return status == "ok" || status.isEmpty();
 }
 
-bool ErrorHandler::isSuccess(const QString& response) {
+bool ErrorHandler::isSuccess(const QString & response) {
     QJsonDocument doc = QJsonDocument::fromJson(response.toUtf8());
     if (doc.isNull() || !doc.isObject()) {
         return false;

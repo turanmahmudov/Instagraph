@@ -9,10 +9,11 @@ namespace IG {
 
 class ErrorHandler {
 public:
-    static ClientError parseResponse(const QString& response, int httpCode = 200);
-    static ClientError fromNetworkError(QNetworkReply::NetworkError error, const QString& errorString);
-    static bool isSuccess(const QJsonObject& response);
-    static bool isSuccess(const QString& response);
+    static ClientError parseResponse(const QString & response, int httpCode = 200);
+    static ClientError fromNetworkError(QNetworkReply::NetworkError error,
+                                        const QString & errorString);
+    static bool isSuccess(const QJsonObject & response);
+    static bool isSuccess(const QString & response);
 };
 
 } // namespace IG

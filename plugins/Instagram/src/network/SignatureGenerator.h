@@ -1,9 +1,9 @@
 #ifndef INSTAGRAM_SIGNATUREGENERATOR_H
 #define INSTAGRAM_SIGNATUREGENERATOR_H
 
-#include <QString>
-#include <QJsonObject>
 #include <QByteArray>
+#include <QJsonObject>
+#include <QString>
 
 namespace IG {
 
@@ -12,10 +12,11 @@ public:
     /**
      * Generate signed body for Instagram API
      * @param data The JSON data to sign
-     * @param useHmac If true, use actual HMAC signature; if false (default), use "SIGNATURE" literal
+     * @param useHmac If true, use actual HMAC signature; if false (default), use
+     * "SIGNATURE" literal
      */
-    static QString generate(const QJsonObject& data, bool useHmac = false);
-    static QByteArray hmacSha256(const QByteArray& data, const QByteArray& key);
+    static QString generate(const QJsonObject & data, bool useHmac = false);
+    static QByteArray hmacSha256(const QByteArray & data, const QByteArray & key);
 };
 
 } // namespace IG

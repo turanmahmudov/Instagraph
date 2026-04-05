@@ -6,18 +6,15 @@
 
 namespace IG {
 
-LocationEndpoint::LocationEndpoint(ApiClient* client, QObject* parent)
-    : QObject(parent)
-    , m_client(client)
-{
-}
+LocationEndpoint::LocationEndpoint(ApiClient * client, QObject * parent)
+    : QObject(parent), m_client(client) {}
 
-void LocationEndpoint::getGeoMedia(const QString& usernameId) {
+void LocationEndpoint::getGeoMedia(const QString & usernameId) {
     auto request = RequestBuilder::get("maps/user/{username_id}/")
-        .pathParam("username_id", usernameId)
-        .build();
+                       .pathParam("username_id", usernameId)
+                       .build();
 
-    m_client->execute(request, [this](const Response& response) {
+    m_client->execute(request, [this](const Response & response) {
         if (response.ok()) {
             emit geoMediaReady(response.toVariant());
         } else {
@@ -26,15 +23,15 @@ void LocationEndpoint::getGeoMedia(const QString& usernameId) {
     });
 }
 
-void LocationEndpoint::getLocationFeed(const QString& locationId, const QString& maxId) {
-    auto builder = RequestBuilder::get("feed/location/{location_id}/")
-        .pathParam("location_id", locationId);
-    
+void LocationEndpoint::getLocationFeed(const QString & locationId, const QString & maxId) {
+    auto builder =
+        RequestBuilder::get("feed/location/{location_id}/").pathParam("location_id", locationId);
+
     if (!maxId.isEmpty()) {
         builder.queryParam("max_id", maxId);
     }
 
-    m_client->execute(builder.build(), [this](const Response& response) {
+    m_client->execute(builder.build(), [this](const Response & response) {
         if (response.ok()) {
             emit locationFeedReady(response.toVariant());
         } else {
@@ -43,12 +40,13 @@ void LocationEndpoint::getLocationFeed(const QString& locationId, const QString&
     });
 }
 
-void LocationEndpoint::getLocationSectionFeed(const QString& locationId, const QString& tab, int page,
-                                              const QStringList& nextMediaIds, const QString& maxId) {
+void LocationEndpoint::getLocationSectionFeed(const QString & locationId, const QString & tab,
+                                              int page, const QStringList & nextMediaIds,
+                                              const QString & maxId) {
     auto builder = RequestBuilder::post("locations/{location_id}/sections/")
-        .pathParam("location_id", locationId)
-        .param("tab", tab)
-        .param("page", page);
+                       .pathParam("location_id", locationId)
+                       .param("tab", tab)
+                       .param("page", page);
 
     if (!nextMediaIds.isEmpty()) {
         builder.param("next_media_ids", "[" + nextMediaIds.join(",") + "]");
@@ -58,7 +56,7 @@ void LocationEndpoint::getLocationSectionFeed(const QString& locationId, const Q
         builder.param("max_id", maxId);
     }
 
-    m_client->execute(builder.build(), [this](const Response& response) {
+    m_client->execute(builder.build(), [this](const Response & response) {
         if (response.ok()) {
             emit locationSectionFeedReady(response.toVariant());
         } else {
@@ -67,20 +65,20 @@ void LocationEndpoint::getLocationSectionFeed(const QString& locationId, const Q
     });
 }
 
-void LocationEndpoint::searchLocation(const QString& lat, const QString& lng, 
-                                      const QString& query, const QString& rankToken) {
+void LocationEndpoint::searchLocation(const QString & lat, const QString & lng,
+                                      const QString & query, const QString & rankToken) {
     auto builder = RequestBuilder::get("location_search/")
-        .queryParam("rank_token", rankToken)
-        .queryParam("latitude", lat)
-        .queryParam("longitude", lng);
-    
+                       .queryParam("rank_token", rankToken)
+                       .queryParam("latitude", lat)
+                       .queryParam("longitude", lng);
+
     if (!query.isEmpty()) {
         builder.queryParam("search_query", query);
     } else {
         builder.queryParam("timestamp", QString::number(QDateTime::currentSecsSinceEpoch()));
     }
 
-    m_client->execute(builder.build(), [this](const Response& response) {
+    m_client->execute(builder.build(), [this](const Response & response) {
         if (response.ok()) {
             emit searchLocationReady(response.toVariant());
         } else {

@@ -11,24 +11,23 @@ class ApiClient;
 /**
  * @brief Handles all usertag-related API operations.
  */
-class UsertagEndpoint : public QObject
-{
+class UsertagEndpoint : public QObject {
     Q_OBJECT
 
 public:
-    explicit UsertagEndpoint(ApiClient* client, QObject* parent = nullptr);
+    explicit UsertagEndpoint(ApiClient * client, QObject * parent = nullptr);
 
-    void getUserTags(const QString& userId, const QString& maxId = "", 
-                     const QString& minTimestamp = "", const QString& rankToken = "");
-    void removeSelfTag(const QString& mediaId);
+    void getUserTags(const QString & userId, const QString & maxId = "",
+                     const QString & minTimestamp = "", const QString & rankToken = "");
+    void removeSelfTag(const QString & mediaId);
 
 Q_SIGNALS:
-    void userTagsReady(const QVariant& answer);
-    void selfTagRemoved(const QVariant& answer);
-    void error(const QString& message);
+    void userTagsReady(const QVariant & answer);
+    void selfTagRemoved(const QVariant & answer);
+    void error(const QString & message);
 
 private:
-    ApiClient* m_client;
+    ApiClient * m_client;
 };
 
 } // namespace IG

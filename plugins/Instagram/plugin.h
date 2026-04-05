@@ -8,7 +8,7 @@ class InstagramPlugin : public QQmlExtensionPlugin {
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface")
 
 public:
-    void registerTypes(const char *uri) override;
+    void registerTypes(const char * uri) override;
 };
 
 #endif // INSTAGRAM_PLUGIN_H

@@ -18,24 +18,23 @@
 #define OFFSCREENRENDERER_H
 
 #include <QObject>
-#include <QQuickRenderControl>
-#include <QQuickWindow>
+#include <QOffscreenSurface>
+#include <QOpenGLContext>
+#include <QOpenGLFramebufferObject>
 #include <QQmlEngine>
 #include <QQuickItem>
-#include <QOpenGLContext>
-#include <QOffscreenSurface>
-#include <QOpenGLFramebufferObject>
+#include <QQuickRenderControl>
+#include <QQuickWindow>
 
-class OffscreenRenderer : public QObject
-{
+class OffscreenRenderer : public QObject {
     Q_OBJECT
-    Q_PROPERTY(QQuickItem* contentItem READ contentItem NOTIFY contentItemChanged)
+    Q_PROPERTY(QQuickItem * contentItem READ contentItem NOTIFY contentItemChanged)
 
 public:
-    explicit OffscreenRenderer(QObject *parent = 0);
+    explicit OffscreenRenderer(QObject * parent = 0);
     ~OffscreenRenderer();
 
-    QQuickItem* contentItem() const;
+    QQuickItem * contentItem() const;
 
 signals:
     void contentItemChanged();
@@ -43,9 +42,9 @@ signals:
 public slots:
 
 private:
-    QQuickRenderControl* m_renderControl;
-    QQuickWindow* m_window;
-    QQmlEngine* m_qmlEngine;
+    QQuickRenderControl * m_renderControl;
+    QQuickWindow * m_window;
+    QQmlEngine * m_qmlEngine;
 };
 
 #endif // OFFSCREENRENDERER_H

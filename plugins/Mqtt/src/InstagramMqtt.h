@@ -6,7 +6,7 @@
 #include <QVariantMap>
 
 namespace IGMQTT {
-    class FbnsClient;
+class FbnsClient;
 }
 
 /**
@@ -25,23 +25,23 @@ class InstagramMqtt : public QObject {
     Q_PROPERTY(bool fbnsConnected READ isFbnsConnected NOTIFY fbnsConnectionChanged)
 
 public:
-    explicit InstagramMqtt(QObject* parent = nullptr);
+    explicit InstagramMqtt(QObject * parent = nullptr);
     ~InstagramMqtt();
 
     bool isFbnsConnected() const;
 
 public slots:
-    Q_INVOKABLE void connectToMqtt(const QString& userId, const QString& phoneId);
+    Q_INVOKABLE void connectToMqtt(const QString & userId, const QString & phoneId);
     Q_INVOKABLE void disconnectFromMqtt();
 
 signals:
     void fbnsConnectionChanged(bool connected);
-    void mqttError(const QString& message);
-    void fbnsTokenReceived(const QString& token);
-    void pushNotificationReceived(const QVariant& notification);
+    void mqttError(const QString & message);
+    void fbnsTokenReceived(const QString & token);
+    void pushNotificationReceived(const QVariant & notification);
 
 private:
-    IGMQTT::FbnsClient* m_fbns;
+    IGMQTT::FbnsClient * m_fbns;
 };
 
 #endif // MQTT_INSTAGRAM_MQTT_H

@@ -1,15 +1,12 @@
 #include "ImageEditor.h"
-#include <QImage>
-#include <QFile>
-#include <QTransform>
 #include <QDebug>
+#include <QFile>
+#include <QImage>
+#include <QTransform>
 
-ImageEditor::ImageEditor(QObject* parent)
-    : QObject(parent)
-{
-}
+ImageEditor::ImageEditor(QObject * parent) : QObject(parent) {}
 
-void ImageEditor::rotateImage(const QString& filename, qreal degrees) {
+void ImageEditor::rotateImage(const QString & filename, qreal degrees) {
     QImage image(filename);
     if (image.isNull()) {
         emit error("Failed to load image: " + filename);
@@ -36,7 +33,7 @@ void ImageEditor::rotateImage(const QString& filename, qreal degrees) {
     imgFile.close();
 }
 
-void ImageEditor::cropImage(const QString& filename, bool squared, bool isRotated) {
+void ImageEditor::cropImage(const QString & filename, bool squared, bool isRotated) {
     QImage image(filename);
     if (image.isNull()) {
         emit error("Failed to load image: " + filename);
@@ -84,7 +81,8 @@ void ImageEditor::cropImage(const QString& filename, bool squared, bool isRotate
     imgFile.close();
 }
 
-void ImageEditor::cropImage(const QString& inFilename, const QString& outFilename, int topSpace, bool squared) {
+void ImageEditor::cropImage(const QString & inFilename, const QString & outFilename, int topSpace,
+                            bool squared) {
     QImage image(inFilename);
     if (image.isNull()) {
         emit error("Failed to load image: " + inFilename);
@@ -108,7 +106,7 @@ void ImageEditor::cropImage(const QString& inFilename, const QString& outFilenam
     }
 }
 
-void ImageEditor::scaleImage(const QString& filename) {
+void ImageEditor::scaleImage(const QString & filename) {
     QImage image(filename);
     if (image.isNull()) {
         emit error("Failed to load image: " + filename);
