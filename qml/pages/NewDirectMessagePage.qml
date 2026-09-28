@@ -45,12 +45,12 @@ PageItem {
 
     function sendMessage(text) {
         isSending = true;
-        instagram.directMessage(recipientsViewModel.buildRecipientsString(threadUsers), text, "");
+        recipientsViewModel.sendMessage(threadUsers, text);
     }
 
     function sendLike() {
         isSending = true;
-        instagram.directLike(recipientsViewModel.buildRecipientsString(threadUsers), "");
+        recipientsViewModel.sendLike(threadUsers);
     }
 
     function openSentThread(data) {

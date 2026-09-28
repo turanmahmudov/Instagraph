@@ -19,12 +19,34 @@ import "../components/Feed"
 import "../components/Media"
 import "../components/Camera"
 import "../components/Actions"
+import "../viewmodels"
 
 PageItem {
     id: editprofilepage
 
-    property bool changeProfilePictureLoading: false
     property bool awaitingProfilePhoto: false
+
+    EditProfileViewModel {
+        id: editProfileViewModel
+        onProfileChanged: {
+            if (profile && !isSaving) {
+                fillFields(profile);
+            }
+        }
+        onProfileSaved: {
+            pageLayout.removePages(editprofilepage);
+
+            userPage.getUsernameInfo();
+            userPage.getUsernameFeed();
+        }
+        onPictureChanged: {
+            pageLayout.removePages(userPage);
+            pageLayout.primaryPage = userPage;
+
+            userPage.getUsernameInfo();
+            userPage.getUsernameFeed();
+        }
+    }
 
     header: PageHeaderItem {
         title: i18n.tr("Edit Profile")
@@ -32,9 +54,15 @@ PageItem {
             Action {
                 iconName: IconsConstants.camera_flip
                 text: i18n.tr("Save")
-                onTriggered: {
-                    instagram.editProfile(webField.text, (phoneField.text.replace('+', '')), nameField.text, bioField.text, emailField.text, genderField.selectedIndex == 1 ? true : false);
-                }
+                enabled: !editProfileViewModel.isSaving
+                onTriggered: editProfileViewModel.saveProfile({
+                    "url": webField.text,
+                    "phone": phoneField.text,
+                    "name": nameField.text,
+                    "biography": bioField.text,
+                    "email": emailField.text,
+                    "gender": genderField.selectedIndex
+                })
             }
         ]
     }
@@ -80,8 +108,7 @@ PageItem {
                         title.text: i18n.tr("Remove Profile Photo")
                     }
                     onClicked: {
-                        changeProfilePictureLoading = true;
-                        instagram.removeProfilePicture();
+                        editProfileViewModel.removePicture();
                         PopupUtils.close(popoverElement);
                     }
                 }
@@ -89,14 +116,14 @@ PageItem {
         }
     }
 
-    function profileDataFinished(data) {
-        nameField.text = data.user.full_name;
-        webField.text = data.user.external_url;
-        bioField.text = data.user.biography;
-        phoneField.text = data.user.phone_number;
-        emailField.text = data.user.email;
-        genderField.selectedIndex = data.user.gender;
-        profilePhoto.source = data.user.profile_pic_url;
+    function fillFields(user) {
+        nameField.text = user.full_name;
+        webField.text = user.external_url;
+        bioField.text = user.biography;
+        phoneField.text = user.phone_number;
+        emailField.text = user.email;
+        genderField.selectedIndex = user.gender;
+        profilePhoto.source = user.profile_pic_url;
     }
 
     function changePhotoClicked() {
@@ -109,13 +136,12 @@ PageItem {
         enabled: awaitingProfilePhoto
         function onFileImported(fileUrl) {
             awaitingProfilePhoto = false;
-            changeProfilePictureLoading = true;
-            instagram.changeProfilePicture(String(fileUrl).replace('file://', ''));
+            editProfileViewModel.changePicture(fileUrl);
         }
     }
 
     Component.onCompleted: {
-        instagram.getCurrentUser();
+        editProfileViewModel.loadProfile();
     }
 
     Flickable {
@@ -157,7 +183,7 @@ PageItem {
                             MouseArea {
                                 anchors.fill: parent
                                 onClicked: {
-                                    if (!changeProfilePictureLoading) {
+                                    if (!editProfileViewModel.isChangingPicture) {
                                         PopupUtils.open(popoverComponent);
                                     }
                                 }
@@ -173,7 +199,7 @@ PageItem {
                             MouseArea {
                                 anchors.fill: parent
                                 onClicked: {
-                                    if (!changeProfilePictureLoading) {
+                                    if (!editProfileViewModel.isChangingPicture) {
                                         PopupUtils.open(popoverComponent);
                                     }
                                 }
@@ -390,39 +416,6 @@ PageItem {
                     }
                 }
             }
-        }
-    }
-
-    Connections {
-        target: instagram
-        function onCurrentUserDataReady(answer) {
-            var data = JSON.parse(answer);
-            profileDataFinished(data);
-        }
-        function onEditDataReady(answer) {
-            var data = JSON.parse(answer);
-            if (data.status == 'ok') {
-                pageLayout.removePages(editprofilepage);
-
-                userPage.getUsernameInfo();
-                userPage.getUsernameFeed();
-            }
-        }
-        function onProfilePictureChanged(answer) {
-            changeProfilePictureLoading = false;
-            pageLayout.removePages(userPage);
-            pageLayout.primaryPage = userPage;
-
-            userPage.getUsernameInfo();
-            userPage.getUsernameFeed();
-        }
-        function onProfilePictureDeleted(answer) {
-            changeProfilePictureLoading = false;
-            pageLayout.removePages(userPage);
-            pageLayout.primaryPage = userPage;
-
-            userPage.getUsernameInfo();
-            userPage.getUsernameFeed();
         }
     }
 }

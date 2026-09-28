@@ -194,6 +194,7 @@ Q_SIGNALS:
     // Image upload signals
     void imageConfigureDataReady(QVariant answer);
     void imageUploadProgressDataReady(double answer);
+    void uploadFailed(QString message);
 
     // Popular/Search signals
     void popularFeedDataReady(QVariant answer);

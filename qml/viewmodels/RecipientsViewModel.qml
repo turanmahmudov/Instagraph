@@ -4,9 +4,9 @@ import Instagram 1.0
 /**
  * RecipientsViewModel - ViewModel for direct message recipients
  *
- * Handles recipient loading logic:
+ * Handles recipient logic:
  * - Ranked recipients loading and search
- * - Recipients string for direct message calls
+ * - Sending a message, a like or a shared post to the selected users
  *
  * Used by NewDirectMessagePage and ShareMediaPage.
  */
@@ -22,6 +22,33 @@ Item {
      */
     function loadRecipients(query) {
         instagram.getRankedRecipients(query || "");
+    }
+
+    /**
+     * Send a text message to new recipients
+     * @param userIds - Array of user ids
+     * @param text - Message text
+     */
+    function sendMessage(userIds, text) {
+        instagram.directMessage(buildRecipientsString(userIds), text, "");
+    }
+
+    /**
+     * Send a like to new recipients
+     * @param userIds - Array of user ids
+     */
+    function sendLike(userIds) {
+        instagram.directLike(buildRecipientsString(userIds), "");
+    }
+
+    /**
+     * Share a post with the recipients
+     * @param mediaId - Id of the shared post
+     * @param userIds - Array of user ids
+     * @param text - Message text
+     */
+    function shareMedia(mediaId, userIds, text) {
+        instagram.directShare(mediaId, buildRecipientsString(userIds), text);
     }
 
     /**

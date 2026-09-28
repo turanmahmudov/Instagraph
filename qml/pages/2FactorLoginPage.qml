@@ -18,6 +18,7 @@ import "../components/Feed"
 import "../components/Media"
 import "../components/Camera"
 import "../components/Actions"
+import "../viewmodels"
 
 PageItem {
     id: twoFactorLoginPage
@@ -32,6 +33,10 @@ PageItem {
 
     header: PageHeaderItem {
         title: i18n.tr("Enter Security Code")
+    }
+
+    LoginViewModel {
+        id: loginViewModel
     }
 
     Component.onCompleted: {
@@ -87,9 +92,8 @@ PageItem {
             anchors.horizontalCenter: parent.horizontalCenter
             color: LomiriColors.blue
             text: i18n.tr("Confirm")
-            onTriggered: {
-                instagram.confirm2Factor(codeField.text, answer.two_factor_info.two_factor_identifier, has_totp ? "3" : "1");
-            }
+            enabled: !loginViewModel.isLoggingIn
+            onTriggered: loginViewModel.confirmTwoFactor(codeField.text, answer ? answer.two_factor_info : null)
         }
 
         Item {
@@ -101,17 +105,7 @@ PageItem {
             id: errorTextLabel
             anchors.horizontalCenter: parent.horizontalCenter
             wrapMode: Text.WordWrap
-            color: "#ffffff"
-        }
-    }
-
-    Connections {
-        target: instagram
-        function onProfileConnected(answer) {}
-        function onProfileConnectedFail() {}
-        function onError(message) {
-            console.log(message);
-            errorTextLabel.text = message;
+            text: loginViewModel.errorMessage
         }
     }
 }

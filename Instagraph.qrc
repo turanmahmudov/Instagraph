@@ -94,6 +94,14 @@
         <file>qml/viewmodels/LocationSearchViewModel.qml</file>
         <file>qml/viewmodels/RecipientsViewModel.qml</file>
         <file>qml/viewmodels/DirectThreadViewModel.qml</file>
+        <file>qml/viewmodels/LoginViewModel.qml</file>
+        <file>qml/viewmodels/OptionsViewModel.qml</file>
+        <file>qml/viewmodels/ChangePasswordViewModel.qml</file>
+        <file>qml/viewmodels/EditMediaViewModel.qml</file>
+        <file>qml/viewmodels/EditProfileViewModel.qml</file>
+        <file>qml/viewmodels/PublishViewModel.qml</file>
+        <file>qml/viewmodels/FriendshipViewModel.qml</file>
+        <file>qml/viewmodels/FollowRequestsViewModel.qml</file>
         <file>qml/pages/FollowRequestsPage.qml</file>
         <file>qml/images/media_save_bold.png</file>
         <file>qml/images/media_save.png</file>

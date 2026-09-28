@@ -16,11 +16,8 @@ PageItem {
 
     property alias list_loading: viewModel.isLoading
 
-    property var lastFriendshipActionUserId
-
-    BaseUserListViewModel {
+    FollowRequestsViewModel {
         id: viewModel
-        hasPagination: false
     }
 
     ListView {
@@ -75,20 +72,14 @@ PageItem {
                         color: LomiriColors.blue
                         text: i18n.tr("Confirm")
                         anchors.verticalCenter: parent.verticalCenter
-                        onClicked: {
-                            lastFriendshipActionUserId = user.pk;
-                            instagram.approveFriendship(user.pk);
-                        }
+                        onClicked: viewModel.approve(user.pk)
                     }
 
                     Button {
                         color: LomiriColors.lightGrey
                         text: i18n.tr("Delete")
                         anchors.verticalCenter: parent.verticalCenter
-                        onClicked: {
-                            lastFriendshipActionUserId = user.pk;
-                            instagram.rejectFriendship(user.pk);
-                        }
+                        onClicked: viewModel.reject(user.pk)
                     }
                 }
 
@@ -106,17 +97,10 @@ PageItem {
             }
 
             Connections {
-                target: instagram
-                function onApproveFriendshipDataReady(answer) {
-                    var data = JSON.parse(answer);
-                    if (data.status === "ok" && lastFriendshipActionUserId === user.pk) {
-                        approvedFriendship = data.friendship_status;
-                    }
-                }
-                function onRejectFriendshipDataReady(answer) {
-                    var data = JSON.parse(answer);
-                    if (data.status === "ok" && lastFriendshipActionUserId === user.pk) {
-                        viewModel.userListModel.remove(index);
+                target: viewModel
+                function onRequestApproved(userId, friendship) {
+                    if (userId == user.pk) {
+                        approvedFriendship = friendship;
                     }
                 }
             }
@@ -124,26 +108,13 @@ PageItem {
         PullToRefresh {
             refreshing: viewModel.isLoading && viewModel.userListModel.count === 0
             onRefresh: {
-                loadFollowRequests();
+                viewModel.loadRequests();
             }
         }
     }
 
-    function loadFollowRequests() {
-        viewModel.loadData('', function () {
-            instagram.getPendingFriendships();
-        });
-    }
-
-    Connections {
-        target: instagram
-        function onPendingFriendshipsDataReady(answer) {
-            viewModel.handleResponse(answer);
-        }
-    }
-
     Component.onCompleted: {
-        loadFollowRequests();
+        viewModel.loadRequests();
     }
 
     BottomMenu {

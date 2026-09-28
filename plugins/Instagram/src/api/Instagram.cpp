@@ -214,6 +214,7 @@ void Instagram::setupEndpointConnections() {
     connect(m_upload, &IG::UploadEndpoint::profilePictureChanged, this,
             &Instagram::profilePictureChanged);
     connect(m_upload, &IG::UploadEndpoint::error, this, &Instagram::error);
+    connect(m_upload, &IG::UploadEndpoint::error, this, &Instagram::uploadFailed);
 
     // Error handling from API client
     connect(m_client, &IG::ApiClient::error, this, &Instagram::error);

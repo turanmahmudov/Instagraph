@@ -19,6 +19,7 @@ import "../components/Feed"
 import "../components/Media"
 import "../components/Camera"
 import "../components/Actions"
+import "../viewmodels"
 
 PageItem {
     id: optionspage
@@ -27,16 +28,12 @@ PageItem {
         title: i18n.tr("Options")
     }
 
-    function profileDataFinished(data) {
-        if (data.user.is_private == true) {
-            privateSwitch.checked = true;
-        } else {
-            privateSwitch.checked = false;
-        }
+    OptionsViewModel {
+        id: optionsViewModel
     }
 
     Component.onCompleted: {
-        instagram.getCurrentUser();
+        optionsViewModel.loadAccount();
     }
 
     Flickable {
@@ -124,13 +121,12 @@ PageItem {
                     Switch {
                         id: privateSwitch
                         SlotsLayout.position: SlotsLayout.Trailing
-                        checked: false
-                        onCheckedChanged: {
-                            if (checked) {
-                                instagram.setPrivateAccount();
-                            } else {
-                                instagram.setPublicAccount();
-                            }
+                        checked: optionsViewModel.isPrivate
+                        onClicked: {
+                            optionsViewModel.setPrivate(checked);
+                            checked = Qt.binding(function () {
+                                return optionsViewModel.isPrivate;
+                            });
                         }
                     }
                 }
@@ -201,29 +197,5 @@ PageItem {
     BottomMenu {
         id: bottomMenu
         width: parent.width
-    }
-
-    Connections {
-        target: instagram
-        function onCurrentUserDataReady(answer) {
-            var data = JSON.parse(answer);
-            profileDataFinished(data);
-        }
-        function onSetProfilePublic(answer) {
-            var data = JSON.parse(answer);
-            if (data.user.is_private == true) {
-                privateSwitch.checked = true;
-            } else {
-                privateSwitch.checked = false;
-            }
-        }
-        function onSetProfilePrivate(answer) {
-            var data = JSON.parse(answer);
-            if (data.user.is_private == true) {
-                privateSwitch.checked = true;
-            } else {
-                privateSwitch.checked = false;
-            }
-        }
     }
 }

@@ -17,6 +17,7 @@ import "../components/Feed"
 import "../components/Media"
 import "../components/Camera"
 import "../components/Actions"
+import "../viewmodels"
 
 PageItem {
     id: changepasswordpage
@@ -27,16 +28,15 @@ PageItem {
             Action {
                 text: i18n.tr("Save")
                 iconName: IconsConstants.camera_flip
-                enabled: currentPasswordField.text.length > 0 && newPasswordField.text.length > 0 && newPasswordAgainField.text.length > 0
-                onTriggered: {
-                    if (newPasswordField.text == newPasswordAgainField.text) {
-                        instagram.changePassword(currentPasswordField.text, newPasswordField.text);
-                    } else {
-                        // must be same error
-                    }
-                }
+                enabled: !passwordViewModel.isSaving && currentPasswordField.text.length > 0 && newPasswordField.text.length > 0 && newPasswordAgainField.text.length > 0
+                onTriggered: passwordViewModel.changePassword(currentPasswordField.text, newPasswordField.text, newPasswordAgainField.text)
             }
         ]
+    }
+
+    ChangePasswordViewModel {
+        id: passwordViewModel
+        onPasswordChanged: pageLayout.removePages(changepasswordpage)
     }
 
     Flickable {
@@ -155,15 +155,14 @@ PageItem {
                     }
                 }
             }
-        }
-    }
 
-    Connections {
-        target: instagram
-        function onChangePasswordDataReady(answer) {
-            var data = JSON.parse(answer);
-            if (data.status == 'ok') {
-                pageLayout.removePages(changepasswordpage);
+            Label {
+                visible: text.length > 0
+                width: parent.width - units.gu(4)
+                anchors.horizontalCenter: parent.horizontalCenter
+                wrapMode: Text.WordWrap
+                color: LomiriColors.red
+                text: passwordViewModel.errorMessage
             }
         }
     }

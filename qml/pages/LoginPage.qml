@@ -17,6 +17,7 @@ import "../components/Feed"
 import "../components/Media"
 import "../components/Camera"
 import "../components/Actions"
+import "../viewmodels"
 
 PageItem {
     id: loginpage
@@ -32,6 +33,10 @@ PageItem {
                 }
             }
         ]
+    }
+
+    LoginViewModel {
+        id: loginViewModel
     }
 
     Component.onCompleted: {
@@ -90,17 +95,8 @@ PageItem {
             anchors.horizontalCenter: parent.horizontalCenter
             color: LomiriColors.blue
             text: i18n.tr("Log In")
-            onTriggered: {
-                if (usernameField.text && passwordField.text) {
-                    tmpUsername = usernameField.text;
-                    tmpPassword = passwordField.text;
-
-                    instagram.setUsername(tmpUsername);
-                    instagram.setPassword(tmpPassword);
-
-                    instagram.login(true);
-                }
-            }
+            enabled: !loginViewModel.isLoggingIn
+            onTriggered: loginViewModel.login(usernameField.text, passwordField.text)
         }
 
         Column {
@@ -153,6 +149,7 @@ PageItem {
             id: errorTextLabel
             anchors.horizontalCenter: parent.horizontalCenter
             wrapMode: Text.WordWrap
+            text: loginViewModel.errorMessage
         }
     }
 
@@ -167,20 +164,6 @@ PageItem {
         }
         onCommitCompleted: {
             bottomEdge.contentItem.init();
-        }
-    }
-
-    Connections {
-        target: instagram
-        function onProfileConnected(answer) {}
-        function onTwoFactorRequired(answer) {}
-        function onProfileConnectedFail() {}
-        function onError(message) {
-            console.log(message);
-            errorTextLabel.text = message;
-        }
-        function onChallengeRequired(answer) {
-            var challengeUrl = answer["url"];
         }
     }
 }

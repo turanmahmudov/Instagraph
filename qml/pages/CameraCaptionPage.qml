@@ -31,7 +31,17 @@ PageItem {
     property bool locationSelected: false
     property var locationVar: ({})
 
-    property bool imageUploading: false
+    readonly property bool imageUploading: publishViewModel.isUploading
+
+    PublishViewModel {
+        id: publishViewModel
+        onPublished: {
+            pageLayout.removePages(homePage);
+            pageLayout.primaryPage = homePage;
+
+            Scripts.pushSingleImage(pageLayout.primaryPage, mediaId);
+        }
+    }
 
     LocationSearchViewModel {
         id: locationViewModel
@@ -54,10 +64,8 @@ PageItem {
                 id: nextPageAction
                 text: i18n.tr("Share")
                 iconName: IconsConstants.camera_flip
-                onTriggered: {
-                    imageUploading = true;
-                    Scripts.publishImage(imagePath, caption.text, locationVar, disableCommentsSwitch.checked);
-                }
+                enabled: !imageUploading
+                onTriggered: publishViewModel.publish(imagePath, caption.text, locationVar, disableCommentsSwitch.checked)
             }
         ]
     }
@@ -98,7 +106,7 @@ PageItem {
             width: parent.width
             maximumValue: 100
             minimumValue: 0
-            value: 0
+            value: publishViewModel.progress
         }
     }
 
@@ -109,6 +117,15 @@ PageItem {
             right: parent.right
             top: !imageUploading ? cameracaptionpage.header.bottom : uploadProgressBarItem.bottom
             topMargin: units.gu(1)
+        }
+
+        Label {
+            visible: text.length > 0
+            width: parent.width - units.gu(2)
+            anchors.horizontalCenter: parent.horizontalCenter
+            wrapMode: Text.WordWrap
+            color: LomiriColors.red
+            text: publishViewModel.errorMessage
         }
 
         Row {
@@ -260,21 +277,6 @@ PageItem {
                     checked: false
                 }
             }
-        }
-    }
-
-    Connections {
-        target: instagram
-        function onImageConfigureDataReady(answer) {
-            pageLayout.removePages(homePage);
-            pageLayout.primaryPage = homePage;
-
-            var data = JSON.parse(answer);
-
-            Scripts.pushSingleImage(pageLayout.primaryPage, data.media.id);
-        }
-        function onImageUploadProgressDataReady(answer) {
-            uploadProgressBar.value = answer;
         }
     }
 }

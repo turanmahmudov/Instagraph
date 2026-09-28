@@ -45,7 +45,7 @@ PageItem {
     }
 
     function sendMessage(text) {
-        instagram.directShare(mediaId, recipientsViewModel.buildRecipientsString(threadUsers), text);
+        recipientsViewModel.shareMedia(mediaId, threadUsers, text);
     }
 
     ListModel {

@@ -23,6 +23,16 @@ function insertAccount(username, password) {
     return res;
 }
 
+function updatePassword(username, password) {
+    var db = getDatabase();
+    var res = false;
+    db.transaction(function(tx) {
+        var rs = tx.executeSql('UPDATE accounts SET password = ? WHERE username = ?', [password, username]);
+        res = rs.rowsAffected > 0;
+    });
+    return res;
+}
+
 function updateProfilePic(username, profilePicUrl) {
     var db = getDatabase();
     var res = false;

@@ -30,7 +30,7 @@ PageItem {
         trailingActions: [
             Action {
                 id: userMenuAction
-                visible: usernameId !== activeUsernameId
+                visible: usernameId != activeUsernameId
                 text: i18n.tr("Options")
                 iconName: IconsConstants.user_grid
                 onTriggered: {
@@ -39,7 +39,7 @@ PageItem {
             },
             Action {
                 id: settingsAction
-                visible: usernameId === activeUsernameId
+                visible: usernameId == activeUsernameId
                 text: i18n.tr("Settings")
                 iconName: IconsConstants.settings
                 onTriggered: {
@@ -52,10 +52,18 @@ PageItem {
     property var usernameString
     property var usernameId
 
-    property var latest_follow_request
-
     property bool selfProfile
-    property bool isPrivate: false
+    readonly property bool isPrivate: !selfProfile && friendshipViewModel.contentHidden
+
+    FriendshipViewModel {
+        id: friendshipViewModel
+        userId: usernameId
+        onFriendshipLoaded: {
+            if (!friendshipViewModel.contentHidden) {
+                feedViewModel.loadFeed(true);
+            }
+        }
+    }
 
     // ViewModel handles all feed logic
     UserFeedViewModel {
@@ -101,24 +109,15 @@ PageItem {
                 Action {
                     text: i18n.tr("Block")
                     onTriggered: {
-                        instagram.block(usernameId);
+                        friendshipViewModel.block();
                     }
                 }
             }
 
             Connections {
-                target: instagram
-                function onBlockDataReady(answer) {
-                    var data = JSON.parse(answer);
-
-                    if (data.friendship_status.blocking) {
-                        followingButton.visible = false;
-                        unfollowingButton.visible = false;
-                        requestedButton.visible = false;
-                        unBlockButton.visible = true;
-
-                        PopupUtils.close(userMenuPopup);
-                    }
+                target: friendshipViewModel
+                function onBlocked() {
+                    PopupUtils.close(userMenuPopup);
                 }
             }
         }
@@ -168,52 +167,40 @@ PageItem {
 
             Button {
                 id: followingButton
-                visible: false
+                visible: friendshipViewModel.following
                 width: parent.width - units.gu(2)
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: i18n.tr("Following")
-                onTriggered: {
-                    latest_follow_request = usernameId;
-                    instagram.unFollow(usernameId);
-                }
+                onTriggered: friendshipViewModel.unfollow()
             }
 
             Button {
                 id: unfollowingButton
-                visible: false
+                visible: friendshipViewModel.canFollow
                 width: parent.width - units.gu(2)
                 anchors.horizontalCenter: parent.horizontalCenter
                 color: LomiriColors.green
                 text: i18n.tr("Follow")
-                onTriggered: {
-                    latest_follow_request = usernameId;
-                    instagram.follow(usernameId);
-                }
+                onTriggered: friendshipViewModel.follow()
             }
 
             Button {
                 id: requestedButton
-                visible: false
+                visible: friendshipViewModel.outgoingRequest
                 width: parent.width - units.gu(2)
                 anchors.horizontalCenter: parent.horizontalCenter
                 color: "#666666"
                 text: i18n.tr("Requested")
-                onTriggered: {
-                    latest_follow_request = usernameId;
-                    instagram.unFollow(usernameId);
-                }
+                onTriggered: friendshipViewModel.unfollow()
             }
 
             Button {
                 id: unBlockButton
-                visible: false
+                visible: friendshipViewModel.blocking
                 width: parent.width - units.gu(2)
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: i18n.tr("Unblock")
-                onTriggered: {
-                    latest_follow_request = usernameId;
-                    instagram.unBlock(usernameId);
-                }
+                onTriggered: friendshipViewModel.unblock()
             }
 
             Button {
@@ -462,59 +449,13 @@ PageItem {
     Connections {
         target: instagram
         function onInfoByNameDataReady(answer) {
+            if (usernameId) {
+                return;
+            }
+
             var data = JSON.parse(answer);
             usernameId = data.user.pk;
-
-            if (usernameId === activeUsernameId) {
-                selfProfile = true;
-
-                feedViewModel.loadFeed(true);
-            } else {
-                selfProfile = false;
-
-                instagram.getFriendship(usernameId);
-            }
-
-            feedViewModel.loadUserInfo();
-        }
-        function onFriendshipDataReady(answer) {
-            var data = JSON.parse(answer);
-
-            if (!data.following && data.is_private) {
-                isPrivate = true;
-            } else {
-                isPrivate = false;
-
-                feedViewModel.loadFeed(true);
-            }
-
-            followingButton.visible = data.following;
-            unfollowingButton.visible = !data.following && !data.outgoing_request && !data.blocking;
-            requestedButton.visible = data.outgoing_request;
-            unBlockButton.visible = data.blocking;
-        }
-
-        function onFollowDataReady(answer) {
-            if (usernameId == latest_follow_request) {
-                var data = JSON.parse(answer);
-                followDataFinished(data);
-            }
-        }
-        function onUnfollowDataReady(answer) {
-            if (usernameId == latest_follow_request) {
-                var data = JSON.parse(answer);
-                followDataFinished(data);
-            }
-        }
-        function onUnBlockDataReady(answer) {
-            var data = JSON.parse(answer);
-
-            if (data.status == "ok" && !data.friendship_status.blocking) {
-                followingButton.visible = false;
-                unfollowingButton.visible = true;
-                requestedButton.visible = false;
-                unBlockButton.visible = false;
-            }
+            loadProfile();
         }
     }
 
@@ -523,35 +464,24 @@ PageItem {
         width: parent.width
     }
 
-    function followDataFinished(data) {
-        if (usernameId == latest_follow_request) {
-            if (data.friendship_status) {
-                followingButton.visible = data.friendship_status.following;
-                unfollowingButton.visible = !data.friendship_status.following && !data.friendship_status.outgoing_request && !data.friendship_status.blocking;
-                requestedButton.visible = data.friendship_status.outgoing_request;
-                unBlockButton.visible = data.friendship_status.blocking;
-
-                latest_follow_request = 0;
-            }
-        }
-    }
-
     Component.onCompleted: {
         if (usernameId) {
-            if (usernameId == activeUsernameId) {
-                selfProfile = true;
-
-                feedViewModel.loadFeed(true);
-            } else {
-                selfProfile = false;
-
-                instagram.getFriendship(usernameId);
-            }
-
-            getUsernameInfo();
+            loadProfile();
         } else {
             instagram.getInfoByName(usernameString);
         }
+    }
+
+    function loadProfile() {
+        if (usernameId == activeUsernameId) {
+            selfProfile = true;
+            feedViewModel.loadFeed(true);
+        } else {
+            selfProfile = false;
+            friendshipViewModel.loadFriendship();
+        }
+
+        getUsernameInfo();
     }
 
     function getUsernameInfo() {

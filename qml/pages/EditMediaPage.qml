@@ -1,26 +1,17 @@
 // Qt imports
 import QtQuick 2.12
-import QtQuick.LocalStorage 2.12
-import QtMultimedia 5.12
 
 // Lomiri imports
 import Lomiri.Components 1.3
-import Lomiri.Content 1.1
 
 // JavaScript imports
-import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
-import "../js/Scripts.js" as Scripts
 
 // Component imports
 import "../components"
 import "../components/Constants"
 import "../components/Page"
-import "../components/User"
-import "../components/Feed"
-import "../components/Media"
-import "../components/Camera"
-import "../components/Actions"
+import "../viewmodels"
 
 PageItem {
     id: editpagepage
@@ -34,30 +25,21 @@ PageItem {
                 id: nextPageAction
                 text: i18n.tr("Done")
                 iconName: IconsConstants.camera_flip
-                onTriggered: {
-                    instagram.editMedia(mediaId, mediaCaption.text);
-                }
+                enabled: !editMediaViewModel.isSaving
+                onTriggered: editMediaViewModel.saveCaption(mediaCaption.text)
             }
         ]
     }
 
-    function mediaDataFinished(data) {
-        if (!data.items || data.items.length === 0 || data.items[0].id !== mediaId) {
-            return;
-        }
-
-        mediaImage.source = Helper.getBestImage(data.items[0].image_versions2.candidates, mediaImage.width).url;
-        mediaCaption.text = data.items[0].caption ? data.items[0].caption.text : "";
-    }
-
-    function mediaEditFinished(data) {
-        if (data.status == 'ok') {
-            pageLayout.removePages(editpagepage);
-        }
+    EditMediaViewModel {
+        id: editMediaViewModel
+        mediaId: editpagepage.mediaId
+        onCaptionChanged: mediaCaption.text = caption
+        onMediaSaved: pageLayout.removePages(editpagepage)
     }
 
     Component.onCompleted: {
-        instagram.getInfoMedia(mediaId);
+        editMediaViewModel.loadMedia();
     }
 
     Column {
@@ -83,6 +65,7 @@ PageItem {
                 cache: false
                 clip: true
                 fillMode: Image.PreserveAspectFit
+                source: editMediaViewModel.imageCandidates.length > 0 ? Helper.getBestImage(editMediaViewModel.imageCandidates, width).url : ""
             }
 
             TextArea {
@@ -91,18 +74,6 @@ PageItem {
                 height: units.gu(8)
                 placeholderText: i18n.tr("Write a caption...")
             }
-        }
-    }
-
-    Connections {
-        target: instagram
-        function onMediaInfoReady(answer) {
-            var data = JSON.parse(answer);
-            mediaDataFinished(data);
-        }
-        function onMediaEdited(answer) {
-            var data = JSON.parse(answer);
-            mediaEditFinished(data);
         }
     }
 }
