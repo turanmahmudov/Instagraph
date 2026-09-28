@@ -3,6 +3,75 @@
 
 namespace IG {
 
+namespace {
+
+// Largest integer a JavaScript number holds exactly: 2^53 - 1
+const QByteArray maxSafeInteger = QByteArrayLiteral("9007199254740991");
+
+bool isUnsafeInteger(const QByteArray & digits) {
+    if (digits.size() != maxSafeInteger.size()) {
+        return digits.size() > maxSafeInteger.size();
+    }
+    return digits > maxSafeInteger;
+}
+
+QByteArray quoteUnsafeIntegers(const QByteArray & json) {
+    QByteArray result;
+    result.reserve(json.size() + 64);
+
+    bool inString = false;
+    bool escaped = false;
+    int i = 0;
+    while (i < json.size()) {
+        const char c = json.at(i);
+
+        if (inString) {
+            result.append(c);
+            if (escaped) {
+                escaped = false;
+            } else if (c == '\\') {
+                escaped = true;
+            } else if (c == '"') {
+                inString = false;
+            }
+            ++i;
+            continue;
+        }
+
+        if (c == '"') {
+            inString = true;
+            result.append(c);
+            ++i;
+            continue;
+        }
+
+        if (c == '-' || (c >= '0' && c <= '9')) {
+            int end = i + (c == '-' ? 1 : 0);
+            while (end < json.size() && json.at(end) >= '0' && json.at(end) <= '9') {
+                ++end;
+            }
+            const bool isInteger =
+                end >= json.size() || (json.at(end) != '.' && json.at(end) != 'e' && json.at(end) != 'E');
+            const QByteArray token = json.mid(i, end - i);
+            const QByteArray digits = c == '-' ? token.mid(1) : token;
+            if (isInteger && isUnsafeInteger(digits)) {
+                result.append('"').append(token).append('"');
+            } else {
+                result.append(token);
+            }
+            i = end;
+            continue;
+        }
+
+        result.append(c);
+        ++i;
+    }
+
+    return result;
+}
+
+} // namespace
+
 Response::Response(const QByteArray & data, int httpCode) : m_rawData(data), m_httpCode(httpCode) {
     QJsonParseError parseError;
     QJsonDocument doc = QJsonDocument::fromJson(data, &parseError);
@@ -32,7 +101,7 @@ bool Response::ok() const {
 }
 
 QVariant Response::toVariant() const {
-    return QVariant(m_rawData);
+    return QVariant(QString::fromUtf8(quoteUnsafeIntegers(m_rawData)));
 }
 
 QString Response::errorMessage() const {

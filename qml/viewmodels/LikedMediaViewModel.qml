@@ -47,8 +47,7 @@ BaseFeedViewModel {
     Connections {
         target: instagram
         function onLikedMediaDataReady(answer) {
-            var quotedAnswer = answer.replace(/([\[:])?(\d{18,})([,\}\]])/g, "$1\"$2\"$3");
-            var data = JSON.parse(quotedAnswer);
+            var data = JSON.parse(answer);
             handleFeedResponse(data);
         }
     }
