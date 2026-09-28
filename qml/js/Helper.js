@@ -74,8 +74,12 @@ function milisecondsToString(miliseconds, short, timestamp) {
             months = Math.floor(difference_ms);
             weeks = 0;
         }
+        var years = Math.floor(months / 12);
+
         //check and return the largest value of date time initialized.
-        if (months > 0) {
+        if (years > 0) {
+            return short ? i18n.tr("%1y").arg(years) : i18n.tr("%1 YEAR AGO", "%1 YEARS AGO", years).arg(years);
+        } else if (months > 0) {
             return short ? i18n.tr("%1M").arg(months) : i18n.tr("%1 MONTH AGO", "%1 MONTHS AGO", months).arg(months);
         } else if (weeks !== 0) {
             return short ? i18n.tr("%1w").arg(weeks) : i18n.tr("%1 WEEK AGO", "%1 WEEKS AGO", weeks).arg(weeks);
