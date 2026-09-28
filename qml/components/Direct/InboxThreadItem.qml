@@ -30,13 +30,14 @@ ListItem {
             width: parent.width - unseen_mark.width
 
             CircleImage {
+                id: threadImage
                 width: units.gu(5)
                 height: width
                 source: profile_pic_url
             }
 
             Column {
-                width: parent.width
+                width: parent.width - threadImage.width - parent.spacing
                 anchors.verticalCenter: parent.verticalCenter
 
                 Text {
@@ -48,6 +49,7 @@ ListItem {
                 }
 
                 Text {
+                    visible: text.length > 0
                     text: thread_text
                     font.weight: unseen ? Font.DemiBold : Font.ExtraLight
                     width: parent.width
