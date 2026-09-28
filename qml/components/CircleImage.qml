@@ -65,6 +65,13 @@ Item {
         }
     }
 
+    Rectangle {
+        anchors.fill: image
+        radius: width / 2
+        color: Qt.rgba(0.5, 0.5, 0.5, 0.15)
+        visible: image.status !== Image.Ready
+    }
+
     Image {
         id: image
 
