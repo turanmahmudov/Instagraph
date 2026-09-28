@@ -79,6 +79,7 @@ MainView {
     property var twoFactorData: null
 
     signal fileImported(var fileUrl)
+    signal directMessageNotified(string igAction)
     signal locationSelected(var location)
 
     property bool mqttConnected: false
@@ -294,6 +295,8 @@ MainView {
 
             switch (ck) {
             case "direct_v2_message":
+                directMessageNotified(notification.igAction || "");
+                break;
             case "like":
             case "like_on_tag":
             case "comment_like":
@@ -305,6 +308,8 @@ MainView {
             case "private_user_follow_request":
             case "follow_request_approved":
             case "usertag":
+                activityPage.getRecentActivity();
+                break;
             }
         }
     }

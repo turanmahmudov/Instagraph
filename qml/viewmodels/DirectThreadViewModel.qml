@@ -94,6 +94,16 @@ Item {
     }
 
     Connections {
+        target: mainView
+        function onDirectMessageNotified(igAction) {
+            if (threadId && igAction.indexOf(threadId) !== -1 && !isSending) {
+                firstLoad = true;
+                loadThread();
+            }
+        }
+    }
+
+    Connections {
         target: instagram
         function onDirectThreadDataReady(answer) {
             var data = JSON.parse(answer);

@@ -47,6 +47,13 @@ BaseFeedViewModel {
     }
 
     Connections {
+        target: mainView
+        function onDirectMessageNotified(igAction) {
+            loadFeed(true);
+        }
+    }
+
+    Connections {
         target: instagram
         function onInboxDataReady(answer) {
             var data = JSON.parse(answer);
