@@ -209,6 +209,8 @@ void Instagram::setupEndpointConnections() {
     // Upload endpoint connections
     connect(m_upload, &IG::UploadEndpoint::imageConfigured, this,
             &Instagram::imageConfigureDataReady);
+    connect(m_upload, &IG::UploadEndpoint::videoConfigured, this,
+            &Instagram::videoConfigureDataReady);
     connect(m_upload, &IG::UploadEndpoint::uploadProgress, this,
             &Instagram::imageUploadProgressDataReady);
     connect(m_upload, &IG::UploadEndpoint::profilePictureChanged, this,
@@ -819,6 +821,11 @@ void Instagram::removeSelftag(QString mediaId) {
 void Instagram::postImage(QString path, QString caption, QVariantMap location, QString upload_id,
                           QString disableComments) {
     m_upload->postImage(path, caption, location, upload_id, disableComments);
+}
+
+void Instagram::postVideo(QString videoPath, QString coverPath, int width, int height,
+                          qint64 durationMs, QString caption, QString disableComments) {
+    m_upload->postVideo(videoPath, coverPath, width, height, durationMs, caption, disableComments);
 }
 
 // ============================================================================

@@ -5,6 +5,7 @@
 #include "../utils/Constants.h"
 #include <QBuffer>
 #include <QDateTime>
+#include <QFile>
 #include <QImage>
 #include <QImageReader>
 #include <QJsonArray>
@@ -12,6 +13,7 @@
 #include <QJsonObject>
 #include <QPainter>
 #include <QRandomGenerator>
+#include <QTimer>
 #include <QUuid>
 
 namespace IG {
@@ -42,6 +44,36 @@ void UploadEndpoint::postImage(const QString & path, const QString & caption,
     const QString id =
         uploadId.isEmpty() ? QString::number(QDateTime::currentMSecsSinceEpoch()) : uploadId;
     uploadPhoto(jpegData, id, [this, id]() { configurePhoto(id); });
+}
+
+void UploadEndpoint::postVideo(const QString & videoPath, const QString & coverPath, int width,
+                               int height, qint64 durationMs, const QString & caption,
+                               const QString & disableComments) {
+    QFile videoFile(videoPath);
+    if (!videoFile.open(QIODevice::ReadOnly)) {
+        emit error("Video not found: " + videoPath);
+        return;
+    }
+    const QByteArray videoData = videoFile.readAll();
+    videoFile.close();
+
+    QByteArray coverData;
+    QSize coverSize;
+    if (!readJpeg(coverPath, coverData, coverSize)) {
+        emit error("Video cover not found: " + coverPath);
+        return;
+    }
+
+    m_caption = caption;
+    m_disableComments = disableComments;
+    m_location.clear();
+    m_videoSize = QSize(width, height);
+    m_videoDurationMs = durationMs;
+
+    const QString uploadId = QString::number(QDateTime::currentMSecsSinceEpoch());
+    uploadVideo(videoData, uploadId, [this, coverData, uploadId]() {
+        uploadPhoto(coverData, uploadId, [this, uploadId]() { configureVideo(uploadId, 1); });
+    });
 }
 
 void UploadEndpoint::changeProfilePicture(const QString & photoPath) {
@@ -136,6 +168,126 @@ void UploadEndpoint::uploadPhoto(const QByteArray & jpegData, const QString & up
         } else {
             emit error(response.errorMessage());
         }
+    });
+}
+
+void UploadEndpoint::uploadVideo(const QByteArray & videoData, const QString & uploadId,
+                                 std::function<void()> onUploaded) {
+    const int uploadSuffix = QRandomGenerator::global()->bounded(1000000000, 2147483647);
+    const QString uploadName = QString("%1_0_%2").arg(uploadId).arg(uploadSuffix);
+    const QString url = QStringLiteral("https://i.instagram.com/rupload_igvideo/") + uploadName;
+
+    QJsonObject ruploadParams;
+    ruploadParams.insert("retry_context",
+                         QStringLiteral("{\"num_step_auto_retry\":0,\"num_reupload\":0,"
+                                        "\"num_step_manual_retry\":0}"));
+    ruploadParams.insert("media_type", "2");
+    ruploadParams.insert("xsharing_user_ids", "[]");
+    ruploadParams.insert("upload_id", uploadId);
+    ruploadParams.insert("upload_media_duration_ms", QString::number(m_videoDurationMs));
+    ruploadParams.insert("upload_media_width", QString::number(m_videoSize.width()));
+    ruploadParams.insert("upload_media_height", QString::number(m_videoSize.height()));
+    const QByteArray params = QJsonDocument(ruploadParams).toJson(QJsonDocument::Compact);
+
+    QString waterfallId = QUuid::createUuid().toString();
+    waterfallId = waterfallId.mid(1, waterfallId.length() - 2);
+
+    auto startRequest = RequestBuilder::get("")
+                            .absoluteUrl(url)
+                            .header("X-Instagram-Rupload-Params", params)
+                            .header("X_FB_VIDEO_WATERFALL_ID", waterfallId.toUtf8())
+                            .header("X-Entity-Type", "video/mp4")
+                            .build();
+
+    m_client->execute(startRequest, [this, url, params, waterfallId, uploadName, videoData,
+                                     onUploaded](const Response & startResponse) {
+        if (startResponse.httpCode() != 200) {
+            emit error(startResponse.errorMessage());
+            return;
+        }
+
+        auto request = RequestBuilder::post("")
+                           .absoluteUrl(url)
+                           .header("X-Instagram-Rupload-Params", params)
+                           .header("X_FB_VIDEO_WATERFALL_ID", waterfallId.toUtf8())
+                           .header("X-Entity-Type", "video/mp4")
+                           .header("Offset", "0")
+                           .header("X-Entity-Name", uploadName.toUtf8())
+                           .header("X-Entity-Length", QByteArray::number(videoData.size()))
+                           .octetStream(videoData)
+                           .build();
+
+        m_uploadRequestId =
+            m_client->execute(request, [this, onUploaded](const Response & response) {
+                m_uploadRequestId.clear();
+                if (response.httpCode() == 200) {
+                    onUploaded();
+                } else {
+                    emit error(response.errorMessage());
+                }
+            });
+    });
+}
+
+void UploadEndpoint::configureVideo(const QString & uploadId, int attempt) {
+    const double lengthSeconds = m_videoDurationMs / 1000.0;
+
+    QJsonObject device;
+    device.insert("manufacturer", Constants::deviceManufacturer());
+    device.insert("model", Constants::deviceModel());
+    device.insert("android_version", Constants::androidVersion().toInt());
+    device.insert("android_release", Constants::androidRelease());
+
+    QJsonObject extra;
+    extra.insert("source_width", m_videoSize.width());
+    extra.insert("source_height", m_videoSize.height());
+
+    QJsonObject clip;
+    clip.insert("length", lengthSeconds);
+    clip.insert("source_type", "4");
+    QJsonArray clips;
+    clips.append(clip);
+
+    auto builder =
+        RequestBuilder::post("media/configure/")
+            .queryParam("video", "1")
+            .param("upload_id", uploadId)
+            .param("caption", m_caption)
+            .param("source_type", "4")
+            .param("multi_sharing", "1")
+            .param("poster_frame_index", 0)
+            .param("length", QString::number(lengthSeconds, 'f', 3))
+            .param("audio_muted", false)
+            .param("filter_type", "0")
+            .param("timezone_offset", QString::number(Constants::timezoneOffset()))
+            .param("date_time_original",
+                   QDateTime::currentDateTimeUtc().toString("yyyyMMdd'T'HHmmss'.000Z'"))
+            .param("clips", clips)
+            .param("extra", extra)
+            .param("device", device)
+            .authenticated();
+
+    if (m_disableComments == "1") {
+        builder.param("disable_comments", "1");
+    }
+
+    m_client->execute(builder.build(), [this, uploadId, attempt](const Response & response) {
+        if (response.ok()) {
+            m_caption.clear();
+            emit videoConfigured(response.toVariant());
+            return;
+        }
+
+        // Instagram answers until the uploaded video is transcoded
+        const int maxAttempts = 30;
+        if (response.errorMessage().contains("Transcode not finished") && attempt < maxAttempts) {
+            QTimer::singleShot(4000, this,
+                               [this, uploadId, attempt]() { configureVideo(uploadId, attempt + 1); });
+            return;
+        }
+
+        m_caption.clear();
+        emit error(response.errorMessage());
     });
 }
 

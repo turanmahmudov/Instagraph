@@ -62,6 +62,8 @@ public Q_SLOTS:
     // Image upload
     Q_INVOKABLE void postImage(QString path, QString caption, QVariantMap location,
                                QString upload_id = "", QString disableComments = "0");
+    Q_INVOKABLE void postVideo(QString videoPath, QString coverPath, int width, int height,
+                               qint64 durationMs, QString caption, QString disableComments = "0");
 
     // Popular/Search
     Q_INVOKABLE void getPopularFeed(QString max_id = "");
@@ -193,6 +195,7 @@ Q_SIGNALS:
 
     // Image upload signals
     void imageConfigureDataReady(QVariant answer);
+    void videoConfigureDataReady(QVariant answer);
     void imageUploadProgressDataReady(double answer);
     void uploadFailed(QString message);
 

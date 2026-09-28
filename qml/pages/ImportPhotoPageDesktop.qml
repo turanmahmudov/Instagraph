@@ -17,6 +17,8 @@ import "../components/Actions"
 PageItem {
     id: picker
 
+    property bool video: false
+
     header: PageHeaderItem {
         title: i18n.tr("Choose from")
     }
@@ -36,6 +38,7 @@ PageItem {
             title: "Please choose a file"
             folder: shortcuts.home
             selectMultiple: false
+            nameFilters: picker.video ? [i18n.tr("Videos (*.mp4 *.mov)")] : []
             onAccepted: {
                 mainView.fileImported(fileDialog.fileUrl);
                 pageLayout.removePages(picker);

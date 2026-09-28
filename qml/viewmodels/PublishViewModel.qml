@@ -4,8 +4,9 @@ import Instagram 1.0
 /**
  * PublishViewModel - ViewModel for CameraCaptionPage
  *
- * Handles photo publishing:
+ * Handles publishing:
  * - Photo upload and post
+ * - Video upload and post
  * - Upload progress
  * - Error message
  */
@@ -38,30 +39,58 @@ Item {
         instagram.postImage(String(imagePath).replace('file://', ''), caption, location, "", disableComments ? "1" : "0");
     }
 
+    /**
+     * Upload and post a video
+     * @param videoUrl - Local video file URL
+     * @param coverPath - Local path of the cover image
+     * @param width - Video width in pixels
+     * @param height - Video height in pixels
+     * @param durationMs - Video duration in milliseconds
+     * @param caption - Post caption
+     * @param disableComments - true to turn off commenting
+     */
+    function publishVideo(videoUrl, coverPath, width, height, durationMs, caption, disableComments) {
+        if (isUploading) {
+            return;
+        }
+
+        errorMessage = "";
+        progress = 0;
+        isUploading = true;
+
+        instagram.postVideo(String(videoUrl).replace('file://', ''), coverPath, width, height, durationMs, caption, disableComments ? "1" : "0");
+    }
+
     Connections {
         target: instagram
         function onImageUploadProgressDataReady(answer) {
             progress = answer;
         }
         function onImageConfigureDataReady(answer) {
-            if (!isUploading) {
-                return;
-            }
-
-            isUploading = false;
-
-            var data = JSON.parse(answer);
-            if (data.status === "ok" && data.media) {
-                published(data.media.id);
-            } else {
-                errorMessage = data.message || i18n.tr("Could not post the photo.");
-            }
+            handleConfigureResponse(JSON.parse(answer));
+        }
+        function onVideoConfigureDataReady(answer) {
+            handleConfigureResponse(JSON.parse(answer));
         }
         function onUploadFailed(message) {
             if (isUploading) {
                 isUploading = false;
                 errorMessage = message;
             }
+        }
+    }
+
+    function handleConfigureResponse(data) {
+        if (!isUploading) {
+            return;
+        }
+
+        isUploading = false;
+
+        if (data.status === "ok" && data.media) {
+            published(data.media.id);
+        } else {
+            errorMessage = data.message || i18n.tr("Could not post.");
         }
     }
 }

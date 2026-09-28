@@ -18,6 +18,7 @@
         <file>qml/pages/CommentsPage.qml</file>
         <file>qml/components/BottomMenu.qml</file>
         <file>qml/pages/CameraCaptionPage.qml</file>
+        <file>qml/pages/VideoCaptionPage.qml</file>
         <file>qml/components/FollowComponent2.qml</file>
         <file>qml/pages/OtherUserPage.qml</file>
         <file>qml/pages/SinglePhoto.qml</file>

@@ -32,6 +32,7 @@ PageItem {
 
     property var imagePath
     property bool awaitingImport: false
+    property bool importingVideo: false
     property bool _hasBackCamera: false
     property bool _hasFrontCamera: false
 
@@ -257,12 +258,13 @@ PageItem {
                 right: parent.right
             }
             selectedIndex: 1
-            model: [i18n.tr("Library"), i18n.tr("Photo")]
+            model: [i18n.tr("Library"), i18n.tr("Photo"), i18n.tr("Video")]
 
             onSelectedIndexChanged: {
-                if (selectedIndex == 0) {
+                if (selectedIndex == 0 || selectedIndex == 2) {
                     awaitingImport = true;
-                    Scripts.openImportPhotoPage(takephotopage, IS_DESKTOP);
+                    importingVideo = selectedIndex == 2;
+                    Scripts.openImportPhotoPage(takephotopage, IS_DESKTOP, importingVideo);
                 }
             }
         }
@@ -273,7 +275,13 @@ PageItem {
         enabled: awaitingImport
         function onFileImported(fileUrl) {
             awaitingImport = false;
-            Scripts.pushImageCrop(takephotopage, fileUrl);
+            if (importingVideo) {
+                pageLayout.pushToCurrent(takephotopage, PagesConstants.video_caption, {
+                    videoUrl: fileUrl
+                });
+            } else {
+                Scripts.pushImageCrop(takephotopage, fileUrl);
+            }
         }
     }
 

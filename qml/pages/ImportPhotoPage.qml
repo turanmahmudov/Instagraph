@@ -17,6 +17,8 @@ import "../components/Actions"
 PageItem {
     id: picker
 
+    property bool video: false
+
     header: PageHeaderItem {
         title: i18n.tr("Choose from")
     }
@@ -39,7 +41,7 @@ PageItem {
             }
             visible: parent.visible
             showTitle: false
-            contentType: ContentType.Pictures
+            contentType: picker.video ? ContentType.Videos : ContentType.Pictures
             handler: ContentHandler.Source
 
             onPeerSelected: {

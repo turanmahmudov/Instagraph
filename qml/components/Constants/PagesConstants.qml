@@ -37,6 +37,7 @@ QtObject {
     readonly property string camera_crop: getQtResolvedUrl("CameraCropPage.qml")
     readonly property string camera_edit: getQtResolvedUrl("CameraEditPage.qml")
     readonly property string camera_caption: getQtResolvedUrl("CameraCaptionPage.qml")
+    readonly property string video_caption: getQtResolvedUrl("VideoCaptionPage.qml")
     readonly property string import_photo: getQtResolvedUrl("ImportPhotoPage.qml")
     readonly property string import_photo_desktop: getQtResolvedUrl("ImportPhotoPageDesktop.qml")
 

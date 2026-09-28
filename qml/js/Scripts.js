@@ -38,11 +38,11 @@ function pushSingleImage(page, mediaId) {
     pageLayout.pushToCurrent(page, Qt.resolvedUrl("../pages/SinglePhoto.qml"), { photoId: mediaId })
 }
 
-function openImportPhotoPage(currentpage, is_desktop = false) {
+function openImportPhotoPage(currentpage, is_desktop = false, video = false) {
     if (is_desktop === true || is_desktop === "true" || parseInt(is_desktop) === 1) {
-        pageLayout.pushToCurrent(currentpage, Qt.resolvedUrl("../pages/ImportPhotoPageDesktop.qml"))
+        pageLayout.pushToCurrent(currentpage, Qt.resolvedUrl("../pages/ImportPhotoPageDesktop.qml"), { video: video })
     } else {
-        pageLayout.pushToCurrent(currentpage, Qt.resolvedUrl("../pages/ImportPhotoPage.qml"))
+        pageLayout.pushToCurrent(currentpage, Qt.resolvedUrl("../pages/ImportPhotoPage.qml"), { video: video })
     }
 }
 
