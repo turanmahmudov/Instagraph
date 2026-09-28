@@ -48,7 +48,7 @@ void UploadEndpoint::postImage(const QString & path, const QString & caption,
 
 void UploadEndpoint::postVideo(const QString & videoPath, const QString & coverPath, int width,
                                int height, qint64 durationMs, const QString & caption,
-                               const QString & disableComments) {
+                               const QVariantMap & location, const QString & disableComments) {
     QFile videoFile(videoPath);
     if (!videoFile.open(QIODevice::ReadOnly)) {
         emit error("Video not found: " + videoPath);
@@ -66,7 +66,7 @@ void UploadEndpoint::postVideo(const QString & videoPath, const QString & coverP
 
     m_caption = caption;
     m_disableComments = disableComments;
-    m_location.clear();
+    m_location = location;
     m_videoSize = QSize(width, height);
     m_videoDurationMs = durationMs;
 
@@ -267,6 +267,8 @@ void UploadEndpoint::configureVideo(const QString & uploadId, int attempt) {
             .param("device", device)
             .authenticated();
 
+    addLocation(builder);
+
     if (m_disableComments == "1") {
         builder.param("disable_comments", "1");
     }
@@ -274,6 +276,7 @@ void UploadEndpoint::configureVideo(const QString & uploadId, int attempt) {
     m_client->execute(builder.build(), [this, uploadId, attempt](const Response & response) {
         if (response.ok()) {
             m_caption.clear();
+            m_location.clear();
             emit videoConfigured(response.toVariant());
             return;
         }
@@ -290,6 +293,29 @@ void UploadEndpoint::configureVideo(const QString & uploadId, int attempt) {
         m_caption.clear();
         emit error(response.errorMessage());
     });
+}
+
+void UploadEndpoint::addLocation(RequestBuilder & builder) const {
+    if (m_location.isEmpty() || m_location["name"].toString().isEmpty()) {
+        return;
+    }
+
+    QJsonObject locationObj;
+    QString eisk = m_location["external_id_source"].toString() + "_id";
+    locationObj.insert(eisk, m_location["external_id"].toString());
+    locationObj.insert("name", m_location["name"].toString());
+    locationObj.insert("lat", m_location["lat"].toString());
+    locationObj.insert("lng", m_location["lng"].toString());
+    locationObj.insert("address", m_location["address"].toString());
+    locationObj.insert("external_source", m_location["external_id_source"].toString());
+
+    builder.param("location", QString(QJsonDocument(locationObj).toJson(QJsonDocument::Compact)))
+        .param("geotag_enabled", true)
+        .param("media_latitude", m_location["lat"].toString())
+        .param("posting_latitude", m_location["lat"].toString())
+        .param("media_longitude", m_location["lng"].toString())
+        .param("posting_longitude", m_location["lng"].toString())
+        .param("altitude", QString::number(QRandomGenerator::global()->bounded(800, 810)));
 }
 
 void UploadEndpoint::configurePhoto(const QString & uploadId) {
@@ -335,28 +361,7 @@ void UploadEndpoint::configurePhoto(const QString & uploadId) {
                        .param("device", device)
                        .authenticated();
 
-    // Add location if provided
-    if (m_location.count() > 0 && m_location["name"].toString().length() > 0) {
-        QJsonObject locationObj;
-        QString eisk = m_location["external_id_source"].toString() + "_id";
-        locationObj.insert(eisk, m_location["external_id"].toString());
-        locationObj.insert("name", m_location["name"].toString());
-        locationObj.insert("lat", m_location["lat"].toString());
-        locationObj.insert("lng", m_location["lng"].toString());
-        locationObj.insert("address", m_location["address"].toString());
-        locationObj.insert("external_source", m_location["external_id_source"].toString());
-
-        QJsonDocument doc(locationObj);
-        QString strJson(doc.toJson(QJsonDocument::Compact));
-
-        builder.param("location", strJson)
-            .param("geotag_enabled", true)
-            .param("media_latitude", m_location["lat"].toString())
-            .param("posting_latitude", m_location["lat"].toString())
-            .param("media_longitude", m_location["lng"].toString())
-            .param("posting_longitude", m_location["lng"].toString())
-            .param("altitude", QString::number(QRandomGenerator::global()->bounded(800, 810)));
-    }
+    addLocation(builder);
 
     // Add disable comments if set
     if (m_disableComments == "1") {

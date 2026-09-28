@@ -10,6 +10,7 @@
 namespace IG {
 
 class ApiClient;
+class RequestBuilder;
 
 /**
  * @brief Handles image uploads to Instagram
@@ -45,10 +46,12 @@ public:
      * @param height Video height in pixels
      * @param durationMs Video duration in milliseconds
      * @param caption Post caption
+     * @param location Optional location data
      * @param disableComments "1" to disable comments, "0" otherwise
      */
     void postVideo(const QString & videoPath, const QString & coverPath, int width, int height,
-                   qint64 durationMs, const QString & caption, const QString & disableComments);
+                   qint64 durationMs, const QString & caption, const QVariantMap & location,
+                   const QString & disableComments);
 
     /**
      * @brief Change user's profile picture
@@ -90,6 +93,7 @@ private:
     bool readJpeg(const QString & path, QByteArray & jpegData, QSize & size);
     void uploadPhoto(const QByteArray & jpegData, const QString & uploadId,
                      std::function<void()> onUploaded);
+    void addLocation(RequestBuilder & builder) const;
     void configurePhoto(const QString & uploadId);
     void uploadVideo(const QByteArray & videoData, const QString & uploadId,
                      std::function<void()> onUploaded);

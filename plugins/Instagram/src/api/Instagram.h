@@ -63,7 +63,8 @@ public Q_SLOTS:
     Q_INVOKABLE void postImage(QString path, QString caption, QVariantMap location,
                                QString upload_id = "", QString disableComments = "0");
     Q_INVOKABLE void postVideo(QString videoPath, QString coverPath, int width, int height,
-                               qint64 durationMs, QString caption, QString disableComments = "0");
+                               qint64 durationMs, QString caption, QVariantMap location,
+                               QString disableComments = "0");
 
     // Popular/Search
     Q_INVOKABLE void getPopularFeed(QString max_id = "");

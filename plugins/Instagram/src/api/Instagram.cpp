@@ -824,8 +824,10 @@ void Instagram::postImage(QString path, QString caption, QVariantMap location, Q
 }
 
 void Instagram::postVideo(QString videoPath, QString coverPath, int width, int height,
-                          qint64 durationMs, QString caption, QString disableComments) {
-    m_upload->postVideo(videoPath, coverPath, width, height, durationMs, caption, disableComments);
+                          qint64 durationMs, QString caption, QVariantMap location,
+                          QString disableComments) {
+    m_upload->postVideo(videoPath, coverPath, width, height, durationMs, caption, location,
+                        disableComments);
 }
 
 // ============================================================================
