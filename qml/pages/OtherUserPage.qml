@@ -108,6 +108,7 @@ PageItem {
                     y: units.gu(2)
 
                     Label {
+                        width: parent.width
                         text: action.text
                         font.weight: Font.DemiBold
                         wrapMode: Text.WordWrap
@@ -116,6 +117,11 @@ PageItem {
                 }
             }
             actions: ActionList {
+                Action {
+                    visible: friendshipViewModel.following
+                    text: friendshipViewModel.favorite ? i18n.tr("Remove from Favorites") : i18n.tr("Add to Favorites")
+                    onTriggered: friendshipViewModel.favorite ? friendshipViewModel.removeFavorite() : friendshipViewModel.addFavorite()
+                }
                 Action {
                     text: i18n.tr("Block")
                     onTriggered: {
@@ -229,12 +235,6 @@ PageItem {
                 height: units.gu(2)
             }
 
-            Loader {
-                id: storiesFeedTrayLoader
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: parent.width - units.gu(2)
-                height: width / 5 + units.gu(3)
-                visible: feedViewModel.highlightsModel.count > 0
             Column {
                 visible: similarAccountsViewModel.accountsModel.count > 0
                 width: parent.width
@@ -259,6 +259,12 @@ PageItem {
                 }
             }
 
+            Loader {
+                id: storiesFeedTrayLoader
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: parent.width - units.gu(2)
+                height: width / 5 + units.gu(3)
+                visible: feedViewModel.highlightsModel.count > 0
                 active: feedViewModel.highlightsModel.count > 0
                 asynchronous: true
 
@@ -500,13 +506,13 @@ PageItem {
         } else {
             selfProfile = false;
             friendshipViewModel.loadFriendship();
+            similarAccountsViewModel.load();
         }
 
         getUsernameInfo();
     }
 
     function getUsernameInfo() {
-            similarAccountsViewModel.load();
         feedViewModel.loadUserInfo();
     }
 }

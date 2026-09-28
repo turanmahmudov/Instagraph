@@ -7,6 +7,7 @@ import Instagram 1.0
  * Handles the relation to another user:
  * - Friendship status loading
  * - Follow, unfollow, block and unblock
+ * - Favorites
  */
 Item {
     id: viewModel
@@ -18,6 +19,7 @@ Item {
     property bool following: false
     property bool outgoingRequest: false
     property bool blocking: false
+    property bool favorite: false
     property bool privateAccount: false
 
     readonly property bool canFollow: isLoaded && !following && !outgoingRequest && !blocking
@@ -54,6 +56,16 @@ Item {
         instagram.unBlock(userId);
     }
 
+    function addFavorite() {
+        pendingUserId = userId;
+        instagram.favorite(userId);
+    }
+
+    function removeFavorite() {
+        pendingUserId = userId;
+        instagram.unFavorite(userId);
+    }
+
     Connections {
         target: instagram
         enabled: viewModel.isLoading || viewModel.pendingUserId !== null
@@ -84,6 +96,12 @@ Item {
         function onUnBlockDataReady(answer) {
             handleActionResponse(JSON.parse(answer));
         }
+        function onFavoriteDataReady(answer) {
+            handleFavoriteResponse(JSON.parse(answer), true);
+        }
+        function onUnFavoriteDataReady(answer) {
+            handleFavoriteResponse(JSON.parse(answer), false);
+        }
     }
 
     function handleActionResponse(data) {
@@ -96,9 +114,21 @@ Item {
         return true;
     }
 
+    function handleFavoriteResponse(data, isFavorite) {
+        if (pendingUserId === null || pendingUserId != userId) {
+            return;
+        }
+
+        pendingUserId = null;
+        if (data.status === "ok") {
+            favorite = isFavorite;
+        }
+    }
+
     function applyStatus(status) {
         following = status.following === true;
         outgoingRequest = status.outgoing_request === true;
         blocking = status.blocking === true;
+        favorite = status.is_feed_favorite === true;
     }
 }
