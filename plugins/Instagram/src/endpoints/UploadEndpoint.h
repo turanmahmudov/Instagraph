@@ -1,10 +1,11 @@
 #ifndef INSTAGRAM_UPLOADENDPOINT_H
 #define INSTAGRAM_UPLOADENDPOINT_H
 
-#include <QImage>
 #include <QObject>
+#include <QSize>
 #include <QVariant>
 #include <QVariantMap>
+#include <functional>
 
 namespace IG {
 
@@ -14,12 +15,10 @@ class ApiClient;
  * @brief Handles image uploads to Instagram
  *
  * This endpoint manages:
- * - Photo uploads with configurePhoto step
+ * - Photo upload to rupload_igphoto
+ * - Photo post with media/configure
+ * - Profile picture change
  * - Upload progress tracking
- *
- * Note: UploadEndpoint requires special handling for file uploads
- * which is currently not fully supported by the new pattern.
- * File upload functionality needs to be added to ApiClient.
  */
 class UploadEndpoint : public QObject {
     Q_OBJECT
@@ -68,16 +67,19 @@ signals:
     void error(const QString & message);
 
 private:
+    bool readJpeg(const QString & path, QByteArray & jpegData, QSize & size);
+    void uploadPhoto(const QByteArray & jpegData, const QString & uploadId,
+                     std::function<void()> onUploaded);
     void configurePhoto(const QString & uploadId);
 
     ApiClient * m_client;
 
     // Upload state
     QString m_caption;
-    QString m_imagePath;
+    QSize m_imageSize;
     QVariantMap m_location;
     QString m_disableComments;
-    QString m_currentUploadId;
+    QString m_uploadRequestId;
 };
 
 } // namespace IG

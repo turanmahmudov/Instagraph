@@ -86,6 +86,23 @@ RequestBuilder & RequestBuilder::rawBody(const QByteArray & body) {
     return *this;
 }
 
+RequestBuilder & RequestBuilder::octetStream(const QByteArray & body) {
+    m_contentType = ContentType::OctetStream;
+    m_rawBody = body;
+    m_signed = false;
+    return *this;
+}
+
+RequestBuilder & RequestBuilder::absoluteUrl(const QString & url) {
+    m_url = url;
+    return *this;
+}
+
+RequestBuilder & RequestBuilder::header(const QByteArray & name, const QByteArray & value) {
+    m_headers.insert(name, value);
+    return *this;
+}
+
 Request RequestBuilder::build() const {
     Request request;
     request.m_method = m_method;
@@ -98,6 +115,8 @@ Request RequestBuilder::build() const {
     request.m_contentType = m_contentType;
     request.m_boundary = m_boundary;
     request.m_rawBody = m_rawBody;
+    request.m_url = m_url;
+    request.m_headers = m_headers;
 
     // Generate unique request ID for tracking
     QString uuid = QUuid::createUuid().toString();

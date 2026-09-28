@@ -66,7 +66,11 @@ QString ApiClient::execute(const Request & request, ResponseCallback callback) {
         reply = m_network->get(netRequest);
     } else {
         QByteArray body = buildBody(request);
-        qDebug() << "Body:" << body;
+        if (request.contentType() == ContentType::OctetStream) {
+            qDebug() << "Body:" << body.size() << "bytes";
+        } else {
+            qDebug() << "Body:" << body;
+        }
         reply = m_network->post(netRequest, body);
     }
     qDebug() << "=================================";
@@ -215,8 +219,8 @@ void ApiClient::onReplyFinished(QNetworkReply * reply) {
 }
 
 QUrl ApiClient::buildUrl(const Request & request) const {
-    QString baseUrl = Constants::apiUrl(request.isApiV2());
-    QUrl url(baseUrl + request.endpoint());
+    QUrl url(request.url().isEmpty() ? Constants::apiUrl(request.isApiV2()) + request.endpoint()
+                                     : request.url());
 
     if (!request.query().isEmpty()) {
         url.setQuery(request.query());
@@ -318,10 +322,17 @@ QNetworkRequest ApiClient::buildNetworkRequest(const Request & request) const {
             QString contentType =
                 QString("multipart/form-data; boundary=%1").arg(request.boundary());
             netRequest.setHeader(QNetworkRequest::ContentTypeHeader, contentType);
+        } else if (request.contentType() == ContentType::OctetStream) {
+            netRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/octet-stream");
         } else {
             netRequest.setHeader(QNetworkRequest::ContentTypeHeader,
                                  "application/x-www-form-urlencoded; charset=UTF-8");
         }
+    }
+
+    const QMap<QByteArray, QByteArray> headers = request.headers();
+    for (auto it = headers.constBegin(); it != headers.constEnd(); ++it) {
+        netRequest.setRawHeader(it.key(), it.value());
     }
 
     return netRequest;

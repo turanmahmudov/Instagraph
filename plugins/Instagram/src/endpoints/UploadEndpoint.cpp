@@ -2,74 +2,157 @@
 #include "../core/ApiClient.h"
 #include "../core/Request.h"
 #include "../core/Response.h"
+#include "../utils/Constants.h"
+#include <QBuffer>
 #include <QDateTime>
-#include <QDebug>
-#include <QFile>
-#include <QFileInfo>
 #include <QImage>
+#include <QImageReader>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QPainter>
+#include <QRandomGenerator>
+#include <QUuid>
 
 namespace IG {
 
 UploadEndpoint::UploadEndpoint(ApiClient * client, QObject * parent)
-    : QObject(parent), m_client(client) {}
+    : QObject(parent), m_client(client) {
+    connect(m_client, &ApiClient::uploadProgress, this,
+            [this](const QString & requestId, double percent) {
+                if (requestId == m_uploadRequestId) {
+                    emit uploadProgress(percent);
+                }
+            });
+}
 
 void UploadEndpoint::postImage(const QString & path, const QString & caption,
                                const QVariantMap & location, const QString & uploadId,
                                const QString & disableComments) {
-    // Store upload state
-    m_caption = caption;
-    m_imagePath = path;
-    m_location = location;
-    m_disableComments = disableComments;
-
-    // Open and read the image file
-    QFile image(path);
-    if (!image.open(QIODevice::ReadOnly)) {
+    QByteArray jpegData;
+    if (!readJpeg(path, jpegData, m_imageSize)) {
         emit error("Image not found: " + path);
         return;
     }
 
-    QByteArray dataStream = image.readAll();
-    image.close();
+    m_caption = caption;
+    m_location = location;
+    m_disableComments = disableComments;
 
-    // Generate upload ID if not provided
-    m_currentUploadId = uploadId;
-    if (m_currentUploadId.isEmpty()) {
-        m_currentUploadId = QString::number(QDateTime::currentMSecsSinceEpoch());
-    }
-
-    // TODO: File upload requires special handling in ApiClient
-    // For now, emit error indicating this needs implementation
-    emit error("File upload not yet implemented in new ApiClient pattern. Use "
-               "legacy upload method.");
+    const QString id =
+        uploadId.isEmpty() ? QString::number(QDateTime::currentMSecsSinceEpoch()) : uploadId;
+    uploadPhoto(jpegData, id, [this, id]() { configurePhoto(id); });
 }
 
-void UploadEndpoint::configurePhoto(const QString & uploadId) {
-    QImage image(m_imagePath);
-    if (image.isNull()) {
-        emit error("Failed to load image for configuration: " + m_imagePath);
+void UploadEndpoint::changeProfilePicture(const QString & photoPath) {
+    QByteArray jpegData;
+    QSize size;
+    if (!readJpeg(photoPath, jpegData, size)) {
+        emit error("Image not found: " + photoPath);
         return;
     }
 
-    // Build device info
+    const QString uploadId = QString::number(QDateTime::currentMSecsSinceEpoch());
+    uploadPhoto(jpegData, uploadId, [this, uploadId]() {
+        auto request = RequestBuilder::post("accounts/change_profile_picture/")
+                           .param("use_fbuploader", "true")
+                           .param("upload_id", uploadId)
+                           .authenticated()
+                           .build();
+
+        m_client->execute(request, [this](const Response & response) {
+            if (response.ok()) {
+                emit profilePictureChanged(response.toVariant());
+            } else {
+                emit error(response.errorMessage());
+            }
+        });
+    });
+}
+
+bool UploadEndpoint::readJpeg(const QString & path, QByteArray & jpegData, QSize & size) {
+    QImageReader reader(path);
+    reader.setAutoTransform(true);
+    QImage image = reader.read();
+    if (image.isNull()) {
+        return false;
+    }
+
+    if (image.hasAlphaChannel()) {
+        QImage opaque(image.size(), QImage::Format_RGB32);
+        opaque.fill(Qt::white);
+        QPainter painter(&opaque);
+        painter.drawImage(0, 0, image);
+        painter.end();
+        image = opaque;
+    }
+
+    QBuffer buffer(&jpegData);
+    buffer.open(QIODevice::WriteOnly);
+    if (!image.save(&buffer, "JPG", 95)) {
+        return false;
+    }
+
+    size = image.size();
+    return true;
+}
+
+void UploadEndpoint::uploadPhoto(const QByteArray & jpegData, const QString & uploadId,
+                                 std::function<void()> onUploaded) {
+    const int uploadSuffix = QRandomGenerator::global()->bounded(1000000000, 2147483647);
+    const QString uploadName = QString("%1_0_%2").arg(uploadId).arg(uploadSuffix);
+
+    QJsonObject ruploadParams;
+    ruploadParams.insert("retry_context",
+                         QStringLiteral("{\"num_step_auto_retry\":0,\"num_reupload\":0,"
+                                        "\"num_step_manual_retry\":0}"));
+    ruploadParams.insert("media_type", "1");
+    ruploadParams.insert("xsharing_user_ids", "[]");
+    ruploadParams.insert("upload_id", uploadId);
+    ruploadParams.insert(
+        "image_compression",
+        QStringLiteral("{\"lib_name\":\"moz\",\"lib_version\":\"3.1.m\",\"quality\":\"80\"}"));
+
+    QString waterfallId = QUuid::createUuid().toString();
+    waterfallId = waterfallId.mid(1, waterfallId.length() - 2);
+
+    auto request =
+        RequestBuilder::post("")
+            .absoluteUrl(QStringLiteral("https://i.instagram.com/rupload_igphoto/") + uploadName)
+            .header("X-Instagram-Rupload-Params",
+                    QJsonDocument(ruploadParams).toJson(QJsonDocument::Compact))
+            .header("X_FB_PHOTO_WATERFALL_ID", waterfallId.toUtf8())
+            .header("X-Entity-Type", "image/jpeg")
+            .header("Offset", "0")
+            .header("X-Entity-Name", uploadName.toUtf8())
+            .header("X-Entity-Length", QByteArray::number(jpegData.size()))
+            .octetStream(jpegData)
+            .build();
+
+    m_uploadRequestId = m_client->execute(request, [this, onUploaded](const Response & response) {
+        m_uploadRequestId.clear();
+        if (response.ok()) {
+            onUploaded();
+        } else {
+            emit error(response.errorMessage());
+        }
+    });
+}
+
+void UploadEndpoint::configurePhoto(const QString & uploadId) {
     QJsonObject device;
-    device.insert("manufacturer", QString("Xiaomi"));
-    device.insert("model", QString("HM 1SW"));
-    device.insert("android_version", 18);
-    device.insert("android_release", QString("4.3"));
+    device.insert("manufacturer", Constants::deviceManufacturer());
+    device.insert("model", Constants::deviceModel());
+    device.insert("android_version", Constants::androidVersion().toInt());
+    device.insert("android_release", Constants::androidRelease());
 
-    // Build extra info
     QJsonObject extra;
-    extra.insert("source_width", image.width());
-    extra.insert("source_height", image.height());
+    extra.insert("source_width", m_imageSize.width());
+    extra.insert("source_height", m_imageSize.height());
 
-    // Build crop info
     QJsonArray cropOriginalSize;
-    cropOriginalSize.append(image.width());
-    cropOriginalSize.append(image.height());
+    cropOriginalSize.append(static_cast<double>(m_imageSize.width()));
+    cropOriginalSize.append(static_cast<double>(m_imageSize.height()));
 
     QJsonArray cropCenter;
     cropCenter.append(0.0);
@@ -77,21 +160,26 @@ void UploadEndpoint::configurePhoto(const QString & uploadId) {
 
     QJsonObject edits;
     edits.insert("crop_original_size", cropOriginalSize);
-    edits.insert("crop_zoom", 1.3333334);
     edits.insert("crop_center", cropCenter);
+    edits.insert("crop_zoom", 1.0);
 
-    // Build request
+    const QString now = QDateTime::currentDateTimeUtc().toString("yyyyMMdd'T'HHmmss'.000Z'");
+
     auto builder = RequestBuilder::post("media/configure/")
                        .param("upload_id", uploadId)
-                       .param("camera_model", "HM1S")
-                       .param("source_type", 4)
-                       .param("date_time_original",
-                              QDateTime::currentDateTime().toString("yyyy:MM:dd HH:mm:ss"))
-                       .param("camera_make", "XIAOMI")
+                       .param("caption", m_caption)
+                       .param("source_type", "4")
+                       .param("media_folder", "Camera")
+                       .param("scene_capture_type", "standard")
+                       .param("multi_sharing", "1")
+                       .param("camera_model", Constants::deviceModel())
+                       .param("camera_make", Constants::deviceManufacturer())
+                       .param("timezone_offset", QString::number(Constants::timezoneOffset()))
+                       .param("date_time_original", now)
+                       .param("date_time_digitalized", now)
                        .param("edits", edits)
                        .param("extra", extra)
                        .param("device", device)
-                       .param("caption", m_caption)
                        .authenticated();
 
     // Add location if provided
@@ -114,7 +202,7 @@ void UploadEndpoint::configurePhoto(const QString & uploadId) {
             .param("posting_latitude", m_location["lat"].toString())
             .param("media_longitude", m_location["lng"].toString())
             .param("posting_longitude", m_location["lng"].toString())
-            .param("altitude", QString::number(rand() % 10 + 800));
+            .param("altitude", QString::number(QRandomGenerator::global()->bounded(800, 810)));
     }
 
     // Add disable comments if set
@@ -123,9 +211,7 @@ void UploadEndpoint::configurePhoto(const QString & uploadId) {
     }
 
     m_client->execute(builder.build(), [this](const Response & response) {
-        // Clear state
         m_caption.clear();
-        m_imagePath.clear();
         m_location.clear();
 
         if (response.ok()) {
@@ -134,12 +220,6 @@ void UploadEndpoint::configurePhoto(const QString & uploadId) {
             emit error(response.errorMessage());
         }
     });
-}
-
-void UploadEndpoint::changeProfilePicture(const QString & photoPath) {
-    // TODO: File upload requires special handling in ApiClient
-    Q_UNUSED(photoPath);
-    emit error("Profile picture upload not yet implemented in new ApiClient pattern");
 }
 
 } // namespace IG

@@ -20,7 +20,8 @@ enum class HttpMethod { GET, POST };
  */
 enum class ContentType {
     FormUrlEncoded, // application/x-www-form-urlencoded
-    Multipart       // multipart/form-data
+    Multipart,      // multipart/form-data
+    OctetStream     // application/octet-stream
 };
 
 /**
@@ -67,6 +68,12 @@ public:
     bool hasRawBody() const {
         return !m_rawBody.isEmpty();
     }
+    QString url() const {
+        return m_url;
+    }
+    QMap<QByteArray, QByteArray> headers() const {
+        return m_headers;
+    }
 
 private:
     friend class RequestBuilder;
@@ -82,6 +89,8 @@ private:
     ContentType m_contentType = ContentType::FormUrlEncoded;
     QString m_boundary;
     QByteArray m_rawBody;
+    QString m_url;
+    QMap<QByteArray, QByteArray> m_headers;
 };
 
 /**
@@ -153,6 +162,21 @@ public:
     RequestBuilder & rawBody(const QByteArray & body);
 
     /**
+     * @brief Send the raw body as application/octet-stream
+     */
+    RequestBuilder & octetStream(const QByteArray & body);
+
+    /**
+     * @brief Use this absolute URL instead of the API base URL and endpoint
+     */
+    RequestBuilder & absoluteUrl(const QString & url);
+
+    /**
+     * @brief Add a request header
+     */
+    RequestBuilder & header(const QByteArray & name, const QByteArray & value);
+
+    /**
      * @brief Build the immutable Request object
      */
     Request build() const;
@@ -170,6 +194,8 @@ private:
     ContentType m_contentType = ContentType::FormUrlEncoded;
     QString m_boundary;
     QByteArray m_rawBody;
+    QString m_url;
+    QMap<QByteArray, QByteArray> m_headers;
 };
 
 } // namespace IG
