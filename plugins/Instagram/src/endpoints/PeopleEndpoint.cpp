@@ -217,6 +217,52 @@ void PeopleEndpoint::unblock(const QString & userId) {
     });
 }
 
+void PeopleEndpoint::getPendingFriendships() {
+    auto request = RequestBuilder::get("friendships/pending/").build();
+
+    m_client->execute(request, [this](const Response & response) {
+        if (response.ok()) {
+            emit pendingFriendshipsReady(response.toVariant());
+        } else {
+            emit error(response.errorMessage());
+        }
+    });
+}
+
+void PeopleEndpoint::approveFriendship(const QString & userId) {
+    auto request = RequestBuilder::post("friendships/approve/{user_id}/")
+                       .pathParam("user_id", userId)
+                       .param("user_id", userId)
+                       .param("radio_type", "wifi-none")
+                       .authenticated()
+                       .build();
+
+    m_client->execute(request, [this](const Response & response) {
+        if (response.ok()) {
+            emit approveFriendshipReady(response.toVariant());
+        } else {
+            emit error(response.errorMessage());
+        }
+    });
+}
+
+void PeopleEndpoint::rejectFriendship(const QString & userId) {
+    auto request = RequestBuilder::post("friendships/ignore/{user_id}/")
+                       .pathParam("user_id", userId)
+                       .param("user_id", userId)
+                       .param("radio_type", "wifi-none")
+                       .authenticated()
+                       .build();
+
+    m_client->execute(request, [this](const Response & response) {
+        if (response.ok()) {
+            emit rejectFriendshipReady(response.toVariant());
+        } else {
+            emit error(response.errorMessage());
+        }
+    });
+}
+
 void PeopleEndpoint::getAutocompleteUserList() {
     auto request = RequestBuilder::get("friendships/autocomplete_user_list/")
                        .queryParam("version", "2")

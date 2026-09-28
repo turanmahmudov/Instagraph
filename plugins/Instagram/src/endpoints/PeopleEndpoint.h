@@ -47,6 +47,11 @@ public:
     void block(const QString & userId);
     void unblock(const QString & userId);
 
+    // Follow requests
+    void getPendingFriendships();
+    void approveFriendship(const QString & userId);
+    void rejectFriendship(const QString & userId);
+
     // Lists
     void getAutocompleteUserList();
     void getBlockedUserList();
@@ -71,6 +76,9 @@ Q_SIGNALS:
     void unfavoriteReady(const QVariant & answer);
     void blockReady(const QVariant & answer);
     void unblockReady(const QVariant & answer);
+    void pendingFriendshipsReady(const QVariant & answer);
+    void approveFriendshipReady(const QVariant & answer);
+    void rejectFriendshipReady(const QVariant & answer);
     void autocompleteUserListReady(const QVariant & answer);
     void blockedUserListReady(const QVariant & answer);
     void searchUserReady(const QVariant & answer);

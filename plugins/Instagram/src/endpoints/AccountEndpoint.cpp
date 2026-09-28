@@ -214,6 +214,24 @@ void AccountEndpoint::editProfile(const QString & url, const QString & phone,
     });
 }
 
+void AccountEndpoint::changePassword(const QString & encOldPassword,
+                                     const QString & encNewPassword) {
+    auto request = RequestBuilder::post("accounts/change_password/")
+                       .param("enc_old_password", encOldPassword)
+                       .param("enc_new_password1", encNewPassword)
+                       .param("enc_new_password2", encNewPassword)
+                       .authenticated()
+                       .build();
+
+    m_client->execute(request, [this](const Response & response) {
+        if (response.ok()) {
+            emit passwordChanged(response.toVariant());
+        } else {
+            emit error(response.errorMessage());
+        }
+    });
+}
+
 void AccountEndpoint::checkUsername(const QString & username, const QString & userId) {
     auto request = RequestBuilder::post("users/check_username/")
                        .param("_csrftoken", "missing")

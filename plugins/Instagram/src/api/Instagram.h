@@ -6,7 +6,6 @@
 #include <QVariantMap>
 #include <memory>
 
-class QFile;
 class QNetworkAccessManager;
 
 namespace IG {
@@ -71,12 +70,13 @@ public Q_SLOTS:
     // Account
     Q_INVOKABLE void setPrivateAccount();
     Q_INVOKABLE void setPublicAccount();
-    Q_INVOKABLE void changeProfilePicture(QFile * photo);
+    Q_INVOKABLE void changeProfilePicture(QString path);
     Q_INVOKABLE void removeProfilePicture();
     Q_INVOKABLE void getCurrentUser();
     Q_INVOKABLE void editProfile(QString url, QString phone, QString first_name, QString biography,
                                  QString email, bool gender);
     Q_INVOKABLE void checkUsername(QString username);
+    Q_INVOKABLE void changePassword(QString oldPassword, QString newPassword);
 
     // Direct
     Q_INVOKABLE void getInbox(QString cursorId = "");
@@ -155,6 +155,10 @@ public Q_SLOTS:
     Q_INVOKABLE void block(QString userId);
     Q_INVOKABLE void unBlock(QString userId);
 
+    Q_INVOKABLE void getPendingFriendships();
+    Q_INVOKABLE void approveFriendship(QString userId);
+    Q_INVOKABLE void rejectFriendship(QString userId);
+
     Q_INVOKABLE void searchUser(QString query);
 
     // Story
@@ -197,11 +201,13 @@ Q_SIGNALS:
 
     // Account signals
     void profilePictureDeleted(QVariant answer);
+    void profilePictureChanged(QVariant answer);
     void setProfilePrivate(QVariant answer);
     void setProfilePublic(QVariant answer);
     void currentUserDataReady(QVariant answer);
     void editDataReady(QVariant answer);
     void usernameCheckDataReady(QVariant answer);
+    void changePasswordDataReady(QVariant answer);
 
     // Direct signals
     void inboxDataReady(QVariant answer);
@@ -267,6 +273,9 @@ Q_SIGNALS:
     void unFavoriteDataReady(QVariant answer);
     void blockDataReady(QVariant answer);
     void unBlockDataReady(QVariant answer);
+    void pendingFriendshipsDataReady(QVariant answer);
+    void approveFriendshipDataReady(QVariant answer);
+    void rejectFriendshipDataReady(QVariant answer);
 
     void infoByIdDataReady(QVariant answer);
     void infoByNameDataReady(QVariant answer);

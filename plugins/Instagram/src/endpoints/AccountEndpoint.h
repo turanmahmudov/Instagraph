@@ -62,6 +62,9 @@ public:
                      const QString & biography, const QString & email, bool gender,
                      const QString & username);
 
+    // Password
+    void changePassword(const QString & encOldPassword, const QString & encNewPassword);
+
     // Username management
     void checkUsername(const QString & username, const QString & userId);
 
@@ -84,6 +87,7 @@ Q_SIGNALS:
     void currentUserReady(const QVariant & answer);
     void profileEdited(const QVariant & answer);
     void usernameCheckReady(const QVariant & answer);
+    void passwordChanged(const QVariant & answer);
     void featuresSynced(const QVariant & answer);
 
     void error(const QString & message);

@@ -17,6 +17,7 @@
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QTimer>
 #include <QUuid>
 
 Instagram::Instagram(QObject * parent)
@@ -76,6 +77,8 @@ void Instagram::setupEndpointConnections() {
     connect(m_account, &IG::AccountEndpoint::profileEdited, this, &Instagram::editDataReady);
     connect(m_account, &IG::AccountEndpoint::usernameCheckReady, this,
             &Instagram::usernameCheckDataReady);
+    connect(m_account, &IG::AccountEndpoint::passwordChanged, this,
+            &Instagram::changePasswordDataReady);
     connect(m_account, &IG::AccountEndpoint::logoutReady, this, &Instagram::doLogout);
     connect(m_account, &IG::AccountEndpoint::error, this, &Instagram::error);
 
@@ -145,6 +148,12 @@ void Instagram::setupEndpointConnections() {
     connect(m_people, &IG::PeopleEndpoint::unfavoriteReady, this, &Instagram::unFavoriteDataReady);
     connect(m_people, &IG::PeopleEndpoint::blockReady, this, &Instagram::blockDataReady);
     connect(m_people, &IG::PeopleEndpoint::unblockReady, this, &Instagram::unBlockDataReady);
+    connect(m_people, &IG::PeopleEndpoint::pendingFriendshipsReady, this,
+            &Instagram::pendingFriendshipsDataReady);
+    connect(m_people, &IG::PeopleEndpoint::approveFriendshipReady, this,
+            &Instagram::approveFriendshipDataReady);
+    connect(m_people, &IG::PeopleEndpoint::rejectFriendshipReady, this,
+            &Instagram::rejectFriendshipDataReady);
     connect(m_people, &IG::PeopleEndpoint::autocompleteUserListReady, this,
             &Instagram::autocompleteUserListDataReady);
     connect(m_people, &IG::PeopleEndpoint::blockedUserListReady, this,
@@ -202,6 +211,8 @@ void Instagram::setupEndpointConnections() {
             &Instagram::imageConfigureDataReady);
     connect(m_upload, &IG::UploadEndpoint::uploadProgress, this,
             &Instagram::imageUploadProgressDataReady);
+    connect(m_upload, &IG::UploadEndpoint::profilePictureChanged, this,
+            &Instagram::profilePictureChanged);
     connect(m_upload, &IG::UploadEndpoint::error, this, &Instagram::error);
 
     // Error handling from API client
@@ -429,9 +440,9 @@ void Instagram::setPublicAccount() {
     m_account->setPublicAccount();
 }
 
-void Instagram::changeProfilePicture(QFile * photo) {
-    if (photo && photo->exists()) {
-        m_upload->changeProfilePicture(photo->fileName());
+void Instagram::changeProfilePicture(QString path) {
+    if (QFile::exists(path)) {
+        m_upload->changeProfilePicture(path);
     } else {
         emit error("Profile picture file not found");
     }
@@ -453,6 +464,24 @@ void Instagram::editProfile(QString url, QString phone, QString first_name, QStr
 
 void Instagram::checkUsername(QString username) {
     m_account->checkUsername(username, m_session->userId());
+}
+
+void Instagram::changePassword(QString oldPassword, QString newPassword) {
+    m_passwordEncryptor->encryptPassword(oldPassword, [this, newPassword](const QString & encOld) {
+        if (encOld.isEmpty()) {
+            emit error("Password encryption failed");
+            return;
+        }
+        QTimer::singleShot(0, this, [this, encOld, newPassword]() {
+            m_passwordEncryptor->encryptPassword(newPassword, [this, encOld](const QString & encNew) {
+                if (encNew.isEmpty()) {
+                    emit error("Password encryption failed");
+                    return;
+                }
+                m_account->changePassword(encOld, encNew);
+            });
+        });
+    });
 }
 
 // ============================================================================
@@ -715,6 +744,18 @@ void Instagram::block(QString userId) {
 
 void Instagram::unBlock(QString userId) {
     m_people->unblock(userId);
+}
+
+void Instagram::getPendingFriendships() {
+    m_people->getPendingFriendships();
+}
+
+void Instagram::approveFriendship(QString userId) {
+    m_people->approveFriendship(userId);
+}
+
+void Instagram::rejectFriendship(QString userId) {
+    m_people->rejectFriendship(userId);
 }
 
 void Instagram::searchUser(QString query) {
