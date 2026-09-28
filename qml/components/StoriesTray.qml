@@ -36,7 +36,7 @@ Item {
 
         ActivityIndicator {
             id: activity
-            running: true
+            running: parent.opacity > 0
         }
     }
 
