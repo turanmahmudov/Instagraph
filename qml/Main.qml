@@ -5,7 +5,6 @@ import Qt.labs.settings 1.0
 import Lomiri.Components 1.3
 import Lomiri.Components.Popups 1.3
 import Lomiri.Content 1.3
-import Lomiri.DownloadManager 1.2
 import Lomiri.Connectivity 1.0
 import Lomiri.Layouts 1.0
 
@@ -48,7 +47,7 @@ MainView {
     }
 
     // Constants (used directly as singletons - no need for aliases)
-    // Access via: IconsConstants.inbox, PagesConstants.home, etc.
+    // Access via: IconsConstants.more, PagesConstants.home, etc.
 
     // Settings
     Settings {
@@ -111,29 +110,6 @@ MainView {
     ContentStore {
         id: appStore
         scope: ContentScope.App
-    }
-
-    Component {
-        id: downloadComponent
-        SingleDownload {
-            autoStart: false
-            property var contentType
-            onDownloadIdChanged: {
-                PopupUtils.open(downloadDialog, mainView, {
-                    "contentType": contentType,
-                    "downloadId": downloadId
-                });
-            }
-
-            onFinished: {
-                destroy();
-            }
-        }
-    }
-
-    Component {
-        id: downloadDialog
-        ContentDownloadDialog {}
     }
 
     // Pages

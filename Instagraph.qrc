@@ -29,7 +29,6 @@
         <file>qml/pages/DirectThreadPage.qml</file>
         <file>qml/pages/ChangePasswordPage.qml</file>
 
-        <file>qml/pages/CheckpointInfo.qml</file>
         <file>qml/js/Workers/ActivityWorker.js</file>
         <file>qml/js/Workers/SimpleWorker.js</file>
         <file>qml/js/Workers/UserWorker.js</file>
@@ -54,7 +53,6 @@
         <file>instagraph.dispatcher</file>
         <file>qml/pages/SuggestionsPage.qml</file>
         <file>qml/pages/ShareMediaPage.qml</file>
-        <file>qml/components/ContentDownloadDialog.qml</file>
         <file>qml/pages/BlockedUsers.qml</file>
 
         <file>qml/components/CarouselSlider.qml</file>

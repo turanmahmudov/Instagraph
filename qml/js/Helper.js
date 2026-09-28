@@ -117,23 +117,6 @@ function numFormatter(num, digits) {
     return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
 }
 
-function toObject(arr) {
-    var rv = {};
-    for (var i = 0; i < arr.length; ++i)
-        if (arr[i] !== undefined) rv[i] = arr[i];
-    return rv;
-}
-
-function objectLength(obj) {
-    var result = 0;
-    for (var prop in obj) {
-        if (obj.hasOwnProperty(prop)) {
-            result++;
-        }
-    }
-    return result;
-}
-
 function hexToRgb(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 

@@ -169,13 +169,6 @@ void AccountEndpoint::removeProfilePicture() {
     });
 }
 
-void AccountEndpoint::changeProfilePicture(QFile * photo) {
-    // TODO: Implement multipart upload for profile picture
-    // This requires multipart form-data support in ApiClient
-    Q_UNUSED(photo);
-    emit error("changeProfilePicture not yet implemented");
-}
-
 void AccountEndpoint::getCurrentUser() {
     auto request = RequestBuilder::get("accounts/current_user/").queryParam("edit", "true").build();
 

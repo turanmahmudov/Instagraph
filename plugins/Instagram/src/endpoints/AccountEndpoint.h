@@ -1,7 +1,6 @@
 #ifndef INSTAGRAM_ACCOUNTENDPOINT_H
 #define INSTAGRAM_ACCOUNTENDPOINT_H
 
-#include <QFile>
 #include <QObject>
 #include <QVariant>
 
@@ -54,7 +53,6 @@ public:
 
     // Profile picture
     void removeProfilePicture();
-    void changeProfilePicture(QFile * photo);
 
     // Profile data
     void getCurrentUser();
@@ -83,7 +81,6 @@ Q_SIGNALS:
     void profilePrivateReady(const QVariant & answer);
     void profilePublicReady(const QVariant & answer);
     void profilePictureRemoved(const QVariant & answer);
-    void profilePictureChanged(const QVariant & answer);
     void currentUserReady(const QVariant & answer);
     void profileEdited(const QVariant & answer);
     void usernameCheckReady(const QVariant & answer);

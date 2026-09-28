@@ -11,7 +11,6 @@ QtObject {
     readonly property string envelope: "\ueaab"
     readonly property string exit: "\ueab0"
     readonly property string image: "\ueaeb"
-    readonly property string inbox: "\ueaec"
     readonly property string liked: "\ueadf"
     readonly property string lock: "\ueb17"
     readonly property string more: "\ueb2e"
