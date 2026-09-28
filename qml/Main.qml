@@ -89,6 +89,11 @@ MainView {
         id: instagram
     }
 
+    // Remote media saved to local files
+    MediaCache {
+        id: mediaCache
+    }
+
     // MQTT - FBNS push notifications
     InstagramMqtt {
         id: mqtt

@@ -10,6 +10,9 @@ Item {
     property var mediaImage
     property var itemMaxWidth
 
+    readonly property string remoteUrl: mediaImage ? (mediaImage.url || "") : ""
+    property string localUrl: ""
+
     visible: mediaImage !== undefined
     width: visible ? feed_image.width : 0
     height: visible ? feed_image.height + units.gu(2.5) : 0
@@ -28,21 +31,32 @@ Item {
                 return 0;
             return isSticker ? (horizontal ? units.gu(8) : ((mediaImage.height || 1) * width / (mediaImage.width || 1))) : (width / (mediaImage.width || 1) * (mediaImage.height || 1));
         }
-        source: mediaImage ? (mediaImage.url || "") : ""
+        source: localUrl
         smooth: true
         clip: true
     }
 
     Image {
         anchors.fill: feed_image
-        visible: feed_image.status === AnimatedImage.Error
-        source: visible ? feed_image.source : ""
+        visible: feed_image.status !== AnimatedImage.Ready
+        source: visible ? remoteUrl : ""
         fillMode: Image.PreserveAspectFit
         sourceSize: Qt.size(width, height)
         asynchronous: true
     }
 
+    Connections {
+        target: mediaCache
+        enabled: localUrl === ""
+        function onFetched(url, fileUrl) {
+            if (url === remoteUrl) {
+                localUrl = fileUrl;
+            }
+        }
+    }
+
     Component.onCompleted: {
+        localUrl = mediaCache.fetch(remoteUrl);
         if (isOutgoing) {
             anchors.right = parent.right;
         }
