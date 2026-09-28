@@ -33,6 +33,15 @@ Item {
         clip: true
     }
 
+    Image {
+        anchors.fill: feed_image
+        visible: feed_image.status === AnimatedImage.Error
+        source: visible ? feed_image.source : ""
+        fillMode: Image.PreserveAspectFit
+        sourceSize: Qt.size(width, height)
+        asynchronous: true
+    }
+
     Component.onCompleted: {
         if (isOutgoing) {
             anchors.right = parent.right;

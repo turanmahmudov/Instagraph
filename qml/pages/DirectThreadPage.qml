@@ -120,7 +120,7 @@ PageItem {
                             case "xma_media_share":
                                 return xmaMediaShareComponent;
                             default:
-                                return null;
+                                return unsupportedComponent;
                             }
                         }
                     }
@@ -213,6 +213,17 @@ PageItem {
                         DirectThreadRavenMediaMessage {
                             isOutgoing: directThreadDelegate.outgoing_message
                             itemMaxWidth: directThreadDelegate.item_max_width
+                        }
+                    }
+
+                    Component {
+                        id: unsupportedComponent
+                        Label {
+                            height: implicitHeight + units.gu(2.5)
+                            verticalAlignment: Text.AlignVCenter
+                            text: i18n.tr("Unsupported message")
+                            fontSize: "small"
+                            color: styleApp.common.text2Color
                         }
                     }
 

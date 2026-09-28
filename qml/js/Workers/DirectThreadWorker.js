@@ -59,12 +59,23 @@ WorkerScript.onMessage = function(msg) {
             case "story_share":
                 listObj.story_share = obj[i].story_share
                 break;
-            case "xma_media_share":
-                listObj.xma_media_share = (obj[i].xma_media_share && obj[i].xma_media_share.length > 0) ? obj[i].xma_media_share[0] : {}
+            case "store_sticker":
+                var sticker = obj[i].store_sticker || {}
+                listObj.item_type = "animated_media"
+                listObj.animated_media = {
+                    is_sticker: true,
+                    url: sticker.image_url || "",
+                    width: String(sticker.image_width || 0),
+                    height: String(sticker.image_height || 0)
+                }
                 break;
 
             default:
-
+                var xma = obj[i][obj[i].item_type]
+                if (obj[i].item_type.indexOf("xma") !== -1 && xma && xma.length > 0) {
+                    listObj.item_type = "xma_media_share"
+                    listObj.xma_media_share = xma[0]
+                }
         }
 
         if (msg.insert) {

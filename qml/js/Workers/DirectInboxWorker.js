@@ -49,7 +49,12 @@ function getThreadText(item, activeUserId, typeTexts) {
                 return String(item.user_id) === String(activeUserId) ? typeTexts.you_replied_to_their_story : typeTexts.replied_to_your_story
             }
             return typeTexts.unknown
+        case 'store_sticker':
+            return String(item.user_id) === String(activeUserId) ? typeTexts.you_sent_a_sticker : typeTexts.sent_a_sticker
         default:
+            if (item.item_type.indexOf('xma') !== -1) {
+                return String(item.user_id) === String(activeUserId) ? typeTexts.you_shared_a_post : typeTexts.shared_a_post
+            }
             return item.text || ""
     }
 }
