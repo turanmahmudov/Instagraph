@@ -21,7 +21,7 @@ ActionsPopup {
     property var currentDelegatePage: pageLayout.primaryPage
 
     // Check if current user owns this media
-    property bool is_current_user: activeUsernameId === user.pk
+    property bool is_current_user: String(activeUsernameId) === String(user.pk)
 
     actions: ActionList {
         Action {
