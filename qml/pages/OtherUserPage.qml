@@ -64,6 +64,11 @@ PageItem {
         }
     }
 
+    SimilarAccountsViewModel {
+        id: similarAccountsViewModel
+        userId: usernameId
+    }
+
     // ViewModel handles all feed logic
     UserFeedViewModel {
         id: feedViewModel
@@ -230,6 +235,30 @@ PageItem {
                 width: parent.width - units.gu(2)
                 height: width / 5 + units.gu(3)
                 visible: feedViewModel.highlightsModel.count > 0
+            Column {
+                visible: similarAccountsViewModel.accountsModel.count > 0
+                width: parent.width
+                spacing: units.gu(1)
+
+                Label {
+                    x: units.gu(1)
+                    text: i18n.tr("Suggested for you")
+                    font.weight: Font.DemiBold
+                }
+
+                SuggestionsSlider {
+                    width: parent.width
+                    height: contentItem.childrenRect.height
+                    model: similarAccountsViewModel.accountsModel
+                    currentPage: otheruserpage
+                }
+
+                Item {
+                    width: parent.width
+                    height: units.gu(1)
+                }
+            }
+
                 active: feedViewModel.highlightsModel.count > 0
                 asynchronous: true
 
@@ -477,6 +506,7 @@ PageItem {
     }
 
     function getUsernameInfo() {
+            similarAccountsViewModel.load();
         feedViewModel.loadUserInfo();
     }
 }
