@@ -78,7 +78,6 @@ MainView {
     property string tmpPassword: ""
     property var twoFactorData: null
 
-    signal fileImported(var fileUrl)
     signal directMessageNotified(string igAction)
     signal locationSelected(var location)
 

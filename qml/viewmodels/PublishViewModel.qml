@@ -2,7 +2,7 @@ import QtQuick 2.12
 import Instagram 1.0
 
 /**
- * PublishViewModel - ViewModel for CameraCaptionPage
+ * PublishViewModel - ViewModel for PublishPage
  *
  * Handles publishing:
  * - Photo upload and post
@@ -36,7 +36,7 @@ Item {
         progress = 0;
         isUploading = true;
 
-        instagram.postImage(String(imagePath).replace('file://', ''), caption, location, "", disableComments ? "1" : "0");
+        instagram.postImage(decodeURIComponent(String(imagePath).replace('file://', '')), caption, location, "", disableComments ? "1" : "0");
     }
 
     /**
@@ -47,9 +47,10 @@ Item {
      * @param height - Video height in pixels
      * @param durationMs - Video duration in milliseconds
      * @param caption - Post caption
+     * @param location - Location object, or {} for none
      * @param disableComments - true to turn off commenting
      */
-    function publishVideo(videoUrl, coverPath, width, height, durationMs, caption, disableComments) {
+    function publishVideo(videoUrl, coverPath, width, height, durationMs, caption, location, disableComments) {
         if (isUploading) {
             return;
         }
@@ -58,7 +59,7 @@ Item {
         progress = 0;
         isUploading = true;
 
-        instagram.postVideo(String(videoUrl).replace('file://', ''), coverPath, width, height, durationMs, caption, disableComments ? "1" : "0");
+        instagram.postVideo(decodeURIComponent(String(videoUrl).replace('file://', '')), coverPath, width, height, durationMs, caption, location, disableComments ? "1" : "0");
     }
 
     Connections {

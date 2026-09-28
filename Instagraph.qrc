@@ -10,15 +10,14 @@
         <file>qml/js/Helper.js</file>
         <file>qml/images/not_found_user.jpg</file>
         <file>qml/pages/UserPage.qml</file>
-        <file>qml/pages/CameraPage.qml</file>
         <file>qml/js/Scripts.js</file>
         <file>qml/pages/TagFeedPage.qml</file>
         <file>qml/pages/DirectInboxPage.qml</file>
-        <file>qml/pages/CameraEditPage.qml</file>
+        <file>qml/pages/EditPhotoPage.qml</file>
+        <file>qml/pages/CropPhotoPage.qml</file>
+        <file>qml/pages/PublishPage.qml</file>
         <file>qml/pages/CommentsPage.qml</file>
         <file>qml/components/BottomMenu.qml</file>
-        <file>qml/pages/CameraCaptionPage.qml</file>
-        <file>qml/pages/VideoCaptionPage.qml</file>
         <file>qml/components/FollowComponent2.qml</file>
         <file>qml/pages/OtherUserPage.qml</file>
         <file>qml/pages/SinglePhoto.qml</file>
@@ -38,7 +37,6 @@
         <file>qml/js/Workers/WorkerUtils.js</file>
         <file>qml/pages/UserFollowings.qml</file>
         <file>qml/pages/UserFollowers.qml</file>
-        <file>qml/pages/CameraCropPage.qml</file>
         <file>qml/pages/EditMediaPage.qml</file>
         <file>qml/components/FiltersView.qml</file>
         <file>qml/components/OtherActionsView.qml</file>
@@ -47,9 +45,7 @@
         <file>qml/components/Slider.qml</file>
         <file>qml/components/sliderUtils.js</file>
         <file>qml/components/FunctionSelector.qml</file>
-        <file>qml/components/Camera/CameraToolButton.qml</file>
-        <file>qml/components/Camera/CameraCaptureButton.qml</file>
-        <file>qml/pages/ImportPhotoPage.qml</file>
+        <file>qml/pages/ImportMediaPage.qml</file>
         <file>qml/pages/SearchLocation.qml</file>
         <file>qml/pages/LocationFeedPage.qml</file>
         <file>qml/components/ClaritySettingsPanel.qml</file>
@@ -139,7 +135,7 @@
         <file>qml/js/Workers/DirectInboxWorker.js</file>
         <file>qml/js/DirectTypeTexts.js</file>
         <file>qml/components/User/UserListItem.qml</file>
-        <file>qml/pages/ImportPhotoPageDesktop.qml</file>
+        <file>qml/pages/ImportMediaPageDesktop.qml</file>
 
         <!-- Constants -->
         <file>qml/components/Constants/IconsConstants.qml</file>

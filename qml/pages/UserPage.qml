@@ -20,7 +20,6 @@ import "../components/User"
 import "../components/Feed"
 import "../viewmodels"
 import "../components/Media"
-import "../components/Camera"
 import "../components/Actions"
 
 PageItem {

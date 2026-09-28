@@ -13,37 +13,41 @@ function linkClick(page, link, photoId) {
     }
 }
 
-function pushImageEdit(page, url) {
-    pageLayout.pushToCurrent(page, Qt.resolvedUrl("../pages/CameraEditPage.qml"))
+function localPath(url) {
+    return decodeURIComponent(String(url).replace('file://', ''))
+}
 
-    var r = {
-        "x": 0,
-        "y": 0,
-        "width": 1,
-        "height": 1
+function isVideoFile(url) {
+    return /\.(mp4|mov|m4v|3gp|webm)$/i.test(String(url))
+}
+
+// contentType is a Lomiri.Content ContentType value
+function openMediaPicker(page, contentType, onPicked) {
+    var desktop = IS_DESKTOP === true || IS_DESKTOP === "true" || parseInt(IS_DESKTOP) === 1
+    var picker = desktop ? "../pages/ImportMediaPageDesktop.qml" : "../pages/ImportMediaPage.qml"
+    pageLayout.pushToCurrent(page, Qt.resolvedUrl(picker), { contentType: contentType, onPicked: onPicked })
+}
+
+function openPostEditor(page, url) {
+    if (isVideoFile(url)) {
+        pageLayout.pushToCurrent(page, Qt.resolvedUrl("../pages/PublishPage.qml"), { mediaUrl: String(url), isVideo: true })
+    } else {
+        pageLayout.pushToCurrent(page, Qt.resolvedUrl("../pages/CropPhotoPage.qml"), { imagePath: localPath(url) })
     }
-
-    imageproc.loadImage("image://photo/" + String(url).replace('file://', '') + "?crop=true" + "&x=" + r.x + "&y=" + r.y + "&w=" + r.width + "&h=" + r.height);
 }
 
-function pushImageCaption(page, url) {
-    pageLayout.pushToCurrent(page, Qt.resolvedUrl("../pages/CameraCaptionPage.qml"), { imagePath: String(url).replace('file://', '') })
+function openPhotoEditor(page, imagePath, cropRect) {
+    var encodedPath = imagePath.split('/').map(encodeURIComponent).join('/')
+    imageproc.loadImage("image://photo/" + encodedPath + "?crop=true" + "&x=" + cropRect.x + "&y=" + cropRect.y + "&w=" + cropRect.width + "&h=" + cropRect.height)
+    pageLayout.pushToCurrent(page, Qt.resolvedUrl("../pages/EditPhotoPage.qml"))
 }
 
-function pushImageCrop(page, url) {
-    pageLayout.pushToCurrent(page, Qt.resolvedUrl("../pages/CameraCropPage.qml"), { imagePath: String(url).replace('file://', '') })
+function openPhotoPublisher(page, imagePath) {
+    pageLayout.pushToCurrent(page, Qt.resolvedUrl("../pages/PublishPage.qml"), { mediaUrl: "file://" + imagePath, isVideo: false })
 }
 
 function pushSingleImage(page, mediaId) {
     pageLayout.pushToCurrent(page, Qt.resolvedUrl("../pages/SinglePhoto.qml"), { photoId: mediaId })
-}
-
-function openImportPhotoPage(currentpage, is_desktop = false, video = false) {
-    if (is_desktop === true || is_desktop === "true" || parseInt(is_desktop) === 1) {
-        pageLayout.pushToCurrent(currentpage, Qt.resolvedUrl("../pages/ImportPhotoPageDesktop.qml"), { video: video })
-    } else {
-        pageLayout.pushToCurrent(currentpage, Qt.resolvedUrl("../pages/ImportPhotoPage.qml"), { video: video })
-    }
 }
 
 function logOut() {

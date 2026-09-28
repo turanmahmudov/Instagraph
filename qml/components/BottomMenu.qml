@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import Lomiri.Components 1.3
+import Lomiri.Content 1.3
 import QtQuick.LocalStorage 2.12
 
 import "../fonts/"
@@ -96,7 +97,9 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    pageLayout.addPageToCurrentColumn(pageLayout.primaryPage, Qt.resolvedUrl("../pages/CameraPage.qml"));
+                    Scripts.openMediaPicker(pageLayout.primaryPage, ContentType.All, function (url) {
+                        Scripts.openPostEditor(pageLayout.primaryPage, url);
+                    });
                 }
             }
         }

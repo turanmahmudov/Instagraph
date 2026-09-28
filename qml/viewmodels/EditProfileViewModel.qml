@@ -48,7 +48,7 @@ Item {
         }
 
         isChangingPicture = true;
-        instagram.changeProfilePicture(String(fileUrl).replace('file://', ''));
+        instagram.changeProfilePicture(decodeURIComponent(String(fileUrl).replace('file://', '')));
     }
 
     function removePicture() {

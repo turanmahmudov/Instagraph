@@ -16,7 +16,6 @@ import "../components/Page"
 import "../components/User"
 import "../components/Feed"
 import "../components/Media"
-import "../components/Camera"
 import "../components/Actions"
 import "../viewmodels"
 

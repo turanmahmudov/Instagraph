@@ -32,14 +32,12 @@ QtObject {
     readonly property string edit_media: getQtResolvedUrl("EditMediaPage.qml")
     readonly property string share_media: getQtResolvedUrl("ShareMediaPage.qml")
 
-    // Camera
-    readonly property string camera: getQtResolvedUrl("CameraPage.qml")
-    readonly property string camera_crop: getQtResolvedUrl("CameraCropPage.qml")
-    readonly property string camera_edit: getQtResolvedUrl("CameraEditPage.qml")
-    readonly property string camera_caption: getQtResolvedUrl("CameraCaptionPage.qml")
-    readonly property string video_caption: getQtResolvedUrl("VideoCaptionPage.qml")
-    readonly property string import_photo: getQtResolvedUrl("ImportPhotoPage.qml")
-    readonly property string import_photo_desktop: getQtResolvedUrl("ImportPhotoPageDesktop.qml")
+    // New post
+    readonly property string crop_photo: getQtResolvedUrl("CropPhotoPage.qml")
+    readonly property string edit_photo: getQtResolvedUrl("EditPhotoPage.qml")
+    readonly property string publish: getQtResolvedUrl("PublishPage.qml")
+    readonly property string import_media: getQtResolvedUrl("ImportMediaPage.qml")
+    readonly property string import_media_desktop: getQtResolvedUrl("ImportMediaPageDesktop.qml")
 
     // Direct Messages
     readonly property string direct_inbox: getQtResolvedUrl("DirectInboxPage.qml")

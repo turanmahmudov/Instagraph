@@ -5,6 +5,7 @@ import QtQuick.LocalStorage 2.12
 // Lomiri imports
 import Lomiri.Components 1.3
 import Lomiri.Components.Popups 1.3
+import Lomiri.Content 1.3
 
 // JavaScript imports
 import "../js/Storage.js" as Storage
@@ -17,14 +18,12 @@ import "../components/Page"
 import "../components/User"
 import "../components/Feed"
 import "../components/Media"
-import "../components/Camera"
 import "../components/Actions"
 import "../viewmodels"
 
 PageItem {
     id: editprofilepage
 
-    property bool awaitingProfilePhoto: false
 
     EditProfileViewModel {
         id: editProfileViewModel
@@ -127,17 +126,9 @@ PageItem {
     }
 
     function changePhotoClicked() {
-        awaitingProfilePhoto = true;
-        Scripts.openImportPhotoPage(editprofilepage, IS_DESKTOP);
-    }
-
-    Connections {
-        target: mainView
-        enabled: awaitingProfilePhoto
-        function onFileImported(fileUrl) {
-            awaitingProfilePhoto = false;
-            editProfileViewModel.changePicture(fileUrl);
-        }
+        Scripts.openMediaPicker(editprofilepage, ContentType.Pictures, function (url) {
+            editProfileViewModel.changePicture(url);
+        });
     }
 
     Component.onCompleted: {

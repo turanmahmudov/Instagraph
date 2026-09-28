@@ -9,7 +9,7 @@ import Instagram 1.0
  * - Device position tracking
  * - Location search around the current position
  *
- * Used by SearchLocation and CameraCaptionPage.
+ * Used by SearchLocation and PublishPage.
  */
 Item {
     id: viewModel
