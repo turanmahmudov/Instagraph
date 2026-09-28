@@ -8,6 +8,7 @@
 #include <QJsonObject>
 #include <QNetworkCookie>
 #include <QNetworkRequest>
+#include <QRandomGenerator>
 #include <QUrlQuery>
 #include <QtDebug>
 
@@ -282,11 +283,13 @@ QNetworkRequest ApiClient::buildNetworkRequest(const Request & request) const {
     netRequest.setRawHeader("X-IG-Mapped-Locale", locale.toUtf8());
     netRequest.setRawHeader("X-Pigeon-Session-Id", pigeonSessionId.toUtf8());
     netRequest.setRawHeader("X-Pigeon-Rawclienttime", timestamp.toUtf8());
-    netRequest.setRawHeader("X-IG-Bandwidth-Speed-KBPS", QByteArray::number(qrand() % 500 + 2500));
+    QRandomGenerator * random = QRandomGenerator::global();
+    netRequest.setRawHeader("X-IG-Bandwidth-Speed-KBPS",
+                            QByteArray::number(random->bounded(2500, 3000)));
     netRequest.setRawHeader("X-IG-Bandwidth-TotalBytes-B",
-                            QByteArray::number(qrand() % 85000000 + 5000000));
+                            QByteArray::number(random->bounded(5000000, 90000000)));
     netRequest.setRawHeader("X-IG-Bandwidth-TotalTime-MS",
-                            QByteArray::number(qrand() % 7000 + 2000));
+                            QByteArray::number(random->bounded(2000, 9000)));
     netRequest.setRawHeader("X-IG-App-Startup-Country", Constants::country().toUpper().toUtf8());
     netRequest.setRawHeader("X-Bloks-Version-Id", Constants::bloksVersionId().toUtf8());
     netRequest.setRawHeader("X-IG-WWW-Claim", "0");
