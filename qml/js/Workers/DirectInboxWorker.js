@@ -50,6 +50,6 @@ function getThreadText(item, activeUserId, typeTexts) {
             }
             return typeTexts.unknown
         default:
-            return item.text
+            return item.text || ""
     }
 }

@@ -50,8 +50,8 @@ function generateActivityText(args, linkColor) {
   if (!args) return "";
 
   if (!("links" in args)) {
-    if ("rich_text" in args) return args.rich_text;
-    return args.text;
+    if ("rich_text" in args) return args.rich_text || "";
+    return args.text || "";
   }
 
   if (args.links.length === 0) return "";

@@ -54,7 +54,7 @@ PageItem {
         cacheBuffer: parent.height
         model: inboxViewModel.feedModel
         delegate: InboxThreadItem {
-            width: parent.width
+            width: ListView.view ? ListView.view.width : 0
         }
 
         PullToRefresh {

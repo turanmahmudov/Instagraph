@@ -11,7 +11,7 @@ ListView {
     property var currentPage: pageLayout.primaryPage
 
     delegate: ListItem {
-        width: parent.width
+        width: ListView.view ? ListView.view.width : 0
         height: layout.height
         divider.visible: false
         onClicked: pageLayout.pushToCurrent(searchuserslist.currentPage, PagesConstants.user, {
