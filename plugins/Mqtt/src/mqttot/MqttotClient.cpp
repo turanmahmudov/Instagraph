@@ -28,10 +28,7 @@ MqttotClient::MqttotClient(QObject * parent)
 
     connect(m_socket, &QSslSocket::encrypted, this, &MqttotClient::onSocketConnected);
     connect(m_socket, &QSslSocket::disconnected, this, &MqttotClient::onSocketDisconnected);
-    connect(
-        m_socket,
-        static_cast<void (QAbstractSocket::*)(QAbstractSocket::SocketError)>(&QSslSocket::error),
-        this, &MqttotClient::onSocketError);
+    connect(m_socket, &QSslSocket::errorOccurred, this, &MqttotClient::onSocketError);
     connect(m_socket, &QSslSocket::readyRead, this, &MqttotClient::onReadyRead);
     connect(m_pingTimer, &QTimer::timeout, this, &MqttotClient::onPingTimer);
 }
@@ -310,6 +307,7 @@ void MqttotClient::handleConnAck(const QByteArray & payload) {
     quint8 returnCode = static_cast<quint8>(payload.at(1));
     if (returnCode != 0) {
         emit error(QString("CONNACK rejected with code %1").arg(returnCode));
+        emit connectionRefused(returnCode);
         return;
     }
 

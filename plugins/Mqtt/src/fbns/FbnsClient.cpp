@@ -27,7 +27,7 @@ const QString FbnsClient::TOPIC_FBNS_REG_RESP = QStringLiteral("80");
 
 FbnsClient::FbnsClient(QObject * parent)
     : QObject(parent), m_mqtt(new MqttotClient(this)), m_reconnectTimer(new QTimer(this)),
-      m_connected(false) {
+      m_connected(false), m_reconnectWithNewAuth(false) {
     m_reconnectTimer->setInterval(30000); // 30s reconnect delay
     m_reconnectTimer->setSingleShot(true);
 
@@ -35,6 +35,7 @@ FbnsClient::FbnsClient(QObject * parent)
     connect(m_mqtt, &MqttotClient::disconnected, this, &FbnsClient::onMqttDisconnected);
     connect(m_mqtt, &MqttotClient::messageReceived, this, &FbnsClient::onMqttMessage);
     connect(m_mqtt, &MqttotClient::error, this, &FbnsClient::onMqttError);
+    connect(m_mqtt, &MqttotClient::connectionRefused, this, &FbnsClient::onMqttConnectionRefused);
     connect(m_reconnectTimer, &QTimer::timeout, this, &FbnsClient::onReconnectTimer);
 
     loadAuth();
@@ -111,6 +112,13 @@ void FbnsClient::onMqttDisconnected() {
     m_connected = false;
     emit connectionStateChanged(false);
 
+    if (m_reconnectWithNewAuth) {
+        m_reconnectWithNewAuth = false;
+        m_reconnectTimer->stop();
+        connectWithSession(m_igUserId, m_igPhoneId);
+        return;
+    }
+
     // Auto-reconnect
     if (!m_reconnectTimer->isActive()) {
         m_reconnectTimer->start();
@@ -134,6 +142,18 @@ void FbnsClient::onMqttError(const QString & message) {
     if (!m_reconnectTimer->isActive()) {
         m_reconnectTimer->start();
     }
+}
+
+void FbnsClient::onMqttConnectionRefused(int returnCode) {
+    // 4: bad user name or password, 5: not authorized
+    if (returnCode != 4 && returnCode != 5) {
+        return;
+    }
+
+    qWarning() << "FbnsClient: stored device auth rejected, registering a new device";
+    clearAuth();
+    m_reconnectWithNewAuth = true;
+    m_mqtt->disconnectFromHost();
 }
 
 void FbnsClient::onReconnectTimer() {
@@ -327,6 +347,11 @@ void FbnsClient::saveAuth() {
         file.write(QJsonDocument(obj).toJson(QJsonDocument::Compact));
         file.close();
     }
+}
+
+void FbnsClient::clearAuth() {
+    m_auth = FbnsAuth();
+    QFile::remove(authFilePath());
 }
 
 void FbnsClient::loadAuth() {

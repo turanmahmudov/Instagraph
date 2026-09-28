@@ -41,6 +41,7 @@ signals:
     void disconnected();
     void messageReceived(const QString & topic, const QByteArray & payload);
     void error(const QString & message);
+    void connectionRefused(int returnCode);
     void publishAcknowledged(quint16 messageId);
 
 private slots:

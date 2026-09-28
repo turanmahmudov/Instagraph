@@ -46,6 +46,7 @@ private slots:
     void onMqttDisconnected();
     void onMqttMessage(const QString & topic, const QByteArray & payload);
     void onMqttError(const QString & message);
+    void onMqttConnectionRefused(int returnCode);
     void onReconnectTimer();
 
 private:
@@ -58,6 +59,7 @@ private:
     // Auth persistence
     void saveAuth();
     void loadAuth();
+    void clearAuth();
     QString authFilePath() const;
 
     // FBNS auth credentials (persisted across sessions)
@@ -75,6 +77,7 @@ private:
     QTimer * m_reconnectTimer;
     FbnsAuth m_auth;
     bool m_connected;
+    bool m_reconnectWithNewAuth;
 
     // Session data
     QString m_igUserId;
