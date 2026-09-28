@@ -45,9 +45,6 @@ public:
     QString rankToken() const {
         return m_rankToken;
     }
-    QString profilePic() const {
-        return m_profilePic;
-    }
     QString authorizationHeader() const {
         return m_authorizationHeader;
     }
@@ -63,7 +60,6 @@ public:
     void setPassword(const QString & password);
     void setUserId(const QString & userId);
     void setCsrfToken(const QString & token);
-    void setProfilePic(const QString & pic);
     void setLoggedIn(bool loggedIn);
     void setAuthorizationHeader(const QString & header);
 
@@ -102,7 +98,6 @@ private:
     QString m_phoneId;
     QString m_advertisingId;
     QString m_rankToken;
-    QString m_profilePic;
     QString m_authorizationHeader;
     QDir m_dataPath;
     QDir m_photosPath;

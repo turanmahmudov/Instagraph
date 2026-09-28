@@ -27,7 +27,6 @@ public:
     // Like operations
     void like(const QString & mediaId, const QString & module = "feed_contextual_post");
     void unlike(const QString & mediaId, const QString & module = "feed_contextual_post");
-    void getLikedFeed(const QString & maxId = "");
     void getLikedMedia(const QString & maxId = "");
     void getMediaLikers(const QString & mediaId);
 
@@ -58,7 +57,6 @@ public:
 Q_SIGNALS:
     void likeReady(const QVariant & answer);
     void unlikeReady(const QVariant & answer);
-    void likedFeedReady(const QVariant & answer);
     void likedMediaReady(const QVariant & answer);
     void mediaLikersReady(const QVariant & answer);
     void mediaInfoReady(const QVariant & answer);

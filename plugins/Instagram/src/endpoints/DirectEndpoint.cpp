@@ -61,18 +61,6 @@ void DirectEndpoint::getDirectThread(const QString & threadId, const QString & c
     });
 }
 
-void DirectEndpoint::getRecentRecipients() {
-    auto request = RequestBuilder::get("direct_share/recent_recipients/").build();
-
-    m_client->execute(request, [this](const Response & response) {
-        if (response.ok()) {
-            emit recentRecipientsReady(response.toVariant());
-        } else {
-            emit error(response.errorMessage());
-        }
-    });
-}
-
 void DirectEndpoint::getRankedRecipients(const QString & query) {
     auto builder = RequestBuilder::get("direct_v2/ranked_recipients/")
                        .queryParam("mode", "raven")

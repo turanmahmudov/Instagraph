@@ -64,7 +64,6 @@ public:
     void changePassword(const QString & encOldPassword, const QString & encNewPassword);
 
     // Username management
-    void checkUsername(const QString & username, const QString & userId);
 
     // Feature sync (called after login)
     void syncFeatures(const QString & userId, const QString & password);
@@ -83,7 +82,6 @@ Q_SIGNALS:
     void profilePictureRemoved(const QVariant & answer);
     void currentUserReady(const QVariant & answer);
     void profileEdited(const QVariant & answer);
-    void usernameCheckReady(const QVariant & answer);
     void passwordChanged(const QVariant & answer);
     void featuresSynced(const QVariant & answer);
 

@@ -46,21 +46,6 @@ void MediaEndpoint::unlike(const QString & mediaId, const QString & module) {
     });
 }
 
-void MediaEndpoint::getLikedFeed(const QString & maxId) {
-    auto builder = RequestBuilder::get("feed/liked/");
-    if (!maxId.isEmpty()) {
-        builder.queryParam("max_id", maxId);
-    }
-
-    m_client->execute(builder.build(), [this](const Response & response) {
-        if (response.ok()) {
-            emit likedFeedReady(response.toVariant());
-        } else {
-            emit error(response.errorMessage());
-        }
-    });
-}
-
 void MediaEndpoint::getLikedMedia(const QString & maxId) {
     auto builder = RequestBuilder::get("feed/liked/");
     if (!maxId.isEmpty()) {

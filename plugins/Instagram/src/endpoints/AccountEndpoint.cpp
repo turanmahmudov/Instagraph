@@ -225,23 +225,6 @@ void AccountEndpoint::changePassword(const QString & encOldPassword,
     });
 }
 
-void AccountEndpoint::checkUsername(const QString & username, const QString & userId) {
-    auto request = RequestBuilder::post("users/check_username/")
-                       .param("_csrftoken", "missing")
-                       .param("username", username)
-                       .param("_uid", userId)
-                       .authenticated()
-                       .build();
-
-    m_client->execute(request, [this](const Response & response) {
-        if (response.ok()) {
-            emit usernameCheckReady(response.toVariant());
-        } else {
-            emit error(response.errorMessage());
-        }
-    });
-}
-
 void AccountEndpoint::syncFeatures(const QString & userId, const QString & /* password */) {
     // Post-login qe/sync - does NOT send password, uses authenticated params
     // Requests are signed by default, so no need to call signed_()

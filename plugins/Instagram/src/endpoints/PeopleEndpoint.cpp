@@ -38,20 +38,6 @@ void PeopleEndpoint::getInfoByName(const QString & username) {
     });
 }
 
-void PeopleEndpoint::searchUsername(const QString & username) {
-    auto request = RequestBuilder::get("users/{username}/usernameinfo/")
-                       .pathParam("username", username)
-                       .build();
-
-    m_client->execute(request, [this](const Response & response) {
-        if (response.ok()) {
-            emit searchUsernameReady(response.toVariant());
-        } else {
-            emit error(response.errorMessage());
-        }
-    });
-}
-
 void PeopleEndpoint::getRecentActivityInbox() {
     auto request = RequestBuilder::get("news/inbox/").build();
 

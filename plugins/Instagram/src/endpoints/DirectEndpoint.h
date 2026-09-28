@@ -29,7 +29,6 @@ public:
     void getDirectThread(const QString & threadId, const QString & cursorId = "");
 
     // Recipients
-    void getRecentRecipients();
     void getRankedRecipients(const QString & query = "");
 
     // Thread actions
@@ -47,7 +46,6 @@ Q_SIGNALS:
     void inboxReady(const QVariant & answer);
     void pendingInboxReady(const QVariant & answer);
     void directThreadReady(const QVariant & answer);
-    void recentRecipientsReady(const QVariant & answer);
     void rankedRecipientsReady(const QVariant & answer);
     void threadMarkedSeen(const QVariant & answer);
     void messageReady(const QVariant & answer);

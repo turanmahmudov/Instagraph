@@ -113,25 +113,6 @@ QString CookieManager::extractCsrfToken() const {
     return QString();
 }
 
-QString CookieManager::extractSessionId() const {
-    QList<QNetworkCookie> cookies = m_cookieJar->cookiesForUrl(QUrl("https://i.instagram.com/"));
-    for (const QNetworkCookie & cookie : cookies) {
-        if (cookie.name() == "sessionid") {
-            return QString::fromUtf8(cookie.value());
-        }
-    }
-
-    QList<QNetworkCookie> allCookies =
-        m_cookieJar->cookiesForUrl(QUrl("https://www.instagram.com/"));
-    for (const QNetworkCookie & cookie : allCookies) {
-        if (cookie.name() == "sessionid") {
-            return QString::fromUtf8(cookie.value());
-        }
-    }
-
-    return QString();
-}
-
 bool CookieManager::hasCookies() const {
     return QFile::exists(m_dataPath + "/cookies.dat");
 }

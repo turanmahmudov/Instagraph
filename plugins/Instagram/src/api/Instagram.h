@@ -53,11 +53,8 @@ public Q_SLOTS:
     Q_INVOKABLE void setUsername(QString username);
     Q_INVOKABLE void setPassword(QString password);
     Q_INVOKABLE QString getUsernameId();
-    Q_INVOKABLE QString getSessionId();
     Q_INVOKABLE QString getPhoneId();
     Q_INVOKABLE void registerPush(QString token);
-    Q_INVOKABLE void setProfilePic(QString userpic);
-    Q_INVOKABLE QString getProfilePic();
 
     // Image upload
     Q_INVOKABLE void postImage(QString path, QString caption, QVariantMap location,
@@ -67,8 +64,6 @@ public Q_SLOTS:
                                QString disableComments = "0");
 
     // Popular/Search
-    Q_INVOKABLE void getPopularFeed(QString max_id = "");
-    Q_INVOKABLE void searchUsername(QString username);
 
     // Account
     Q_INVOKABLE void setPrivateAccount();
@@ -78,14 +73,12 @@ public Q_SLOTS:
     Q_INVOKABLE void getCurrentUser();
     Q_INVOKABLE void editProfile(QString url, QString phone, QString first_name, QString biography,
                                  QString email, bool gender);
-    Q_INVOKABLE void checkUsername(QString username);
     Q_INVOKABLE void changePassword(QString oldPassword, QString newPassword);
 
     // Direct
     Q_INVOKABLE void getInbox(QString cursorId = "");
     Q_INVOKABLE void getDirectThread(QString threadId, QString cursorId = "");
     Q_INVOKABLE void getPendingInbox();
-    Q_INVOKABLE void getRecentRecipients();
     Q_INVOKABLE void getRankedRecipients(QString query = "");
     Q_INVOKABLE void markThreadSeen(QString threadId, QString threadItemId);
     Q_INVOKABLE void directMessage(QString recipients, QString text, QString thread_id = "0");
@@ -101,8 +94,6 @@ public Q_SLOTS:
     Q_INVOKABLE void searchPlaces(QString query);
 
     // Location
-    Q_INVOKABLE void getGeoMedia(QString usernameId);
-    Q_INVOKABLE void getLocationFeed(QString locationId, QString max_id = "");
     Q_INVOKABLE void getLocationSectionFeed(QString locationId, QString tab, int page,
                                             QStringList nextMediaIds, QString max_id);
 
@@ -110,7 +101,6 @@ public Q_SLOTS:
     Q_INVOKABLE void searchLocation(QString lat, QString lng, QString query = "");
 
     // Hashtag
-    Q_INVOKABLE void getTagFeed(QString tag, QString max_id = "");
     Q_INVOKABLE void getTagSectionFeed(QString tag, QString tab, int page, QStringList nextMediaIds,
                                        QString max_id);
     Q_INVOKABLE void searchTags(QString tag);
@@ -125,7 +115,6 @@ public Q_SLOTS:
     Q_INVOKABLE void deleteMedia(QString mediaId, QString mediaType = "PHOTO");
     Q_INVOKABLE void like(QString mediaId, QString module = "feed_contextual_post");
     Q_INVOKABLE void unLike(QString mediaId, QString module = "feed_contextual_post");
-    Q_INVOKABLE void getLikedFeed(QString max_id = "");
     Q_INVOKABLE void comment(QString mediaId, QString commentText, QString replyCommentId = "",
                              QString module = "coments_feed_timeline");
     Q_INVOKABLE void deleteComment(QString mediaId, QString commentId);
@@ -147,7 +136,7 @@ public Q_SLOTS:
     Q_INVOKABLE void getFollowing(QString userId, QString max_id = "", QString searchQuery = "");
     Q_INVOKABLE void getFollowers(QString userId, QString max_id = "", QString searchQuery = "");
     Q_INVOKABLE void getFriendship(QString userId);
-    Q_INVOKABLE void getSugestedUser(QString userId);
+    Q_INVOKABLE void getSuggestedUser(QString userId);
     Q_INVOKABLE void getAutocompleteUserList();
     Q_INVOKABLE void getBlockedUserList();
 
@@ -174,7 +163,6 @@ public Q_SLOTS:
     Q_INVOKABLE void getTimelineFeed(QString max_id = "", QString seen_posts = "",
                                      bool pullToRefresh = false);
     Q_INVOKABLE void getUserFeed(QString userID, QString max_id = "", QString minTimestamp = "");
-    Q_INVOKABLE void mediaSeen(QStringList mediaIds, QStringList skippedMediaIds = QStringList());
 
     // Usertag
     Q_INVOKABLE void getUserTags(QString userId, QString max_id = "", QString minTimestamp = "");
@@ -201,8 +189,6 @@ Q_SIGNALS:
     void uploadFailed(QString message);
 
     // Popular/Search signals
-    void popularFeedDataReady(QVariant answer);
-    void searchUsernameDataReady(QVariant answer);
 
     // Account signals
     void profilePictureDeleted(QVariant answer);
@@ -211,14 +197,12 @@ Q_SIGNALS:
     void setProfilePublic(QVariant answer);
     void currentUserDataReady(QVariant answer);
     void editDataReady(QVariant answer);
-    void usernameCheckDataReady(QVariant answer);
     void changePasswordDataReady(QVariant answer);
 
     // Direct signals
     void inboxDataReady(QVariant answer);
     void directThreadDataReady(QVariant answer);
     void pendingInboxDataReady(QVariant answer);
-    void recentRecipientsDataReady(QVariant answer);
     void rankedRecipientsDataReady(QVariant answer);
     void markThreadSeenDataReady(QVariant answer);
     void directMessageDataReady(QVariant answer);
@@ -234,15 +218,12 @@ Q_SIGNALS:
     void searchPlacesDataReady(QVariant answer);
 
     // Location signals
-    void geoMediaDataReady(QVariant answer);
-    void getLocationFeedDataReady(QVariant answer);
     void locationSectionFeedDataReady(QVariant answer);
 
     // Location Search signals
     void searchLocationDataReady(QVariant answer);
 
     // Hashtag signals
-    void tagFeedDataReady(QVariant answer);
     void tagSectionFeedDataReady(QVariant answer);
     void searchTagsDataReady(QVariant answer);
 
@@ -252,7 +233,6 @@ Q_SIGNALS:
     // Media signals
     void likeDataReady(QVariant answer);
     void unLikeDataReady(QVariant answer);
-    void likedFeedDataReady(QVariant answer);
     void mediaInfoReady(QVariant answer);
     void mediaEdited(QVariant answer);
     void mediaDeleted(QVariant answer);
@@ -302,7 +282,6 @@ Q_SIGNALS:
     // Timeline signals
     void userFeedDataReady(QVariant answer);
     void timelineFeedDataReady(QVariant answer);
-    void mediaSeenDataReady(QVariant answer);
 
     // Usertags signals
     void userTagsDataReady(QVariant answer);

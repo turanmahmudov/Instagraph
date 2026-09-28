@@ -75,8 +75,6 @@ void Instagram::setupEndpointConnections() {
     connect(m_account, &IG::AccountEndpoint::currentUserReady, this,
             &Instagram::currentUserDataReady);
     connect(m_account, &IG::AccountEndpoint::profileEdited, this, &Instagram::editDataReady);
-    connect(m_account, &IG::AccountEndpoint::usernameCheckReady, this,
-            &Instagram::usernameCheckDataReady);
     connect(m_account, &IG::AccountEndpoint::passwordChanged, this,
             &Instagram::changePasswordDataReady);
     connect(m_account, &IG::AccountEndpoint::logoutReady, this, &Instagram::doLogout);
@@ -85,7 +83,6 @@ void Instagram::setupEndpointConnections() {
     // Media endpoint connections
     connect(m_media, &IG::MediaEndpoint::likeReady, this, &Instagram::likeDataReady);
     connect(m_media, &IG::MediaEndpoint::unlikeReady, this, &Instagram::unLikeDataReady);
-    connect(m_media, &IG::MediaEndpoint::likedFeedReady, this, &Instagram::likedFeedDataReady);
     connect(m_media, &IG::MediaEndpoint::likedMediaReady, this, &Instagram::likedMediaDataReady);
     connect(m_media, &IG::MediaEndpoint::mediaLikersReady, this, &Instagram::mediaLikersDataReady);
     connect(m_media, &IG::MediaEndpoint::mediaInfoReady, this, &Instagram::mediaInfoReady);
@@ -111,8 +108,6 @@ void Instagram::setupEndpointConnections() {
             &Instagram::directThreadDataReady);
     connect(m_direct, &IG::DirectEndpoint::pendingInboxReady, this,
             &Instagram::pendingInboxDataReady);
-    connect(m_direct, &IG::DirectEndpoint::recentRecipientsReady, this,
-            &Instagram::recentRecipientsDataReady);
     connect(m_direct, &IG::DirectEndpoint::rankedRecipientsReady, this,
             &Instagram::rankedRecipientsDataReady);
     connect(m_direct, &IG::DirectEndpoint::threadMarkedSeen, this,
@@ -125,18 +120,14 @@ void Instagram::setupEndpointConnections() {
     // Feed endpoint connections
     connect(m_feed, &IG::FeedEndpoint::timelineFeedReady, this, &Instagram::timelineFeedDataReady);
     connect(m_feed, &IG::FeedEndpoint::userFeedReady, this, &Instagram::userFeedDataReady);
-    connect(m_feed, &IG::FeedEndpoint::popularFeedReady, this, &Instagram::popularFeedDataReady);
     connect(m_feed, &IG::FeedEndpoint::exploreFeedReady, this, &Instagram::exploreFeedDataReady);
     connect(m_feed, &IG::FeedEndpoint::suggestionsReady, this,
             &Instagram::suggestionsFeedDataReady);
-    connect(m_feed, &IG::FeedEndpoint::mediaSeenReady, this, &Instagram::mediaSeenDataReady);
     connect(m_feed, &IG::FeedEndpoint::error, this, &Instagram::error);
 
     // People endpoint connections
     connect(m_people, &IG::PeopleEndpoint::infoByIdReady, this, &Instagram::infoByIdDataReady);
     connect(m_people, &IG::PeopleEndpoint::infoByNameReady, this, &Instagram::infoByNameDataReady);
-    connect(m_people, &IG::PeopleEndpoint::searchUsernameReady, this,
-            &Instagram::searchUsernameDataReady);
     connect(m_people, &IG::PeopleEndpoint::recentActivityReady, this,
             &Instagram::recentActivityInboxDataReady);
     connect(m_people, &IG::PeopleEndpoint::followingReady, this, &Instagram::followingDataReady);
@@ -177,7 +168,6 @@ void Instagram::setupEndpointConnections() {
     connect(m_story, &IG::StoryEndpoint::error, this, &Instagram::error);
 
     // Hashtag endpoint connections
-    connect(m_hashtag, &IG::HashtagEndpoint::tagFeedReady, this, &Instagram::tagFeedDataReady);
     connect(m_hashtag, &IG::HashtagEndpoint::tagSectionFeedReady, this,
             &Instagram::tagSectionFeedDataReady);
     connect(m_hashtag, &IG::HashtagEndpoint::searchTagsReady, this,
@@ -185,9 +175,6 @@ void Instagram::setupEndpointConnections() {
     connect(m_hashtag, &IG::HashtagEndpoint::error, this, &Instagram::error);
 
     // Location endpoint connections
-    connect(m_location, &IG::LocationEndpoint::geoMediaReady, this, &Instagram::geoMediaDataReady);
-    connect(m_location, &IG::LocationEndpoint::locationFeedReady, this,
-            &Instagram::getLocationFeedDataReady);
     connect(m_location, &IG::LocationEndpoint::locationSectionFeedReady, this,
             &Instagram::locationSectionFeedDataReady);
     connect(m_location, &IG::LocationEndpoint::searchLocationReady, this,
@@ -387,10 +374,6 @@ QString Instagram::getUsernameId() {
     return m_session->userId();
 }
 
-QString Instagram::getSessionId() {
-    return m_cookies->extractSessionId();
-}
-
 QString Instagram::getPhoneId() {
     return m_session->phoneId();
 }
@@ -421,14 +404,6 @@ void Instagram::registerPush(QString token) {
             emit error(response.errorMessage());
         }
     });
-}
-
-void Instagram::setProfilePic(QString userpic) {
-    m_session->setProfilePic(userpic);
-}
-
-QString Instagram::getProfilePic() {
-    return m_session->profilePic();
 }
 
 // ============================================================================
@@ -465,10 +440,6 @@ void Instagram::editProfile(QString url, QString phone, QString first_name, QStr
     m_account->editProfile(url, phone, first_name, biography, email, gender, m_session->username());
 }
 
-void Instagram::checkUsername(QString username) {
-    m_account->checkUsername(username, m_session->userId());
-}
-
 void Instagram::changePassword(QString oldPassword, QString newPassword) {
     m_passwordEncryptor->encryptPassword(oldPassword, [this, newPassword](const QString & encOld) {
         if (encOld.isEmpty()) {
@@ -501,10 +472,6 @@ void Instagram::getDirectThread(QString threadId, QString cursorId) {
 
 void Instagram::getPendingInbox() {
     m_direct->getPendingInbox();
-}
-
-void Instagram::getRecentRecipients() {
-    m_direct->getRecentRecipients();
 }
 
 void Instagram::getRankedRecipients(QString query) {
@@ -542,10 +509,6 @@ void Instagram::getSuggestions() {
     m_feed->getSuggestions(m_session->uuid(), m_session->csrfToken());
 }
 
-void Instagram::getPopularFeed(QString max_id) {
-    m_feed->getPopularFeed(max_id, m_session->rankToken());
-}
-
 // ============================================================================
 // FBSearch
 // ============================================================================
@@ -562,14 +525,6 @@ void Instagram::searchPlaces(QString query) {
 // Location
 // ============================================================================
 
-void Instagram::getGeoMedia(QString usernameId) {
-    m_location->getGeoMedia(usernameId);
-}
-
-void Instagram::getLocationFeed(QString locationId, QString max_id) {
-    m_location->getLocationFeed(locationId, max_id);
-}
-
 void Instagram::getLocationSectionFeed(QString locationId, QString tab, int page,
                                        QStringList nextMediaIds, QString max_id) {
     m_location->getLocationSectionFeed(locationId, tab, page, nextMediaIds, max_id);
@@ -582,10 +537,6 @@ void Instagram::searchLocation(QString lat, QString lng, QString query) {
 // ============================================================================
 // Hashtag
 // ============================================================================
-
-void Instagram::getTagFeed(QString tag, QString max_id) {
-    m_hashtag->getTagFeed(tag, max_id, m_session->rankToken());
-}
 
 void Instagram::getTagSectionFeed(QString tag, QString tab, int page, QStringList nextMediaIds,
                                   QString max_id) {
@@ -626,10 +577,6 @@ void Instagram::like(QString mediaId, QString module) {
 
 void Instagram::unLike(QString mediaId, QString module) {
     m_media->unlike(mediaId, module);
-}
-
-void Instagram::getLikedFeed(QString max_id) {
-    m_media->getLikedFeed(max_id);
 }
 
 void Instagram::comment(QString mediaId, QString commentText, QString replyCommentId,
@@ -693,10 +640,6 @@ void Instagram::getInfoByName(QString username) {
     m_people->getInfoByName(username);
 }
 
-void Instagram::searchUsername(QString username) {
-    m_people->searchUsername(username);
-}
-
 void Instagram::getRecentActivityInbox() {
     m_people->getRecentActivityInbox();
 }
@@ -713,7 +656,7 @@ void Instagram::getFriendship(QString userId) {
     m_people->getFriendship(userId);
 }
 
-void Instagram::getSugestedUser(QString userId) {
+void Instagram::getSuggestedUser(QString userId) {
     m_people->getSuggestedUser(userId);
 }
 
@@ -796,10 +739,6 @@ void Instagram::getTimelineFeed(QString max_id, QString seen_posts, bool pullToR
 
 void Instagram::getUserFeed(QString userID, QString max_id, QString minTimestamp) {
     m_feed->getUserFeed(userID, max_id, minTimestamp, m_session->rankToken());
-}
-
-void Instagram::mediaSeen(QStringList mediaIds, QStringList skippedMediaIds) {
-    m_feed->mediaSeen(mediaIds, skippedMediaIds);
 }
 
 // ============================================================================

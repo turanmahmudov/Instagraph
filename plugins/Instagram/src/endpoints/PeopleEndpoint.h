@@ -27,7 +27,6 @@ public:
     // User info
     void getInfoById(const QString & userId, const QString & deviceId = "");
     void getInfoByName(const QString & username);
-    void searchUsername(const QString & username);
 
     // Activity
     void getRecentActivityInbox();
@@ -65,7 +64,6 @@ public:
 Q_SIGNALS:
     void infoByIdReady(const QVariant & answer);
     void infoByNameReady(const QVariant & answer);
-    void searchUsernameReady(const QVariant & answer);
     void recentActivityReady(const QVariant & answer);
     void followingReady(const QVariant & answer);
     void followersReady(const QVariant & answer);

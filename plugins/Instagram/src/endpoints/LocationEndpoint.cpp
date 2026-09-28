@@ -9,37 +9,6 @@ namespace IG {
 LocationEndpoint::LocationEndpoint(ApiClient * client, QObject * parent)
     : QObject(parent), m_client(client) {}
 
-void LocationEndpoint::getGeoMedia(const QString & usernameId) {
-    auto request = RequestBuilder::get("maps/user/{username_id}/")
-                       .pathParam("username_id", usernameId)
-                       .build();
-
-    m_client->execute(request, [this](const Response & response) {
-        if (response.ok()) {
-            emit geoMediaReady(response.toVariant());
-        } else {
-            emit error(response.errorMessage());
-        }
-    });
-}
-
-void LocationEndpoint::getLocationFeed(const QString & locationId, const QString & maxId) {
-    auto builder =
-        RequestBuilder::get("feed/location/{location_id}/").pathParam("location_id", locationId);
-
-    if (!maxId.isEmpty()) {
-        builder.queryParam("max_id", maxId);
-    }
-
-    m_client->execute(builder.build(), [this](const Response & response) {
-        if (response.ok()) {
-            emit locationFeedReady(response.toVariant());
-        } else {
-            emit error(response.errorMessage());
-        }
-    });
-}
-
 void LocationEndpoint::getLocationSectionFeed(const QString & locationId, const QString & tab,
                                               int page, const QStringList & nextMediaIds,
                                               const QString & maxId) {

@@ -8,26 +8,6 @@ namespace IG {
 HashtagEndpoint::HashtagEndpoint(ApiClient * client, QObject * parent)
     : QObject(parent), m_client(client) {}
 
-void HashtagEndpoint::getTagFeed(const QString & tag, const QString & maxId,
-                                 const QString & rankToken) {
-    auto builder = RequestBuilder::get("feed/tag/{tag}/")
-                       .pathParam("tag", tag)
-                       .queryParam("rank_token", rankToken)
-                       .queryParam("ranked_content", "true");
-
-    if (!maxId.isEmpty()) {
-        builder.queryParam("max_id", maxId);
-    }
-
-    m_client->execute(builder.build(), [this](const Response & response) {
-        if (response.ok()) {
-            emit tagFeedReady(response.toVariant());
-        } else {
-            emit error(response.errorMessage());
-        }
-    });
-}
-
 void HashtagEndpoint::getTagSectionFeed(const QString & tag, const QString & tab, int page,
                                         const QStringList & nextMediaIds, const QString & maxId) {
     auto builder = RequestBuilder::post("tags/{tag}/sections/")

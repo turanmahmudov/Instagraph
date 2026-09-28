@@ -125,13 +125,6 @@ void SessionManager::setCsrfToken(const QString & token) {
     }
 }
 
-void SessionManager::setProfilePic(const QString & pic) {
-    if (m_profilePic != pic) {
-        m_profilePic = pic;
-        emit sessionChanged();
-    }
-}
-
 void SessionManager::setLoggedIn(bool loggedIn) {
     if (m_isLoggedIn != loggedIn) {
         m_isLoggedIn = loggedIn;
