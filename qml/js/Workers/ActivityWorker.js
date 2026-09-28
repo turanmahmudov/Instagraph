@@ -86,8 +86,8 @@ function generateActivityText(args, linkColor) {
 }
 
 function generateHeader(partition, index) {
-  if (!partition) return "lol no partition";
-  if (!("time_bucket" in partition)) return "lol no time bucket";
+  if (!partition) return "";
+  if (!("time_bucket" in partition)) return "";
 
   for (let j = 0; j < partition.time_bucket.headers.length; j++) {
     if (partition.time_bucket.indices[j] === index) {

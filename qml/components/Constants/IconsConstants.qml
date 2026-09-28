@@ -48,6 +48,7 @@ QtObject {
     readonly property string bookmark: "\ueab0"      // Bookmark/save icon
     readonly property string forward: "\ueb17"       // Forward/share icon
     readonly property string camera_flip: "\uea55"   // Camera flip icon
+    readonly property string check: "\uea55"
     readonly property string flash_on: "\uea5a"      // Flash on icon
     readonly property string flash_off: "\uea5c"     // Flash off icon
     readonly property string timer: "\uea63"         // Timer icon

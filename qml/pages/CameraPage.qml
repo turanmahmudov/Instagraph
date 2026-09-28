@@ -31,6 +31,7 @@ PageItem {
     property int takePhotoMode: functionSelector.selectedIndex
 
     property var imagePath
+    property bool awaitingImport: false
     property bool _hasBackCamera: false
     property bool _hasFrontCamera: false
 
@@ -260,13 +261,19 @@ PageItem {
 
             onSelectedIndexChanged: {
                 if (selectedIndex == 0) {
+                    awaitingImport = true;
                     Scripts.openImportPhotoPage(takephotopage, IS_DESKTOP);
-
-                    mainView.fileImported.connect(function (fileUrl) {
-                        Scripts.pushImageCrop(takephotopage, fileUrl);
-                    });
                 }
             }
+        }
+    }
+
+    Connections {
+        target: mainView
+        enabled: awaitingImport
+        onFileImported: {
+            awaitingImport = false;
+            Scripts.pushImageCrop(takephotopage, fileUrl);
         }
     }
 

@@ -156,7 +156,7 @@ PageItem {
             Loader {
                 x: units.gu(1)
                 width: parent.width - units.gu(2)
-                active: typeof userData != 'undefined' && userData.hasOwnProperty("username")
+                active: !!userData && userData.hasOwnProperty("username")
 
                 sourceComponent: userDataComponent
             }

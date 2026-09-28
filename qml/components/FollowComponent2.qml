@@ -11,11 +11,11 @@ Item {
     property var friendship: null
     property bool showLabel: false
 
-    readonly property bool isFollowing: friendship ? (friendship.following || false) : false
-    readonly property bool isRequested: friendship ? (friendship.outgoing_request || false) : false
+    property bool isFollowing: false
+    property bool isRequested: false
     readonly property bool isUnfollowed: !isFollowing && !isRequested
 
-    property int pendingRequestUserId: 0
+    property var pendingRequestUserId: null
 
     QtObject {
         id: styles
@@ -57,18 +57,19 @@ Item {
         }
     }
 
+    function syncFromFriendship() {
+        isFollowing = !!(friendship && friendship.following);
+        isRequested = !!(friendship && friendship.outgoing_request);
+    }
+
     function handleFollowResponse(data) {
-        if (!data || !data.friendship_status || userId !== pendingRequestUserId) {
+        if (!data || !data.friendship_status || pendingRequestUserId === null || userId != pendingRequestUserId) {
             return;
         }
 
-        if (friendship) {
-            friendship.following = data.friendship_status.following;
-            friendship.outgoing_request = data.friendship_status.outgoing_request;
-        }
-
-        updateStyles();
-        pendingRequestUserId = 0;
+        isFollowing = data.friendship_status.following === true;
+        isRequested = data.friendship_status.outgoing_request === true;
+        pendingRequestUserId = null;
     }
 
     function toggleFollow() {
@@ -83,7 +84,11 @@ Item {
         }
     }
 
-    Component.onCompleted: updateStyles()
+    Component.onCompleted: {
+        syncFromFriendship();
+        updateStyles();
+    }
+    onFriendshipChanged: syncFromFriendship()
     onIsFollowingChanged: updateStyles()
     onIsRequestedChanged: updateStyles()
 

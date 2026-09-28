@@ -7,7 +7,7 @@ function linkClick(page, link, photoId) {
     } else if (result[0] === "tag") {
         pageLayout.pushToCurrent(page, Qt.resolvedUrl("../pages/TagFeedPage.qml"), { tag: result[1] });
     } else if (result[0] === "likes") {
-        pageLayout.pushToCurrent(page, Qt.resolvedUrl("../pages/MediaLikersPage.qml"), { photoId: photoId });
+        pageLayout.pushToCurrent(page, Qt.resolvedUrl("../pages/MediaLikersPage.qml"), { mediaId: photoId });
     } else {
         Qt.openUrlExternally(link)
     }

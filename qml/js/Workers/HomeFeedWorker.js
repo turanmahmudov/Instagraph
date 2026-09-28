@@ -42,6 +42,7 @@ WorkerScript.onMessage = (message) => {
             feed_item_obj.can_view_more_preview_comments = media.can_view_more_preview_comments
             feed_item_obj.comment_count = media.comment_count
             feed_item_obj.comments_disabled = media.comments_disabled
+            feed_item_obj.has_viewer_saved = media.has_viewer_saved === true
             feed_item_obj.location = media.location || { name: "" }
             feed_item_obj.user = media.user
 
@@ -101,6 +102,7 @@ WorkerScript.onMessage = (message) => {
                             suggested_feed_item.can_view_more_preview_comments = media.can_view_more_preview_comments || false
                             suggested_feed_item.comment_count = media.comment_count || 0
                             suggested_feed_item.comments_disabled = media.comments_disabled || false
+                            suggested_feed_item.has_viewer_saved = media.has_viewer_saved === true
                             suggested_feed_item.location = media.location || { name: "" }
                             suggested_feed_item.user = media.user
 

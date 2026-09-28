@@ -7,7 +7,7 @@ Page {
     id: pageitem
 
     BouncingProgressBar {
-        anchors.top: pageitem.header.bottom
+        anchors.top: pageitem.header ? pageitem.header.bottom : pageitem.top
         visible: (typeof pageitem.list_loading != 'undefined' && pageitem.list_loading)
         z: 100
     }

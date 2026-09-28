@@ -29,6 +29,7 @@ WorkerScript.onMessage = function(msg) {
             list_obj.has_more_comments = media.has_more_comments
             list_obj.comment_count = media.comment_count
             list_obj.comments_disabled = media.comments_disabled
+            list_obj.has_viewer_saved = media.has_viewer_saved === true
 
             list_obj.user = media.user
 

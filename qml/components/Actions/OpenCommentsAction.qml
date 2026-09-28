@@ -10,7 +10,7 @@ import ".."
 Item {
     signal openCommentsClicked
 
-    property bool comments_disabled: typeof comments_disabled != 'undefined' && comments_disabled == true
+    property bool commentsDisabled: typeof comments_disabled != 'undefined' && comments_disabled == true
 
     Layout.minimumWidth: width
     Layout.preferredWidth: width
@@ -18,14 +18,14 @@ Item {
     LineIcon {
         anchors.verticalCenter: parent.verticalCenter
         name: IconsConstants.comments
-        color: comments_disabled ? LomiriColors.lightGrey : styleApp.common.iconActiveColor
+        color: commentsDisabled ? LomiriColors.lightGrey : styleApp.common.iconActiveColor
         iconSize: units.gu(2.2)
     }
 
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            if (!comments_disabled)
+            if (!commentsDisabled)
                 openCommentsClicked();
         }
     }

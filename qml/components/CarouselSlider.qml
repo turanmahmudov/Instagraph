@@ -40,7 +40,7 @@ ListView {
 
         MediaPlayer {
             id: player
-            source: modelData.video_url || ""
+            source: modelData.video_versions && modelData.video_versions.length > 0 ? modelData.video_versions[0].url : ""
             autoLoad: false
             autoPlay: false
             loops: MediaPlayer.Infinite

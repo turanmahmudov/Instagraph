@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.12
 import Lomiri.Components 1.3
 
 import ".."
+import "../Constants"
 
 import "../../js/Helper.js" as Helper
 import "../../js/Scripts.js" as Scripts
@@ -100,7 +101,7 @@ Column {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    pageLayout.pushToCurrent(directthreadpage, Qt.resolvedUrl("HighlightStoriesPage.qml"), {
+                    pageLayout.pushToCurrent(directthreadpage, PagesConstants.highlight_stories, {
                         highlightId: story_share.reel_id
                     });
                 }

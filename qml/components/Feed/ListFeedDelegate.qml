@@ -72,12 +72,18 @@ ListItem {
         visible: list_type === 'suggested_users'
         active: visible
         asynchronous: true
+
+        sourceComponent: SuggestionsPanel {
+            width: parent.width
+            suggestionsModel: listFeedDelegate.suggestionsModel
+            currentPage: listFeedDelegate.currentPage
+        }
     }
 
     Loader {
         id: storiesFeedTrayLoader
         width: parent.width
-        height: list_type === 'stories_feed' && storiesFeedTrayLoader.item.checkVisible() ? units.gu(13) : 0
+        height: list_type === 'stories_feed' && storiesFeedTrayLoader.item && storiesFeedTrayLoader.item.checkVisible() ? units.gu(13) : 0
         anchors {
             left: parent.left
             right: parent.right

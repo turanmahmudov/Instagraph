@@ -129,11 +129,6 @@ Rectangle {
                     pageLayout.primaryPage = activityPage;
 
                     activityPage.new_notifs = false;
-
-                    if (activityPage.firstOpen) {
-                        activityPage.getRecentActivity();
-                        activityPage.firstOpen = false;
-                    }
                 }
             }
         }

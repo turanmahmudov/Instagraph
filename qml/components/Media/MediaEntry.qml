@@ -258,7 +258,8 @@ Column {
             MouseArea {
                 anchors.fill: parent
                 onClicked: pageLayout.pushToNext(currentPage, PagesConstants.comments, {
-                    photoId: id
+                    photoId: id,
+                    mediaUserId: userData.pk
                 })
             }
         }

@@ -85,7 +85,7 @@ PageItem {
             top: homepage.header.bottom
         }
         model: feedViewModel.feedModel
-        cacheBuffer: height * 2
+        cacheBuffer: Math.max(0, height * 2)
         clip: true
         delegate: ListFeedDelegate {
             id: homeFeedDelegate

@@ -5,6 +5,7 @@ WorkerScript.onMessage = function(msg) {
 
     if (msg.clear_model) {
         model.clear();
+        last_row = 0
     }
 
     // Object loop

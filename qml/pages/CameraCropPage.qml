@@ -59,7 +59,8 @@ PageItem {
                     if (toCropImage.width > toCropImage.height) {
                         imageEditor.scaleImage(String(imagePath).replace('file://', ''));
                     } else {
-                        imageEditor.cropImage(String(imagePath).replace('file://', ''), toCropFlickable.visibleArea.yPosition);
+                        var path = String(imagePath).replace('file://', '');
+                        imageEditor.cropImage(path, path, Math.round(toCropImage.sourceSize.height * toCropFlickable.visibleArea.yPosition), true);
                     }
                 }
             }

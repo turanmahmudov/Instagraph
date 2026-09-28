@@ -28,13 +28,13 @@ function getThreadText(item, activeUserId, typeTexts) {
 
     switch (item.item_type) {
         case 'media_share':
-            return item.user_id === activeUserId ? typeTexts.you_shared_a_post : typeTexts.shared_a_post
+            return String(item.user_id) === String(activeUserId) ? typeTexts.you_shared_a_post : typeTexts.shared_a_post
         case 'media':
-            return item.user_id === activeUserId ? typeTexts.you_shared_a_media : typeTexts.shared_a_media
+            return String(item.user_id) === String(activeUserId) ? typeTexts.you_shared_a_media : typeTexts.shared_a_media
         case 'story_share':
-            return item.user_id === activeUserId ? typeTexts.you_sent_a_story : typeTexts.sent_a_story
+            return String(item.user_id) === String(activeUserId) ? typeTexts.you_sent_a_story : typeTexts.sent_a_story
         case 'link':
-            return item.user_id === activeUserId ? typeTexts.you_shared_a_link : typeTexts.shared_a_link
+            return String(item.user_id) === String(activeUserId) ? typeTexts.you_shared_a_link : typeTexts.shared_a_link
         case 'like':
             return item.like
         case 'action_log':
@@ -43,10 +43,10 @@ function getThreadText(item, activeUserId, typeTexts) {
             return item.placeholder.title
         case 'reel_share':
             if (item.reel_share.type === 'mention') {
-                return item.user_id === activeUserId ? typeTexts.you_mentioned_them_in_a_story : typeTexts.mentioned_you_in_a_story
+                return String(item.user_id) === String(activeUserId) ? typeTexts.you_mentioned_them_in_a_story : typeTexts.mentioned_you_in_a_story
             }
             if (item.reel_share.type === 'reply') {
-                return item.user_id === activeUserId ? typeTexts.you_replied_to_their_story : typeTexts.replied_to_your_story
+                return String(item.user_id) === String(activeUserId) ? typeTexts.you_replied_to_their_story : typeTexts.replied_to_your_story
             }
             return typeTexts.unknown
         default:

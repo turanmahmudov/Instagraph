@@ -3,9 +3,11 @@ import QtQuick.Layouts 1.12
 import Lomiri.Components 1.3
 
 import ".."
+import "../Constants"
 import "../Feed"
 
 import "../../js/Helper.js" as Helper
+import "../../js/Scripts.js" as Scripts
 
 Column {
     property bool isOutgoing: false
@@ -49,7 +51,7 @@ Column {
                             fill: parent
                         }
                         onClicked: {
-                            pageLayout.pushToCurrent(directthreadpage, Qt.resolvedUrl("OtherUserPage.qml"), {
+                            pageLayout.pushToCurrent(directthreadpage, PagesConstants.user, {
                                 usernameId: media_share.user.pk
                             });
                         }
@@ -73,7 +75,7 @@ Column {
                                 fill: parent
                             }
                             onClicked: {
-                                pageLayout.pushToCurrent(directthreadpage, Qt.resolvedUrl("OtherUserPage.qml"), {
+                                pageLayout.pushToCurrent(directthreadpage, PagesConstants.user, {
                                     usernameId: media_share.user.pk
                                 });
                             }
@@ -95,7 +97,7 @@ Column {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        pageLayout.pushToNext(directthreadpage, Qt.resolvedUrl("SinglePhoto.qml"), {
+                        pageLayout.pushToNext(directthreadpage, PagesConstants.photo, {
                             photoId: media_share.id
                         });
                     }
