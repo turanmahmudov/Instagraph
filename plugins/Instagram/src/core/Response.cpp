@@ -15,6 +15,13 @@ bool isUnsafeInteger(const QByteArray & digits) {
     return digits > maxSafeInteger;
 }
 
+int skipDigits(const QByteArray & json, int pos) {
+    while (pos < json.size() && json.at(pos) >= '0' && json.at(pos) <= '9') {
+        ++pos;
+    }
+    return pos;
+}
+
 QByteArray quoteUnsafeIntegers(const QByteArray & json) {
     QByteArray result;
     result.reserve(json.size() + 64);
@@ -47,13 +54,26 @@ QByteArray quoteUnsafeIntegers(const QByteArray & json) {
 
         if (c == '-' || (c >= '0' && c <= '9')) {
             int end = i + (c == '-' ? 1 : 0);
-            while (end < json.size() && json.at(end) >= '0' && json.at(end) <= '9') {
-                ++end;
+            const int digitsStart = end;
+            end = skipDigits(json, end);
+            const int digitsEnd = end;
+
+            bool isInteger = true;
+            if (end < json.size() && json.at(end) == '.') {
+                isInteger = false;
+                end = skipDigits(json, end + 1);
             }
-            const bool isInteger =
-                end >= json.size() || (json.at(end) != '.' && json.at(end) != 'e' && json.at(end) != 'E');
+            if (end < json.size() && (json.at(end) == 'e' || json.at(end) == 'E')) {
+                isInteger = false;
+                ++end;
+                if (end < json.size() && (json.at(end) == '+' || json.at(end) == '-')) {
+                    ++end;
+                }
+                end = skipDigits(json, end);
+            }
+
             const QByteArray token = json.mid(i, end - i);
-            const QByteArray digits = c == '-' ? token.mid(1) : token;
+            const QByteArray digits = json.mid(digitsStart, digitsEnd - digitsStart);
             if (isInteger && isUnsafeInteger(digits)) {
                 result.append('"').append(token).append('"');
             } else {
