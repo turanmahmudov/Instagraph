@@ -10,6 +10,9 @@ Button {
 
     property color customIconColor: styleApp.common.iconActiveColor
     width: units.gu(5)
+    color: "transparent"
+    gradient: null
+    font: Qt.application.font
     action: model
     enabled: model.enabled
     style: Rectangle {

@@ -54,7 +54,6 @@
         <file>qml/components/ClaritySettingsPanel.qml</file>
         <file>qml/components/EmptyBox.qml</file>
         <file>qml/pages/LikedMediaPage.qml</file>
-        <file>qml/components/FloatingActionButton.qml</file>
         <file>instagraph.dispatcher</file>
         <file>qml/pages/SuggestionsPage.qml</file>
         <file>qml/pages/ShareMediaPage.qml</file>
