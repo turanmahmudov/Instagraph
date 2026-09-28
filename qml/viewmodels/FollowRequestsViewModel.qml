@@ -17,10 +17,9 @@ BaseUserListViewModel {
     signal requestApproved(var userId, var friendship)
     signal requestRejected(var userId)
 
-    function loadRequests() {
-        loadData('', function () {
-            instagram.getPendingFriendships();
-        });
+    function load() {
+        beginLoad('');
+        instagram.getPendingFriendships();
     }
 
     function approve(userId) {

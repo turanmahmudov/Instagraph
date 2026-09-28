@@ -16,9 +16,8 @@ PageItem {
 
     property alias list_loading: viewModel.isLoading
 
-    BaseUserListViewModel {
+    SuggestionsViewModel {
         id: viewModel
-        hasPagination: false
     }
 
     ListView {
@@ -40,37 +39,13 @@ PageItem {
         PullToRefresh {
             refreshing: viewModel.isLoading && viewModel.userListModel.count === 0
             onRefresh: {
-                loadSuggestions();
+                viewModel.load();
             }
         }
     }
 
-    function loadSuggestions() {
-        viewModel.loadData('', function () {
-            instagram.getSuggestions();
-        });
-    }
-
-    Connections {
-        target: instagram
-        function onSuggestionsFeedDataReady(answer) {
-            var data = JSON.parse(answer);
-            var suggestions = data.suggested_users ? data.suggested_users.suggestions : [];
-            viewModel.handleResponse({
-                users: suggestions.map(function (suggestion) {
-                    var user = suggestion.user;
-                    user.friendship = {
-                        "following": false,
-                        "outgoing_request": false
-                    };
-                    return user;
-                })
-            });
-        }
-    }
-
     Component.onCompleted: {
-        loadSuggestions();
+        viewModel.load();
     }
 
     BottomMenu {

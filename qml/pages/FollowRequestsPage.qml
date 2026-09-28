@@ -108,13 +108,13 @@ PageItem {
         PullToRefresh {
             refreshing: viewModel.isLoading && viewModel.userListModel.count === 0
             onRefresh: {
-                viewModel.loadRequests();
+                viewModel.load();
             }
         }
     }
 
     Component.onCompleted: {
-        viewModel.loadRequests();
+        viewModel.load();
     }
 
     BottomMenu {

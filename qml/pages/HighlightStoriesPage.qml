@@ -7,6 +7,7 @@ import "../js/Helper.js" as Helper
 // Component imports
 import "../components/Constants"
 import "../components/Stories"
+import "../viewmodels"
 
 StoryViewerPage {
     id: highlightStoriesPage
@@ -16,102 +17,34 @@ StoryViewerPage {
 
     // Bind navigation context
     currentEntryId: highlightId
+    storiesModel: viewModel.storiesModel
     allEntries: allHighlights
 
-    // Internal references
-    property var user
-    property var highlight: {
-        'title': '',
-        'cover_url': ''
-    }
-
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/TimelineWorker.js"
-    }
-
-    function getReelsMediaFeed() {
-        var idsArray = [];
-        idsArray.push(highlightId);
-        instagram.getReelsMediaFeed(JSON.stringify(idsArray));
-    }
-
-    function handleReelsData(data) {
-        if (!data || !data.reels || !data.reels[highlightId]) {
-            storyUnavailable = true;
+    StoryReelViewModel {
+        id: viewModel
+        onReelLoaded: {
+            headerImageSource = viewModel.coverUrl;
+            headerTitle = viewModel.title;
+            headerSubtitle = viewModel.unavailable ? "" : Helper.milisecondsToString(viewModel.firstTakenAt, true);
+            storyUnavailable = viewModel.unavailable;
             getting = false;
-            return;
         }
-
-        var reelData = data.reels[highlightId];
-        var items = reelData.items;
-
-        if (!items || items.length === 0) {
-            // Show highlight info in header even when unavailable
-            user = reelData.user;
-            if (user) {
-                highlight = {
-                    'title': "title" in reelData ? reelData.title : user.username,
-                    'cover_url': "cover_media" in reelData ? reelData.cover_media.cropped_image_version.url : user.profile_pic_url
-                };
-                headerImageSource = highlight.cover_url;
-                headerTitle = highlight.title;
-                headerSubtitle = "";
-            }
-            storyUnavailable = true;
-            getting = false;
-            return;
-        }
-
-        storyUnavailable = false;
-
-        worker.sendMessage({
-            'feed': 'userStoriesPage',
-            'obj': items,
-            'model': storiesModel,
-            'clear_model': true
-        });
-
-        user = reelData.user;
-        highlight = {
-            'title': "title" in reelData ? reelData.title : (user ? user.username : ""),
-            'cover_url': "cover_media" in reelData ? reelData.cover_media.cropped_image_version.url : (user ? user.profile_pic_url : "")
-        };
-
-        // Update header
-        headerImageSource = highlight.cover_url;
-        headerTitle = highlight.title;
-        headerSubtitle = Helper.milisecondsToString(items[0].taken_at, true);
-
-        // Mark all stories as seen immediately
-        markStoriesSeen(items);
-
-        getting = false;
     }
 
     Component.onCompleted: {
-        getReelsMediaFeed();
+        viewModel.loadHighlightReel(highlightId);
     }
 
     onRequestLoadEntry: {
         highlightId = entryId;
-        getReelsMediaFeed();
+        viewModel.loadHighlightReel(highlightId);
     }
 
     onHeaderClicked: {
-        if (user) {
+        if (viewModel.user) {
             pageLayout.pushToCurrent(highlightStoriesPage, PagesConstants.user, {
-                usernameId: user.pk
+                usernameId: viewModel.user.pk
             });
         }
-    }
-
-    Connections {
-        target: instagram
-        function onReelsMediaFeedDataReady(answer) {
-            var data = JSON.parse(answer);
-            handleReelsData(data);
-        }
-        function onMarkStoryMediaSeenDataReady(answer) {}
     }
 }

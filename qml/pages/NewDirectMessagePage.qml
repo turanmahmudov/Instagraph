@@ -36,6 +36,7 @@ PageItem {
 
     RecipientsViewModel {
         id: recipientsViewModel
+        onMessageSent: openSentThread(data)
     }
 
     Component.onCompleted: {
@@ -339,16 +340,6 @@ PageItem {
                     sendMessage(addMessageField.text);
                 }
             }
-        }
-    }
-
-    Connections {
-        target: instagram
-        function onDirectMessageDataReady(answer) {
-            openSentThread(JSON.parse(answer));
-        }
-        function onDirectLikeDataReady(answer) {
-            openSentThread(JSON.parse(answer));
         }
     }
 }

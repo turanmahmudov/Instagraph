@@ -18,9 +18,9 @@ PageItem {
 
     property alias list_loading: viewModel.isLoading
 
-    BaseUserListViewModel {
+    FollowingsViewModel {
         id: viewModel
-        hasPagination: true
+        userId: followingspage.userId
     }
 
     ListView {
@@ -39,30 +39,17 @@ PageItem {
         }
         onMovementEnded: {
             if (atYEnd && viewModel.canLoadMore())
-                loadFollowings(viewModel.nextMaxId);
+                viewModel.load(viewModel.nextMaxId);
         }
         PullToRefresh {
             refreshing: viewModel.isLoading && viewModel.userListModel.count === 0
             onRefresh: {
-                loadFollowings('');
+                viewModel.load('');
             }
         }
     }
 
-    function loadFollowings(nextId) {
-        viewModel.loadData(nextId, function (nid) {
-            instagram.getFollowing(userId, nid);
-        });
-    }
-
-    Connections {
-        target: instagram
-        function onFollowingDataReady(answer) {
-            viewModel.handleResponse(answer);
-        }
-    }
-
     Component.onCompleted: {
-        loadFollowings();
+        viewModel.load();
     }
 }

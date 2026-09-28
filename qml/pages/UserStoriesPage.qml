@@ -7,6 +7,7 @@ import "../js/Helper.js" as Helper
 // Component imports
 import "../components/Constants"
 import "../components/Stories"
+import "../viewmodels"
 
 StoryViewerPage {
     id: userStoriesPage
@@ -16,79 +17,34 @@ StoryViewerPage {
 
     // Bind navigation context
     currentEntryId: userId
+    storiesModel: viewModel.storiesModel
     allEntries: allUsers
 
-    // Internal user reference for header navigation
-    property var user
-
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/TimelineWorker.js"
-    }
-
-    function getUserReelsMediaFeed() {
-        instagram.getUserReelsMediaFeed(userId);
-    }
-
-    function handleReelsData(data) {
-        if (!data || !data.items || data.items.length === 0) {
-            // Show user info in header even when story is unavailable
-            if (data && data.user) {
-                user = data.user;
-                headerImageSource = data.user.profile_pic_url || "";
-                headerTitle = data.user.username || "";
-                headerSubtitle = "";
-            }
-            storyUnavailable = true;
+    StoryReelViewModel {
+        id: viewModel
+        onReelLoaded: {
+            headerImageSource = viewModel.coverUrl;
+            headerTitle = viewModel.title;
+            headerSubtitle = viewModel.unavailable ? "" : Helper.milisecondsToString(viewModel.firstTakenAt, true);
+            storyUnavailable = viewModel.unavailable;
             getting = false;
-            return;
         }
-
-        storyUnavailable = false;
-
-        worker.sendMessage({
-            'feed': 'userStoriesPage',
-            'obj': data.items,
-            'model': storiesModel,
-            'clear_model': true
-        });
-
-        user = data.user;
-
-        // Update header with user info
-        headerImageSource = data.user ? data.user.profile_pic_url : "";
-        headerTitle = data.user ? data.user.username : "";
-        headerSubtitle = Helper.milisecondsToString(data.items[0].taken_at, true);
-
-        // Mark all stories as seen immediately
-        markStoriesSeen(data.items);
-
-        getting = false;
     }
 
     Component.onCompleted: {
-        getUserReelsMediaFeed();
+        viewModel.loadUserReel(userId);
     }
 
     onRequestLoadEntry: {
         userId = entryId;
-        getUserReelsMediaFeed();
+        viewModel.loadUserReel(userId);
     }
 
     onHeaderClicked: {
-        if (user) {
+        if (viewModel.user) {
             pageLayout.pushToCurrent(userStoriesPage, PagesConstants.user, {
-                usernameId: user.pk
+                usernameId: viewModel.user.pk
             });
         }
-    }
-
-    Connections {
-        target: instagram
-        function onUserReelsMediaFeedDataReady(answer) {
-            var data = JSON.parse(answer);
-            handleReelsData(data);
-        }
-        function onMarkStoryMediaSeenDataReady(answer) {}
     }
 }

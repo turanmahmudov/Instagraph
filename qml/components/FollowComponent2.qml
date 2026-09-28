@@ -1,6 +1,8 @@
 import QtQuick 2.12
 import Lomiri.Components 1.3
 
+import "../viewmodels"
+
 Item {
     id: root
 
@@ -11,11 +13,14 @@ Item {
     property var friendship: null
     property bool showLabel: false
 
-    property bool isFollowing: false
-    property bool isRequested: false
+    readonly property bool isFollowing: friendshipViewModel.following
+    readonly property bool isRequested: friendshipViewModel.outgoingRequest
     readonly property bool isUnfollowed: !isFollowing && !isRequested
 
-    property var pendingRequestUserId: null
+    FriendshipViewModel {
+        id: friendshipViewModel
+        userId: root.userId
+    }
 
     QtObject {
         id: styles
@@ -58,29 +63,17 @@ Item {
     }
 
     function syncFromFriendship() {
-        isFollowing = !!(friendship && friendship.following);
-        isRequested = !!(friendship && friendship.outgoing_request);
-    }
-
-    function handleFollowResponse(data) {
-        if (!data || !data.friendship_status || pendingRequestUserId === null || userId != pendingRequestUserId) {
-            return;
-        }
-
-        isFollowing = data.friendship_status.following === true;
-        isRequested = data.friendship_status.outgoing_request === true;
-        pendingRequestUserId = null;
+        friendshipViewModel.applyStatus(friendship || {});
     }
 
     function toggleFollow() {
         if (!userId)
             return;
-        pendingRequestUserId = userId;
 
         if (isFollowing || isRequested) {
-            instagram.unFollow(userId);
+            friendshipViewModel.unfollow();
         } else {
-            instagram.follow(userId);
+            friendshipViewModel.follow();
         }
     }
 
@@ -133,20 +126,6 @@ Item {
         MouseArea {
             anchors.fill: parent
             onClicked: toggleFollow()
-        }
-    }
-
-    Connections {
-        target: instagram
-
-        function onFollowDataReady(answer) {
-            var data = JSON.parse(answer);
-            handleFollowResponse(data);
-        }
-
-        function onUnfollowDataReady(answer) {
-            var data = JSON.parse(answer);
-            handleFollowResponse(data);
         }
     }
 }

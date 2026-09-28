@@ -9,6 +9,7 @@ import Instagram 1.0
  * - Tagged photos feed
  * - Highlights feed
  * - User info
+ * - User id lookup by username
  */
 BaseFeedViewModel {
     id: viewModel
@@ -17,6 +18,9 @@ BaseFeedViewModel {
     property string userId: ""
     property var userData: null
     property bool clearModels: true
+    property string pendingUsername: ""
+
+    signal userIdResolved(var resolvedUserId)
 
     onUserIdChanged: {
         if (userId) {
@@ -113,6 +117,14 @@ BaseFeedViewModel {
     }
 
     /**
+     * Look up the user id for a username; emits userIdResolved
+     */
+    function resolveUsername(username) {
+        pendingUsername = username;
+        instagram.getInfoByName(username);
+    }
+
+    /**
      * Load user highlights
      */
     function loadHighlights() {
@@ -140,6 +152,18 @@ BaseFeedViewModel {
             var data = JSON.parse(answer);
             if (data.status === "ok" && (!data.user || data.user.pk == userId)) {
                 handleFeedResponse(data);
+            }
+        }
+
+        function onInfoByNameDataReady(answer) {
+            if (!pendingUsername) {
+                return;
+            }
+
+            pendingUsername = "";
+            var data = JSON.parse(answer);
+            if (data.user) {
+                userIdResolved(data.user.pk);
             }
         }
 

@@ -38,6 +38,7 @@ PageItem {
     RecipientsViewModel {
         id: recipientsViewModel
     }
+        onMediaShared: pageLayout.removePages(sharemediapage)
 
     Component.onCompleted: {
         recipientsViewModel.loadRecipients();
@@ -321,14 +322,6 @@ PageItem {
                     sendMessage(addMessageField.text);
                 }
             }
-        }
-    }
-
-    Connections {
-        target: instagram
-        function onDirectShareDataReady(answer) {
-            var data = JSON.parse(answer);
-            pageLayout.removePages(sharemediapage);
         }
     }
 }

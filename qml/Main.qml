@@ -17,6 +17,7 @@ import "pages"
 import "components"
 import "components/Style"
 import "components/Helpers"
+import "viewmodels"
 import "components/Constants"
 
 import Instagram 1.0
@@ -80,23 +81,6 @@ MainView {
 
     signal directMessageNotified(string igAction)
     signal locationSelected(var location)
-
-    property bool mqttConnected: false
-
-    function connectMqtt() {
-        if (mqttConnected) {
-            return;
-        }
-
-        var phoneId = instagram.getPhoneId();
-        if (!phoneId || phoneId === "") {
-            console.log("MQTT: no phoneId available");
-            return;
-        }
-
-        mqtt.connectToMqtt(activeUsernameId, phoneId);
-        mqttConnected = true;
-    }
 
     property alias appStore: appStore
     property var activeTransfer
@@ -207,10 +191,7 @@ MainView {
             loginPageActive = true;
             goLogin();
         } else {
-            instagram.setUsername(username);
-            instagram.setPassword(password);
-
-            instagram.login(force === true ? true : false, username, password, true);
+            sessionViewModel.login(force, username, password);
         }
     }
 
@@ -233,11 +214,9 @@ MainView {
         }
     }
 
-    Connections {
-        target: instagram
-        function onProfileConnected(answer) {
-            console.log('PROFILE CONNECTED');
-
+    SessionViewModel {
+        id: sessionViewModel
+        onProfileConnected: {
             if (loginPageActive && tmpUsername != "" && tmpPassword != "") {
                 Storage.insertAccount(tmpUsername, tmpPassword);
                 activeUsername = tmpUsername;
@@ -247,7 +226,7 @@ MainView {
             anchorToKeyboard = true;
             loading.visible = false;
 
-            activeUsernameId = instagram.getUsernameId();
+            activeUsernameId = usernameId;
 
             pageLayout.primaryPage = homePage;
 
@@ -262,12 +241,9 @@ MainView {
             userPage.getUsernameInfo();
 
             // Connect MQTT for push notifications
-            connectMqtt();
+            sessionViewModel.connectPush(activeUsernameId);
         }
-        function onProfileConnectedFail() {}
-        function onTwoFactorRequired(answer) {
-            console.log('2FACTOR REQUIRED');
-
+        onTwoFactorRequired: {
             // Store the 2FA data and load the 2FA page as primary
             twoFactorData = answer;
             pageLayout.primaryPageSource = Qt.resolvedUrl("pages/2FactorLoginPage.qml");
@@ -279,10 +255,6 @@ MainView {
     // MQTT FBNS push notification handlers
     Connections {
         target: mqtt
-
-        function onFbnsTokenReceived(token) {
-            instagram.registerPush(token);
-        }
 
         function onFbnsConnectionChanged(connected) {
             console.log("MQTT FBNS connected:", connected);

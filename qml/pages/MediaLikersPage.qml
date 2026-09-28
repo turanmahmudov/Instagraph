@@ -18,9 +18,9 @@ PageItem {
 
     property alias list_loading: viewModel.isLoading
 
-    BaseUserListViewModel {
+    MediaLikersViewModel {
         id: viewModel
-        hasPagination: false
+        mediaId: medialikerspage.mediaId
     }
 
     ListView {
@@ -40,25 +40,12 @@ PageItem {
         PullToRefresh {
             refreshing: viewModel.isLoading && viewModel.userListModel.count === 0
             onRefresh: {
-                loadLikers();
+                viewModel.load();
             }
         }
     }
 
-    function loadLikers() {
-        viewModel.loadData('', function () {
-            instagram.getMediaLikers(mediaId);
-        });
-    }
-
-    Connections {
-        target: instagram
-        function onMediaLikersDataReady(answer) {
-            viewModel.handleResponse(answer);
-        }
-    }
-
     Component.onCompleted: {
-        loadLikers();
+        viewModel.load();
     }
 }

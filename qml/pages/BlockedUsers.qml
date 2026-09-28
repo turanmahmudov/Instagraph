@@ -16,10 +16,8 @@ PageItem {
 
     property alias list_loading: viewModel.isLoading
 
-    BaseUserListViewModel {
+    BlockedUsersViewModel {
         id: viewModel
-        hasPagination: false
-        dataKey: "blocked_list"
     }
 
     ListView {
@@ -39,25 +37,12 @@ PageItem {
         PullToRefresh {
             refreshing: viewModel.isLoading && viewModel.userListModel.count === 0
             onRefresh: {
-                loadBlockedUsers();
+                viewModel.load();
             }
         }
     }
 
-    function loadBlockedUsers() {
-        viewModel.loadData('', function () {
-            instagram.getBlockedUserList();
-        });
-    }
-
-    Connections {
-        target: instagram
-        function onBlockedUserListDataReady(answer) {
-            viewModel.handleResponse(answer);
-        }
-    }
-
     Component.onCompleted: {
-        loadBlockedUsers();
+        viewModel.load();
     }
 }

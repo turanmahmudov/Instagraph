@@ -56,6 +56,7 @@ Item {
 
     Connections {
         target: instagram
+        enabled: viewModel.isLoading || viewModel.pendingUserId !== null
         function onFriendshipDataReady(answer) {
             if (!isLoading) {
                 return;

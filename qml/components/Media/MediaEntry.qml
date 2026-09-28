@@ -7,6 +7,7 @@ import ".."
 import "../Actions"
 import "../Feed"
 import "../Constants"
+import "../../viewmodels"
 
 import "../../js/Scripts.js" as Scripts
 import "../../js/Helper.js" as Helper
@@ -15,8 +16,6 @@ Column {
     id: mediaentry
     spacing: units.gu(1)
 
-    property var lastActionId: null
-    property var lastDeletedId: null
     property bool showCarousel: false
     property bool enableVideoPlayback: false
 
@@ -168,8 +167,8 @@ Column {
             width: units.gu(4)
             height: width
 
-            onLikeClicked: mediaentry.like()
-            onUnlikeClicked: mediaentry.unlike()
+            onLikeClicked: mediaActions.like()
+            onUnlikeClicked: mediaActions.unlike()
         }
 
         OpenCommentsAction {
@@ -204,8 +203,8 @@ Column {
             height: width
             Layout.alignment: Qt.AlignRight
 
-            onSaveClicked: mediaentry.save()
-            onUnsaveClicked: mediaentry.unsave()
+            onSaveClicked: mediaActions.save()
+            onUnsaveClicked: mediaActions.unsave()
         }
     }
 
@@ -293,7 +292,7 @@ Column {
 
         SingleMedia {
             id: mediaItem
-            onDoubleClicked: like()
+            onDoubleClicked: mediaActions.like()
         }
     }
 
@@ -302,7 +301,7 @@ Column {
 
         CarouselMedia {
             id: carouselItem
-            onDoubleClicked: like()
+            onDoubleClicked: mediaActions.like()
         }
     }
 
@@ -316,122 +315,24 @@ Column {
                 mediaId: id
             })
             onCopyLinkClicked: Clipboard.push(`https://instagram.com/p/${code}`)
-            onDownloadMediaClicked: {
-                // TODO
-                //var singleDownload = downloadComponent.createObject(mainView)
-                //singleDownload.contentType = ContentType.Pictures
-                //singleDownload.download(images_obj.candidates[0].url)
-            }
-            onDeleteMediaClicked: {
-                lastDeletedId = id;
-                instagram.deleteMedia(id);
-            }
-            onEnableCommentsClicked: {
-                lastActionId = id;
-                instagram.enableMediaComments(id);
-            }
-            onDisableCommentsClicked: {
-                lastActionId = id;
-                instagram.disableMediaComments(id);
-            }
-            onRemoveTagClicked: {
-                lastDeletedId = id;
-                instagram.removeSelftag(id);
-            }
+            onDeleteMediaClicked: mediaActions.deleteMedia()
+            onEnableCommentsClicked: mediaActions.enableComments()
+            onDisableCommentsClicked: mediaActions.disableComments()
+            onRemoveTagClicked: mediaActions.removeSelfTag()
         }
     }
 
-    Connections {
-        target: instagram
-        enabled: lastActionId !== null || lastDeletedId !== null
-
-        function onMediaDeleted(answer) {
-            if (lastDeletedId === id) {
-                var data = JSON.parse(answer);
-                if (data.did_delete) {
-                    currentModel.remove(index);
-                    if (currentModel.count === 0)
-                        pageLayout.removePages(currentPage);
-                }
-                lastDeletedId = null;
-            }
+    MediaActionsViewModel {
+        id: mediaActions
+        mediaId: id
+        onLikeUpdated: likeAction.is_liked = liked
+        onSaveUpdated: saveAction.is_saved = saved
+        onCommentsUpdated: currentModel.get(index).comments_disabled = disabled
+        onSelfTagRemoved: currentModel.get(index).photo_of_you = false
+        onDeleted: {
+            currentModel.remove(index);
+            if (currentModel.count === 0)
+                pageLayout.removePages(currentPage);
         }
-
-        function onRemoveSelftagDone(answer) {
-            if (lastDeletedId === id) {
-                var data = JSON.parse(answer);
-                if (data.status === "ok")
-                    currentModel.get(index).photo_of_you = false;
-                lastDeletedId = null;
-            }
-        }
-
-        function onEnableMediaCommentsDataReady(answer) {
-            if (lastActionId === id) {
-                var data = JSON.parse(answer);
-                if (data.status === "ok")
-                    currentModel.get(index).comments_disabled = false;
-                lastActionId = null;
-            }
-        }
-
-        function onDisableMediaCommentsDataReady(answer) {
-            if (lastActionId === id) {
-                var data = JSON.parse(answer);
-                if (data.status === "ok")
-                    currentModel.get(index).comments_disabled = true;
-                lastActionId = null;
-            }
-        }
-
-        function onLikeDataReady(answer) {
-            if (lastActionId === id) {
-                var data = JSON.parse(answer);
-                if (data.status === "ok")
-                    likeAction.is_liked = true;
-                lastActionId = null;
-            }
-        }
-        function onUnLikeDataReady(answer) {
-            if (lastActionId === id) {
-                var data = JSON.parse(answer);
-                if (data.status === "ok")
-                    likeAction.is_liked = false;
-                lastActionId = null;
-            }
-        }
-        function onSaveMediaDataReady(answer) {
-            if (lastActionId === id) {
-                var data = JSON.parse(answer);
-                if (data.status === "ok")
-                    saveAction.is_saved = true;
-                lastActionId = null;
-            }
-        }
-        function onUnsaveMediaDataReady(answer) {
-            if (lastActionId === id) {
-                var data = JSON.parse(answer);
-                if (data.status === "ok")
-                    saveAction.is_saved = false;
-                lastActionId = null;
-            }
-        }
-    }
-
-    function like() {
-        lastActionId = id;
-        instagram.like(id);
-    }
-    function unlike() {
-        lastActionId = id;
-        instagram.unLike(id);
-    }
-    function save() {
-        lastActionId = id;
-        instagram.saveMedia(id);
-    }
-    function unsave() {
-        lastActionId = id;
-        instagram.unsaveMedia(id);
     }
 }

@@ -16,6 +16,11 @@ Item {
 
     property ListModel recipientsModel: ListModel {}
 
+    property bool isSending: false
+
+    signal messageSent(var data)
+    signal mediaShared(var data)
+
     /**
      * Load ranked recipients
      * @param query - Search text, or "" for the default ranking
@@ -30,6 +35,7 @@ Item {
      * @param text - Message text
      */
     function sendMessage(userIds, text) {
+        isSending = true;
         instagram.directMessage(buildRecipientsString(userIds), text, "");
     }
 
@@ -38,6 +44,7 @@ Item {
      * @param userIds - Array of user ids
      */
     function sendLike(userIds) {
+        isSending = true;
         instagram.directLike(buildRecipientsString(userIds), "");
     }
 
@@ -48,6 +55,7 @@ Item {
      * @param text - Message text
      */
     function shareMedia(mediaId, userIds, text) {
+        isSending = true;
         instagram.directShare(mediaId, buildRecipientsString(userIds), text);
     }
 
@@ -80,5 +88,23 @@ Item {
                 clear_model: true
             });
         }
+        function onDirectMessageDataReady(answer) {
+            finishSend(answer, messageSent);
+        }
+        function onDirectLikeDataReady(answer) {
+            finishSend(answer, messageSent);
+        }
+        function onDirectShareDataReady(answer) {
+            finishSend(answer, mediaShared);
+        }
+    }
+
+    function finishSend(answer, sentSignal) {
+        if (!isSending) {
+            return;
+        }
+
+        isSending = false;
+        sentSignal(JSON.parse(answer));
     }
 }

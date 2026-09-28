@@ -52,7 +52,7 @@ function pushSingleImage(page, mediaId) {
 
 function logOut() {
     if (loggedIn) {
-        instagram.logout()
+        sessionViewModel.logout()
         pageLayout.removePages(homePage)
     }
 

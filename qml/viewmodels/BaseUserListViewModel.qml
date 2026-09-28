@@ -11,11 +11,11 @@ import QtQuick 2.12
  * - Pull-to-refresh support
  * - Worker-based model population via UserWorker.js
  *
- * Child pages must:
+ * Child ViewModels must:
  * - Set the `dataKey` property (e.g. "users", "blocked_list")
  * - Set `hasPagination` to true/false
- * - Call loadData(apiCallFunction) to initiate loading
- * - Connect the appropriate Instagram API signal to handleResponse(answer)
+ * - Implement load(nextId): call beginLoad(nextId), then the Instagram API call
+ * - Pass the matching Instagram API signal to handleResponse(answer)
  */
 Item {
     id: base
@@ -47,13 +47,11 @@ Item {
     }
 
     /**
-     * Load or refresh the user list.
+     * Prepare the state for a load or refresh of the user list.
      * @param nextId - Pass "" or undefined to refresh from the start,
      *                 or a max_id string to load the next page.
-     * @param apiCall - A function that performs the actual Instagram API call.
-     *                  Receives nextId as argument: function(nextId) { instagram.getFollowers(userId, nextId) }
      */
-    function loadData(nextId, apiCall) {
+    function beginLoad(nextId) {
         isLoading = true;
         clearModels = false;
 
@@ -62,8 +60,6 @@ Item {
             nextMaxId = "";
             clearModels = true;
         }
-
-        apiCall(nextId);
     }
 
     /**
@@ -71,6 +67,8 @@ Item {
      * @param answer - Raw JSON string from the Instagram API signal, or the parsed object
      */
     function handleResponse(answer) {
+        if (!isLoading)
+            return;
         var data = typeof answer === "string" ? JSON.parse(answer) : answer;
         if (!data)
             return;

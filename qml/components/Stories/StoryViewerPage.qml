@@ -40,7 +40,7 @@ PageItem {
     property int _remainingTime: 0  // remaining ms when paused
 
     // The parent page populates this model via the worker
-    property alias storiesModel: storiesModel
+    property ListModel storiesModel: ListModel {}
     property alias storiesList: storiesList
 
     header: PageHeaderItem {
@@ -176,30 +176,6 @@ PageItem {
         }
     }
 
-    // -- Mark stories as seen --
-
-    function markStoriesSeen(items) {
-        if (!items || items.length === 0)
-            return;
-        var reels = {};
-        var now = new Date().getTime();
-
-        for (var i = 0; i < items.length; i++) {
-            var item = items[i];
-            var itemTakenAt = item.taken_at;
-            var seenAt = now;
-            if (seenAt < itemTakenAt) {
-                seenAt = itemTakenAt + 2;
-            }
-
-            var itemSourceId = item.user.pk;
-            var reelId = item.id + '_' + itemSourceId;
-            reels[reelId] = [itemTakenAt + '_' + seenAt];
-        }
-
-        instagram.markStoryMediaSeen(JSON.stringify(reels));
-    }
-
     // Update the time-ago label for the current slide
     function updateTimeAgo() {
         if (storiesModel.count > 0 && storiesList.currentIndex >= 0 && storiesList.currentIndex < storiesModel.count) {
@@ -242,10 +218,6 @@ PageItem {
     }
 
     // -- Story model & list --
-
-    ListModel {
-        id: storiesModel
-    }
 
     Rectangle {
         anchors.fill: parent

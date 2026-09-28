@@ -67,7 +67,13 @@ PageItem {
     // ViewModel handles all feed logic
     UserFeedViewModel {
         id: feedViewModel
-        userId: usernameId
+        userId: usernameId || ""
+        onUserIdResolved: {
+            if (!usernameId) {
+                usernameId = resolvedUserId;
+                loadProfile();
+            }
+        }
     }
 
     property int current_user_section: 0
@@ -445,19 +451,6 @@ PageItem {
         }
     }
 
-    Connections {
-        target: instagram
-        function onInfoByNameDataReady(answer) {
-            if (usernameId) {
-                return;
-            }
-
-            var data = JSON.parse(answer);
-            usernameId = data.user.pk;
-            loadProfile();
-        }
-    }
-
     BottomMenu {
         id: bottomMenu
         width: parent.width
@@ -467,7 +460,7 @@ PageItem {
         if (usernameId) {
             loadProfile();
         } else {
-            instagram.getInfoByName(usernameString);
+            feedViewModel.resolveUsername(usernameString);
         }
     }
 

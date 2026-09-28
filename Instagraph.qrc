@@ -96,6 +96,14 @@
         <file>qml/viewmodels/EditMediaViewModel.qml</file>
         <file>qml/viewmodels/EditProfileViewModel.qml</file>
         <file>qml/viewmodels/PublishViewModel.qml</file>
+        <file>qml/viewmodels/FollowersViewModel.qml</file>
+        <file>qml/viewmodels/FollowingsViewModel.qml</file>
+        <file>qml/viewmodels/MediaLikersViewModel.qml</file>
+        <file>qml/viewmodels/BlockedUsersViewModel.qml</file>
+        <file>qml/viewmodels/SuggestionsViewModel.qml</file>
+        <file>qml/viewmodels/StoryReelViewModel.qml</file>
+        <file>qml/viewmodels/MediaActionsViewModel.qml</file>
+        <file>qml/viewmodels/SessionViewModel.qml</file>
         <file>qml/viewmodels/FriendshipViewModel.qml</file>
         <file>qml/viewmodels/FollowRequestsViewModel.qml</file>
         <file>qml/pages/FollowRequestsPage.qml</file>
