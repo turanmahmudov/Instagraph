@@ -229,6 +229,11 @@ PageItem {
                 }
             }
 
+            MentionSuggestions {
+                width: parent.width
+                field: captionField
+            }
+
             ListItem {
                 height: locationLayout.height
                 divider.visible: true

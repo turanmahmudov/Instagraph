@@ -70,6 +70,16 @@ PageItem {
         }
     }
 
+    MentionSuggestions {
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: addCommentItem.top
+        }
+        z: 1
+        field: addCommentItem.field
+    }
+
     AddCommentItem {
         id: addCommentItem
         height: units.gu(5)

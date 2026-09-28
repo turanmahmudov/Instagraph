@@ -5,6 +5,8 @@ import Lomiri.Components 1.3
 import "../../js/Helper.js" as Helper
 
 Item {
+    property alias field: addCommentField
+
     signal commentPosted(string text)
 
     function prepareReply(username) {
