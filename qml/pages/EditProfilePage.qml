@@ -268,7 +268,6 @@ PageItem {
 
             ListItem {
                 height: bioLayout.height
-                divider.visible: false
 
                 SlotsLayout {
                     id: bioLayout
@@ -306,9 +305,10 @@ PageItem {
 
                 ListItemLayout {
                     id: privateHeaderLayout
+                    padding.leading: units.gu(1)
 
                     title.text: i18n.tr("Private Information")
-                    title.font.weight: Font.Normal
+                    title.font.weight: Font.DemiBold
                 }
             }
 
