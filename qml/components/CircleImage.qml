@@ -71,24 +71,36 @@ Item {
         anchors.centerIn: parent
         width: ringState !== "none" ? parent.width - units.gu(0.9) : parent.width
         height: ringState !== "none" ? parent.height - units.gu(0.9) : parent.height
+        visible: false
         smooth: false
         mipmap: false
         fillMode: Image.PreserveAspectCrop
         sourceSize: Qt.size(width, height)
-        layer.enabled: true
-        layer.effect: ShaderEffect {
-            property real adjustedRadius: image.width / 2
-            fragmentShader: "
-                varying highp vec2 qt_TexCoord0;
-                uniform sampler2D source;
-                uniform lowp float qt_Opacity;
-                void main() {
-                    highp vec2 center = vec2(0.5, 0.5);
-                    highp float dist = distance(qt_TexCoord0, center);
-                    lowp float alpha = 1.0 - smoothstep(0.5 - 0.01, 0.5, dist);
-                    gl_FragColor = texture2D(source, qt_TexCoord0) * qt_Opacity * alpha;
-                }
-            "
+    }
+
+    ShaderEffect {
+        anchors.fill: image
+        visible: image.status === Image.Ready
+
+        property variant source: image
+        property size cropScale: {
+            var textureRatio = image.implicitWidth / Math.max(1, image.implicitHeight);
+            var itemRatio = width / Math.max(1, height);
+            return textureRatio > itemRatio ? Qt.size(itemRatio / textureRatio, 1) : Qt.size(1, textureRatio / itemRatio);
         }
+
+        fragmentShader: "
+            varying highp vec2 qt_TexCoord0;
+            uniform sampler2D source;
+            uniform lowp float qt_Opacity;
+            uniform highp vec2 cropScale;
+            void main() {
+                highp vec2 center = vec2(0.5, 0.5);
+                highp float dist = distance(qt_TexCoord0, center);
+                lowp float alpha = 1.0 - smoothstep(0.5 - 0.01, 0.5, dist);
+                highp vec2 coord = center + (qt_TexCoord0 - center) * cropScale;
+                gl_FragColor = texture2D(source, coord) * qt_Opacity * alpha;
+            }
+        "
     }
 }
