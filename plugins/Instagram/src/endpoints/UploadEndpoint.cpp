@@ -281,8 +281,9 @@ void UploadEndpoint::configureVideo(const QString & uploadId, int attempt) {
         // Instagram answers until the uploaded video is transcoded
         const int maxAttempts = 30;
         if (response.errorMessage().contains("Transcode not finished") && attempt < maxAttempts) {
-            QTimer::singleShot(4000, this,
-                               [this, uploadId, attempt]() { configureVideo(uploadId, attempt + 1); });
+            QTimer::singleShot(4000, this, [this, uploadId, attempt]() {
+                configureVideo(uploadId, attempt + 1);
+            });
             return;
         }
 
