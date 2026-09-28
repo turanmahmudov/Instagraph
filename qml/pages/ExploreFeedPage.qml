@@ -21,7 +21,7 @@ PageItem {
             Action {
                 id: closePageAction
                 text: i18n.tr("Back")
-                iconName: IconsConstants.flash_on
+                iconName: IconsConstants.chevron_left
                 visible: mode != "exploreFeed"
                 onTriggered: {
                     if (mode == "searchResults") {

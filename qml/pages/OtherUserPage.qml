@@ -32,7 +32,7 @@ PageItem {
                 id: userMenuAction
                 visible: usernameId != activeUsernameId
                 text: i18n.tr("Options")
-                iconName: IconsConstants.user_grid
+                iconName: IconsConstants.more
                 onTriggered: {
                     PopupUtils.open(userMenuComponent);
                 }
@@ -336,7 +336,7 @@ PageItem {
                 width: parent.width
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                iconName: IconsConstants.heart_filled
+                iconName: IconsConstants.image
 
                 title: current_user_section == 3 ? i18n.tr("No Photos Yet") : ""
 
@@ -355,7 +355,7 @@ PageItem {
                 width: parent.width
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                iconName: IconsConstants.forward
+                iconName: IconsConstants.lock
 
                 description: i18n.tr("This account is private.")
                 description2: i18n.tr("Follow to see their photos and videos.")

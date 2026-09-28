@@ -27,7 +27,7 @@ PageItem {
         trailingActions: [
             Action {
                 text: i18n.tr("Close")
-                iconName: IconsConstants.bookmark
+                iconName: IconsConstants.exit
                 onTriggered: {
                     Qt.quit();
                 }

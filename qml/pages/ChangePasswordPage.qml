@@ -27,7 +27,7 @@ PageItem {
         trailingActions: [
             Action {
                 text: i18n.tr("Save")
-                iconName: IconsConstants.camera_flip
+                iconName: IconsConstants.checkmark
                 enabled: !passwordViewModel.isSaving && currentPasswordField.text.length > 0 && newPasswordField.text.length > 0 && newPasswordAgainField.text.length > 0
                 onTriggered: passwordViewModel.changePassword(currentPasswordField.text, newPasswordField.text, newPasswordAgainField.text)
             }

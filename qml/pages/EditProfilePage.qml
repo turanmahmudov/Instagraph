@@ -52,7 +52,7 @@ PageItem {
         title: i18n.tr("Edit Profile")
         trailingActions: [
             Action {
-                iconName: IconsConstants.camera_flip
+                iconName: IconsConstants.checkmark
                 text: i18n.tr("Save")
                 enabled: !editProfileViewModel.isSaving
                 onTriggered: editProfileViewModel.saveProfile({

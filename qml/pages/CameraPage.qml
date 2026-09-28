@@ -75,7 +75,7 @@ PageItem {
             Action {
                 id: closePageAction
                 text: i18n.tr("Close")
-                iconName: IconsConstants.timer
+                iconName: IconsConstants.close
                 onTriggered: {
                     pageLayout.removePages(takephotopage);
                 }

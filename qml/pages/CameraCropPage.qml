@@ -42,7 +42,7 @@ PageItem {
             Action {
                 id: closePageAction
                 text: i18n.tr("Back")
-                iconName: IconsConstants.flash_on
+                iconName: IconsConstants.chevron_left
                 onTriggered: {
                     pageLayout.removePages(cameracroppage);
                 }
@@ -52,7 +52,7 @@ PageItem {
             Action {
                 id: nextPageAction
                 text: i18n.tr("Next")
-                iconName: IconsConstants.flash_off
+                iconName: IconsConstants.chevron_right
                 onTriggered: {
                     //Scripts.pushImageCaption(imagePath)
 

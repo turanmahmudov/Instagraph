@@ -15,7 +15,7 @@ Item {
 
     LineIcon {
         anchors.verticalCenter: parent.verticalCenter
-        name: IconsConstants.popup
+        name: IconsConstants.more
         color: styleApp.common.iconActiveColor
         iconSize: units.gu(2)
     }

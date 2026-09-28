@@ -71,7 +71,7 @@ PageItem {
             horizontalCenter: parent.horizontalCenter
         }
 
-        iconName: IconsConstants.heart_filled
+        iconName: IconsConstants.image
 
         description: i18n.tr("No photos or videos yet!")
     }

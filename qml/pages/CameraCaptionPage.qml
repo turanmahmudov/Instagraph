@@ -53,7 +53,7 @@ PageItem {
             Action {
                 id: closePageAction
                 text: i18n.tr("Back")
-                iconName: IconsConstants.flash_on
+                iconName: IconsConstants.chevron_left
                 onTriggered: {
                     pageLayout.removePages(cameracaptionpage);
                 }
@@ -63,7 +63,7 @@ PageItem {
             Action {
                 id: nextPageAction
                 text: i18n.tr("Share")
-                iconName: IconsConstants.camera_flip
+                iconName: IconsConstants.checkmark
                 enabled: !imageUploading
                 onTriggered: publishViewModel.publish(imagePath, caption.text, locationVar, disableCommentsSwitch.checked)
             }

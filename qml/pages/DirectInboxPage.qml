@@ -20,7 +20,7 @@ PageItem {
             Action {
                 id: newDirectMessageAction
                 text: i18n.tr("New Message")
-                iconName: IconsConstants.mic
+                iconName: IconsConstants.pencil
                 onTriggered: {
                     pageLayout.pushToNext(pageLayout.primaryPage, PagesConstants.new_direct_message);
                 }
@@ -73,7 +73,7 @@ PageItem {
             horizontalCenter: parent.horizontalCenter
         }
 
-        iconName: IconsConstants.icon_eaab
+        iconName: IconsConstants.envelope
 
         title: i18n.tr("Welcome to Instagraph Direct!")
         description: i18n.tr("Tap the + icon to send a photo, video or message.")

@@ -24,7 +24,7 @@ PageItem {
             Action {
                 id: nextPageAction
                 text: i18n.tr("Done")
-                iconName: IconsConstants.camera_flip
+                iconName: IconsConstants.checkmark
                 enabled: !editMediaViewModel.isSaving
                 onTriggered: editMediaViewModel.saveCaption(mediaCaption.text)
             }

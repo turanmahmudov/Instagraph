@@ -115,7 +115,7 @@ PageItem {
         footer: EmptyBox {
             visible: feedViewModel.isCaughtUp
             width: homeFeedList.width
-            iconName: IconsConstants.check
+            iconName: IconsConstants.checkmark
             iconColor: LomiriColors.green
             title: feedViewModel.caughtUpTitle
             description: feedViewModel.caughtUpSubtitle

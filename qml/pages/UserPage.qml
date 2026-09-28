@@ -40,7 +40,7 @@ PageItem {
             Action {
                 id: addPeopleAction
                 text: i18n.tr("Suggestions")
-                iconName: IconsConstants.people_add
+                iconName: IconsConstants.users
                 onTriggered: {
                     pageLayout.pushToNext(pageLayout.primaryPage, PagesConstants.suggestions);
                 }
@@ -266,7 +266,7 @@ PageItem {
                 width: parent.width
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                iconName: current_user_section == 3 ? IconsConstants.heart_filled : ""
+                iconName: current_user_section == 3 ? IconsConstants.image : ""
 
                 title: current_user_section == 3 ? i18n.tr("No Photos Yet") : ""
 
