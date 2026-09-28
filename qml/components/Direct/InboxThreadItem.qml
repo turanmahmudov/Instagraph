@@ -8,10 +8,12 @@ import ".."
 import "../../js/Helper.js" as Helper
 
 ListItem {
+    property var currentPage: pageLayout.primaryPage
+
     height: layout.height
     divider.visible: false
     onClicked: {
-        pageLayout.pushToNext(directinboxpage, PagesConstants.direct_thread, {
+        pageLayout.pushToNext(currentPage, PagesConstants.direct_thread, {
             threadId: thread_id
         });
     }

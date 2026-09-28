@@ -14,7 +14,8 @@ WorkerScript.onMessage = (message) => {
         item_obj.thread_title = item.thread_title !== "" ? item.thread_title : item.inviter.username
         item_obj.thread_text = getThreadText(item.last_permanent_item, message.activeUserId, typeTexts)
         item_obj.thread_time = item.last_permanent_item.timestamp
-        item_obj.unseen = item.last_permanent_item.timestamp > item.last_seen_at[Object.keys(item.last_seen_at)[0]].timestamp
+        const seenMarkers = Object.keys(item.last_seen_at || {})
+        item_obj.unseen = seenMarkers.length === 0 || item.last_permanent_item.timestamp > item.last_seen_at[seenMarkers[0]].timestamp
         item_obj.profile_pic_url = item.users.length > 0 ? item.users[0].profile_pic_url : item.inviter.profile_pic_url
 
         model.append(item_obj)

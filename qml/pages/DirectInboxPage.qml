@@ -35,6 +35,32 @@ PageItem {
     property alias list_loading: inboxViewModel.isLoading
     property alias isEmpty: inboxViewModel.isEmpty
 
+    ListItem {
+        id: requestsRow
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: directinboxpage.header.bottom
+        }
+        height: requestsLayout.height
+        divider.visible: false
+        onClicked: pageLayout.pushToNext(directinboxpage, PagesConstants.message_requests)
+
+        ListItemLayout {
+            id: requestsLayout
+            title.text: i18n.tr("Message requests")
+            title.font.weight: Font.DemiBold
+
+            Label {
+                visible: inboxViewModel.pendingRequestsTotal > 0
+                SlotsLayout.position: SlotsLayout.Trailing
+                text: inboxViewModel.pendingRequestsTotal
+                color: styleApp.common.primaryButtonColor
+                font.weight: Font.DemiBold
+            }
+        }
+    }
+
     ListView {
         id: directInboxList
         visible: !isEmpty
@@ -42,7 +68,7 @@ PageItem {
             left: parent.left
             right: parent.right
             bottom: parent.bottom
-            top: directinboxpage.header.bottom
+            top: requestsRow.bottom
         }
         onMovementEnded: {
             if (atYEnd) {
@@ -55,6 +81,7 @@ PageItem {
         model: inboxViewModel.feedModel
         delegate: InboxThreadItem {
             width: ListView.view ? ListView.view.width : 0
+            currentPage: directinboxpage
         }
 
         PullToRefresh {
@@ -69,7 +96,7 @@ PageItem {
         visible: isEmpty
         width: parent.width
         anchors {
-            top: directinboxpage.header.bottom
+            top: requestsRow.bottom
             horizontalCenter: parent.horizontalCenter
         }
 

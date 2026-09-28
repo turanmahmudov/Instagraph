@@ -39,6 +39,7 @@ QtObject {
     readonly property string direct_inbox: getQtResolvedUrl("DirectInboxPage.qml")
     readonly property string direct_thread: getQtResolvedUrl("DirectThreadPage.qml")
     readonly property string new_direct_message: getQtResolvedUrl("NewDirectMessagePage.qml")
+    readonly property string message_requests: getQtResolvedUrl("MessageRequestsPage.qml")
 
     // Stories
     readonly property string user_stories: getQtResolvedUrl("UserStoriesPage.qml")

@@ -9,11 +9,13 @@ import "../js/DirectTypeTexts.js" as DirectTypeTexts
  * Handles direct inbox loading logic:
  * - Inbox threads loading with cursor pagination
  * - Pull-to-refresh
+ * - Message request count
  */
 BaseFeedViewModel {
     id: viewModel
 
     property bool clearModels: true
+    property int pendingRequestsTotal: 0
 
     /**
      * Load inbox threads
@@ -72,6 +74,10 @@ BaseFeedViewModel {
         }
 
         setLoadingState(false);
+
+        if (clearModels) {
+            pendingRequestsTotal = data.pending_requests_total || 0;
+        }
 
         isEmpty = false;
         if (data.inbox.threads.length === 0) {
