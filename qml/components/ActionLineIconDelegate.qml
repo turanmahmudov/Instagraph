@@ -9,6 +9,7 @@ Button {
     property var iconSize: units.gu(2)
 
     property color customIconColor: styleApp.common.iconActiveColor
+    readonly property bool themeIcon: model.iconName.length > 1 && model.iconName !== "back" && model.iconName !== "down"
     width: units.gu(5)
     color: "transparent"
     gradient: null
@@ -21,8 +22,17 @@ Button {
         implicitWidth: units.gu(6)
         implicitHeight: units.gu(6)
         opacity: button.pressed ? 0.75 : 1.0
+        Icon {
+            anchors.centerIn: parent
+            visible: themeIcon
+            width: units.gu(3.25)
+            height: width
+            name: themeIcon ? model.iconName : ""
+            color: customIconColor
+        }
         LineIcon {
             anchors.centerIn: parent
+            visible: !themeIcon
             name: model.iconName === "back" ? "\uea5a" : (model.iconName === "down" ? "\uea58" : model.iconName)
             iconSize: button.iconSize
             color: customIconColor

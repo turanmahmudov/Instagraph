@@ -66,7 +66,7 @@ PageItem {
             Action {
                 id: inboxAction
                 text: i18n.tr("Inbox")
-                iconName: IconsConstants.inbox
+                iconName: "send"
                 onTriggered: {
                     pageLayout.pushToNext(pageLayout.primaryPage, PagesConstants.direct_inbox);
                 }
