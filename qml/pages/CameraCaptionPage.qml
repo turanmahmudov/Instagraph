@@ -68,7 +68,7 @@ PageItem {
 
     Connections {
         target: mainView
-        onLocationSelected: {
+        function onLocationSelected(location) {
             cameracaptionpage.locationSelected = true;
             cameracaptionpage.locationVar = location;
         }
@@ -265,7 +265,7 @@ PageItem {
 
     Connections {
         target: instagram
-        onImageConfigureDataReady: {
+        function onImageConfigureDataReady(answer) {
             pageLayout.removePages(homePage);
             pageLayout.primaryPage = homePage;
 
@@ -273,7 +273,7 @@ PageItem {
 
             Scripts.pushSingleImage(pageLayout.primaryPage, data.media.id);
         }
-        onImageUploadProgressDataReady: {
+        function onImageUploadProgressDataReady(answer) {
             uploadProgressBar.value = answer;
         }
     }

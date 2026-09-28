@@ -349,7 +349,7 @@ Column {
     Connections {
         target: instagram
 
-        onMediaDeleted: {
+        function onMediaDeleted(answer) {
             if (lastDeletedId === id) {
                 var data = JSON.parse(answer);
                 if (data.did_delete) {
@@ -361,7 +361,7 @@ Column {
             }
         }
 
-        onRemoveSelftagDone: {
+        function onRemoveSelftagDone(answer) {
             if (lastDeletedId === id) {
                 var data = JSON.parse(answer);
                 if (data.status === "ok")
@@ -370,7 +370,7 @@ Column {
             }
         }
 
-        onEnableMediaCommentsDataReady: {
+        function onEnableMediaCommentsDataReady(answer) {
             if (lastActionId === id) {
                 var data = JSON.parse(answer);
                 if (data.status === "ok")
@@ -379,7 +379,7 @@ Column {
             }
         }
 
-        onDisableMediaCommentsDataReady: {
+        function onDisableMediaCommentsDataReady(answer) {
             if (lastActionId === id) {
                 var data = JSON.parse(answer);
                 if (data.status === "ok")
@@ -388,7 +388,7 @@ Column {
             }
         }
 
-        onLikeDataReady: {
+        function onLikeDataReady(answer) {
             if (lastActionId === id) {
                 var data = JSON.parse(answer);
                 if (data.status === "ok")
@@ -396,7 +396,7 @@ Column {
                 lastActionId = null;
             }
         }
-        onUnLikeDataReady: {
+        function onUnLikeDataReady(answer) {
             if (lastActionId === id) {
                 var data = JSON.parse(answer);
                 if (data.status === "ok")
@@ -404,7 +404,7 @@ Column {
                 lastActionId = null;
             }
         }
-        onSaveMediaDataReady: {
+        function onSaveMediaDataReady(answer) {
             if (lastActionId === id) {
                 var data = JSON.parse(answer);
                 if (data.status === "ok")
@@ -412,7 +412,7 @@ Column {
                 lastActionId = null;
             }
         }
-        onUnsaveMediaDataReady: {
+        function onUnsaveMediaDataReady(answer) {
             if (lastActionId === id) {
                 var data = JSON.parse(answer);
                 if (data.status === "ok")

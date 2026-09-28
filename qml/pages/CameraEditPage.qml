@@ -34,7 +34,7 @@ PageItem {
 
     Connections {
         target: imageproc
-        onImageSaved: {
+        function onImageSaved(path) {
             imageproc.__output.setDefaultSize();
             Scripts.pushImageCaption(cameraeditpage, path);
         }

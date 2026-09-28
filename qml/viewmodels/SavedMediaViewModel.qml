@@ -49,7 +49,7 @@ BaseFeedViewModel {
     // Connection to Instagram API
     Connections {
         target: instagram
-        onSavedFeedDataReady: {
+        function onSavedFeedDataReady(answer) {
             var data = JSON.parse(answer);
             handleFeedResponse(data);
         }

@@ -371,7 +371,7 @@ PageItem {
     // Update header title when user data changes
     Connections {
         target: feedViewModel
-        onUserDataChanged: {
+        function onUserDataChanged() {
             if (userData) {
                 userpage.header.title = userData.username;
                 activeUserProfilePic = userData.profile_pic_url;

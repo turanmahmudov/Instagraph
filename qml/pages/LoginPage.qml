@@ -172,14 +172,14 @@ PageItem {
 
     Connections {
         target: instagram
-        onProfileConnected: {}
-        onTwoFactorRequired: {}
-        onProfileConnectedFail: {}
-        onError: {
+        function onProfileConnected(answer) {}
+        function onTwoFactorRequired(answer) {}
+        function onProfileConnectedFail() {}
+        function onError(message) {
             console.log(message);
             errorTextLabel.text = message;
         }
-        onChallengeRequired: {
+        function onChallengeRequired(answer) {
             var challengeUrl = answer["url"];
         }
     }

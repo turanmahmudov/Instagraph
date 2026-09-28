@@ -107,9 +107,9 @@ PageItem {
 
     Connections {
         target: instagram
-        onProfileConnected: {}
-        onProfileConnectedFail: {}
-        onError: {
+        function onProfileConnected(answer) {}
+        function onProfileConnectedFail() {}
+        function onError(message) {
             console.log(message);
             errorTextLabel.text = message;
         }

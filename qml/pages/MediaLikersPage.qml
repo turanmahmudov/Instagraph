@@ -53,7 +53,7 @@ PageItem {
 
     Connections {
         target: instagram
-        onMediaLikersDataReady: {
+        function onMediaLikersDataReady(answer) {
             viewModel.handleResponse(answer);
         }
     }

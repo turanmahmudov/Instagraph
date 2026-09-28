@@ -235,7 +235,7 @@ MainView {
 
     Connections {
         target: instagram
-        onProfileConnected: {
+        function onProfileConnected(answer) {
             console.log('PROFILE CONNECTED');
 
             if (loginPageActive && tmpUsername != "" && tmpPassword != "") {
@@ -264,8 +264,8 @@ MainView {
             // Connect MQTT for push notifications
             connectMqtt();
         }
-        onProfileConnectedFail: {}
-        onTwoFactorRequired: {
+        function onProfileConnectedFail() {}
+        function onTwoFactorRequired(answer) {
             console.log('2FACTOR REQUIRED');
 
             // Store the 2FA data and load the 2FA page as primary
@@ -280,15 +280,15 @@ MainView {
     Connections {
         target: mqtt
 
-        onFbnsTokenReceived: {
+        function onFbnsTokenReceived(token) {
             instagram.registerPush(token);
         }
 
-        onFbnsConnectionChanged: {
+        function onFbnsConnectionChanged(connected) {
             console.log("MQTT FBNS connected:", connected);
         }
 
-        onPushNotificationReceived: {
+        function onPushNotificationReceived(notification) {
             var ck = notification.collapseKey;
             console.log("MQTT push [" + ck + "]:", notification.message);
 

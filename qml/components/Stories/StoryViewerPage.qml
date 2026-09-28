@@ -361,7 +361,7 @@ PageItem {
 
                     Connections {
                         target: storyViewerPage
-                        onPausedChanged: {
+                        function onPausedChanged() {
                             if (storiesList.currentIndex === index) {
                                 if (paused) {
                                     player.pause();

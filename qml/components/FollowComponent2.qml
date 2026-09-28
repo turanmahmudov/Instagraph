@@ -139,12 +139,12 @@ Item {
     Connections {
         target: instagram
 
-        onFollowDataReady: {
+        function onFollowDataReady(answer) {
             var data = JSON.parse(answer);
             handleFollowResponse(data);
         }
 
-        onUnfollowDataReady: {
+        function onUnfollowDataReady(answer) {
             var data = JSON.parse(answer);
             handleFollowResponse(data);
         }

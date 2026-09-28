@@ -269,7 +269,7 @@ PageItem {
 
                         Connections {
                             target: newdirectmessagepage
-                            onRefreshList: {
+                            function onRefreshList() {
                                 var index = threadUsers.indexOf(user_obj.pk);
                                 if (index == -1) {
                                     selectUserCheckBox.checked = false;
@@ -345,7 +345,11 @@ PageItem {
 
     Connections {
         target: instagram
-        onDirectMessageDataReady: openSentThread(JSON.parse(answer))
-        onDirectLikeDataReady: openSentThread(JSON.parse(answer))
+        function onDirectMessageDataReady(answer) {
+            openSentThread(JSON.parse(answer));
+        }
+        function onDirectLikeDataReady(answer) {
+            openSentThread(JSON.parse(answer));
+        }
     }
 }

@@ -205,11 +205,11 @@ PageItem {
 
     Connections {
         target: instagram
-        onCurrentUserDataReady: {
+        function onCurrentUserDataReady(answer) {
             var data = JSON.parse(answer);
             profileDataFinished(data);
         }
-        onSetProfilePublic: {
+        function onSetProfilePublic(answer) {
             var data = JSON.parse(answer);
             if (data.user.is_private == true) {
                 privateSwitch.checked = true;
@@ -217,7 +217,7 @@ PageItem {
                 privateSwitch.checked = false;
             }
         }
-        onSetProfilePrivate: {
+        function onSetProfilePrivate(answer) {
             var data = JSON.parse(answer);
             if (data.user.is_private == true) {
                 privateSwitch.checked = true;

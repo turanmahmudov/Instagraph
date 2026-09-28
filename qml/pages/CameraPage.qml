@@ -271,7 +271,7 @@ PageItem {
     Connections {
         target: mainView
         enabled: awaitingImport
-        onFileImported: {
+        function onFileImported(fileUrl) {
             awaitingImport = false;
             Scripts.pushImageCrop(takephotopage, fileUrl);
         }
@@ -279,13 +279,13 @@ PageItem {
 
     Connections {
         target: imageEditor
-        onRotated: {
+        function onRotated() {
             imageEditor.cropImage(String(imagePath).replace('file://', ''), true);
         }
-        onCropped: {
+        function onCropped() {
             imageEditor.scaleImage(String(imagePath).replace('file://', ''));
         }
-        onScaled: {
+        function onScaled() {
             Scripts.pushImageEdit(takephotopage, imagePath);
         }
     }

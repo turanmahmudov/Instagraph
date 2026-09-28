@@ -272,7 +272,7 @@ PageItem {
 
                         Connections {
                             target: sharemediapage
-                            onRefreshList: {
+                            function onRefreshList() {
                                 var index = threadUsers.indexOf(user_obj.pk);
                                 if (index == -1) {
                                     selectUserCheckBox.checked = false;
@@ -327,7 +327,7 @@ PageItem {
 
     Connections {
         target: instagram
-        onDirectShareDataReady: {
+        function onDirectShareDataReady(answer) {
             var data = JSON.parse(answer);
             pageLayout.removePages(sharemediapage);
         }

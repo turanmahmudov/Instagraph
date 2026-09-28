@@ -108,10 +108,10 @@ StoryViewerPage {
 
     Connections {
         target: instagram
-        onReelsMediaFeedDataReady: {
+        function onReelsMediaFeedDataReady(answer) {
             var data = JSON.parse(answer);
             handleReelsData(data);
         }
-        onMarkStoryMediaSeenDataReady: {}
+        function onMarkStoryMediaSeenDataReady(answer) {}
     }
 }

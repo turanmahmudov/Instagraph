@@ -48,7 +48,7 @@ BaseFeedViewModel {
 
     Connections {
         target: instagram
-        onInboxDataReady: {
+        function onInboxDataReady(answer) {
             var data = JSON.parse(answer);
             handleInboxResponse(data);
         }

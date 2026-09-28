@@ -44,7 +44,7 @@ Item {
 
     Connections {
         target: instagram
-        onRankedRecipientsDataReady: {
+        function onRankedRecipientsDataReady(answer) {
             var data = JSON.parse(answer);
             worker.sendMessage({
                 feed: 'ShareMediaPage',

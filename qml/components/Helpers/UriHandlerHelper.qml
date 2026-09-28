@@ -8,7 +8,7 @@ Item {
     Connections {
         target: UriHandler
 
-        onOpened: {
+        function onOpened(uris) {
             for (var i = 0; i < uris.length; i++) {
                 console.debug("URI=" + uris[i]);
                 uriHandler.process(uris[i]);

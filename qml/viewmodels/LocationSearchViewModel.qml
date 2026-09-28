@@ -39,7 +39,7 @@ Item {
 
     Connections {
         target: instagram
-        onSearchLocationDataReady: {
+        function onSearchLocationDataReady(answer) {
             var data = JSON.parse(answer);
             worker.sendMessage({
                 type: 'searchVenues',

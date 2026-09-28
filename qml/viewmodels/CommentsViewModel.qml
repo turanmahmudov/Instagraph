@@ -75,11 +75,11 @@ Item {
 
     Connections {
         target: instagram
-        onMediaCommentsDataReady: {
+        function onMediaCommentsDataReady(answer) {
             var data = JSON.parse(answer);
             handleCommentsResponse(data);
         }
-        onCommentPosted: {
+        function onCommentPosted(answer) {
             var data = JSON.parse(answer);
             if (data.status === "ok" && data.comment) {
                 worker.sendMessage({
@@ -91,20 +91,20 @@ Item {
                 commentPosted();
             }
         }
-        onCommentDeleted: {
+        function onCommentDeleted(answer) {
             var data = JSON.parse(answer);
             if (data.status === "ok" && pendingCommentId !== null) {
                 commentDeleted(pendingCommentId);
                 pendingCommentId = null;
             }
         }
-        onCommentLiked: {
+        function onCommentLiked(answer) {
             var data = JSON.parse(answer);
             if (data.status === "ok") {
                 updateCommentLike(pendingCommentId, true);
             }
         }
-        onCommentUnliked: {
+        function onCommentUnliked(answer) {
             var data = JSON.parse(answer);
             if (data.status === "ok") {
                 updateCommentLike(pendingCommentId, false);

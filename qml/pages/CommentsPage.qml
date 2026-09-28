@@ -54,7 +54,7 @@ PageItem {
 
             Connections {
                 target: viewModel
-                onCommentDeleted: {
+                function onCommentDeleted(commentId) {
                     if (commentId === pk) {
                         commentDelegate.removeComment();
                     }

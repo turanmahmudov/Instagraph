@@ -107,13 +107,13 @@ PageItem {
 
             Connections {
                 target: instagram
-                onApproveFriendshipDataReady: {
+                function onApproveFriendshipDataReady(answer) {
                     var data = JSON.parse(answer);
                     if (data.status === "ok" && lastFriendshipActionUserId === user.pk) {
                         approvedFriendship = data.friendship_status;
                     }
                 }
-                onRejectFriendshipDataReady: {
+                function onRejectFriendshipDataReady(answer) {
                     var data = JSON.parse(answer);
                     if (data.status === "ok" && lastFriendshipActionUserId === user.pk) {
                         viewModel.userListModel.remove(index);
@@ -137,7 +137,7 @@ PageItem {
 
     Connections {
         target: instagram
-        onPendingFriendshipsDataReady: {
+        function onPendingFriendshipsDataReady(answer) {
             viewModel.handleResponse(answer);
         }
     }

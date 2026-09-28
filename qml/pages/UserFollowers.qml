@@ -57,7 +57,7 @@ PageItem {
 
     Connections {
         target: instagram
-        onFollowersDataReady: {
+        function onFollowersDataReady(answer) {
             viewModel.handleResponse(answer);
         }
     }

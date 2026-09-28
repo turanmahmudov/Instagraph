@@ -103,11 +103,11 @@ BaseFeedViewModel {
     // Connection to Instagram API
     Connections {
         target: instagram
-        onTimelineFeedDataReady: {
+        function onTimelineFeedDataReady(answer) {
             var data = JSON.parse(answer);
             handleFeedResponse(data);
         }
-        onReelsTrayFeedDataReady: {
+        function onReelsTrayFeedDataReady(answer) {
             var data = JSON.parse(answer);
             trayWorker.sendMessage({
                 'feed': 'StoriesTray',

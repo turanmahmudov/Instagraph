@@ -102,10 +102,10 @@ PageItem {
 
     Connections {
         target: imageEditor
-        onCropped: {
+        function onCropped() {
             imageEditor.scaleImage(String(imagePath).replace('file://', ''));
         }
-        onScaled: {
+        function onScaled() {
             Scripts.pushImageEdit(cameracroppage, imagePath);
         }
     }

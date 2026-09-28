@@ -95,18 +95,18 @@ Item {
 
     Connections {
         target: instagram
-        onDirectThreadDataReady: {
+        function onDirectThreadDataReady(answer) {
             var data = JSON.parse(answer);
             handleThreadResponse(data);
         }
-        onDirectMessageDataReady: {
+        function onDirectMessageDataReady(answer) {
             var data = JSON.parse(answer);
             handleSentItem(data, {
                 "item_type": "text",
                 "text": sentMessage
             });
         }
-        onDirectLikeDataReady: {
+        function onDirectLikeDataReady(answer) {
             var data = JSON.parse(answer);
             handleSentItem(data, {
                 "item_type": "like"

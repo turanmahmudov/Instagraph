@@ -48,7 +48,9 @@ ListView {
 
         Connections {
             target: imageHandler
-            onImageSettingsChanged: actionDelegate.selected = (imageHandler.getProperty(modelData.prop) != modelData.defaultValue)
+            function onImageSettingsChanged() {
+                actionDelegate.selected = (imageHandler.getProperty(modelData.prop) != modelData.defaultValue);
+            }
         }
     }
 

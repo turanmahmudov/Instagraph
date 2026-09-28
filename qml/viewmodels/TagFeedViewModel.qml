@@ -39,7 +39,7 @@ BaseFeedViewModel {
 
     Connections {
         target: instagram
-        onTagSectionFeedDataReady: {
+        function onTagSectionFeedDataReady(answer) {
             var data = JSON.parse(answer);
             handleFeedResponse(data);
         }

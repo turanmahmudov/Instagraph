@@ -52,7 +52,7 @@ PageItem {
 
     Connections {
         target: instagram
-        onBlockedUserListDataReady: {
+        function onBlockedUserListDataReady(answer) {
             viewModel.handleResponse(answer);
         }
     }

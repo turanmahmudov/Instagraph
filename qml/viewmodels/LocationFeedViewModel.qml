@@ -39,7 +39,7 @@ BaseFeedViewModel {
 
     Connections {
         target: instagram
-        onLocationSectionFeedDataReady: {
+        function onLocationSectionFeedDataReady(answer) {
             var data = JSON.parse(answer);
             handleFeedResponse(data);
         }

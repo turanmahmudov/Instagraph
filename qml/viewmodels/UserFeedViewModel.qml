@@ -136,28 +136,28 @@ BaseFeedViewModel {
     Connections {
         target: instagram
 
-        onUserFeedDataReady: {
+        function onUserFeedDataReady(answer) {
             var data = JSON.parse(answer);
             if (data.status === "ok" && (!data.user || data.user.pk == userId)) {
                 handleFeedResponse(data);
             }
         }
 
-        onInfoByIdDataReady: {
+        function onInfoByIdDataReady(answer) {
             var data = JSON.parse(answer);
             if (data.user.pk == userId) {
                 handleUserInfoResponse(data);
             }
         }
 
-        onUserTagsDataReady: {
+        function onUserTagsDataReady(answer) {
             var data = JSON.parse(answer);
             if (!userId || !data || !data.user || data.user.pk == userId) {
                 handleTaggedPhotosResponse(data);
             }
         }
 
-        onUserHighlightFeedDataReady: {
+        function onUserHighlightFeedDataReady(answer) {
             var data = JSON.parse(answer);
             if (!userId || !data || !data.user || data.user.pk == userId) {
                 handleHighlightsResponse(data);

@@ -32,7 +32,7 @@ BaseFeedViewModel {
 
     Connections {
         target: instagram
-        onMediaInfoReady: {
+        function onMediaInfoReady(answer) {
             var data = JSON.parse(answer);
             handleMediaResponse(data);
         }

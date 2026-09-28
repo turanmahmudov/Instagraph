@@ -107,7 +107,7 @@ PageItem {
     Connections {
         target: mainView
         enabled: awaitingProfilePhoto
-        onFileImported: {
+        function onFileImported(fileUrl) {
             awaitingProfilePhoto = false;
             changeProfilePictureLoading = true;
             instagram.changeProfilePicture(String(fileUrl).replace('file://', ''));
@@ -395,11 +395,11 @@ PageItem {
 
     Connections {
         target: instagram
-        onCurrentUserDataReady: {
+        function onCurrentUserDataReady(answer) {
             var data = JSON.parse(answer);
             profileDataFinished(data);
         }
-        onEditDataReady: {
+        function onEditDataReady(answer) {
             var data = JSON.parse(answer);
             if (data.status == 'ok') {
                 pageLayout.removePages(editprofilepage);
@@ -408,7 +408,7 @@ PageItem {
                 userPage.getUsernameFeed();
             }
         }
-        onProfilePictureChanged: {
+        function onProfilePictureChanged(answer) {
             changeProfilePictureLoading = false;
             pageLayout.removePages(userPage);
             pageLayout.primaryPage = userPage;
@@ -416,7 +416,7 @@ PageItem {
             userPage.getUsernameInfo();
             userPage.getUsernameFeed();
         }
-        onProfilePictureDeleted: {
+        function onProfilePictureDeleted(answer) {
             changeProfilePictureLoading = false;
             pageLayout.removePages(userPage);
             pageLayout.primaryPage = userPage;

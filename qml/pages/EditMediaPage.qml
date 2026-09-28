@@ -96,11 +96,11 @@ PageItem {
 
     Connections {
         target: instagram
-        onMediaInfoReady: {
+        function onMediaInfoReady(answer) {
             var data = JSON.parse(answer);
             mediaDataFinished(data);
         }
-        onMediaEdited: {
+        function onMediaEdited(answer) {
             var data = JSON.parse(answer);
             mediaEditFinished(data);
         }

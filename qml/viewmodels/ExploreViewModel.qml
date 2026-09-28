@@ -67,23 +67,23 @@ BaseFeedViewModel {
 
     Connections {
         target: instagram
-        onExploreFeedDataReady: {
+        function onExploreFeedDataReady(answer) {
             var data = JSON.parse(answer);
             handleFeedResponse(data);
         }
-        onRecentSearchesDataReady: {
+        function onRecentSearchesDataReady(answer) {
             var data = JSON.parse(answer);
             fillSearchModel('recentSearches', data.recent, recentSearchesModel);
         }
-        onSearchUserDataReady: {
+        function onSearchUserDataReady(answer) {
             var data = JSON.parse(answer);
             fillSearchModel('searchUsers', data.users, searchUsersModel);
         }
-        onSearchTagsDataReady: {
+        function onSearchTagsDataReady(answer) {
             var data = JSON.parse(answer);
             fillSearchModel('searchTags', data.results, searchTagsModel);
         }
-        onSearchPlacesDataReady: {
+        function onSearchPlacesDataReady(answer) {
             var data = JSON.parse(answer);
             fillSearchModel('searchLocation', data.items, searchPlacesModel);
         }

@@ -160,7 +160,7 @@ PageItem {
 
     Connections {
         target: instagram
-        onChangePasswordDataReady: {
+        function onChangePasswordDataReady(answer) {
             var data = JSON.parse(answer);
             if (data.status == 'ok') {
                 pageLayout.removePages(changepasswordpage);

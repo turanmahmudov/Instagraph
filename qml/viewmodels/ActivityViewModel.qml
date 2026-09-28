@@ -34,7 +34,7 @@ Item {
 
     Connections {
         target: instagram
-        onRecentActivityInboxDataReady: {
+        function onRecentActivityInboxDataReady(answer) {
             var data = JSON.parse(answer);
             handleActivityResponse(data);
         }

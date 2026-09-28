@@ -108,7 +108,7 @@ PageItem {
 
             Connections {
                 target: instagram
-                onBlockDataReady: {
+                function onBlockDataReady(answer) {
                     var data = JSON.parse(answer);
 
                     if (data.friendship_status.blocking) {
@@ -452,7 +452,7 @@ PageItem {
     // Update header title when user data changes
     Connections {
         target: feedViewModel
-        onUserDataChanged: {
+        function onUserDataChanged() {
             if (userData) {
                 otheruserpage.header.title = userData.username;
             }
@@ -461,7 +461,7 @@ PageItem {
 
     Connections {
         target: instagram
-        onInfoByNameDataReady: {
+        function onInfoByNameDataReady(answer) {
             var data = JSON.parse(answer);
             usernameId = data.user.pk;
 
@@ -477,7 +477,7 @@ PageItem {
 
             feedViewModel.loadUserInfo();
         }
-        onFriendshipDataReady: {
+        function onFriendshipDataReady(answer) {
             var data = JSON.parse(answer);
 
             if (!data.following && data.is_private) {
@@ -494,19 +494,19 @@ PageItem {
             unBlockButton.visible = data.blocking;
         }
 
-        onFollowDataReady: {
+        function onFollowDataReady(answer) {
             if (usernameId == latest_follow_request) {
                 var data = JSON.parse(answer);
                 followDataFinished(data);
             }
         }
-        onUnfollowDataReady: {
+        function onUnfollowDataReady(answer) {
             if (usernameId == latest_follow_request) {
                 var data = JSON.parse(answer);
                 followDataFinished(data);
             }
         }
-        onUnBlockDataReady: {
+        function onUnBlockDataReady(answer) {
             var data = JSON.parse(answer);
 
             if (data.status == "ok" && !data.friendship_status.blocking) {

@@ -53,7 +53,7 @@ PageItem {
 
     Connections {
         target: instagram
-        onSuggestionsFeedDataReady: {
+        function onSuggestionsFeedDataReady(answer) {
             var data = JSON.parse(answer);
             var suggestions = data.suggested_users ? data.suggested_users.suggestions : [];
             viewModel.handleResponse({
