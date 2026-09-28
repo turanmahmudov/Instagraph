@@ -17,8 +17,7 @@ Item {
 
     FeedImage {
         id: feed_image
-        width: parent.width
-        height: parent.width / bestImage.width * bestImage.height
+        anchors.fill: parent
         source: bestImage.url
     }
 
