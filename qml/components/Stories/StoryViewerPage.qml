@@ -247,6 +247,11 @@ PageItem {
         id: storiesModel
     }
 
+    Rectangle {
+        anchors.fill: parent
+        color: "#000000"
+    }
+
     ListView {
         id: storiesList
         anchors {
@@ -268,12 +273,7 @@ PageItem {
         delegate: Item {
             id: storyDelegate
             width: storyViewerPage.width
-            height: {
-                if (typeof image_versions2 !== 'undefined' && image_versions2.candidates && image_versions2.candidates[0]) {
-                    return width / image_versions2.candidates[0].width * image_versions2.candidates[0].height;
-                }
-                return storyViewerPage.height;
-            }
+            height: storiesList.height
 
             Loader {
                 id: mediaLoader
@@ -293,7 +293,7 @@ PageItem {
                         id: storyImage
                         width: parent.width
                         height: parent.height
-                        fillMode: Image.PreserveAspectCrop
+                        fillMode: Image.PreserveAspectFit
                         source: image_versions2.candidates[0].url
                         sourceSize: Qt.size(width, height)
                         smooth: true
@@ -345,7 +345,7 @@ PageItem {
                     VideoOutput {
                         id: videoOutput
                         source: player
-                        fillMode: VideoOutput.PreserveAspectCrop
+                        fillMode: VideoOutput.PreserveAspectFit
                         anchors.fill: parent
                     }
 
@@ -441,6 +441,6 @@ PageItem {
         text: i18n.tr("Story unavailable")
         fontSize: "large"
         font.weight: Font.DemiBold
-        color: styleApp.common.textColor
+        color: "#ffffff"
     }
 }
