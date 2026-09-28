@@ -39,6 +39,7 @@ ApiClient::ApiClient(SessionManager * session, CookieManager * cookies, QObject 
 }
 
 ApiClient::~ApiClient() {
+    disconnect(m_network, &QNetworkAccessManager::finished, this, &ApiClient::onReplyFinished);
     cancelAll();
 }
 
@@ -100,10 +101,11 @@ void ApiClient::cancel(const QString & requestId) {
 void ApiClient::cancelAll() {
     m_pendingCallbacks.clear();
 
-    for (auto it = m_replyToRequestId.begin(); it != m_replyToRequestId.end(); ++it) {
-        it.key()->abort();
-    }
+    const QList<QNetworkReply *> replies = m_replyToRequestId.keys();
     m_replyToRequestId.clear();
+    for (QNetworkReply * reply : replies) {
+        reply->abort();
+    }
 }
 
 void ApiClient::setNetworkManager(QNetworkAccessManager * manager) {
