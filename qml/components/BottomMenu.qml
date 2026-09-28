@@ -5,6 +5,7 @@ import QtQuick.LocalStorage 2.12
 
 import "../fonts/"
 
+import "Constants"
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts

@@ -8,6 +8,7 @@ import "../components/Page"
 import "../components/Comment"
 import "../viewmodels"
 
+import "../components/Constants"
 PageItem {
     id: commentspage
 

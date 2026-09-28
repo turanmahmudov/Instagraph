@@ -9,6 +9,8 @@ import Lomiri.Content 1.3
 
 import "../js/Storage.js" as Storage
 import "../js/Scripts.js" as Scripts
+
+import "Constants"
 import "../js/Helper.js" as Helper
 
 ActionSelectionPopover {

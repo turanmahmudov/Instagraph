@@ -52,7 +52,7 @@ ListItem {
                         anchors.fill: parent
                         onClicked: {
                             if (typeof profile_id !== 'undefined')
-                                pageLayout.pushToCurrent(pageLayout.primaryPage, Qt.resolvedUrl("../../pages/OtherUserPage.qml"), {
+                                pageLayout.pushToCurrent(pageLayout.primaryPage, PagesConstants.user, {
                                     usernameId: profile_id
                                 });
                         }

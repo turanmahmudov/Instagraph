@@ -11,11 +11,8 @@ QtObject {
 
     // Main Pages
     readonly property string home: getQtResolvedUrl("HomePage.qml")
-    readonly property string explore: getQtResolvedUrl("ExploreFeedPage.qml")
-    readonly property string activity: getQtResolvedUrl("ActivityPage.qml")
 
     // User Profile
-    readonly property string current_user: getQtResolvedUrl("UserPage.qml")
     readonly property string user: getQtResolvedUrl("OtherUserPage.qml")
     readonly property string edit_profile: getQtResolvedUrl("EditProfilePage.qml")
     readonly property string change_password: getQtResolvedUrl("ChangePasswordPage.qml")

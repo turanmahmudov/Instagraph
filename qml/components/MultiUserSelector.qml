@@ -8,6 +8,8 @@ import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
+import "Constants"
+
 AbstractButton {
     id: multiUserSelector
 

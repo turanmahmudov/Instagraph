@@ -15,6 +15,7 @@ import "../viewmodels"
 import "../components/Media"
 import "../components/Actions"
 
+import "../components/Constants"
 PageItem {
     id: locationfeedpage
 

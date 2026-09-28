@@ -16,8 +16,8 @@ import "pages"
 import "components"
 import "components/Style"
 import "components/Helpers"
-import "viewmodels"
 import "components/Constants"
+import "viewmodels"
 
 import Instagram 1.0
 import ImageProcessor 1.0
@@ -174,7 +174,7 @@ MainView {
     function goLogin() {
         console.log('GO LOGIN PAGE');
 
-        pageLayout.primaryPageSource = Qt.resolvedUrl("pages/LoginPage.qml");
+        pageLayout.primaryPageSource = PagesConstants.login;
     }
 
     LoadingSpinner {
@@ -222,7 +222,7 @@ MainView {
         onTwoFactorRequired: {
             // Store the 2FA data and load the 2FA page as primary
             twoFactorData = answer;
-            pageLayout.primaryPageSource = Qt.resolvedUrl("pages/2FactorLoginPage.qml");
+            pageLayout.primaryPageSource = PagesConstants.two_fa;
 
             loading.visible = false;
         }

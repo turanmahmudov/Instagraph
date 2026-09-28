@@ -187,7 +187,7 @@ Column {
             width: units.gu(4)
             height: width
 
-            onOpenShareClicked: pageLayout.pushToCurrent(currentPage, Qt.resolvedUrl("../../pages/ShareMediaPage.qml"), {
+            onOpenShareClicked: pageLayout.pushToCurrent(currentPage, PagesConstants.share_media, {
                 mediaId: id,
                 mediaUser: user
             })
@@ -219,7 +219,7 @@ Column {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/MediaLikersPage.qml"), {
+            onClicked: pageLayout.pushToNext(currentPage, PagesConstants.media_likers, {
                 mediaId: id
             })
         }

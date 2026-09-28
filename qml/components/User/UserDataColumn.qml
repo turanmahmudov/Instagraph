@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import ".."
+import "../Constants"
 import QtQuick.Layouts 1.12
 import Lomiri.Components 1.3
 
@@ -74,7 +75,7 @@ Column {
                             width: parent.width
                             height: parent.height
                             onClicked: {
-                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/UserFollowers.qml"), {
+                                pageLayout.pushToNext(currentPage, PagesConstants.user_followers, {
                                     userId: currentUserId
                                 });
                             }
@@ -91,7 +92,7 @@ Column {
                             width: parent.width
                             height: parent.height
                             onClicked: {
-                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/UserFollowers.qml"), {
+                                pageLayout.pushToNext(currentPage, PagesConstants.user_followers, {
                                     userId: currentUserId
                                 });
                             }
@@ -114,7 +115,7 @@ Column {
                             width: parent.width
                             height: parent.height
                             onClicked: {
-                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/UserFollowings.qml"), {
+                                pageLayout.pushToNext(currentPage, PagesConstants.user_followings, {
                                     userId: currentUserId
                                 });
                             }
@@ -131,7 +132,7 @@ Column {
                             width: parent.width
                             height: parent.height
                             onClicked: {
-                                pageLayout.pushToNext(currentPage, Qt.resolvedUrl("../../pages/UserFollowings.qml"), {
+                                pageLayout.pushToNext(currentPage, PagesConstants.user_followings, {
                                     userId: currentUserId
                                 });
                             }

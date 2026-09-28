@@ -8,6 +8,7 @@ import Lomiri.Content 1.3
 import QtGraphicalEffects 1.0
 
 import "Page"
+import "Constants"
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
