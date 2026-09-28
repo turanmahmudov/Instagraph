@@ -37,26 +37,32 @@ ListView {
             bestImage: Helper.getBestImage(images_obj.candidates, width)
         }
 
-        MediaPlayer {
-            id: player
-            source: modelData.video_versions && modelData.video_versions.length > 0 ? modelData.video_versions[0].url : ""
-            autoLoad: false
-            autoPlay: false
-            loops: MediaPlayer.Infinite
-        }
-
-        VideoOutput {
-            id: videoOutput
+        Loader {
+            id: videoLoader
             anchors.fill: parent
-            source: player
-            fillMode: VideoOutput.PreserveAspectCrop
-            visible: media_type === 2
+            active: media_type === 2
+
+            sourceComponent: VideoOutput {
+                property alias player: player
+
+                fillMode: VideoOutput.PreserveAspectCrop
+                source: player
+
+                MediaPlayer {
+                    id: player
+                    source: modelData.video_versions && modelData.video_versions.length > 0 ? modelData.video_versions[0].url : ""
+                    autoLoad: false
+                    autoPlay: false
+                    loops: MediaPlayer.Infinite
+                }
+            }
         }
 
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                if (media_type === 2) {
+                if (videoLoader.item) {
+                    var player = videoLoader.item.player;
                     if (player.playbackState === MediaPlayer.PlayingState) {
                         player.stop();
                     } else {
