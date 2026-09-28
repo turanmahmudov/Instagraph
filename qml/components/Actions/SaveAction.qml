@@ -1,6 +1,5 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
-import QtMultimedia 5.12
 import QtGraphicalEffects 1.0
 import Lomiri.Components 1.3
 
@@ -15,13 +14,14 @@ Item {
     Layout.minimumWidth: width
     Layout.preferredWidth: width
 
-    Icon {
+    Image {
         id: imagesaveicon
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         width: units.gu(3)
         height: width
-        color: styleApp.common.iconActiveColor
+        visible: false
+        sourceSize: Qt.size(width, height)
         source: is_saved ? "../../images/media_save.png" : "../../images/media_save_bold.png"
     }
     ColorOverlay {
