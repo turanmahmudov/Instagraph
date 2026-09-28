@@ -176,26 +176,32 @@ QString PasswordEncryptor::doEncrypt(const QString & password, int keyId,
         return QString();
     }
 
-    RSA * rsa = PEM_read_bio_RSA_PUBKEY(bio, nullptr, nullptr, nullptr);
+    EVP_PKEY * publicKeyEvp = PEM_read_bio_PUBKEY(bio, nullptr, nullptr, nullptr);
     BIO_free(bio);
 
-    if (!rsa) {
+    if (!publicKeyEvp) {
         return QString();
     }
 
     // RSA encrypt the session key using PKCS1 v1.5 padding
-    int rsaSize = RSA_size(rsa);
-    QByteArray rsaEncrypted(rsaSize, 0);
+    QByteArray rsaEncrypted;
+    size_t rsaLen = 0;
+    EVP_PKEY_CTX * keyCtx = EVP_PKEY_CTX_new(publicKeyEvp, nullptr);
+    bool rsaOk = keyCtx && EVP_PKEY_encrypt_init(keyCtx) == 1 &&
+                 EVP_PKEY_CTX_set_rsa_padding(keyCtx, RSA_PKCS1_PADDING) == 1 &&
+                 EVP_PKEY_encrypt(keyCtx, nullptr, &rsaLen, sessionKey, 32) == 1;
+    if (rsaOk) {
+        rsaEncrypted.resize(static_cast<int>(rsaLen));
+        rsaOk = EVP_PKEY_encrypt(keyCtx, reinterpret_cast<unsigned char *>(rsaEncrypted.data()),
+                                 &rsaLen, sessionKey, 32) == 1;
+        rsaEncrypted.resize(static_cast<int>(rsaLen));
+    }
+    EVP_PKEY_CTX_free(keyCtx);
+    EVP_PKEY_free(publicKeyEvp);
 
-    int rsaLen =
-        RSA_public_encrypt(32, sessionKey, reinterpret_cast<unsigned char *>(rsaEncrypted.data()),
-                           rsa, RSA_PKCS1_PADDING);
-    RSA_free(rsa);
-
-    if (rsaLen < 0) {
+    if (!rsaOk) {
         return QString();
     }
-    rsaEncrypted.resize(rsaLen);
 
     // AES-GCM encrypt the password
     QByteArray passwordBytes = password.toUtf8();
