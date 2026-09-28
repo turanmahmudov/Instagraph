@@ -45,7 +45,7 @@ Item {
         Button {
             id: addMessageButton
             anchors.verticalCenter: parent.verticalCenter
-            color: LomiriColors.green
+            color: styleApp.common.primaryButtonColor
             text: i18n.tr("Send")
             onClicked: sendMessageClicked(addMessageField.text)
         }

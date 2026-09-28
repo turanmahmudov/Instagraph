@@ -10,7 +10,7 @@ Rectangle {
 
     width: myText.width + units.gu(3)
     height: myText.height + units.gu(2.5)
-    color: isOutgoing ? styleApp.directInbox.outgoingMessageBackgroundColor : styleApp.directInbox.incomingMessageBackgroundColor
+    color: isOutgoing ? styleApp.directInbox.outgoingTextBackgroundColor : styleApp.directInbox.incomingMessageBackgroundColor
     radius: units.gu(2)
 
     Label {
@@ -19,6 +19,6 @@ Rectangle {
         width: Math.min(myText.implicitWidth, itemMaxWidth)
         anchors.centerIn: parent
         text: cText
-        color: isOutgoing ? styleApp.directInbox.outgoingMessageTextColor : styleApp.directInbox.incomingMessageTextColor
+        color: isOutgoing ? styleApp.directInbox.outgoingTextColor : styleApp.directInbox.incomingMessageTextColor
     }
 }

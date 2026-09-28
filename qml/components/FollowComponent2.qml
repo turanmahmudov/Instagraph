@@ -24,8 +24,8 @@ Item {
                 icon: "add",
                 label: i18n.tr("Follow"),
                 textColor: "#ffffff",
-                backgroundColor: LomiriColors.green,
-                borderColor: LomiriColors.green
+                backgroundColor: styleApp.common.primaryButtonColor,
+                borderColor: styleApp.common.primaryButtonColor
             })
 
         readonly property var following: ({

@@ -16,6 +16,9 @@ QtObject {
 
         property color backgroundColor: "#030303"
         property color baseBorderColor: LomiriColors.darkGrey
+
+        property color primaryButtonColor: "#1877F2"
+        property color secondaryButtonColor: "#363636"
     }
 
     property QtObject mainView: QtObject {
@@ -33,10 +36,13 @@ QtObject {
     }
 
     property QtObject directInbox: QtObject {
-        property color incomingMessageBackgroundColor: "#030303"
+        property color incomingMessageBackgroundColor: "#262626"
         property color incomingMessageTextColor: styleApp.common.textColor
 
         property color outgoingMessageBackgroundColor: Qt.darker(LomiriColors.darkGrey, 2)
         property color outgoingMessageTextColor: styleApp.common.textColor
+
+        property color outgoingTextBackgroundColor: "#1877F2"
+        property color outgoingTextColor: styleApp.common.white
     }
 }

@@ -34,7 +34,7 @@ Item {
         Button {
             id: addCommentButton
             anchors.verticalCenter: parent.verticalCenter
-            color: LomiriColors.green
+            color: styleApp.common.primaryButtonColor
             text: i18n.tr("Send")
             onClicked: commentPosted(addCommentField.text)
         }

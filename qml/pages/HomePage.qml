@@ -154,7 +154,7 @@ PageItem {
         Button {
             anchors.horizontalCenter: parent.horizontalCenter
             text: i18n.tr("Retry")
-            color: LomiriColors.green
+            color: styleApp.common.primaryButtonColor
             onClicked: feedViewModel.loadFeed(true)
         }
     }

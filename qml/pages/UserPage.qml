@@ -118,7 +118,7 @@ PageItem {
             Button {
                 width: parent.width - units.gu(2)
                 anchors.horizontalCenter: parent.horizontalCenter
-                color: LomiriColors.green
+                color: styleApp.common.secondaryButtonColor
                 text: i18n.tr("Edit Profile")
                 onClicked: {
                     pageLayout.pushToCurrent(pageLayout.primaryPage, PagesConstants.edit_profile);

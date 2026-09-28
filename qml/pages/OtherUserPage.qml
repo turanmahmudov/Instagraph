@@ -178,7 +178,7 @@ PageItem {
                 visible: friendshipViewModel.canFollow
                 width: parent.width - units.gu(2)
                 anchors.horizontalCenter: parent.horizontalCenter
-                color: LomiriColors.green
+                color: styleApp.common.primaryButtonColor
                 text: i18n.tr("Follow")
                 onTriggered: friendshipViewModel.follow()
             }
@@ -206,7 +206,7 @@ PageItem {
                 visible: selfProfile
                 width: parent.width - units.gu(2)
                 anchors.horizontalCenter: parent.horizontalCenter
-                color: LomiriColors.green
+                color: styleApp.common.secondaryButtonColor
                 text: i18n.tr("Edit Profile")
                 onClicked: {
                     pageLayout.pushToCurrent(otheruserpage, PagesConstants.edit_profile);

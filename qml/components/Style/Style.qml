@@ -23,6 +23,9 @@ QtObject {
 
         property color backgroundColor: currentStyle.common.backgroundColor
         property color baseBorderColor: currentStyle.common.baseBorderColor
+
+        property color primaryButtonColor: currentStyle.common.primaryButtonColor
+        property color secondaryButtonColor: currentStyle.common.secondaryButtonColor
     }
 
     property QtObject mainView: currentStyle.mainView
