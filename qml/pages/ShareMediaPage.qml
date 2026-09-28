@@ -18,6 +18,7 @@ import "../components/Feed"
 import "../components/Media"
 import "../components/Camera"
 import "../components/Actions"
+import "../viewmodels"
 
 PageItem {
     id: sharemediapage
@@ -35,54 +36,16 @@ PageItem {
         title: i18n.tr("Send to")
     }
 
-    function rankedRecipientsFinished(data) {
-        worker.sendMessage({
-            'feed': 'ShareMediaPage',
-            'obj': data.ranked_recipients,
-            'model': rankedRecipientsModel,
-            'clear_model': true
-        });
-    }
-
-    function recentRecipientsFinished(data) {
-        worker.sendMessage({
-            'feed': 'ShareMediaPage',
-            'obj': data.ranked_recipients,
-            'model': rankedRecipientsModel,
-            'clear_model': true
-        });
-    }
-
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/SimpleWorker.js"
+    RecipientsViewModel {
+        id: recipientsViewModel
     }
 
     Component.onCompleted: {
-        getRankedRecipients();
-    }
-
-    function getRankedRecipients() {
-        instagram.getRankedRecipients();
-    }
-
-    function getRecentRecipients() {
-        instagram.getRecentRecipients();
+        recipientsViewModel.loadRecipients();
     }
 
     function sendMessage(text) {
-        var recip_array = [];
-        var recip_string = '';
-        for (var i in threadUsers) {
-            recip_array.push('"' + threadUsers[i] + '"');
-        }
-        recip_string = recip_array.join(',');
-
-        instagram.directShare(mediaId, recip_string, text);
-    }
-
-    ListModel {
-        id: rankedRecipientsModel
+        instagram.directShare(mediaId, recipientsViewModel.buildRecipientsString(threadUsers), text);
     }
 
     ListModel {
@@ -208,10 +171,10 @@ PageItem {
                 }
                 placeholderText: i18n.tr("Search")
                 onAccepted: {
-                    instagram.getRankedRecipients(searchUsersField.text);
+                    recipientsViewModel.loadRecipients(searchUsersField.text);
                 }
                 onTextChanged: {
-                    instagram.getRankedRecipients(searchUsersField.text);
+                    recipientsViewModel.loadRecipients(searchUsersField.text);
                 }
             }
         }
@@ -222,7 +185,7 @@ PageItem {
             width: parent.width
             height: parent.height - searchUsersField.height - selectedUsersFlow.height
             clip: true
-            model: rankedRecipientsModel
+            model: recipientsViewModel.recipientsModel
             delegate: ListItem {
                 height: layout.height - units.gu(2)
                 divider.visible: false
@@ -364,17 +327,9 @@ PageItem {
 
     Connections {
         target: instagram
-        onRankedRecipientsDataReady: {
-            var data = JSON.parse(answer);
-            rankedRecipientsFinished(data);
-        }
-        onRecentRecipientsDataReady: {
-            var data = JSON.parse(answer);
-            recentRecipientsFinished(data);
-        }
         onDirectShareDataReady: {
             var data = JSON.parse(answer);
-            pageStack.pop();
+            pageLayout.removePages(sharemediapage);
         }
     }
 }

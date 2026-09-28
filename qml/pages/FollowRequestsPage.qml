@@ -1,24 +1,11 @@
-// Qt imports
 import QtQuick 2.12
-import QtQuick.LocalStorage 2.12
-
-// Lomiri imports
 import Lomiri.Components 1.3
 
-// JavaScript imports
-import "../js/Storage.js" as Storage
-import "../js/Helper.js" as Helper
-import "../js/Scripts.js" as Scripts
-
-// Component imports
 import "../components"
 import "../components/Constants"
 import "../components/Page"
 import "../components/User"
-import "../components/Feed"
-import "../components/Media"
-import "../components/Camera"
-import "../components/Actions"
+import "../viewmodels"
 
 PageItem {
     id: followrequestspage
@@ -27,38 +14,13 @@ PageItem {
         title: i18n.tr("Follow Requests")
     }
 
-    property bool list_loading: false
+    property alias list_loading: viewModel.isLoading
 
-    property var last_friendship_action_done
+    property var lastFriendshipActionUserId
 
-    function pendingFriendshipsDataFinished(data) {
-        worker.sendMessage({
-            'feed': 'FollowRequestsPage',
-            'obj': data.users,
-            'model': followrequestsModel,
-            'clear_model': true
-        });
-
-        list_loading = false;
-    }
-
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/SimpleWorker.js"
-    }
-
-    Component.onCompleted: {
-        followRequests();
-    }
-
-    function followRequests() {
-        followrequestsModel.clear();
-        list_loading = true;
-        instagram.pendingFriendships();
-    }
-
-    ListModel {
-        id: followrequestsModel
+    BaseUserListViewModel {
+        id: viewModel
+        hasPagination: false
     }
 
     ListView {
@@ -73,18 +35,18 @@ PageItem {
 
         clip: true
         cacheBuffer: followrequestspage.height * 2
-        model: followrequestsModel
+        model: viewModel.userListModel
         delegate: ListItem {
-            id: searchUsersDelegate
+            id: followRequestDelegate
             height: layout.height
             divider.visible: false
             onClicked: {
                 pageLayout.pushToCurrent(followrequestspage, PagesConstants.user, {
-                    usernameId: pk
+                    usernameId: user.pk
                 });
             }
 
-            property bool is_friendship_approved: false
+            property var approvedFriendship: null
 
             SlotsLayout {
                 id: layout
@@ -96,95 +58,92 @@ PageItem {
                 padding.bottom: units.gu(1)
 
                 mainSlot: UserRowSlot {
-                    id: label
-                    width: parent.width - (is_friendship_approved ? followButton.width : buttons.width)
+                    width: parent.width - (approvedFriendship ? followButton.width : buttons.width)
                 }
 
                 Row {
                     id: buttons
+                    visible: !approvedFriendship
+                    width: visible ? childrenRect.width : 0
                     spacing: units.gu(1)
+
+                    anchors.verticalCenter: parent.verticalCenter
+                    SlotsLayout.position: SlotsLayout.Trailing
+                    SlotsLayout.overrideVerticalPositioning: true
 
                     Button {
                         color: LomiriColors.blue
                         text: i18n.tr("Confirm")
-
                         anchors.verticalCenter: parent.verticalCenter
-                        SlotsLayout.position: SlotsLayout.Trailing
-                        SlotsLayout.overrideVerticalPositioning: true
-
                         onClicked: {
-                            last_friendship_action_done = pk;
-                            instagram.approveFriendship(pk);
+                            lastFriendshipActionUserId = user.pk;
+                            instagram.approveFriendship(user.pk);
                         }
                     }
 
                     Button {
                         color: LomiriColors.lightGrey
                         text: i18n.tr("Delete")
-
                         anchors.verticalCenter: parent.verticalCenter
-                        SlotsLayout.position: SlotsLayout.Trailing
-                        SlotsLayout.overrideVerticalPositioning: true
-
                         onClicked: {
-                            last_friendship_action_done = pk;
-                            instagram.rejectFriendship(pk);
-                        }
-                    }
-
-                    anchors.verticalCenter: parent.verticalCenter
-                    SlotsLayout.position: SlotsLayout.Trailing
-                    SlotsLayout.overrideVerticalPositioning: true
-                }
-
-                Connections {
-                    target: instagram
-                    onApproveFriendshipDataReady: {
-                        var data = JSON.parse(answer);
-                        if (data.status === "ok" && last_friendship_action_done === pk) {
-                            is_friendship_approved = true;
-
-                            buttons.width = 0;
-                            buttons.visible = false;
-
-                            followButton.friendship_var = data.friendship_status;
-                            followButton.init();
-                            followButton.visible = true;
-                        }
-                    }
-                    onRejectFriendshipDataReady: {
-                        var data = JSON.parse(answer);
-                        if (data.status === "ok" && last_friendship_action_done === pk) {
-                            followrequestsModel.remove(index);
+                            lastFriendshipActionUserId = user.pk;
+                            instagram.rejectFriendship(user.pk);
                         }
                     }
                 }
 
-                FollowComponent {
+                FollowComponent2 {
                     id: followButton
-                    visible: false
-                    height: units.gu(3.5)
-                    friendship_var: {
-                        "following": false,
-                        "outgoing_request": false
-                    }
-                    userId: pk
-                    just_icon: false
+                    visible: !!approvedFriendship
+                    userId: user.pk
+                    friendship: approvedFriendship
+                    showLabel: true
 
                     anchors.verticalCenter: parent.verticalCenter
                     SlotsLayout.position: SlotsLayout.Trailing
                     SlotsLayout.overrideVerticalPositioning: true
                 }
             }
+
+            Connections {
+                target: instagram
+                onApproveFriendshipDataReady: {
+                    var data = JSON.parse(answer);
+                    if (data.status === "ok" && lastFriendshipActionUserId === user.pk) {
+                        approvedFriendship = data.friendship_status;
+                    }
+                }
+                onRejectFriendshipDataReady: {
+                    var data = JSON.parse(answer);
+                    if (data.status === "ok" && lastFriendshipActionUserId === user.pk) {
+                        viewModel.userListModel.remove(index);
+                    }
+                }
+            }
         }
+        PullToRefresh {
+            refreshing: viewModel.isLoading && viewModel.userListModel.count === 0
+            onRefresh: {
+                loadFollowRequests();
+            }
+        }
+    }
+
+    function loadFollowRequests() {
+        viewModel.loadData('', function () {
+            instagram.getPendingFriendships();
+        });
     }
 
     Connections {
         target: instagram
         onPendingFriendshipsDataReady: {
-            var data = JSON.parse(answer);
-            pendingFriendshipsDataFinished(data);
+            viewModel.handleResponse(answer);
         }
+    }
+
+    Component.onCompleted: {
+        loadFollowRequests();
     }
 
     BottomMenu {

@@ -47,6 +47,8 @@ WorkerScript.onMessage = function(msg) {
             obj[i].subtitle = obj[i].subtitle
 
             model.append(obj[i]);
+        } else if (type === "searchVenues") {
+            model.append(obj[i]);
         }
 
         model.sync();

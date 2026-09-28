@@ -2,10 +2,10 @@ import QtQuick 2.12
 import Lomiri.Components 1.3
 
 import "../components"
+import "../components/Constants"
 import "../components/Page"
 import "../components/Activity"
-
-import "../js/Helper.js" as Helper
+import "../viewmodels"
 
 PageItem {
     id: activitypage
@@ -15,18 +15,19 @@ PageItem {
         noBackAction: true
     }
 
-    property bool new_notifs: false
-
-    property bool list_loading: false
-
-    property bool isPullToRefresh: true
-
-    ListModel {
-        id: recentActivityModel
+    ActivityViewModel {
+        id: viewModel
     }
 
-    Loader {
-        id: viewLoader
+    property alias new_notifs: viewModel.hasNewNotifications
+    property alias list_loading: viewModel.isLoading
+
+    function getRecentActivity() {
+        viewModel.loadActivity();
+    }
+
+    ListView {
+        id: recentActivityList
         anchors {
             left: parent.left
             right: parent.right
@@ -34,72 +35,61 @@ PageItem {
             bottomMargin: bottomMenu.height
             top: activitypage.header.bottom
         }
-        active: true
-        sourceComponent: recentActivityComponent
-    }
 
-    Component {
-        id: recentActivityComponent
+        clip: true
+        cacheBuffer: activitypage.height
+        model: viewModel.activityModel
+        delegate: ListItem {
+            divider.visible: false
+            height: calculateHeight(list_type)
 
-        ListView {
-            id: recentActivityList
-            anchors.fill: parent
-
-            clip: true
-            cacheBuffer: activitypage.height
-            model: recentActivityModel
-            delegate: ListItem {
-                divider.visible: false
-                height: calculateHeight(list_type)
-
-                function calculateHeight(list_type) {
-                    if (list_type === 'follow_requests') {
-                        return followRequestsLoader.height;
-                    }
-                    if (list_type === 'recent_activity') {
-                        return recentActivityLoader.height;
-                    }
-                    return 0;
+            function calculateHeight(list_type) {
+                if (list_type === 'follow_requests') {
+                    return followRequestsLoader.height;
                 }
-
-                Loader {
-                    id: followRequestsLoader
-                    width: parent.width
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                    }
-                    visible: list_type === 'follow_requests'
-                    active: visible
-                    asynchronous: true
-
-                    sourceComponent: FollowRequest {
-                        width: parent.width
-                    }
+                if (list_type === 'recent_activity') {
+                    return recentActivityLoader.height;
                 }
+                return 0;
+            }
 
-                Loader {
-                    id: recentActivityLoader
+            Loader {
+                id: followRequestsLoader
+                width: parent.width
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                visible: list_type === 'follow_requests'
+                active: visible
+                asynchronous: true
+
+                sourceComponent: FollowRequest {
                     width: parent.width
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                    }
-                    visible: list_type === 'recent_activity'
-                    active: visible
-                    asynchronous: false
-
-                    sourceComponent: RecentActivity {
-                        width: parent.width
-                    }
+                    onClicked: pageLayout.pushToNext(pageLayout.primaryPage, PagesConstants.follow_requests)
                 }
             }
-            PullToRefresh {
-                refreshing: list_loading && recentActivityModel.count === 0
-                onRefresh: {
-                    isPullToRefresh = true;
-                    getRecentActivity();
+
+            Loader {
+                id: recentActivityLoader
+                width: parent.width
+                anchors {
+                    left: parent.left
+                    right: parent.right
                 }
+                visible: list_type === 'recent_activity'
+                active: visible
+                asynchronous: false
+
+                sourceComponent: RecentActivity {
+                    width: parent.width
+                }
+            }
+        }
+        PullToRefresh {
+            refreshing: viewModel.isLoading && viewModel.activityModel.count === 0
+            onRefresh: {
+                getRecentActivity();
             }
         }
     }
@@ -107,67 +97,5 @@ PageItem {
     BottomMenu {
         id: bottomMenu
         width: parent.width
-    }
-
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/ActivityWorker.js"
-    }
-
-    Connections {
-        target: instagram
-        onRecentActivityInboxDataReady: {
-            var data = JSON.parse(answer);
-            recentActivityDataFinished(data);
-        }
-    }
-
-    function getRecentActivity() {
-        recentActivityModel.clear();
-        instagram.getRecentActivityInbox();
-    }
-
-    function recentActivityDataFinished(data) {
-        if (!data)
-            return;
-        isPullToRefresh = false;
-
-        // Follow Requests
-        if ("friend_request_stories" in data && data.friend_request_stories.length > 0) {
-            worker.sendMessage({
-                friend_requests: data.friend_request_stories,
-                model: recentActivityModel,
-                clear: true
-            });
-        } else {
-            recentActivityModel.clear();
-        }
-
-        // New activity stories
-        if ("new_stories" in data && data.new_stories.length > 0) {
-            new_notifs = true;
-        }
-
-        let linkColor = Helper.hexToRgb(styleApp.common.textColor);
-
-        // New stories
-        worker.sendMessage({
-            items: data.new_stories,
-            model: recentActivityModel,
-            partition: data.partition,
-            clear: false,
-            linkColor: linkColor
-        });
-
-        // Old stories
-        worker.sendMessage({
-            items: data.old_stories,
-            model: recentActivityModel,
-            partition: data.partition,
-            clear: false,
-            linkColor: linkColor
-        });
-
-        list_loading = false;
     }
 }

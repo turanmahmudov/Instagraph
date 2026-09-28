@@ -1,23 +1,14 @@
 // Qt imports
 import QtQuick 2.12
-import QtQuick.LocalStorage 2.12
 
 // Lomiri imports
 import Lomiri.Components 1.3
 
-// JavaScript imports
-import "../js/Storage.js" as Storage
-import "../js/Helper.js" as Helper
-import "../js/Scripts.js" as Scripts
-
 // Component imports
 import "../components"
 import "../components/Page"
-import "../components/User"
 import "../components/Feed"
-import "../components/Media"
-import "../components/Camera"
-import "../components/Actions"
+import "../viewmodels"
 
 PageItem {
     id: singlephotopage
@@ -28,42 +19,16 @@ PageItem {
 
     property var photoId
 
-    property var last_like_id
-    property var last_save_id
-
-    property bool list_loading: false
-
-    function mediaDataFinished(data) {
-        if (!("items" in data) || ("items" in data && data.items.length === 0)) {
-            pageLayout.removePages(singlephotopage);
-        }
-
-        worker.sendMessage({
-            'feed': 'singlePhotoPage',
-            'obj': data.items,
-            'model': singlePhotoModel,
-            'clear_model': true
-        });
-
-        list_loading = false;
+    SinglePhotoViewModel {
+        id: feedViewModel
+        photoId: singlephotopage.photoId
+        onMediaNotFound: pageLayout.removePages(singlephotopage)
     }
 
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/TimelineWorker.js"
-    }
+    property alias list_loading: feedViewModel.isLoading
 
     Component.onCompleted: {
-        instagram.getInfoMedia(photoId);
-    }
-
-    function getMedia() {
-        singlePhotoModel.clear();
-        instagram.getInfoMedia(photoId);
-    }
-
-    ListModel {
-        id: singlePhotoModel
+        feedViewModel.loadFeed();
     }
 
     ListView {
@@ -78,20 +43,19 @@ PageItem {
 
         clip: true
         cacheBuffer: parent.height * 2
-        model: singlePhotoModel
+        model: feedViewModel.feedModel
         delegate: ListFeedDelegate {
             id: homePhotosDelegate
             currentPage: singlephotopage
-            currentModel: singlePhotoModel
+            currentModel: feedViewModel.feedModel
             showCarousel: true
             enableVideoPlayback: true
         }
         PullToRefresh {
             id: pullToRefresh
-            refreshing: list_loading && singlePhotoModel.count == 0
+            refreshing: list_loading && feedViewModel.feedModel.count == 0
             onRefresh: {
-                list_loading = true;
-                getMedia();
+                feedViewModel.loadFeed();
             }
         }
     }
@@ -99,13 +63,5 @@ PageItem {
     BottomMenu {
         id: bottomMenu
         width: parent.width
-    }
-
-    Connections {
-        target: instagram
-        onMediaInfoReady: {
-            var data = JSON.parse(answer);
-            mediaDataFinished(data);
-        }
     }
 }

@@ -1,5 +1,4 @@
 import QtQuick 2.12
-import ".."
 import QtQuick.Layouts 1.12
 import Lomiri.Components 1.3
 
@@ -7,7 +6,12 @@ import "../Feed"
 
 Flickable {
     id: explorefeedlist
+    contentWidth: width
     contentHeight: layout.height
+
+    property var currentPage: pageLayout.primaryPage
+    property alias model: repeater.model
+    property bool refreshing: false
 
     signal refreshRequested
 
@@ -18,19 +22,18 @@ Flickable {
         columns: 3
 
         Repeater {
-            model: exploreFeedModel
+            id: repeater
 
             Loader {
                 asynchronous: true
-                Layout.preferredWidth: (explorefeedlist.width - units.gu(0.1)) * rowSpan / 3
-                Layout.preferredHeight: Layout.preferredWidth
+                Layout.preferredWidth: (explorefeedlist.width - units.gu(0.1)) * columnSpan / 3
+                Layout.preferredHeight: (explorefeedlist.width - units.gu(0.1)) * rowSpan / 3
                 Layout.rowSpan: rowSpan
                 Layout.columnSpan: columnSpan
                 Layout.row: row
                 Layout.column: column
-                sourceComponent: GridFeedItem {
-                    currentPage: explorePage
-                    currentModel: exploreFeedModel
+                sourceComponent: GridFeedDelegate {
+                    currentDelegatePage: explorefeedlist.currentPage
                     width: parent.width
                     height: parent.height
                 }
@@ -40,7 +43,7 @@ Flickable {
 
     PullToRefresh {
         parent: explorefeedlist
-        refreshing: list_loading && exploreFeedModel.count == 0
-        onRefresh: refreshRequested()
+        refreshing: explorefeedlist.refreshing
+        onRefresh: explorefeedlist.refreshRequested()
     }
 }

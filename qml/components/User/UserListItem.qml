@@ -8,7 +8,7 @@ ListItem {
     divider.visible: false
     height: layout.height
 
-    property bool show_follow: !!(user && user.pk !== instagram.my_user_id && user.friendship)
+    property bool show_follow: !!(user && user.pk != activeUsernameId && user.friendship)
 
     SlotsLayout {
         id: layout

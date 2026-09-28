@@ -13,7 +13,6 @@ import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
 
 // Component imports
-import QtPositioning 5.2
 import "../components"
 import "../components/Constants"
 import "../components/Page"
@@ -22,6 +21,7 @@ import "../components/Feed"
 import "../components/Media"
 import "../components/Camera"
 import "../components/Actions"
+import "../viewmodels"
 
 PageItem {
     id: cameracaptionpage
@@ -33,21 +33,8 @@ PageItem {
 
     property bool imageUploading: false
 
-    property var coord: {
-        'latitude': positionSource.position.coordinate.latitude,
-        'longitude': positionSource.position.coordinate.longitude
-    }
-
-    PositionSource {
-        id: positionSource
-        updateInterval: 1000 //1 seconds (?)
-        active: true
-        onPositionChanged: {
-            coord.latitude = positionSource.position.coordinate.latitude;
-            coord.longitude = positionSource.position.coordinate.longitude;
-
-            instagram.searchLocation(coord.latitude, coord.longitude, "");
-        }
+    LocationSearchViewModel {
+        id: locationViewModel
     }
 
     header: PageHeaderItem {
@@ -75,33 +62,16 @@ PageItem {
         ]
     }
 
-    function searchLocationDataFinished(data) {
-        searchPlacesModel.clear();
-
-        worker.sendMessage({
-            'feed': 'searchPage',
-            'obj': data.venues,
-            'model': searchPlacesModel,
-            'clear_model': true
-        });
-    }
-
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/TimelineWorker.js"
-    }
-
-    ListModel {
-        id: searchPlacesModel
-    }
-
     Component.onCompleted: {
-        instagram.searchLocation(coord.latitude, coord.longitude, "");
+        locationViewModel.search();
+    }
 
-        mainView.locationSelected.connect(function (location) {
+    Connections {
+        target: mainView
+        onLocationSelected: {
             cameracaptionpage.locationSelected = true;
             cameracaptionpage.locationVar = location;
-        });
+        }
     }
 
     Column {
@@ -220,7 +190,7 @@ PageItem {
 
         ListItem {
             height: rankedLocationsLayout.height
-            visible: searchPlacesModel.count > 0
+            visible: locationViewModel.placesModel.count > 0
             divider.visible: true
             SlotsLayout {
                 id: rankedLocationsLayout
@@ -233,7 +203,7 @@ PageItem {
                     orientation: Qt.Horizontal
                     clip: true
                     spacing: units.gu(0.5)
-                    model: searchPlacesModel
+                    model: locationViewModel.placesModel
 
                     delegate: Item {
                         width: username_rect.width
@@ -305,10 +275,6 @@ PageItem {
         }
         onImageUploadProgressDataReady: {
             uploadProgressBar.value = answer;
-        }
-        onSearchLocationDataReady: {
-            var data = JSON.parse(answer);
-            searchLocationDataFinished(data);
         }
     }
 }

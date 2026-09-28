@@ -42,19 +42,22 @@ PageItem {
     }
 
     function mediaDataFinished(data) {
+        if (!data.items || data.items.length === 0 || data.items[0].id !== mediaId) {
+            return;
+        }
+
         mediaImage.source = Helper.getBestImage(data.items[0].image_versions2.candidates, mediaImage.width).url;
-        mediaCaption.text = data.items[0].caption.text;
+        mediaCaption.text = data.items[0].caption ? data.items[0].caption.text : "";
     }
 
     function mediaEditFinished(data) {
         if (data.status == 'ok') {
-            pageStack.pop();
-            Scripts.pushSingleImage(editpagepage, mediaId);
+            pageLayout.removePages(editpagepage);
         }
     }
 
     Component.onCompleted: {
-        instagram.infoMedia(mediaId);
+        instagram.getInfoMedia(mediaId);
     }
 
     Column {

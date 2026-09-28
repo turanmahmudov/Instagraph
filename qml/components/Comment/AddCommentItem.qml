@@ -12,6 +12,10 @@ Item {
         addCommentField.text = `@${username} `;
     }
 
+    function clear() {
+        addCommentField.text = "";
+    }
+
     Row {
         width: parent.width
         spacing: units.gu(1)

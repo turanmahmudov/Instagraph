@@ -1,24 +1,11 @@
-// Qt imports
 import QtQuick 2.12
-import QtQuick.LocalStorage 2.12
-
-// Lomiri imports
 import Lomiri.Components 1.3
 
-// JavaScript imports
-import "../js/Storage.js" as Storage
-import "../js/Helper.js" as Helper
-import "../js/Scripts.js" as Scripts
-
-// Component imports
 import "../components"
 import "../components/Constants"
 import "../components/Page"
 import "../components/User"
-import "../components/Feed"
-import "../components/Media"
-import "../components/Camera"
-import "../components/Actions"
+import "../viewmodels"
 
 PageItem {
     id: suggestionspage
@@ -27,67 +14,63 @@ PageItem {
         title: i18n.tr("Suggestions")
     }
 
-    property string next_max_id: ""
-    property bool more_available: true
-    property bool next_coming: true
+    property alias list_loading: viewModel.isLoading
 
-    property bool list_loading: false
-
-    function suggestionsDataFinished(data) {
-        more_available = data.more_available;
-        next_coming = true;
-
-        for (var i = 0; i < data.suggested_users.suggestions.length; i++) {
-            suggestionsModel.append(data.suggested_users.suggestions[i].user);
-        }
-
-        next_coming = false;
-
-        list_loading = false;
+    BaseUserListViewModel {
+        id: viewModel
+        hasPagination: false
     }
 
-    Component.onCompleted: {
-        suggestions();
-    }
-
-    function suggestions() {
-        suggestionsModel.clear();
-        list_loading = true;
-        instagram.getSuggestions();
-    }
-
-    ListModel {
-        id: suggestionsModel
-    }
-
-    UsersListView {
+    ListView {
         id: suggestionsList
-        model: suggestionsModel
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+            bottomMargin: bottomMenu.height
+            top: suggestionspage.header.bottom
+        }
+        clip: true
+        model: viewModel.userListModel
         delegate: UserListItem {
             onClicked: pageLayout.pushToCurrent(suggestionspage, PagesConstants.user, {
-                usernameId: pk
+                usernameId: user.pk
             })
-            followButton: true
-            followData: {
-                "friendship": {
-                    "following": false,
-                    "outgoing_request": false
-                },
-                "pk": pk
-            }
         }
         PullToRefresh {
-            refreshing: list_loading && suggestionsModel.count == 0
-            onRefresh: suggestions()
+            refreshing: viewModel.isLoading && viewModel.userListModel.count === 0
+            onRefresh: {
+                loadSuggestions();
+            }
         }
+    }
+
+    function loadSuggestions() {
+        viewModel.loadData('', function () {
+            instagram.getSuggestions();
+        });
     }
 
     Connections {
         target: instagram
         onSuggestionsFeedDataReady: {
             var data = JSON.parse(answer);
-            suggestionsDataFinished(data);
+            var suggestions = data.suggested_users ? data.suggested_users.suggestions : [];
+            viewModel.handleResponse({
+                users: suggestions.map(function (suggestion) {
+                    var user = suggestion.user;
+                    user.friendship = {
+                        "following": false,
+                        "outgoing_request": false
+                    };
+                    return user;
+                })
+            });
         }
+    }
+
+    Component.onCompleted: {
+        loadSuggestions();
     }
 
     BottomMenu {

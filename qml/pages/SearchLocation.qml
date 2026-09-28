@@ -5,39 +5,17 @@ import QtQuick.LocalStorage 2.12
 // Lomiri imports
 import Lomiri.Components 1.3
 
-// JavaScript imports
-import "../js/Storage.js" as Storage
-import "../js/Helper.js" as Helper
-import "../js/Scripts.js" as Scripts
-
 // Component imports
-import QtPositioning 5.2
 import "../components"
 import "../components/Page"
-import "../components/User"
-import "../components/Feed"
-import "../components/Media"
-import "../components/Camera"
-import "../components/Actions"
+import "../viewmodels"
 
 PageItem {
     id: searchlocationpage
 
-    property var coord: {
-        'latitude': positionSource.position.coordinate.latitude,
-        'longitude': positionSource.position.coordinate.longitude
-    }
-
-    PositionSource {
-        id: positionSource
-        updateInterval: 1000 //1 seconds (?)
-        active: true
-        onPositionChanged: {
-            coord.latitude = positionSource.position.coordinate.latitude;
-            coord.longitude = positionSource.position.coordinate.longitude;
-
-            instagram.searchLocation(coord.latitude, coord.longitude, searchInput.text);
-        }
+    LocationSearchViewModel {
+        id: locationViewModel
+        query: searchInput.text
     }
 
     header: PageHeaderItem {
@@ -58,29 +36,9 @@ PageItem {
             hasClearButton: true
             placeholderText: i18n.tr("Search")
             onAccepted: {
-                instagram.searchLocation(coord.latitude, coord.longitude, text);
+                locationViewModel.search();
             }
         }
-    }
-
-    function searchLocationDataFinished(data) {
-        searchPlacesModel.clear();
-
-        worker.sendMessage({
-            'feed': 'searchPage',
-            'obj': data.venues,
-            'model': searchPlacesModel,
-            'clear_model': true
-        });
-    }
-
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/TimelineWorker.js"
-    }
-
-    ListModel {
-        id: searchPlacesModel
     }
 
     Loader {
@@ -104,7 +62,7 @@ PageItem {
 
             clip: true
             cacheBuffer: searchlocationpage.height
-            model: searchPlacesModel
+            model: locationViewModel.placesModel
             delegate: ListItem {
                 id: searchPlacesDelegate
                 height: layout.height
@@ -177,14 +135,6 @@ PageItem {
                     }
                 }
             }
-        }
-    }
-
-    Connections {
-        target: instagram
-        onSearchLocationDataReady: {
-            var data = JSON.parse(answer);
-            searchLocationDataFinished(data);
         }
     }
 }

@@ -1,8 +1,13 @@
 import QtQuick 2.12
 import Lomiri.Components 1.3
 
+import "Constants"
+
 Item {
+    id: suggestionsPanel
+
     property var suggestionsModel
+    property var currentPage: pageLayout.primaryPage
 
     height: suggestions_column.height + units.gu(6)
 
@@ -53,7 +58,7 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            pageLayout.pushToNext(currentDelegatePage, Qt.resolvedUrl("../pages/SuggestionsPage.qml"));
+                            pageLayout.pushToNext(suggestionsPanel.currentPage, PagesConstants.suggestions);
                         }
                     }
                 }
@@ -65,6 +70,7 @@ Item {
             width: parent.width
             height: units.gu(15)
             model: suggestionsModel
+            currentPage: suggestionsPanel.currentPage
         }
     }
 }

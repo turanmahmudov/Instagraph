@@ -1,30 +1,35 @@
 import QtQuick 2.12
-import "../Constants"
-import QtQuick.Layouts 1.12
 import Lomiri.Components 1.3
 
 import ".."
-import "../Feed"
+import "../Constants"
 import "../User"
 
 ListView {
+    id: recentsearcheslist
+    clip: true
+
+    property var currentPage: pageLayout.primaryPage
+
+    signal keywordClicked(string name)
+
     delegate: ListItem {
         width: parent.width
         height: layout.height
         divider.visible: false
         onClicked: {
-            if (search_type == "user") {
-                pageLayout.pushToCurrent(explorePage, PagesConstants.user, {
-                    userId: user.pk
+            if (search_type === "user") {
+                pageLayout.pushToCurrent(recentsearcheslist.currentPage, PagesConstants.user, {
+                    usernameId: user.pk
                 });
             } else {
-                searchInput.text = name;
-                searchKeyword(name);
+                recentsearcheslist.keywordClicked(name);
             }
         }
 
         SlotsLayout {
             id: layout
+            anchors.centerIn: parent
 
             padding.leading: 0
             padding.trailing: 0
@@ -58,7 +63,7 @@ ListView {
 
                     LineIcon {
                         anchors.centerIn: parent
-                        name: IconsConstants.search
+                        name: ""
                     }
                 }
 

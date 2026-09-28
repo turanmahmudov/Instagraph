@@ -8,6 +8,7 @@ import Lomiri.Components.Popups 1.3
 
 // JavaScript imports
 import "../js/Storage.js" as Storage
+import "../js/Scripts.js" as Scripts
 
 // Component imports
 import "../components"
@@ -23,6 +24,7 @@ PageItem {
     id: editprofilepage
 
     property bool changeProfilePictureLoading: false
+    property bool awaitingProfilePhoto: false
 
     header: PageHeaderItem {
         title: i18n.tr("Edit Profile")
@@ -98,13 +100,18 @@ PageItem {
     }
 
     function changePhotoClicked() {
+        awaitingProfilePhoto = true;
         Scripts.openImportPhotoPage(editprofilepage, IS_DESKTOP);
+    }
 
-        mainView.fileImported.connect(function (fileUrl) {
+    Connections {
+        target: mainView
+        enabled: awaitingProfilePhoto
+        onFileImported: {
+            awaitingProfilePhoto = false;
             changeProfilePictureLoading = true;
-            var pth = String(fileUrl).replace('file://', '');
-            instagram.changeProfilePicture(pth);
-        });
+            instagram.changeProfilePicture(String(fileUrl).replace('file://', ''));
+        }
     }
 
     Component.onCompleted: {

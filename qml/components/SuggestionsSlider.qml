@@ -7,6 +7,8 @@ import "../js/Helper.js" as Helper
 ListView {
     id: listView
 
+    property var currentPage: pageLayout.primaryPage
+
     snapMode: ListView.SnapToItem
     orientation: Qt.Horizontal
     highlightMoveDuration: LomiriAnimation.FastDuration
@@ -32,7 +34,7 @@ ListView {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        pageLayout.pushToCurrent(currentDelegatePage, PagesConstants.user, {
+                        pageLayout.pushToCurrent(listView.currentPage, PagesConstants.user, {
                             usernameId: user.pk
                         });
                     }
@@ -49,21 +51,20 @@ ListView {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        pageLayout.pushToCurrent(currentDelegatePage, PagesConstants.user, {
+                        pageLayout.pushToCurrent(listView.currentPage, PagesConstants.user, {
                             usernameId: user.pk
                         });
                     }
                 }
             }
 
-            FollowComponent {
-                height: units.gu(3.5)
-                friendship_var: {
+            FollowComponent2 {
+                userId: user.pk
+                friendship: {
                     "following": false,
                     "outgoing_request": false
                 }
-                userId: user.pk
-                just_icon: false
+                showLabel: true
                 anchors.horizontalCenter: parent.horizontalCenter
             }
         }

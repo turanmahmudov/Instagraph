@@ -11,27 +11,22 @@ ListItem {
     height: layout.height
 
     property var removalAnimation
+    property var mediaUserId
 
-    signal commentDeleted(string pk)
-    signal commentLiked(string pk)
-    signal commentUnliked(string pk)
+    signal commentDeleted(var pk)
+    signal commentLiked(var pk)
+    signal commentUnliked(var pk)
+    signal replyClicked(string username)
+    signal linkClicked(string link)
 
     function removeComment() {
         removalAnimation.start();
     }
 
-    function likeComment() {
-        commentLikeAction.is_liked = true;
-    }
-
-    function unlikeComment() {
-        commentLikeAction.is_liked = false;
-    }
-
     leadingActions: ListItemActions {
         actions: [
             Action {
-                visible: user.pk == activeUserId || mediaUserId == activeUserId ? true : false
+                visible: user.pk == activeUsernameId || mediaUserId == activeUsernameId
                 iconName: "delete"
                 text: i18n.tr("Remove")
                 onTriggered: commentDeleted(pk)
@@ -92,9 +87,7 @@ ListItem {
                     width: parent.width
                     textFormat: Text.RichText
                     color: styleApp.common.textColor
-                    onLinkActivated: {
-                        Scripts.linkClick(commentspage, link);
-                    }
+                    onLinkActivated: commentlistitem.linkClicked(link)
                 }
 
                 Row {
@@ -113,8 +106,8 @@ ListItem {
 
                     Label {
                         id: comment_likes_count
-                        visible: like_count !== "0"
-                        text: like_count === "0" ? "" : (like_count + i18n.tr(" likes"))
+                        visible: like_count > 0
+                        text: like_count > 0 ? (like_count.toLocaleString() + i18n.tr(" likes")) : ""
                         fontSize: "small"
                         font.weight: Font.Normal
                         wrapMode: Text.WordWrap
@@ -131,7 +124,7 @@ ListItem {
 
                         MouseArea {
                             anchors.fill: parent
-                            onClicked: addCommentItem.prepareReply(user.username)
+                            onClicked: commentlistitem.replyClicked(user.username)
                         }
                     }
                 }
@@ -145,7 +138,7 @@ ListItem {
             height: units.gu(5)
             SlotsLayout.position: SlotsLayout.Trailing
 
-            is_liked: has_liked == true
+            is_liked: has_liked
             onLikeClicked: commentlistitem.commentLiked(pk)
             onUnlikeClicked: commentlistitem.commentUnliked(pk)
         }

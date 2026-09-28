@@ -1,18 +1,21 @@
 import QtQuick 2.12
-import "../Constants"
-import QtQuick.Layouts 1.12
 import Lomiri.Components 1.3
 
 import ".."
-import "../Feed"
+import "../Constants"
 
 ListView {
+    id: searchplaceslist
+    clip: true
+
+    property var currentPage: pageLayout.primaryPage
+
     delegate: ListItem {
         width: parent.width
         height: layout.height
         divider.visible: false
         onClicked: {
-            pageLayout.pushToCurrent(explorePage, PagesConstants.location_feed, {
+            pageLayout.pushToCurrent(searchplaceslist.currentPage, PagesConstants.location_feed, {
                 locationId: pk,
                 locationName: title
             });
@@ -20,6 +23,7 @@ ListView {
 
         SlotsLayout {
             id: layout
+            anchors.centerIn: parent
 
             padding.leading: 0
             padding.trailing: 0
@@ -46,7 +50,7 @@ ListView {
                             anchors.centerIn: parent
                             width: units.gu(3)
                             height: width
-                            name: IconsConstants.location
+                            name: "\ueb1c"
                         }
                     }
                 }

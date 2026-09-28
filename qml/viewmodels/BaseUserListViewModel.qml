@@ -68,10 +68,10 @@ Item {
 
     /**
      * Handle API response. Connect your Instagram signal to call this.
-     * @param answer - Raw JSON string from the Instagram API signal
+     * @param answer - Raw JSON string from the Instagram API signal, or the parsed object
      */
     function handleResponse(answer) {
-        var data = JSON.parse(answer);
+        var data = typeof answer === "string" ? JSON.parse(answer) : answer;
         if (!data)
             return;
         isPullToRefresh = false;

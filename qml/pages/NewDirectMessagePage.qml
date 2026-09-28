@@ -19,6 +19,7 @@ import "../components/Feed"
 import "../components/Media"
 import "../components/Camera"
 import "../components/Actions"
+import "../viewmodels"
 
 PageItem {
     id: newdirectmessagepage
@@ -26,6 +27,7 @@ PageItem {
     property bool list_loading: false
 
     property var threadUsers: []
+    property bool isSending: false
 
     signal refreshList
 
@@ -33,65 +35,36 @@ PageItem {
         title: i18n.tr("New Message")
     }
 
-    function rankedRecipientsFinished(data) {
-        worker.sendMessage({
-            'feed': 'ShareMediaPage',
-            'obj': data.ranked_recipients,
-            'model': rankedRecipientsModel,
-            'clear_model': true
-        });
-    }
-
-    function recentRecipientsFinished(data) {
-        worker.sendMessage({
-            'feed': 'ShareMediaPage',
-            'obj': data.ranked_recipients,
-            'model': rankedRecipientsModel,
-            'clear_model': true
-        });
-    }
-
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/SimpleWorker.js"
+    RecipientsViewModel {
+        id: recipientsViewModel
     }
 
     Component.onCompleted: {
-        getRankedRecipients();
-    }
-
-    function getRankedRecipients() {
-        instagram.getRankedRecipients();
-    }
-
-    function getRecentRecipients() {
-        instagram.getRecentRecipients();
+        recipientsViewModel.loadRecipients();
     }
 
     function sendMessage(text) {
-        var recip_array = [];
-        var recip_string = '';
-        for (var i in threadUsers) {
-            recip_array.push('"' + threadUsers[i] + '"');
-        }
-        recip_string = recip_array.join(',');
-
-        instagram.directMessage(recip_string, text, "");
+        isSending = true;
+        instagram.directMessage(recipientsViewModel.buildRecipientsString(threadUsers), text, "");
     }
 
     function sendLike() {
-        var recip_array = [];
-        var recip_string = '';
-        for (var i in threadUsers) {
-            recip_array.push('"' + threadUsers[i] + '"');
-        }
-        recip_string = recip_array.join(',');
-
-        instagram.directLike(recip_string, "");
+        isSending = true;
+        instagram.directLike(recipientsViewModel.buildRecipientsString(threadUsers), "");
     }
 
-    ListModel {
-        id: rankedRecipientsModel
+    function openSentThread(data) {
+        if (!isSending) {
+            return;
+        }
+        isSending = false;
+
+        var threadId = data.payload ? data.payload.thread_id : (data.threads && data.threads.length > 0 ? data.threads[0].thread_id : "");
+        if (data.status == "ok" && threadId) {
+            pageLayout.pushToCurrent(newdirectmessagepage, PagesConstants.direct_thread, {
+                threadId: threadId
+            });
+        }
     }
 
     ListModel {
@@ -195,10 +168,10 @@ PageItem {
                 }
                 placeholderText: i18n.tr("Search")
                 onAccepted: {
-                    instagram.getRankedRecipients(searchUsersField.text);
+                    recipientsViewModel.loadRecipients(searchUsersField.text);
                 }
                 onTextChanged: {
-                    instagram.getRankedRecipients(searchUsersField.text);
+                    recipientsViewModel.loadRecipients(searchUsersField.text);
                 }
             }
         }
@@ -209,7 +182,7 @@ PageItem {
             width: parent.width
             height: parent.height - searchUsersField.height - selectedUsersFlow.height
             clip: true
-            model: rankedRecipientsModel
+            model: recipientsViewModel.recipientsModel
             delegate: ListItem {
                 height: layout.height - units.gu(2)
                 divider.visible: false
@@ -372,29 +345,7 @@ PageItem {
 
     Connections {
         target: instagram
-        onRankedRecipientsDataReady: {
-            var data = JSON.parse(answer);
-            rankedRecipientsFinished(data);
-        }
-        onRecentRecipientsDataReady: {
-            var data = JSON.parse(answer);
-            recentRecipientsFinished(data);
-        }
-        onDirectMessageReady: {
-            var data = JSON.parse(answer);
-            if (data.status == "ok") {
-                pageLayout.pushToCurrent(newdirectmessagepage, PagesConstants.direct_thread, {
-                    threadId: data.threads[0].thread_id
-                });
-            }
-        }
-        onDirectLikeReady: {
-            var data = JSON.parse(answer);
-            if (data.status == "ok") {
-                pageLayout.pushToCurrent(newdirectmessagepage, PagesConstants.direct_thread, {
-                    threadId: data.threads[0].thread_id
-                });
-            }
-        }
+        onDirectMessageDataReady: openSentThread(JSON.parse(answer))
+        onDirectLikeDataReady: openSentThread(JSON.parse(answer))
     }
 }

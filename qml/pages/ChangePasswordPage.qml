@@ -160,10 +160,10 @@ PageItem {
 
     Connections {
         target: instagram
-        onChangePasswordReady: {
+        onChangePasswordDataReady: {
             var data = JSON.parse(answer);
             if (data.status == 'ok') {
-                pageStack.pop();
+                pageLayout.removePages(changepasswordpage);
             }
         }
     }

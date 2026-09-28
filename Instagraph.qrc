@@ -18,7 +18,6 @@
         <file>qml/pages/CommentsPage.qml</file>
         <file>qml/components/BottomMenu.qml</file>
         <file>qml/pages/CameraCaptionPage.qml</file>
-        <file>qml/components/FollowComponent.qml</file>
         <file>qml/components/FollowComponent2.qml</file>
         <file>qml/pages/OtherUserPage.qml</file>
         <file>qml/pages/SinglePhoto.qml</file>
@@ -34,6 +33,7 @@
         <file>qml/js/Workers/ActivityWorker.js</file>
         <file>qml/js/Workers/SimpleWorker.js</file>
         <file>qml/js/Workers/UserWorker.js</file>
+        <file>qml/js/Workers/CommentsWorker.js</file>
         <file>qml/pages/UserFollowings.qml</file>
         <file>qml/pages/UserFollowers.qml</file>
         <file>qml/pages/CameraCropPage.qml</file>
@@ -60,7 +60,6 @@
         <file>qml/components/ContentDownloadDialog.qml</file>
         <file>qml/pages/BlockedUsers.qml</file>
 
-        <file>qml/components/LikeComponent.qml</file>
         <file>qml/components/CarouselSlider.qml</file>
         <file>qml/components/SuggestionsSlider.qml</file>
         <file>qml/pages/NewDirectMessagePage.qml</file>
@@ -85,6 +84,15 @@
         <file>qml/viewmodels/UserFeedViewModel.qml</file>
         <file>qml/viewmodels/SavedMediaViewModel.qml</file>
         <file>qml/viewmodels/BaseUserListViewModel.qml</file>
+        <file>qml/viewmodels/LikedMediaViewModel.qml</file>
+        <file>qml/viewmodels/SinglePhotoViewModel.qml</file>
+        <file>qml/viewmodels/ActivityViewModel.qml</file>
+        <file>qml/viewmodels/DirectInboxViewModel.qml</file>
+        <file>qml/viewmodels/CommentsViewModel.qml</file>
+        <file>qml/viewmodels/ExploreViewModel.qml</file>
+        <file>qml/viewmodels/LocationSearchViewModel.qml</file>
+        <file>qml/viewmodels/RecipientsViewModel.qml</file>
+        <file>qml/viewmodels/DirectThreadViewModel.qml</file>
         <file>qml/pages/FollowRequestsPage.qml</file>
         <file>qml/images/media_save_bold.png</file>
         <file>qml/images/media_save.png</file>
@@ -121,7 +129,6 @@
         <file>qml/js/Workers/DirectThreadWorker.js</file>
         <file>qml/js/Workers/DirectInboxWorker.js</file>
         <file>qml/js/DirectTypeTexts.js</file>
-        <file>qml/components/UsersListView.qml</file>
         <file>qml/components/User/UserListItem.qml</file>
         <file>qml/pages/ImportPhotoPageDesktop.qml</file>
 
