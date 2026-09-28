@@ -17,6 +17,7 @@
 #include "cropimageprovider.h"
 
 #include <QDebug>
+#include <QImageReader>
 #include <QUrl>
 #include <QUrlQuery>
 
@@ -25,7 +26,9 @@
 CropImageResponse::CropImageResponse(const QString & filePath, const QRectF & cropRect,
                                      const QString & errorString)
     : m_errorString(errorString) {
-    if (m_image.load(filePath)) {
+    QImageReader reader(filePath);
+    reader.setAutoTransform(true);
+    if (reader.read(&m_image)) {
         m_image =
             m_image.copy(cropRect.x() * m_image.width(), cropRect.y() * m_image.height(),
                          cropRect.width() * m_image.width(), cropRect.height() * m_image.height());
