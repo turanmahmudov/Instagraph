@@ -60,7 +60,7 @@ Item {
         model: storiesTray.model
 
         delegate: ListItem {
-            width: storiesTray.width / 5 + units.gu(1)
+            width: units.gu(10)
             height: storyColumn.height
             divider.visible: false
 
@@ -68,7 +68,7 @@ Item {
                 id: storyColumn
                 width: parent.width - units.gu(2)
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: units.gu(1)
+                spacing: units.gu(0.5)
 
                 CircleImage {
                     width: parent.width
@@ -91,9 +91,9 @@ Item {
                     text: user.username
                     color: styleApp.common.textColor
                     fontSize: "x-small"
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    width: Math.min((parent.width + 2), contentWidth)
-                    clip: true
+                    width: parent.width
+                    horizontalAlignment: Text.AlignHCenter
+                    elide: Text.ElideRight
 
                     MouseArea {
                         anchors.fill: parent
