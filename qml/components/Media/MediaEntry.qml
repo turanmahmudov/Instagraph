@@ -343,6 +343,7 @@ Column {
 
     Connections {
         target: instagram
+        enabled: lastActionId !== null || lastDeletedId !== null
 
         function onMediaDeleted(answer) {
             if (lastDeletedId === id) {
