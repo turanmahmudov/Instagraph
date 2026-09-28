@@ -1,3 +1,5 @@
+Qt.include("WorkerUtils.js")
+
 WorkerScript.onMessage = (message) => {
     const feed_items = message.feed_items
     const feed_model = message.feed_model
@@ -22,7 +24,7 @@ WorkerScript.onMessage = (message) => {
 
         if ("suggested_users" in feed_item && "suggestions" in feed_item.suggested_users) {
             feed_item.suggested_users.suggestions.forEach((user) => {
-                suggestions_model.append(user)
+                suggestions_model.append(removeEmptyMembers(user))
             })
 
             feed_item_obj.list_type = 'suggested_users'
@@ -33,15 +35,15 @@ WorkerScript.onMessage = (message) => {
             feed_item_obj.id = media.id
             feed_item_obj.photo_id = media.id
             feed_item_obj.code = media.code
-            feed_item_obj.photo_of_you = media.photo_of_you
+            feed_item_obj.photo_of_you = media.photo_of_you === true
             feed_item_obj.media_type = media.media_type
             feed_item_obj.has_liked = media.has_liked
             feed_item_obj.like_count = media.like_count.toLocaleString()
             feed_item_obj.taken_at = media.taken_at
-            feed_item_obj.caption = media.caption
+            feed_item_obj.caption = media.caption || { text: "", user: { username: "" } }
             feed_item_obj.can_view_more_preview_comments = media.can_view_more_preview_comments
             feed_item_obj.comment_count = media.comment_count
-            feed_item_obj.comments_disabled = media.comments_disabled
+            feed_item_obj.comments_disabled = media.comments_disabled === true
             feed_item_obj.has_viewer_saved = media.has_viewer_saved === true
             feed_item_obj.location = media.location || { name: "" }
             feed_item_obj.user = media.user
@@ -66,7 +68,7 @@ WorkerScript.onMessage = (message) => {
             feed_item_obj.video_url = "video_versions" in media ? media.video_versions[0].url : ''
 
             feed_item_obj.list_type = 'media_entry'
-            feed_model.append(feed_item_obj)
+            feed_model.append(removeEmptyMembers(feed_item_obj))
 
             // Seen posts
             WorkerScript.sendMessage({ id: media.id, type: "seen_posts" })
@@ -126,7 +128,7 @@ WorkerScript.onMessage = (message) => {
                             suggested_feed_item.video_url = "video_versions" in media ? media.video_versions[0].url : ''
 
                             suggested_feed_item.list_type = 'media_entry'
-                            feed_model.append(suggested_feed_item)
+                            feed_model.append(removeEmptyMembers(suggested_feed_item))
 
                             // Seen posts
                             WorkerScript.sendMessage({ id: media.id, type: "seen_posts" })

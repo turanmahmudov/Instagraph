@@ -36,8 +36,9 @@ WorkerScript.onMessage = (message) => {
       "media" in item.args && item.args.media.length > 0
         ? item.args.media[0]
         : { image: "", id: "" };
-    item_obj.inline_follow =
-      "inline_follow" in item.args ? item.args.inline_follow : undefined;
+    if ("inline_follow" in item.args) {
+      item_obj.inline_follow = item.args.inline_follow;
+    }
     item_obj.timestamp = item.args.timestamp || 0;
 
     model.append(item_obj);

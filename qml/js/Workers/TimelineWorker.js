@@ -1,3 +1,5 @@
+Qt.include("WorkerUtils.js")
+
 WorkerScript.onMessage = function(msg) {
     var feed = msg.feed;
     var obj = msg.obj;
@@ -25,7 +27,7 @@ WorkerScript.onMessage = function(msg) {
             list_obj.has_liked = media.has_liked
             list_obj.like_count = media.like_count.toLocaleString()
             list_obj.taken_at = media.taken_at
-            list_obj.caption = media.caption
+            list_obj.caption = media.caption || { text: "", user: { username: "" } }
             list_obj.has_more_comments = media.has_more_comments
             list_obj.comment_count = media.comment_count
             list_obj.comments_disabled = media.comments_disabled
@@ -55,20 +57,22 @@ WorkerScript.onMessage = function(msg) {
             list_obj.list_type = 'media_entry';
 
             // Append to model
-            model.append(list_obj);
+            model.append(removeEmptyMembers(list_obj));
         } else {
             var media = obj[i]
+            var previewComments = media.preview_comments || []
 
             list_obj = media
             list_obj.photo_id = media.id
+            list_obj.caption = media.caption || { text: "", user: { username: "" } }
+            list_obj.comments_disabled = media.comments_disabled === true
+            list_obj.photo_of_you = media.photo_of_you === true
+            list_obj.has_viewer_saved = media.has_viewer_saved === true
 
             // Preview Comments
-            list_obj.preview_comments = {}
-            list_obj.preview_comments.comments = media.preview_comments
-            for (var j = 0; j < media.max_num_visible_preview_comments; j++) {
-                if (typeof media.preview_comments[j] !== 'undefined') {
-                    list_obj.preview_comments.comments[j].ctext = media.preview_comments[j].text
-                }
+            list_obj.preview_comments = { comments: previewComments }
+            for (var j = 0; j < previewComments.length; j++) {
+                previewComments[j].ctext = previewComments[j].text
             }
 
             // Carousel media
@@ -84,7 +88,7 @@ WorkerScript.onMessage = function(msg) {
             list_obj.list_type = 'media_entry';
 
             // Append to model
-            model.append(list_obj);
+            model.append(removeEmptyMembers(list_obj));
         }
     }
 
