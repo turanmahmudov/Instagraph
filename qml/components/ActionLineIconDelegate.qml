@@ -30,6 +30,30 @@ Button {
             name: themeIcon ? model.iconName : ""
             color: customIconColor
         }
+        Rectangle {
+            readonly property int count: model.badgeCount || 0
+            visible: count > 0
+            z: 1
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                horizontalCenterOffset: units.gu(1.4)
+                verticalCenter: parent.verticalCenter
+                verticalCenterOffset: -units.gu(1.2)
+            }
+            width: Math.max(height, badgeLabel.implicitWidth + units.gu(0.8))
+            height: units.gu(2)
+            radius: height / 2
+            color: LomiriColors.red
+
+            Label {
+                id: badgeLabel
+                anchors.centerIn: parent
+                text: parent.count > 99 ? "99+" : parent.count
+                color: "#ffffff"
+                fontSize: "x-small"
+                font.weight: Font.DemiBold
+            }
+        }
         LineIcon {
             anchors.centerIn: parent
             visible: !themeIcon

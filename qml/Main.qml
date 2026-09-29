@@ -195,6 +195,10 @@ MainView {
         }
     }
 
+    DirectBadgeViewModel {
+        id: directBadgeViewModel
+    }
+
     SessionViewModel {
         id: sessionViewModel
         onProfileConnected: {
@@ -223,6 +227,8 @@ MainView {
 
             // Connect MQTT for push notifications
             sessionViewModel.connectPush(activeUsernameId);
+
+            directBadgeViewModel.refresh();
         }
         onTwoFactorRequired: {
             // Store the 2FA data and load the 2FA page as primary

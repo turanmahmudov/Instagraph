@@ -102,6 +102,7 @@
         <file>qml/viewmodels/StoryReelViewModel.qml</file>
         <file>qml/viewmodels/MediaActionsViewModel.qml</file>
         <file>qml/viewmodels/SessionViewModel.qml</file>
+        <file>qml/viewmodels/DirectBadgeViewModel.qml</file>
         <file>qml/viewmodels/MessageRequestsViewModel.qml</file>
         <file>qml/viewmodels/MentionSuggestionsViewModel.qml</file>
         <file>qml/viewmodels/SimilarAccountsViewModel.qml</file>

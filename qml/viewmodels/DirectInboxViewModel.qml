@@ -58,6 +58,10 @@ BaseFeedViewModel {
     Connections {
         target: instagram
         function onInboxDataReady(answer) {
+            if (!isLoading) {
+                return;
+            }
+
             var data = JSON.parse(answer);
             handleInboxResponse(data);
         }

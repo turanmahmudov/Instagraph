@@ -123,7 +123,7 @@ Rectangle {
                 width: units.gu(0.8)
                 height: width
                 radius: width / 2
-                color: LomiriColors.orange
+                color: LomiriColors.red
             }
 
             MouseArea {

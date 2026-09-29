@@ -15,3 +15,13 @@ function removeEmptyMembers(value) {
 
     return value
 }
+
+function isThreadUnread(thread, viewerId) {
+    const item = thread.last_permanent_item
+    if (!item || String(item.user_id) === String(viewerId)) {
+        return false
+    }
+
+    const seen = (thread.last_seen_at || {})[String(viewerId)]
+    return !seen || Number(item.timestamp) > Number(seen.timestamp)
+}

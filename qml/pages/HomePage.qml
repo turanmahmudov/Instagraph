@@ -65,6 +65,7 @@ PageItem {
         trailingActions: [
             Action {
                 id: inboxAction
+                property int badgeCount: directBadgeViewModel.unseenCount
                 text: i18n.tr("Inbox")
                 iconName: "send"
                 onTriggered: {
