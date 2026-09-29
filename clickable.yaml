@@ -1,11 +1,13 @@
 clickable_minimum_required: "8.0.0"
-framework: "ubuntu-sdk-20.04"
+framework: "ubuntu-touch-24.04-1.x"
 builder: "cmake"
-qt_version: "5.12"
+qt_version: "5.15"
 kill: instagraph
 dependencies_target:
   - "gstreamer1.0-pulseaudio"
   - "gstreamer1.0-libav"
+  - "gstreamer1.0-plugins-base"
+  - "gstreamer1.0-plugins-good"
   - "gstreamer1.0-plugins-bad"
   - "gstreamer1.0-plugins-ugly"
   - "qml-module-qtquick-dialogs"
