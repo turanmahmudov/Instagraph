@@ -18,8 +18,13 @@ public:
     // and returns an empty string
     Q_INVOKABLE QString fetch(const QString & url);
 
+    // Copies a cached file to the Downloads directory; returns the new path, or an empty
+    // string on failure
+    Q_INVOKABLE QString saveToDownloads(const QString & localUrl);
+
 signals:
     void fetched(const QString & url, const QString & localUrl);
+    void failed(const QString & url);
 
 private:
     QString buildCachePath(const QString & url) const;

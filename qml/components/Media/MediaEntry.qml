@@ -315,11 +315,49 @@ Column {
                 mediaId: id
             })
             onCopyLinkClicked: Clipboard.push(`https://instagram.com/p/${code}`)
+            onDownloadClicked: mediaDownload.download(buildDownloadItems())
             onDeleteMediaClicked: mediaActions.deleteMedia()
             onEnableCommentsClicked: mediaActions.enableComments()
             onDisableCommentsClicked: mediaActions.disableComments()
             onRemoveTagClicked: mediaActions.removeSelfTag()
         }
+    }
+
+    DownloadMediaViewModel {
+        id: mediaDownload
+        onDownloaded: {
+            if (Scripts.isDesktop()) {
+                PopupUtils.open(Scripts.saveToDownloads(fileUrls) ? savedPopupComponent : saveFailedPopupComponent);
+            } else {
+                Scripts.openMediaExporter(currentPage, fileUrls, contentType);
+            }
+        }
+        onDownloadFailed: PopupUtils.open(saveFailedPopupComponent)
+    }
+
+    function buildDownloadItems() {
+        var entries = carouselMediaData.media && carouselMediaData.media.length > 0 ? carouselMediaData.media : [{
+                "media_type": media_type,
+                "image_versions2": imageData,
+                "video_url": video_url
+            }];
+
+        var items = [];
+        for (var i = 0; i < entries.length; i++) {
+            var entry = entries[i];
+            if (entry.media_type === 2) {
+                items.push({
+                    "url": entry.video_url || entry.video_versions[0].url,
+                    "isVideo": true
+                });
+            } else {
+                items.push({
+                    "url": Helper.getLargestImage(entry.image_versions2.candidates).url,
+                    "isVideo": false
+                });
+            }
+        }
+        return items;
     }
 
     MediaActionsViewModel {

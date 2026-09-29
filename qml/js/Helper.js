@@ -44,6 +44,16 @@ function getBestImage(imageObject, width) {
     return closest;
 }
 
+function getLargestImage(imageObject) {
+    var largest = { "width": 0, "height": 0, "url": "" };
+
+    for (var i = 0; i < imageObject.length; i++) {
+        if (imageObject[i].width > largest.width) largest = imageObject[i];
+    }
+
+    return largest;
+}
+
 function milisecondsToString(miliseconds, short, timestamp) {
     if (timestamp) {
         miliseconds = miliseconds / 1000000;

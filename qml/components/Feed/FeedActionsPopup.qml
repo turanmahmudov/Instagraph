@@ -16,6 +16,7 @@ ActionsPopup {
     signal disableCommentsClicked
     signal removeTagClicked
     signal copyLinkClicked
+    signal downloadClicked
 
     // Properties that should be set by parent
     property var currentDelegatePage: pageLayout.primaryPage
@@ -74,6 +75,13 @@ ActionsPopup {
             text: i18n.tr("Copy Link")
             onTriggered: {
                 copyLinkClicked();
+                PopupUtils.close(feedactionspopup);
+            }
+        }
+        Action {
+            text: i18n.tr("Download")
+            onTriggered: {
+                downloadClicked();
                 PopupUtils.close(feedactionspopup);
             }
         }

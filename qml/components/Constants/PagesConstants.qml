@@ -34,6 +34,7 @@ QtObject {
     readonly property string publish: getQtResolvedUrl("PublishPage.qml")
     readonly property string import_media: getQtResolvedUrl("ImportMediaPage.qml")
     readonly property string import_media_desktop: getQtResolvedUrl("ImportMediaPageDesktop.qml")
+    readonly property string export_media: getQtResolvedUrl("ExportMediaPage.qml")
 
     // Direct Messages
     readonly property string direct_inbox: getQtResolvedUrl("DirectInboxPage.qml")

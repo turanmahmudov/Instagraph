@@ -23,9 +23,22 @@ function isVideoFile(url) {
 
 // contentType is a Lomiri.Content ContentType value
 function openMediaPicker(page, contentType, onPicked) {
-    var desktop = IS_DESKTOP === true || IS_DESKTOP === "true" || parseInt(IS_DESKTOP) === 1
-    var picker = desktop ? PagesConstants.import_media_desktop : PagesConstants.import_media
+    var picker = isDesktop() ? PagesConstants.import_media_desktop : PagesConstants.import_media
     pageLayout.pushToCurrent(page, picker, { contentType: contentType, onPicked: onPicked })
+}
+
+function isDesktop() {
+    return IS_DESKTOP === true || IS_DESKTOP === "true" || parseInt(IS_DESKTOP) === 1
+}
+
+function openMediaExporter(page, fileUrls, contentType) {
+    pageLayout.pushToCurrent(page, PagesConstants.export_media, { fileUrls: fileUrls, contentType: contentType })
+}
+
+function saveToDownloads(fileUrls) {
+    return fileUrls.every(function (fileUrl) {
+        return mediaCache.saveToDownloads(fileUrl) !== ""
+    })
 }
 
 function openPostEditor(page, url) {

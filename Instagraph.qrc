@@ -103,6 +103,7 @@
         <file>qml/viewmodels/MediaActionsViewModel.qml</file>
         <file>qml/viewmodels/SessionViewModel.qml</file>
         <file>qml/viewmodels/DirectBadgeViewModel.qml</file>
+        <file>qml/viewmodels/DownloadMediaViewModel.qml</file>
         <file>qml/viewmodels/MessageRequestsViewModel.qml</file>
         <file>qml/viewmodels/MentionSuggestionsViewModel.qml</file>
         <file>qml/viewmodels/SimilarAccountsViewModel.qml</file>
@@ -110,6 +111,7 @@
         <file>qml/viewmodels/FollowRequestsViewModel.qml</file>
         <file>qml/pages/FollowRequestsPage.qml</file>
         <file>qml/pages/MessageRequestsPage.qml</file>
+        <file>qml/pages/ExportMediaPage.qml</file>
         <file>qml/components/MentionSuggestions.qml</file>
         <file>qml/images/media_save_bold.png</file>
         <file>qml/images/media_save.png</file>

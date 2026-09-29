@@ -5,6 +5,7 @@
 #include <QFileInfo>
 #include <QNetworkReply>
 #include <QNetworkRequest>
+#include <QSaveFile>
 #include <QStandardPaths>
 #include <QUrl>
 
@@ -34,19 +35,35 @@ QString MediaCache::fetch(const QString & url) {
         reply->deleteLater();
         m_pending.remove(url);
 
-        if (reply->error() != QNetworkReply::NoError) {
+        QSaveFile file(path);
+        if (reply->error() != QNetworkReply::NoError || !file.open(QIODevice::WriteOnly)) {
+            emit failed(url);
             return;
         }
 
-        QFile file(path);
-        if (file.open(QIODevice::WriteOnly)) {
-            file.write(reply->readAll());
-            file.close();
-            emit fetched(url, QUrl::fromLocalFile(path).toString());
+        file.write(reply->readAll());
+        if (!file.commit()) {
+            emit failed(url);
+            return;
         }
+        emit fetched(url, QUrl::fromLocalFile(path).toString());
     });
 
     return QString();
+}
+
+QString MediaCache::saveToDownloads(const QString & localUrl) {
+    const QString source = QUrl(localUrl).toLocalFile();
+    const QDir downloads(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
+    if (!downloads.mkpath(".")) {
+        return QString();
+    }
+
+    const QString target = downloads.filePath("instagraph_" + QFileInfo(source).fileName());
+    if (QFile::exists(target)) {
+        return target;
+    }
+    return QFile::copy(source, target) ? target : QString();
 }
 
 QString MediaCache::buildCachePath(const QString & url) const {

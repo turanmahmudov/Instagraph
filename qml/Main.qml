@@ -186,6 +186,22 @@ MainView {
         id: loading
     }
 
+    Component {
+        id: savedPopupComponent
+        ErrorPopup {
+            error_text: i18n.tr("Saved")
+            error_subtitle_text: i18n.tr("The media was saved to Downloads.")
+        }
+    }
+
+    Component {
+        id: saveFailedPopupComponent
+        ErrorPopup {
+            error_text: i18n.tr("Download failed")
+            error_subtitle_text: i18n.tr("The media could not be downloaded.")
+        }
+    }
+
     // Network error popup component
     Component {
         id: networkErrorPopupComponent
