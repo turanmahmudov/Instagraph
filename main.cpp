@@ -10,14 +10,16 @@ int main(int argc, char * argv[]) {
 
     QGuiApplication app(argc, argv);
 
-    // All QML types (Instagram, ImageEditor, ImageProcessor) are now
-    // registered by their respective QML plugins automatically.
-
     QQuickView view;
 
-    QQmlEngine *engine = view.engine();
+    QQmlEngine * engine = view.engine();
 
-    engine->rootContext()->setContextProperty("IS_DESKTOP", qgetenv("IS_DESKTOP"));
+    // Content Hub works only in a Lomiri session. `clickable desktop` sets
+    // CLICKABLE_DESKTOP_MODE; IS_DESKTOP overrides the detection.
+    const QByteArray isDesktopEnv = qgetenv("IS_DESKTOP");
+    const bool isDesktop = isDesktopEnv.isEmpty() ? qgetenv("CLICKABLE_DESKTOP_MODE") == "1"
+                                                  : (isDesktopEnv == "1" || isDesktopEnv == "true");
+    engine->rootContext()->setContextProperty("IS_DESKTOP", isDesktop);
 
     QObject::connect(engine, SIGNAL(quit()), QGuiApplication::instance(), SLOT(quit()));
 
