@@ -27,7 +27,7 @@ const QString FbnsClient::TOPIC_FBNS_REG_RESP = QStringLiteral("80");
 
 FbnsClient::FbnsClient(QObject * parent)
     : QObject(parent), m_mqtt(new MqttotClient(this)), m_reconnectTimer(new QTimer(this)),
-      m_connected(false), m_reconnectWithNewAuth(false) {
+      m_connected(false), m_reconnectWithNewAuth(false), m_stopped(false) {
     m_reconnectTimer->setInterval(30000); // 30s reconnect delay
     m_reconnectTimer->setSingleShot(true);
 
@@ -46,6 +46,7 @@ FbnsClient::~FbnsClient() {
 }
 
 void FbnsClient::connectWithSession(const QString & userId, const QString & phoneId) {
+    m_stopped = false;
     m_igUserId = userId;
     m_igPhoneId = phoneId;
 
@@ -59,6 +60,7 @@ void FbnsClient::connectWithSession(const QString & userId, const QString & phon
 }
 
 void FbnsClient::disconnect() {
+    m_stopped = true;
     m_reconnectTimer->stop();
     m_mqtt->disconnectFromHost();
     m_connected = false;
@@ -112,6 +114,10 @@ void FbnsClient::onMqttDisconnected() {
     m_connected = false;
     emit connectionStateChanged(false);
 
+    if (m_stopped) {
+        return;
+    }
+
     if (m_reconnectWithNewAuth) {
         m_reconnectWithNewAuth = false;
         m_reconnectTimer->stop();
@@ -139,7 +145,7 @@ void FbnsClient::onMqttError(const QString & message) {
     emit error(message);
 
     // Try reconnect
-    if (!m_reconnectTimer->isActive()) {
+    if (!m_stopped && !m_reconnectTimer->isActive()) {
         m_reconnectTimer->start();
     }
 }
@@ -157,7 +163,7 @@ void FbnsClient::onMqttConnectionRefused(int returnCode) {
 }
 
 void FbnsClient::onReconnectTimer() {
-    if (!m_connected && !m_igUserId.isEmpty()) {
+    if (!m_stopped && !m_connected && !m_igUserId.isEmpty()) {
         qDebug() << "FbnsClient: attempting reconnect";
         connectWithSession(m_igUserId, m_igPhoneId);
     }

@@ -78,6 +78,7 @@ private:
     FbnsAuth m_auth;
     bool m_connected;
     bool m_reconnectWithNewAuth;
+    bool m_stopped;
 
     // Session data
     QString m_igUserId;

@@ -7,13 +7,14 @@ import Instagram 1.0
  * Handles the account session:
  * - Login with a stored account, logout
  * - Profile connected, two-factor and failed login results
- * - FBNS push registration
+ * - FBNS push registration for the logged-in account
  */
 Item {
     id: viewModel
     visible: false
 
     property bool mqttConnected: false
+    property string pushToken: ""
     property bool isLoggingIn: false
 
     signal profileConnected(var usernameId)
@@ -29,11 +30,17 @@ Item {
     }
 
     function logout() {
+        mqtt.disconnectFromMqtt();
+        mqttConnected = false;
+        pushToken = "";
         instagram.logout();
     }
 
     function connectPush(usernameId) {
         if (mqttConnected) {
+            if (pushToken) {
+                instagram.registerPush(pushToken);
+            }
             return;
         }
 
@@ -70,6 +77,7 @@ Item {
     Connections {
         target: mqtt
         function onFbnsTokenReceived(token) {
+            pushToken = token;
             instagram.registerPush(token);
         }
     }
