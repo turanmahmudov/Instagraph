@@ -42,10 +42,6 @@ set(PLUGIN_SOURCES
     # Media
     src/media/MediaCache.cpp
 
-    # Errors
-    src/errors/ClientError.cpp
-    src/errors/ErrorHandler.cpp
-    
     # Utils
     src/utils/Constants.cpp
 )
