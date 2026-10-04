@@ -199,6 +199,13 @@ MainView {
     }
 
     Component {
+        id: loginFailedPopupComponent
+        ErrorPopup {
+            error_text: i18n.tr("Login failed")
+        }
+    }
+
+    Component {
         id: savedPopupComponent
         ErrorPopup {
             error_text: i18n.tr("Saved")
@@ -257,6 +264,14 @@ MainView {
             sessionViewModel.connectPush(activeUsernameId);
 
             directBadgeViewModel.refresh();
+        }
+        onLoginFailed: {
+            loading.visible = false;
+            loginPageActive = true;
+            goLogin();
+            PopupUtils.open(loginFailedPopupComponent, mainView, {
+                "error_subtitle_text": message
+            });
         }
         onTwoFactorRequired: {
             // Store the 2FA data and load the 2FA page as primary

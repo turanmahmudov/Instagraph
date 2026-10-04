@@ -6,7 +6,7 @@ import Instagram 1.0
  *
  * Handles the account session:
  * - Login with a stored account, logout
- * - Profile connected and two-factor results
+ * - Profile connected, two-factor and failed login results
  * - FBNS push registration
  */
 Item {
@@ -14,11 +14,14 @@ Item {
     visible: false
 
     property bool mqttConnected: false
+    property bool isLoggingIn: false
 
     signal profileConnected(var usernameId)
     signal twoFactorRequired(var answer)
+    signal loginFailed(string message)
 
     function login(force, username, password) {
+        isLoggingIn = true;
         instagram.setUsername(username);
         instagram.setPassword(password);
 
@@ -48,11 +51,19 @@ Item {
         target: instagram
         function onProfileConnected(answer) {
             console.log('PROFILE CONNECTED');
+            isLoggingIn = false;
             profileConnected(instagram.getUsernameId());
         }
         function onTwoFactorRequired(answer) {
             console.log('2FACTOR REQUIRED');
+            isLoggingIn = false;
             twoFactorRequired(answer);
+        }
+        function onError(message) {
+            if (isLoggingIn) {
+                isLoggingIn = false;
+                loginFailed(message);
+            }
         }
     }
 
