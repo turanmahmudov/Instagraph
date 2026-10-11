@@ -8,8 +8,9 @@ import "../../js/Helper.js" as Helper
 Item {
 
     function startLikeAnimation() {
-        animatingLikeIcon.sizeAnimationFunction();
-        animatingLikeIcon.opacityAnimationFunction();
+        likeAnimationLoader.active = true;
+        likeAnimationLoader.item.sizeAnimationFunction();
+        likeAnimationLoader.item.opacityAnimationFunction();
     }
 
     property bool isCarousel: typeof carousel_media_obj.media !== 'undefined' && carousel_media_obj.media.length > 0
@@ -21,58 +22,64 @@ Item {
         source: bestImage.url
     }
 
-    LineIcon {
-        id: animatingLikeIcon
+    Loader {
+        id: likeAnimationLoader
         anchors.centerIn: feed_image
-        name: "\ueadf"
-        color: "#ffffff"
-        iconSize: units.gu(0.1)
-        opacity: 0
+        active: false
 
-        NumberAnimation on iconSize {
-            id: sizeAnimation
-            from: units.gu(0.1)
-            to: units.gu(6)
-            duration: 750
-            easing.type: Easing.Linear
-            running: false
-        }
+        sourceComponent: LineIcon {
+            id: animatingLikeIcon
+            name: "\ueadf"
+            color: "#ffffff"
+            iconSize: units.gu(0.1)
+            opacity: 0
 
-        NumberAnimation on opacity {
-            id: opacityAnimation
-            from: 0
-            to: 1
-            duration: 750
-            easing.type: Easing.InOutQuad
-            running: false
+            NumberAnimation on iconSize {
+                id: sizeAnimation
+                from: units.gu(0.1)
+                to: units.gu(6)
+                duration: 750
+                easing.type: Easing.Linear
+                running: false
+            }
 
-            onRunningChanged: {
-                if (!running) {
-                    destroyTimer.start();
+            NumberAnimation on opacity {
+                id: opacityAnimation
+                from: 0
+                to: 1
+                duration: 750
+                easing.type: Easing.InOutQuad
+                running: false
+
+                onRunningChanged: {
+                    if (!running) {
+                        destroyTimer.start();
+                    }
                 }
             }
-        }
 
-        Timer {
-            id: destroyTimer
-            interval: 500
-            running: false
-            repeat: false
-            onTriggered: {
-                animatingLikeIcon.opacity = 0;
+            Timer {
+                id: destroyTimer
+                interval: 500
+                running: false
+                repeat: false
+                onTriggered: {
+                    likeAnimationLoader.active = false;
+                }
+            }
+
+            function sizeAnimationFunction() {
+                sizeAnimation.start();
+            }
+
+            function opacityAnimationFunction() {
+                destroyTimer.stop();
+                opacityAnimation.start();
             }
         }
-
-        function sizeAnimationFunction() {
-            sizeAnimation.start();
-        }
-
-        function opacityAnimationFunction() {
-            opacityAnimation.start();
-        }
     }
 
-    Item {
+    Loader {
         anchors {
             right: parent.right
             rightMargin: units.gu(2)
@@ -81,27 +88,29 @@ Item {
         }
         width: units.gu(2.4)
         height: units.gu(2.4)
-        visible: media_type === 2
+        active: media_type === 2
 
-        // Simple shadow using layered icons
-        LineIcon {
-            anchors.centerIn: parent
-            anchors.horizontalCenterOffset: 1
-            anchors.verticalCenterOffset: 1
-            name: "\uebe2"
-            color: "#80000000"
-            iconSize: units.gu(2.4)
-        }
-        LineIcon {
-            id: is_video_icon
-            anchors.centerIn: parent
-            name: "\uebe2"
-            color: "#ffffff"
-            iconSize: units.gu(2.4)
+        sourceComponent: Item {
+            // Simple shadow using layered icons
+            LineIcon {
+                anchors.centerIn: parent
+                anchors.horizontalCenterOffset: 1
+                anchors.verticalCenterOffset: 1
+                name: "\uebe2"
+                color: "#80000000"
+                iconSize: units.gu(2.4)
+            }
+            LineIcon {
+                id: is_video_icon
+                anchors.centerIn: parent
+                name: "\uebe2"
+                color: "#ffffff"
+                iconSize: units.gu(2.4)
+            }
         }
     }
 
-    Item {
+    Loader {
         anchors {
             right: parent.right
             rightMargin: units.gu(2)
@@ -110,23 +119,25 @@ Item {
         }
         width: units.gu(2.4)
         height: units.gu(2.4)
-        visible: media_type === 8
+        active: media_type === 8
 
-        // Simple shadow using layered icons
-        LineIcon {
-            anchors.centerIn: parent
-            anchors.horizontalCenterOffset: 1
-            anchors.verticalCenterOffset: 1
-            name: "\ueac8"
-            color: "#80000000"
-            iconSize: units.gu(2.4)
-        }
-        LineIcon {
-            id: is_carousel_icon
-            anchors.centerIn: parent
-            name: "\ueac8"
-            color: "#ffffff"
-            iconSize: units.gu(2.4)
+        sourceComponent: Item {
+            // Simple shadow using layered icons
+            LineIcon {
+                anchors.centerIn: parent
+                anchors.horizontalCenterOffset: 1
+                anchors.verticalCenterOffset: 1
+                name: "\ueac8"
+                color: "#80000000"
+                iconSize: units.gu(2.4)
+            }
+            LineIcon {
+                id: is_carousel_icon
+                anchors.centerIn: parent
+                name: "\ueac8"
+                color: "#ffffff"
+                iconSize: units.gu(2.4)
+            }
         }
     }
 }

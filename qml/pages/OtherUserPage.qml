@@ -439,6 +439,14 @@ PageItem {
         id: gridviewComponent
 
         Grid {
+            id: photoGrid
+
+            readonly property real cellSize: (viewLoader.width - units.gu(0.1)) / 3
+            readonly property real rowStep: cellSize + spacing
+            readonly property real topInPage: entry_column.y + viewLoader.parent.y
+            readonly property int firstActiveRow: Math.ceil((flickpage.contentY - flickpage.height - cellSize - topInPage) / rowStep)
+            readonly property int lastActiveRow: Math.floor((flickpage.contentY + 2 * flickpage.height - topInPage) / rowStep)
+
             columns: 3
             spacing: units.gu(0.1)
 
@@ -446,14 +454,15 @@ PageItem {
                 model: feedViewModel.feedModel
 
                 Item {
-                    readonly property real topInPage: entry_column.y + viewLoader.parent.y + y
+                    readonly property int row: Math.floor(index / 3)
 
-                    width: (viewLoader.width - units.gu(0.1)) / 3
+                    width: photoGrid.cellSize
                     height: width
 
                     Loader {
                         anchors.fill: parent
-                        active: parent.topInPage + parent.height >= flickpage.contentY - flickpage.height && parent.topInPage <= flickpage.contentY + 2 * flickpage.height
+                        asynchronous: true
+                        active: parent.row >= photoGrid.firstActiveRow && parent.row <= photoGrid.lastActiveRow
                         sourceComponent: GridFeedDelegate {
                             currentDelegatePage: otheruserpage
                         }
@@ -467,6 +476,14 @@ PageItem {
         id: tagviewComponent
 
         Grid {
+            id: photoGrid
+
+            readonly property real cellSize: (viewLoader.width - units.gu(0.1)) / 3
+            readonly property real rowStep: cellSize + spacing
+            readonly property real topInPage: entry_column.y + viewLoader.parent.y
+            readonly property int firstActiveRow: Math.ceil((flickpage.contentY - flickpage.height - cellSize - topInPage) / rowStep)
+            readonly property int lastActiveRow: Math.floor((flickpage.contentY + 2 * flickpage.height - topInPage) / rowStep)
+
             columns: 3
             spacing: units.gu(0.1)
 
@@ -474,14 +491,15 @@ PageItem {
                 model: feedViewModel.taggedPhotosModel
 
                 Item {
-                    readonly property real topInPage: entry_column.y + viewLoader.parent.y + y
+                    readonly property int row: Math.floor(index / 3)
 
-                    width: (viewLoader.width - units.gu(0.1)) / 3
+                    width: photoGrid.cellSize
                     height: width
 
                     Loader {
                         anchors.fill: parent
-                        active: parent.topInPage + parent.height >= flickpage.contentY - flickpage.height && parent.topInPage <= flickpage.contentY + 2 * flickpage.height
+                        asynchronous: true
+                        active: parent.row >= photoGrid.firstActiveRow && parent.row <= photoGrid.lastActiveRow
                         sourceComponent: GridFeedDelegate {
                             currentDelegatePage: otheruserpage
                         }
