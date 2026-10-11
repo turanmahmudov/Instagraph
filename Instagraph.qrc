@@ -109,6 +109,8 @@
         <file>qml/components/MentionSuggestions.qml</file>
         <file>qml/images/media_save_bold.png</file>
         <file>qml/images/media_save.png</file>
+        <file>qml/images/media_save_white.png</file>
+        <file>qml/images/media_save_bold_white.png</file>
         <file>qml/images/media_save_profile.svg</file>
         <file>qml/pages/SavedMediaPage.qml</file>
         <file>qml/pages/2FactorLoginPage.qml</file>

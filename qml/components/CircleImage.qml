@@ -24,32 +24,15 @@ Item {
         visible: ringState === "none"
     }
 
-    // Gradient ring for unseen stories — only loaded when needed
+    // Ring for unseen stories - only loaded when needed
     Loader {
         anchors.fill: parent
         active: ringState === "unseen"
-        sourceComponent: Canvas {
-            onPaint: {
-                var ctx = getContext("2d");
-                ctx.reset();
-                var centerX = width / 2;
-                var centerY = height / 2;
-                var r = Math.min(width, height) / 2 - units.gu(0.15);
-
-                var gradient = ctx.createLinearGradient(0, height, width, 0);
-                gradient.addColorStop(0.0, "#FCAF45");
-                gradient.addColorStop(0.3, "#F77737");
-                gradient.addColorStop(0.6, "#F56040");
-                gradient.addColorStop(0.8, "#C13584");
-                gradient.addColorStop(1.0, "#833AB4");
-
-                ctx.beginPath();
-                ctx.arc(centerX, centerY, r, 0, 2 * Math.PI);
-                ctx.lineWidth = units.gu(0.25);
-                ctx.strokeStyle = gradient;
-                ctx.stroke();
-            }
-            Component.onCompleted: requestPaint()
+        sourceComponent: Rectangle {
+            color: "transparent"
+            border.width: units.gu(0.25)
+            border.color: "#C13584"
+            radius: width / 2
         }
     }
 

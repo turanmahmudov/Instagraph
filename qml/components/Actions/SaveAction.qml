@@ -1,6 +1,5 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
-import QtGraphicalEffects 1.0
 import Lomiri.Components 1.3
 
 import ".."
@@ -20,14 +19,8 @@ Item {
         anchors.right: parent.right
         width: units.gu(3)
         height: width
-        visible: false
         sourceSize: Qt.size(width, height)
-        source: is_saved ? "../../images/media_save.png" : "../../images/media_save_bold.png"
-    }
-    ColorOverlay {
-        anchors.fill: imagesaveicon
-        source: imagesaveicon
-        color: styleApp.common.iconActiveColor
+        source: (is_saved ? "../../images/media_save" : "../../images/media_save_bold") + (styleApp.dark ? "_white.png" : ".png")
     }
 
     MouseArea {
