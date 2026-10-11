@@ -3,7 +3,6 @@
         <file>assets/instagraph_title.png</file>
         <file>assets/instagraph_original.png</file>
         <file>assets/instagraph.png</file>
-        <file>qml/components/BouncingProgressBar.qml</file>
         <file>qml/js/Storage.js</file>
         <file>qml/pages/LoginPage.qml</file>
         <file>qml/pages/HomePage.qml</file>

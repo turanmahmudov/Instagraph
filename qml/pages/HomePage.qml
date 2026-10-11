@@ -33,7 +33,6 @@ PageItem {
         id: feedViewModel
     }
 
-    // Expose loading state for PageItem's BouncingProgressBar
     property alias list_loading: feedViewModel.isLoading
 
     function getHomeFeed() {

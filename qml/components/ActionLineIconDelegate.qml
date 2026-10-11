@@ -1,7 +1,6 @@
 import QtQuick 2.12
 import Lomiri.Components 1.3
 import Lomiri.Components.Styles 1.3
-import QtGraphicalEffects 1.0
 
 Button {
     id: button
@@ -60,12 +59,6 @@ Button {
             name: model.iconName === "back" ? "\uea5a" : (model.iconName === "down" ? "\uea58" : model.iconName)
             iconSize: button.iconSize
             color: customIconColor
-            layer.enabled: customIconColor === styleApp.common.white
-            layer.effect: DropShadow {
-                verticalOffset: 2
-                horizontalOffset: 2
-                spread: 0.4
-            }
         }
     }
 }
