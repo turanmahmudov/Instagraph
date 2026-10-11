@@ -14,11 +14,6 @@ Item {
         anchors.fill: parent
         color: styleApp.common.backgroundColor
         visible: image.status !== Image.Ready
-
-        ActivityIndicator {
-            anchors.centerIn: parent
-            running: image.status === Image.Loading
-        }
     }
 
     Image {

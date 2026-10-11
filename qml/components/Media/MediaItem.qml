@@ -13,8 +13,7 @@ Item {
         likeAnimationLoader.item.opacityAnimationFunction();
     }
 
-    property bool isCarousel: typeof carousel_media_obj.media !== 'undefined' && carousel_media_obj.media.length > 0
-    property var bestImage: isCarousel ? Helper.getBestImage(carousel_media_obj.media[0].image_versions2.candidates, parent.width) : Helper.getBestImage(images_obj.candidates, parent.width)
+    property var bestImage: Helper.getBestImage(preview_candidates, parent.width)
 
     FeedImage {
         id: feed_image

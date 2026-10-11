@@ -27,12 +27,23 @@ const QStringList roleKeys = {
     QStringLiteral("carousel_media_obj"),
     QStringLiteral("images_obj"),
     QStringLiteral("video_url"),
+    QStringLiteral("preview_candidates"),
     QStringLiteral("image_versions2"),
     QStringLiteral("video_duration"),
 };
 
 QJsonObject buildEmptyCaption() {
     return QJsonObject{{"text", ""}, {"user", QJsonObject{{"username", ""}}}};
+}
+
+void insertPreviewCandidates(QJsonObject & entry) {
+    const QJsonArray carousel =
+        entry.value("carousel_media_obj").toObject().value("media").toArray();
+    entry.insert("preview_candidates",
+                 !carousel.isEmpty()
+                     ? carousel.at(0).toObject().value("image_versions2").toObject().value(
+                           "candidates")
+                     : entry.value("images_obj").toObject().value("candidates"));
 }
 
 void insertMediaFiles(QJsonObject & entry, const QJsonObject & media) {
@@ -47,6 +58,7 @@ void insertMediaFiles(QJsonObject & entry, const QJsonObject & media) {
                      ? media.value("video_versions").toArray().at(0).toObject().value("url")
                      : QJsonValue(QString()));
     entry.insert("list_type", "media_entry");
+    insertPreviewCandidates(entry);
 }
 
 QVariantMap buildSavedMediaEntry(const QJsonObject & media) {

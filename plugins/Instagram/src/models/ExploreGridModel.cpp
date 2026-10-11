@@ -4,11 +4,22 @@ namespace {
 
 const QStringList roleKeys = {
     QStringLiteral("photo_id"),   QStringLiteral("carousel_media_obj"),
+    QStringLiteral("preview_candidates"),
     QStringLiteral("images_obj"), QStringLiteral("video_url"),
     QStringLiteral("media_type"), QStringLiteral("list_type"),
     QStringLiteral("rowSpan"),    QStringLiteral("columnSpan"),
     QStringLiteral("row"),        QStringLiteral("column"),
 };
+
+void insertPreviewCandidates(QJsonObject & entry) {
+    const QJsonArray carousel =
+        entry.value("carousel_media_obj").toObject().value("media").toArray();
+    entry.insert("preview_candidates",
+                 !carousel.isEmpty()
+                     ? carousel.at(0).toObject().value("image_versions2").toObject().value(
+                           "candidates")
+                     : entry.value("images_obj").toObject().value("candidates"));
+}
 
 QJsonObject buildMedia(const QJsonObject & media) {
     QJsonObject entry;
@@ -25,6 +36,7 @@ QJsonObject buildMedia(const QJsonObject & media) {
                      : QJsonValue(QString()));
     entry.insert("media_type", media.value("media_type"));
     entry.insert("list_type", "media_entry");
+    insertPreviewCandidates(entry);
     return entry;
 }
 
