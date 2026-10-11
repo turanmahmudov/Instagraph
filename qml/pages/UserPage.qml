@@ -320,10 +320,19 @@ PageItem {
             Repeater {
                 model: feedViewModel.feedModel
 
-                GridFeedDelegate {
-                    currentDelegatePage: userpage
+                Item {
+                    readonly property real topInPage: entry_column.y + viewLoader.parent.y + y
+
                     width: (viewLoader.width - units.gu(0.1)) / 3
                     height: width
+
+                    Loader {
+                        anchors.fill: parent
+                        active: parent.topInPage + parent.height >= flickpage.contentY - flickpage.height && parent.topInPage <= flickpage.contentY + 2 * flickpage.height
+                        sourceComponent: GridFeedDelegate {
+                            currentDelegatePage: userpage
+                        }
+                    }
                 }
             }
         }
@@ -339,10 +348,19 @@ PageItem {
             Repeater {
                 model: feedViewModel.taggedPhotosModel
 
-                GridFeedDelegate {
-                    currentDelegatePage: userpage
+                Item {
+                    readonly property real topInPage: entry_column.y + viewLoader.parent.y + y
+
                     width: (viewLoader.width - units.gu(0.1)) / 3
                     height: width
+
+                    Loader {
+                        anchors.fill: parent
+                        active: parent.topInPage + parent.height >= flickpage.contentY - flickpage.height && parent.topInPage <= flickpage.contentY + 2 * flickpage.height
+                        sourceComponent: GridFeedDelegate {
+                            currentDelegatePage: userpage
+                        }
+                    }
                 }
             }
         }

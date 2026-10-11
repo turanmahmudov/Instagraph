@@ -27,6 +27,7 @@ FlickableItem {
 
             Loader {
                 asynchronous: true
+                active: y + height >= explorefeedlist.contentY - explorefeedlist.height && y <= explorefeedlist.contentY + 2 * explorefeedlist.height
                 Layout.preferredWidth: (explorefeedlist.width - units.gu(0.1)) * columnSpan / 3
                 Layout.preferredHeight: (explorefeedlist.width - units.gu(0.1)) * rowSpan / 3
                 Layout.rowSpan: rowSpan
