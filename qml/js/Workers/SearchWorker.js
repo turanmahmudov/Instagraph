@@ -50,7 +50,7 @@ WorkerScript.onMessage = function(msg) {
         } else if (type === "searchVenues") {
             model.append(obj[i]);
         }
-
-        model.sync();
     }
+
+    model.sync();
 }

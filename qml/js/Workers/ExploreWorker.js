@@ -107,9 +107,9 @@ WorkerScript.onMessage = function(msg) {
 
             last_row += 1
         }
-
-        model.sync();
     }
+
+    model.sync();
 }
 
 function setMedia(media) {

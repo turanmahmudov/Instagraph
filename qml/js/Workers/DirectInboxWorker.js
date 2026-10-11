@@ -20,9 +20,9 @@ WorkerScript.onMessage = (message) => {
         item_obj.profile_pic_url = item.users.length > 0 ? item.users[0].profile_pic_url : item.inviter.profile_pic_url
 
         model.append(item_obj)
-
-        model.sync()
     })
+
+    model.sync()
 }
 
 function getThreadText(item, activeUserId, typeTexts) {

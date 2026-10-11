@@ -11,6 +11,7 @@ WorkerScript.onMessage = (message) => {
         item_obj.user = item
 
         model.append(item_obj)
-        model.sync()
     })
+
+    model.sync()
 }
