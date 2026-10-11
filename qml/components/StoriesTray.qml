@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import Lomiri.Components 1.3
+import Instagram 1.0
 
 import "Constants"
 import "Flickable"
@@ -13,7 +14,7 @@ Item {
     property var currentDelegatePage: pageLayout.primaryPage
     property var allUsers: []
     property bool finishedLoading: false
-    property ListModel model: ListModel {}
+    property JsonListModel model: ReelTrayModel {}
 
     function checkVisible() {
         if (finishedLoading && model.count == 0) {

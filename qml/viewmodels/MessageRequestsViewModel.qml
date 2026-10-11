@@ -12,14 +12,11 @@ import "../js/DirectTypeTexts.js" as DirectTypeTexts
 BaseFeedViewModel {
     id: viewModel
 
+    feedModel: DirectInboxModel {}
+
     function loadFeed() {
         setLoadingState(true);
         instagram.getPendingInbox();
-    }
-
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/DirectInboxWorker.js"
     }
 
     Connections {
@@ -29,7 +26,7 @@ BaseFeedViewModel {
                 return;
             }
 
-            var data = JSON.parse(answer);
+            var data = feedModel.parseResponse(answer, ["inbox.threads"]);
             if (!data || !data.inbox) {
                 handleError(i18n.tr("Failed to load message requests"));
                 return;
@@ -37,15 +34,11 @@ BaseFeedViewModel {
 
             setLoadingState(false);
 
-            var threads = data.inbox.threads || [];
-            isEmpty = threads.length === 0;
+            isEmpty = feedModel.countParsed("inbox.threads") === 0;
 
-            worker.sendMessage({
-                items: threads,
-                model: feedModel,
-                clear: true,
-                activeUserId: activeUsernameId,
-                typeTexts: DirectTypeTexts.getDirectTypeTexts()
+            feedModel.appendParsed("inbox.threads", true, {
+                "activeUserId": activeUsernameId,
+                "typeTexts": DirectTypeTexts.getDirectTypeTexts()
             });
         }
     }

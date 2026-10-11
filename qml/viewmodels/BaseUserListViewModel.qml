@@ -1,4 +1,5 @@
 import QtQuick 2.12
+import Instagram 1.0
 
 /**
  * BaseUserListViewModel - Common state and logic for all user list pages
@@ -9,7 +10,6 @@ import QtQuick 2.12
  * - Loading states (isLoading)
  * - Pagination state (nextMaxId, moreAvailable, nextComing)
  * - Pull-to-refresh support
- * - Worker-based model population via UserWorker.js
  *
  * Child ViewModels must:
  * - Set the `dataKey` property (e.g. "users", "blocked_list")
@@ -22,7 +22,7 @@ Item {
     visible: false  // ViewModels are not visual components
 
     // User list data
-    property ListModel userListModel: ListModel {}
+    property JsonListModel userListModel: UserListModel {}
 
     // Loading states
     property bool isLoading: false
@@ -39,12 +39,6 @@ Item {
 
     // Internal
     property bool clearModels: true
-
-    // Worker for processing user data into model
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/UserWorker.js"
-    }
 
     /**
      * Prepare the state for a load or refresh of the user list.
@@ -69,7 +63,8 @@ Item {
     function handleResponse(answer) {
         if (!isLoading)
             return;
-        var data = typeof answer === "string" ? JSON.parse(answer) : answer;
+        var isJson = typeof answer === "string";
+        var data = isJson ? userListModel.parseResponse(answer, [dataKey]) : answer;
         if (!data)
             return;
         isPullToRefresh = false;
@@ -84,14 +79,16 @@ Item {
             nextComing = true;
         }
 
-        var items = data[dataKey];
-        if (!items)
-            return;
-        worker.sendMessage({
-            items: items,
-            model: userListModel,
-            clear: clearModels
-        });
+        if (isJson) {
+            if (!userListModel.hasParsed(dataKey))
+                return;
+            userListModel.appendParsed(dataKey, clearModels);
+        } else {
+            var items = data[dataKey];
+            if (!items)
+                return;
+            userListModel.appendItems(items, clearModels);
+        }
 
         nextComing = false;
         isLoading = false;

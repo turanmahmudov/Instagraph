@@ -11,6 +11,8 @@ import Instagram 1.0
 BaseFeedViewModel {
     id: viewModel
 
+    feedModel: MediaFeedModel {}
+
     // SavedMedia-specific properties
     property bool clearModels: true
 
@@ -40,17 +42,11 @@ BaseFeedViewModel {
         }
     }
 
-    // Worker for processing saved media data
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/TimelineWorker.js"
-    }
-
     // Connection to Instagram API
     Connections {
         target: instagram
         function onSavedFeedDataReady(answer) {
-            var data = JSON.parse(answer);
+            var data = feedModel.parseResponse(answer, ["items"]);
             handleFeedResponse(data);
         }
     }
@@ -84,12 +80,8 @@ BaseFeedViewModel {
         moreAvailable = data.more_available;
         nextComing = true;
 
-        // Send data to worker for processing
-        worker.sendMessage({
-            feed: 'savedMediaPage',
-            obj: data.items,
-            model: feedModel,
-            clear_model: clearModels
+        feedModel.appendParsed("items", clearModels, {
+            "savedMedia": true
         });
 
         nextComing = false;

@@ -42,6 +42,21 @@ set(PLUGIN_SOURCES
     # Media
     src/media/MediaCache.cpp
 
+    # Models
+    src/models/JsonListModel.cpp
+    src/models/JsonValues.cpp
+    src/models/ActivityListModel.cpp
+    src/models/CommentListModel.cpp
+    src/models/DirectInboxModel.cpp
+    src/models/DirectThreadModel.cpp
+    src/models/ExploreGridModel.cpp
+    src/models/MediaFeedModel.cpp
+    src/models/RecipientListModel.cpp
+    src/models/ReelTrayModel.cpp
+    src/models/SearchResultModel.cpp
+    src/models/TimelineFeedModel.cpp
+    src/models/UserListModel.cpp
+
     # Utils
     src/utils/Constants.cpp
 )

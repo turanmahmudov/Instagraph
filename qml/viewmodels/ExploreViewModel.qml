@@ -14,10 +14,12 @@ BaseFeedViewModel {
 
     property bool clearModels: true
 
-    property ListModel recentSearchesModel: ListModel {}
-    property ListModel searchUsersModel: ListModel {}
-    property ListModel searchTagsModel: ListModel {}
-    property ListModel searchPlacesModel: ListModel {}
+    property JsonListModel recentSearchesModel: SearchResultModel {}
+    property JsonListModel searchUsersModel: SearchResultModel {}
+    property JsonListModel searchTagsModel: SearchResultModel {}
+    property JsonListModel searchPlacesModel: SearchResultModel {}
+
+    feedModel: ExploreGridModel {}
 
     /**
      * Load explore feed
@@ -55,37 +57,23 @@ BaseFeedViewModel {
         instagram.searchPlaces(keyword);
     }
 
-    WorkerScript {
-        id: exploreWorker
-        source: "../js/Workers/ExploreWorker.js"
-    }
-
-    WorkerScript {
-        id: searchWorker
-        source: "../js/Workers/SearchWorker.js"
-    }
-
     Connections {
         target: instagram
         function onExploreFeedDataReady(answer) {
-            var data = JSON.parse(answer);
+            var data = feedModel.parseResponse(answer, ["sectional_items"]);
             handleFeedResponse(data);
         }
         function onRecentSearchesDataReady(answer) {
-            var data = JSON.parse(answer);
-            fillSearchModel('recentSearches', data.recent, recentSearchesModel);
+            fillSearchModel('recentSearches', answer, "recent", recentSearchesModel);
         }
         function onSearchUserDataReady(answer) {
-            var data = JSON.parse(answer);
-            fillSearchModel('searchUsers', data.users, searchUsersModel);
+            fillSearchModel('searchUsers', answer, "users", searchUsersModel);
         }
         function onSearchTagsDataReady(answer) {
-            var data = JSON.parse(answer);
-            fillSearchModel('searchTags', data.results, searchTagsModel);
+            fillSearchModel('searchTags', answer, "results", searchTagsModel);
         }
         function onSearchPlacesDataReady(answer) {
-            var data = JSON.parse(answer);
-            fillSearchModel('searchLocation', data.items, searchPlacesModel);
+            fillSearchModel('searchLocation', answer, "items", searchPlacesModel);
         }
     }
 
@@ -112,21 +100,15 @@ BaseFeedViewModel {
         moreAvailable = data.more_available;
         nextComing = true;
 
-        exploreWorker.sendMessage({
-            obj: data.sectional_items || [],
-            model: feedModel,
-            clear_model: clearModels
-        });
+        feedModel.appendParsed("sectional_items", clearModels);
 
         nextComing = false;
     }
 
-    function fillSearchModel(type, items, model) {
-        searchWorker.sendMessage({
-            type: type,
-            obj: items || [],
-            model: model,
-            clear_model: true
+    function fillSearchModel(type, answer, itemsKey, model) {
+        model.parseResponse(answer, [itemsKey]);
+        model.appendParsed(itemsKey, true, {
+            "type": type
         });
     }
 }

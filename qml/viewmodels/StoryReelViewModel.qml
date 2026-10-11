@@ -12,7 +12,7 @@ Item {
     id: viewModel
     visible: false
 
-    property ListModel storiesModel: ListModel {}
+    property JsonListModel storiesModel: MediaFeedModel {}
 
     property var user: null
     property string title: ""
@@ -40,11 +40,6 @@ Item {
         instagram.getReelsMediaFeed(JSON.stringify([highlightId]));
     }
 
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/TimelineWorker.js"
-    }
-
     Connections {
         target: instagram
         function onUserReelsMediaFeedDataReady(answer) {
@@ -52,7 +47,7 @@ Item {
                 return;
             }
 
-            var data = JSON.parse(answer);
+            var data = storiesModel.parseResponse(answer);
             if (!data) {
                 finishReel(null, null, null);
                 return;
@@ -69,7 +64,7 @@ Item {
                 return;
             }
 
-            var data = JSON.parse(answer);
+            var data = storiesModel.parseResponse(answer);
             var reel = data && data.reels ? data.reels[pendingReelId] : null;
             if (!reel) {
                 finishReel(null, null, null);
@@ -107,12 +102,7 @@ Item {
         unavailable = false;
         firstTakenAt = items[0].taken_at;
 
-        worker.sendMessage({
-            'feed': 'userStoriesPage',
-            'obj': items,
-            'model': storiesModel,
-            'clear_model': true
-        });
+        storiesModel.appendItems(items, true);
 
         markStoriesSeen(items);
         reelLoaded();

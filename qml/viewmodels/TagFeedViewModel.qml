@@ -4,6 +4,8 @@ import Instagram 1.0
 BaseFeedViewModel {
     id: viewModel
 
+    feedModel: MediaFeedModel {}
+
     property string tag: ""
     property string tab: "top"
     property int page: 1
@@ -32,15 +34,10 @@ BaseFeedViewModel {
         }
     }
 
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/TimelineWorker.js"
-    }
-
     Connections {
         target: instagram
         function onTagSectionFeedDataReady(answer) {
-            var data = JSON.parse(answer);
+            var data = feedModel.parseResponse(answer, ["sections"]);
             handleFeedResponse(data);
         }
     }
@@ -55,8 +52,7 @@ BaseFeedViewModel {
 
         isEmpty = false;
 
-        var items = extractItemsFromSections(data);
-        if (!items || items.length === 0) {
+        if (feedModel.countSectionMedia("sections") === 0) {
             isEmpty = true;
             return;
         }
@@ -68,37 +64,10 @@ BaseFeedViewModel {
         nextMediaIds = data.next_media_ids || [];
         nextComing = true;
 
-        worker.sendMessage({
-            feed: 'tagFeedPage',
-            obj: items,
-            model: feedModel,
-            clear_model: clearModels
+        feedModel.appendParsed("sections", clearModels, {
+            "sections": true
         });
 
         nextComing = false;
-    }
-
-    function extractItemsFromSections(data) {
-        if (!data.sections || data.sections.length === 0) {
-            return [];
-        }
-
-        var items = [];
-        for (var i = 0; i < data.sections.length; i++) {
-            var section = data.sections[i];
-            if (section.layout_type !== "media_grid" && section.layout_type !== "one_by_two" && section.layout_type !== "two_by_two") {
-                continue;
-            }
-            if (!section.layout_content || !section.layout_content.medias) {
-                continue;
-            }
-            for (var j = 0; j < section.layout_content.medias.length; j++) {
-                var media = section.layout_content.medias[j];
-                if (media && media.media) {
-                    items.push(media.media);
-                }
-            }
-        }
-        return items;
     }
 }

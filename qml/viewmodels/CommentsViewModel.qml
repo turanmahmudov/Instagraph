@@ -14,7 +14,7 @@ Item {
 
     property var mediaId
 
-    property ListModel commentsModel: ListModel {}
+    property JsonListModel commentsModel: CommentListModel {}
 
     property bool isLoading: false
 
@@ -68,26 +68,16 @@ Item {
         instagram.unlikeComment(commentId);
     }
 
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/CommentsWorker.js"
-    }
-
     Connections {
         target: instagram
         function onMediaCommentsDataReady(answer) {
-            var data = JSON.parse(answer);
+            var data = commentsModel.parseResponse(answer, ["comments"]);
             handleCommentsResponse(data);
         }
         function onCommentPosted(answer) {
             var data = JSON.parse(answer);
             if (data.status === "ok" && data.comment) {
-                worker.sendMessage({
-                    is_caption: false,
-                    items: [data.comment],
-                    model: commentsModel,
-                    clear: false
-                });
+                commentsModel.appendItems([data.comment], false);
                 commentPosted();
             }
         }
@@ -131,22 +121,14 @@ Item {
         nextComing = true;
 
         if (data.caption && commentsModel.count === 0) {
-            worker.sendMessage({
-                is_caption: true,
-                items: [data.caption],
-                model: commentsModel,
-                clear: clearModels
+            commentsModel.appendItems([data.caption], clearModels, {
+                "isCaption": true
             });
         } else if (clearModels) {
             commentsModel.clear();
         }
 
-        worker.sendMessage({
-            is_caption: false,
-            items: data.comments || [],
-            model: commentsModel,
-            clear: false
-        });
+        commentsModel.appendParsed("comments", false);
 
         nextComing = false;
     }

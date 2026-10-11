@@ -365,8 +365,8 @@ Column {
         mediaId: id
         onLikeUpdated: likeAction.is_liked = liked
         onSaveUpdated: saveAction.is_saved = saved
-        onCommentsUpdated: currentModel.get(index).comments_disabled = disabled
-        onSelfTagRemoved: currentModel.get(index).photo_of_you = false
+        onCommentsUpdated: currentModel.setProperty(index, "comments_disabled", disabled)
+        onSelfTagRemoved: currentModel.setProperty(index, "photo_of_you", false)
         onDeleted: {
             currentModel.remove(index);
             if (currentModel.count === 0)

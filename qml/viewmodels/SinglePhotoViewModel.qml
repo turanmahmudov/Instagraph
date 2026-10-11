@@ -11,6 +11,8 @@ import Instagram 1.0
 BaseFeedViewModel {
     id: viewModel
 
+    feedModel: MediaFeedModel {}
+
     property var photoId
 
     signal mediaNotFound
@@ -25,15 +27,10 @@ BaseFeedViewModel {
         instagram.getInfoMedia(photoId);
     }
 
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/TimelineWorker.js"
-    }
-
     Connections {
         target: instagram
         function onMediaInfoReady(answer) {
-            var data = JSON.parse(answer);
+            var data = feedModel.parseResponse(answer);
             handleMediaResponse(data);
         }
     }
@@ -55,11 +52,6 @@ BaseFeedViewModel {
 
         setLoadingState(false);
 
-        worker.sendMessage({
-            feed: 'singlePhotoPage',
-            obj: data.items,
-            model: feedModel,
-            clear_model: true
-        });
+        feedModel.appendItems(data.items, true);
     }
 }

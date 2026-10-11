@@ -14,6 +14,8 @@ import "../js/DirectTypeTexts.js" as DirectTypeTexts
 BaseFeedViewModel {
     id: viewModel
 
+    feedModel: DirectInboxModel {}
+
     property bool clearModels: true
     property int pendingRequestsTotal: 0
 
@@ -43,11 +45,6 @@ BaseFeedViewModel {
         }
     }
 
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/DirectInboxWorker.js"
-    }
-
     Connections {
         target: mainView
         function onDirectMessageNotified(igAction) {
@@ -62,7 +59,7 @@ BaseFeedViewModel {
                 return;
             }
 
-            var data = JSON.parse(answer);
+            var data = feedModel.parseResponse(answer, ["inbox.threads"]);
             handleInboxResponse(data);
         }
     }
@@ -84,7 +81,7 @@ BaseFeedViewModel {
         }
 
         isEmpty = false;
-        if (data.inbox.threads.length === 0) {
+        if (feedModel.countParsed("inbox.threads") === 0) {
             isEmpty = true;
             return;
         }
@@ -100,12 +97,9 @@ BaseFeedViewModel {
         moreAvailable = data.inbox.has_older;
         nextComing = true;
 
-        worker.sendMessage({
-            items: data.inbox.threads,
-            model: feedModel,
-            clear: clearModels,
-            activeUserId: activeUsernameId,
-            typeTexts: DirectTypeTexts.getDirectTypeTexts()
+        feedModel.appendParsed("inbox.threads", clearModels, {
+            "activeUserId": activeUsernameId,
+            "typeTexts": DirectTypeTexts.getDirectTypeTexts()
         });
 
         nextComing = false;

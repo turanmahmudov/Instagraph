@@ -16,7 +16,7 @@ Item {
 
     property var threadId
 
-    property ListModel threadModel: ListModel {}
+    property JsonListModel threadModel: DirectThreadModel {}
 
     property var threadUsers: ({})
     property string threadTitle: i18n.tr("Direct")
@@ -87,12 +87,6 @@ Item {
         return quotedIds.join(',');
     }
 
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/DirectThreadWorker.js"
-        onMessage: threadModel.insert(0, messageObject)
-    }
-
     Connections {
         target: mainView
         function onDirectMessageNotified(igAction) {
@@ -106,7 +100,7 @@ Item {
     Connections {
         target: instagram
         function onDirectThreadDataReady(answer) {
-            var data = JSON.parse(answer);
+            var data = threadModel.parseResponse(answer, ["thread.items"]);
             handleThreadResponse(data);
         }
         function onDirectMessageDataReady(answer) {
@@ -151,8 +145,8 @@ Item {
             });
             threadUsers = users;
 
-            if (thread.items && thread.items.length > 0) {
-                instagram.markThreadSeen(thread.thread_id, thread.items[0].item_id);
+            if (threadModel.countParsed("thread.items") > 0) {
+                instagram.markThreadSeen(thread.thread_id, threadModel.findParsed("thread.items", 0).item_id);
             }
 
             firstLoad = false;
@@ -167,12 +161,7 @@ Item {
         moreAvailable = thread.has_older === true;
         nextComing = true;
 
-        worker.sendMessage({
-            obj: thread.items || [],
-            model: threadModel,
-            clear_model: clearModels,
-            insert: false
-        });
+        threadModel.appendParsed("thread.items", clearModels);
 
         nextComing = false;
     }
@@ -197,12 +186,7 @@ Item {
         item.user_id = parseInt(activeUsernameId);
         item.item_id = data.payload.item_id;
 
-        worker.sendMessage({
-            obj: [item],
-            model: threadModel,
-            clear_model: false,
-            insert: true
-        });
+        threadModel.insertItem(item);
 
         if (item.item_type === "text") {
             sentMessage = "";

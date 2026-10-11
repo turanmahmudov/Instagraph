@@ -1,4 +1,5 @@
 import QtQuick 2.12
+import Instagram 1.0
 
 /**
  * BaseFeedViewModel - Common state and logic for all feed types
@@ -12,7 +13,6 @@ import QtQuick 2.12
  * Child ViewModels must implement:
  * - loadFeed() function
  * - loadMore() function
- * - WorkerScript with appropriate source
  * - Connections with appropriate Instagram API signals
  */
 Item {
@@ -23,7 +23,7 @@ Item {
     readonly property real paginationThreshold: 2.0
 
     // Feed data
-    property ListModel feedModel: ListModel {}
+    property JsonListModel feedModel
 
     // Loading states
     property bool isLoading: false

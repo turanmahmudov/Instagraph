@@ -15,7 +15,7 @@ BaseFeedViewModel {
 
     // HomePage-specific properties
     property var seenPosts: []
-    property ListModel suggestionsModel: ListModel {}
+    property JsonListModel suggestionsModel: UserListModel {}
     property bool isPullToRefresh: true
     property bool clearModels: true
 
@@ -26,7 +26,7 @@ BaseFeedViewModel {
     property bool inSuggestedPostsSection: false
 
     // Stories tray state (persists across page navigation)
-    property ListModel storiesTrayModel: ListModel {}
+    property JsonListModel storiesTrayModel: ReelTrayModel {}
     property var storiesTrayAllUsers: []
     property bool storiesTrayLoaded: false
 
@@ -63,35 +63,8 @@ BaseFeedViewModel {
         }
     }
 
-    // Worker for processing timeline feed data
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/HomeFeedWorker.js"
-        onMessage: {
-            if (messageObject.type === "seen_posts") {
-                seenPosts.push(messageObject.id);
-            } else if (messageObject.type === "end_of_feed") {
-                // Handle end of feed demarcator - block further loading
-                if (messageObject.style === "top_of_feed") {
-                    // Suggestions section - stop auto-loading
-                    inSuggestedPostsSection = true;
-                } else if (messageObject.style === "hidden") {
-                    // Caught up - stop auto-loading
-                    isCaughtUp = true;
-                    caughtUpTitle = messageObject.title;
-                    caughtUpSubtitle = messageObject.subtitle;
-                }
-            } else if (messageObject.type === "done") {
-                // Worker finished processing - now it's safe to allow pagination
-                nextComing = false;
-            }
-        }
-    }
-
-    // Stories tray worker
-    WorkerScript {
-        id: trayWorker
-        source: "../js/Workers/SimpleWorker.js"
+    feedModel: TimelineFeedModel {
+        suggestionsModel: viewModel.suggestionsModel
     }
 
     function loadStoriesTray(force) {
@@ -104,21 +77,18 @@ BaseFeedViewModel {
     Connections {
         target: instagram
         function onTimelineFeedDataReady(answer) {
-            var data = JSON.parse(answer);
+            var data = feedModel.parseResponse(answer, ["feed_items"]);
             handleFeedResponse(data);
         }
         function onReelsTrayFeedDataReady(answer) {
-            var data = JSON.parse(answer);
-            trayWorker.sendMessage({
-                'feed': 'StoriesTray',
-                'obj': data.tray,
-                'model': storiesTrayModel,
-                'clear_model': true
+            storiesTrayModel.parseResponse(answer, ["tray"]);
+            storiesTrayModel.appendParsed("tray", true, {
+                "stringIds": true
             });
             storiesTrayLoaded = true;
             storiesTrayAllUsers = [];
-            for (var i = 0; i < data.tray.length; i++) {
-                storiesTrayAllUsers.push(data.tray[i].user.pk);
+            for (var i = 0; i < storiesTrayModel.count; i++) {
+                storiesTrayAllUsers.push(storiesTrayModel.get(i).user.pk);
             }
         }
     }
@@ -153,13 +123,23 @@ BaseFeedViewModel {
         moreAvailable = data.more_available;
         nextComing = true;
 
-        // Send data to worker for processing
-        // Worker will set nextComing = false when done
-        worker.sendMessage({
-            feed_items: data.feed_items,
-            feed_model: feedModel,
-            suggestions_model: suggestionsModel,
-            clear: clearModels
-        });
+        var feedExtras = feedModel.appendParsed("feed_items", clearModels);
+        for (var i = 0; i < feedExtras.seenPosts.length; i++) {
+            seenPosts.push(feedExtras.seenPosts[i]);
+        }
+        for (var j = 0; j < feedExtras.endOfFeed.length; j++) {
+            var endOfFeed = feedExtras.endOfFeed[j];
+            // Handle end of feed demarcator - block further loading
+            if (endOfFeed.style === "top_of_feed") {
+                // Suggestions section - stop auto-loading
+                inSuggestedPostsSection = true;
+            } else if (endOfFeed.style === "hidden") {
+                // Caught up - stop auto-loading
+                isCaughtUp = true;
+                caughtUpTitle = endOfFeed.title;
+                caughtUpSubtitle = endOfFeed.subtitle;
+            }
+        }
+        nextComing = false;
     }
 }

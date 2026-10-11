@@ -15,7 +15,7 @@ Item {
     id: viewModel
     visible: false
 
-    property ListModel activityModel: ListModel {}
+    property JsonListModel activityModel: ActivityListModel {}
 
     property bool isLoading: false
     property bool hasNewNotifications: false
@@ -27,15 +27,10 @@ Item {
         instagram.getRecentActivityInbox();
     }
 
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/ActivityWorker.js"
-    }
-
     Connections {
         target: instagram
         function onRecentActivityInboxDataReady(answer) {
-            var data = JSON.parse(answer);
+            var data = activityModel.parseResponse(answer, ["friend_request_stories", "new_stories", "old_stories"]);
             handleActivityResponse(data);
         }
     }
@@ -50,37 +45,26 @@ Item {
         if (!data)
             return;
 
-        if ("friend_request_stories" in data && data.friend_request_stories.length > 0) {
-            worker.sendMessage({
-                friend_requests: data.friend_request_stories,
-                items: [],
-                model: activityModel,
-                clear: true
+        if (activityModel.countParsed("friend_request_stories") > 0) {
+            activityModel.appendParsed("friend_request_stories", true, {
+                "friendRequests": true
             });
         } else {
             activityModel.clear();
         }
 
-        if ("new_stories" in data && data.new_stories.length > 0) {
+        if (activityModel.countParsed("new_stories") > 0) {
             hasNewNotifications = true;
         }
 
         var linkColor = Helper.hexToRgb(styleApp.common.textColor);
 
-        worker.sendMessage({
-            items: data.new_stories || [],
-            model: activityModel,
-            partition: data.partition,
-            clear: false,
-            linkColor: linkColor
+        activityModel.appendParsed("new_stories", false, {
+            "linkColor": linkColor
         });
 
-        worker.sendMessage({
-            items: data.old_stories || [],
-            model: activityModel,
-            partition: data.partition,
-            clear: false,
-            linkColor: linkColor
+        activityModel.appendParsed("old_stories", false, {
+            "linkColor": linkColor
         });
     }
 }

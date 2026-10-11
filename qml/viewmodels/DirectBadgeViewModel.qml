@@ -1,8 +1,6 @@
 import QtQuick 2.12
 import Instagram 1.0
 
-import "../js/Workers/WorkerUtils.js" as WorkerUtils
-
 /**
  * DirectBadgeViewModel - ViewModel for the unread Direct count in Main
  *
@@ -22,6 +20,16 @@ Item {
         instagram.getInbox("");
     }
 
+    function isThreadUnread(thread, viewerId) {
+        var item = thread.last_permanent_item;
+        if (!item || String(item.user_id) === String(viewerId)) {
+            return false;
+        }
+
+        var seen = (thread.last_seen_at || {})[String(viewerId)];
+        return !seen || Number(item.timestamp) > Number(seen.timestamp);
+    }
+
     Connections {
         target: instagram
         function onInboxDataReady(answer) {
@@ -36,7 +44,7 @@ Item {
             }
 
             unseenCount = data.inbox.threads.filter(function (thread) {
-                return WorkerUtils.isThreadUnread(thread, activeUsernameId);
+                return isThreadUnread(thread, activeUsernameId);
             }).length;
         }
         function onMarkThreadSeenDataReady(answer) {

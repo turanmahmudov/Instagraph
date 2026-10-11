@@ -38,8 +38,10 @@ BaseFeedViewModel {
     }
 
     // Additional models for user page
-    property ListModel taggedPhotosModel: ListModel {}
-    property ListModel highlightsModel: ListModel {}
+    property JsonListModel taggedPhotosModel: MediaFeedModel {}
+    property JsonListModel highlightsModel: ReelTrayModel {}
+
+    feedModel: MediaFeedModel {}
 
     property var allHighlight: []
 
@@ -132,24 +134,11 @@ BaseFeedViewModel {
         instagram.getUserHighlightFeed(userId);
     }
 
-    // Worker for processing user feed data
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/TimelineWorker.js"
-    }
-
-    // Worker for processing highlights
-    WorkerScript {
-        id: highlightsWorker
-        source: "../js/Workers/SimpleWorker.js"
-    }
-
-    // Connection to Instagram API
     Connections {
         target: instagram
 
         function onUserFeedDataReady(answer) {
-            var data = JSON.parse(answer);
+            var data = feedModel.parseResponse(answer, ["items"]);
             if (data.status === "ok" && (!data.user || data.user.pk == userId)) {
                 handleFeedResponse(data);
             }
@@ -175,14 +164,14 @@ BaseFeedViewModel {
         }
 
         function onUserTagsDataReady(answer) {
-            var data = JSON.parse(answer);
+            var data = taggedPhotosModel.parseResponse(answer, ["items"]);
             if (!userId || !data || !data.user || data.user.pk == userId) {
                 handleTaggedPhotosResponse(data);
             }
         }
 
         function onUserHighlightFeedDataReady(answer) {
-            var data = JSON.parse(answer);
+            var data = highlightsModel.parseResponse(answer, ["tray"]);
             if (!userId || !data || !data.user || data.user.pk == userId) {
                 handleHighlightsResponse(data);
             }
@@ -218,13 +207,7 @@ BaseFeedViewModel {
         moreAvailable = data.more_available === true;
         nextComing = true;
 
-        // Send data to worker for processing
-        worker.sendMessage({
-            feed: 'userPage',
-            obj: data.items,
-            model: feedModel,
-            clear_model: clearModels
-        });
+        feedModel.appendParsed("items", clearModels);
 
         nextComing = false;
     }
@@ -249,12 +232,7 @@ BaseFeedViewModel {
         taggedMoreAvailable = data.more_available === true;
         taggedNextComing = true;
 
-        worker.sendMessage({
-            feed: 'userPage',
-            obj: data.items,
-            model: taggedPhotosModel,
-            clear_model: taggedClearModels
-        });
+        taggedPhotosModel.appendParsed("items", taggedClearModels);
 
         taggedNextComing = false;
         setLoadingState(false);
@@ -265,16 +243,11 @@ BaseFeedViewModel {
      * @param data - Parsed JSON response
      */
     function handleHighlightsResponse(data) {
-        highlightsWorker.sendMessage({
-            feed: 'UserHighlights',
-            obj: data.tray,
-            model: highlightsModel,
-            clear_model: true
-        });
+        highlightsModel.appendParsed("tray", true);
 
         allHighlight = [];
-        for (var i = 0; i < data.tray.length; i++) {
-            allHighlight.push(data.tray[i].id);
+        for (var i = 0; i < highlightsModel.count; i++) {
+            allHighlight.push(highlightsModel.get(i).id);
         }
     }
 }

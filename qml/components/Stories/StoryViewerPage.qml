@@ -5,6 +5,7 @@ import QtMultimedia 5.12
 
 // Lomiri imports
 import Lomiri.Components 1.3
+import Instagram 1.0
 
 // JavaScript imports
 import "../../js/Helper.js" as Helper
@@ -41,7 +42,7 @@ PageItem {
     property int _remainingTime: 0  // remaining ms when paused
 
     // The parent page populates this model via the worker
-    property ListModel storiesModel: ListModel {}
+    property JsonListModel storiesModel: MediaFeedModel {}
     property alias storiesList: storiesList
 
     header: PageHeaderItem {

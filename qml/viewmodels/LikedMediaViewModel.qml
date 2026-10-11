@@ -11,6 +11,8 @@ import Instagram 1.0
 BaseFeedViewModel {
     id: viewModel
 
+    feedModel: MediaFeedModel {}
+
     property bool clearModels: true
 
     /**
@@ -39,15 +41,10 @@ BaseFeedViewModel {
         }
     }
 
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/TimelineWorker.js"
-    }
-
     Connections {
         target: instagram
         function onLikedMediaDataReady(answer) {
-            var data = JSON.parse(answer);
+            var data = feedModel.parseResponse(answer, ["items"]);
             handleFeedResponse(data);
         }
     }
@@ -81,12 +78,7 @@ BaseFeedViewModel {
         moreAvailable = data.more_available;
         nextComing = true;
 
-        worker.sendMessage({
-            feed: 'likedMediaPage',
-            obj: data.items,
-            model: feedModel,
-            clear_model: clearModels
-        });
+        feedModel.appendParsed("items", clearModels);
 
         nextComing = false;
     }

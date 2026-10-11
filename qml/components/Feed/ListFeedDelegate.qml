@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import Lomiri.Components 1.3
+import Instagram 1.0
 
 import ".."
 import "../Media"
@@ -10,7 +11,7 @@ ListItem {
     property var currentPage: pageLayout.primaryPage
     property var currentModel
     property var suggestionsModel
-    property ListModel storiesTrayModel: ListModel {}
+    property JsonListModel storiesTrayModel: ReelTrayModel {}
     property var storiesTrayAllUsers: []
     property bool storiesTrayLoaded: false
     property bool showCarousel: false

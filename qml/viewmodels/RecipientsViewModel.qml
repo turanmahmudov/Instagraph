@@ -14,7 +14,7 @@ Item {
     id: viewModel
     visible: false
 
-    property ListModel recipientsModel: ListModel {}
+    property JsonListModel recipientsModel: RecipientListModel {}
 
     property bool isSending: false
 
@@ -72,21 +72,11 @@ Item {
         return quotedIds.join(',');
     }
 
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/SimpleWorker.js"
-    }
-
     Connections {
         target: instagram
         function onRankedRecipientsDataReady(answer) {
-            var data = JSON.parse(answer);
-            worker.sendMessage({
-                feed: 'ShareMediaPage',
-                obj: data.ranked_recipients || [],
-                model: recipientsModel,
-                clear_model: true
-            });
+            recipientsModel.parseResponse(answer, ["ranked_recipients"]);
+            recipientsModel.appendParsed("ranked_recipients", true);
         }
         function onDirectMessageDataReady(answer) {
             finishSend(answer, messageSent);

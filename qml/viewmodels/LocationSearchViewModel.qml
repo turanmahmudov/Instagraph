@@ -15,7 +15,7 @@ Item {
     id: viewModel
     visible: false
 
-    property ListModel placesModel: ListModel {}
+    property JsonListModel placesModel: SearchResultModel {}
 
     property string query: ""
 
@@ -32,20 +32,12 @@ Item {
         onPositionChanged: viewModel.search()
     }
 
-    WorkerScript {
-        id: worker
-        source: "../js/Workers/SearchWorker.js"
-    }
-
     Connections {
         target: instagram
         function onSearchLocationDataReady(answer) {
-            var data = JSON.parse(answer);
-            worker.sendMessage({
-                type: 'searchVenues',
-                obj: data.venues || [],
-                model: placesModel,
-                clear_model: true
+            placesModel.parseResponse(answer, ["venues"]);
+            placesModel.appendParsed("venues", true, {
+                "type": "searchVenues"
             });
         }
     }
