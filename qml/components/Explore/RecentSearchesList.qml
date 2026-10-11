@@ -4,8 +4,9 @@ import Lomiri.Components 1.3
 import ".."
 import "../Constants"
 import "../User"
+import "../Flickable"
 
-ListView {
+ListViewItem {
     id: recentsearcheslist
     clip: true
 

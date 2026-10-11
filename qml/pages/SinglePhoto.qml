@@ -9,6 +9,7 @@ import "../components"
 import "../components/Page"
 import "../components/Feed"
 import "../viewmodels"
+import "../components/Flickable"
 
 PageItem {
     id: singlephotopage
@@ -31,7 +32,7 @@ PageItem {
         feedViewModel.loadFeed();
     }
 
-    ListView {
+    ListViewItem {
         id: homePhotosList
         anchors {
             left: parent.left

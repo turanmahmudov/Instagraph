@@ -4,8 +4,9 @@ import Lomiri.Components 1.3
 import QtGraphicalEffects 1.0
 
 import "../Constants"
+import "../Flickable"
 
-ListView {
+ListViewItem {
     id: userHighlightsTray
     clip: true
 

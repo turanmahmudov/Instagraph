@@ -9,6 +9,7 @@ import Lomiri.Components 1.3
 import "../components"
 import "../components/Page"
 import "../viewmodels"
+import "../components/Flickable"
 
 PageItem {
     id: searchlocationpage
@@ -56,7 +57,7 @@ PageItem {
     Component {
         id: searchPlacesList
 
-        ListView {
+        ListViewItem {
             id: recentActivityList
             anchors.fill: parent
 

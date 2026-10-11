@@ -10,6 +10,7 @@ import "../components/Constants"
 import "../components/Page"
 import "../components/Feed"
 import "../viewmodels"
+import "../components/Flickable"
 
 PageItem {
     id: likedmediapage
@@ -29,7 +30,7 @@ PageItem {
         feedViewModel.loadFeed(true);
     }
 
-    GridView {
+    GridViewItem {
         id: gridView
         visible: !isEmpty
         anchors {

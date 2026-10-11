@@ -12,6 +12,7 @@ import "Constants"
 import "../js/Storage.js" as Storage
 import "../js/Helper.js" as Helper
 import "../js/Scripts.js" as Scripts
+import "Flickable"
 
 PageItem {
     id: multipleAccountsSwitcher
@@ -49,7 +50,7 @@ PageItem {
         id: allUsersModel
     }
 
-    ListView {
+    ListViewItem {
         id: allUsersList
         anchors {
             left: parent.left

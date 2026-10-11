@@ -10,6 +10,7 @@ import "../components/Constants"
 import "../components/Page"
 import "../components/Direct"
 import "../viewmodels"
+import "../components/Flickable"
 
 PageItem {
     id: messagerequestspage
@@ -24,7 +25,7 @@ PageItem {
 
     property alias list_loading: requestsViewModel.isLoading
 
-    ListView {
+    ListViewItem {
         id: requestsList
         visible: !requestsViewModel.isEmpty
         anchors {

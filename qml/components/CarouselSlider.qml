@@ -4,8 +4,9 @@ import QtMultimedia 5.12
 
 import "Media"
 import "../js/Helper.js" as Helper
+import "Flickable"
 
-ListView {
+ListViewItem {
     id: listViewCarousel
 
     property var bestImage

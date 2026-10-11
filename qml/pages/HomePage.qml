@@ -23,6 +23,7 @@ import "../components/Feed"
 import "../viewmodels"
 import "../components/Media"
 import "../components/Actions"
+import "../components/Flickable"
 
 PageItem {
     id: homepage
@@ -75,7 +76,7 @@ PageItem {
         ]
     }
 
-    ListView {
+    ListViewItem {
         id: homeFeedList
         visible: !feedViewModel.isEmpty && !feedViewModel.hasError
         anchors {

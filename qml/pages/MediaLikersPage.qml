@@ -6,6 +6,7 @@ import "../components/Constants"
 import "../components/Page"
 import "../components/User"
 import "../viewmodels"
+import "../components/Flickable"
 
 PageItem {
     id: medialikerspage
@@ -23,7 +24,7 @@ PageItem {
         mediaId: medialikerspage.mediaId
     }
 
-    ListView {
+    ListViewItem {
         id: mediaLikersList
         anchors {
             left: parent.left

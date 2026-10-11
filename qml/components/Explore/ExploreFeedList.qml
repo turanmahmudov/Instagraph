@@ -3,8 +3,9 @@ import QtQuick.Layouts 1.12
 import Lomiri.Components 1.3
 
 import "../Feed"
+import "../Flickable"
 
-Flickable {
+FlickableItem {
     id: explorefeedlist
     contentWidth: width
     contentHeight: layout.height

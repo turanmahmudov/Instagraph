@@ -20,6 +20,7 @@ import "../components/Media"
 import "../components/Actions"
 
 import "../components/Constants"
+import "../components/Flickable"
 PageItem {
     id: savedmediapage
 
@@ -40,7 +41,7 @@ PageItem {
         feedViewModel.loadFeed(true);
     }
 
-    GridView {
+    GridViewItem {
         id: gridView
         anchors {
             left: parent.left

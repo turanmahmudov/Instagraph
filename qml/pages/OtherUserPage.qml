@@ -20,6 +20,7 @@ import "../components/Feed"
 import "../viewmodels"
 import "../components/Media"
 import "../components/Actions"
+import "../components/Flickable"
 
 PageItem {
     id: otheruserpage
@@ -139,7 +140,7 @@ PageItem {
         }
     }
 
-    Flickable {
+    FlickableItem {
         id: flickpage
         anchors {
             bottom: parent.bottom
@@ -425,7 +426,7 @@ PageItem {
     Component {
         id: listviewComponent
 
-        ListView {
+        ListViewItem {
             width: viewLoader.width
             height: contentHeight
             interactive: false

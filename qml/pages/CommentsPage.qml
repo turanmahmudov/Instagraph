@@ -9,6 +9,7 @@ import "../components/Comment"
 import "../viewmodels"
 
 import "../components/Constants"
+import "../components/Flickable"
 PageItem {
     id: commentspage
 
@@ -27,7 +28,7 @@ PageItem {
 
     property alias list_loading: viewModel.isLoading
 
-    ListView {
+    ListViewItem {
         id: mediaCommentsList
         anchors {
             left: parent.left

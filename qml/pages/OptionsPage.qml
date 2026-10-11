@@ -19,6 +19,7 @@ import "../components/Feed"
 import "../components/Media"
 import "../components/Actions"
 import "../viewmodels"
+import "../components/Flickable"
 
 PageItem {
     id: optionspage
@@ -35,7 +36,7 @@ PageItem {
         optionsViewModel.loadAccount();
     }
 
-    Flickable {
+    FlickableItem {
         id: flickable
         anchors {
             left: parent.left

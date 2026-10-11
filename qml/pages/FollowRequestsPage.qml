@@ -6,6 +6,7 @@ import "../components/Constants"
 import "../components/Page"
 import "../components/User"
 import "../viewmodels"
+import "../components/Flickable"
 
 PageItem {
     id: followrequestspage
@@ -20,7 +21,7 @@ PageItem {
         id: viewModel
     }
 
-    ListView {
+    ListViewItem {
         id: followRequestsList
         anchors {
             left: parent.left

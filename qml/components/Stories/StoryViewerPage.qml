@@ -13,6 +13,7 @@ import "../../js/Helper.js" as Helper
 import ".."
 import "../Constants"
 import "../Page"
+import "../Flickable"
 
 PageItem {
     id: storyViewerPage
@@ -224,7 +225,7 @@ PageItem {
         color: "#000000"
     }
 
-    ListView {
+    ListViewItem {
         id: storiesList
         anchors {
             left: parent.left

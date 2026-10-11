@@ -2,6 +2,7 @@ import QtQuick 2.12
 import Lomiri.Components 1.3
 
 import "Constants"
+import "Flickable"
 
 Item {
     id: storiesTray
@@ -40,7 +41,7 @@ Item {
         }
     }
 
-    ListView {
+    ListViewItem {
         id: storiesTrayList
 
         anchors.top: parent.top

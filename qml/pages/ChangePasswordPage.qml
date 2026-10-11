@@ -17,6 +17,7 @@ import "../components/Feed"
 import "../components/Media"
 import "../components/Actions"
 import "../viewmodels"
+import "../components/Flickable"
 
 PageItem {
     id: changepasswordpage
@@ -38,7 +39,7 @@ PageItem {
         onPasswordChanged: pageLayout.removePages(changepasswordpage)
     }
 
-    Flickable {
+    FlickableItem {
         id: flickable
         anchors {
             left: parent.left

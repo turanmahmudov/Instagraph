@@ -16,6 +16,7 @@ import "../components/Media"
 import "../components/Actions"
 
 import "../components/Constants"
+import "../components/Flickable"
 PageItem {
     id: locationfeedpage
 
@@ -37,7 +38,7 @@ PageItem {
         feedViewModel.loadFeed(true);
     }
 
-    ListView {
+    ListViewItem {
         id: homePhotosList
         anchors {
             left: parent.left

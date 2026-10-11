@@ -10,6 +10,7 @@ import "../components/Constants"
 import "../components/Page"
 import "../components/Direct"
 import "../viewmodels"
+import "../components/Flickable"
 
 PageItem {
     id: directinboxpage
@@ -61,7 +62,7 @@ PageItem {
         }
     }
 
-    ListView {
+    ListViewItem {
         id: directInboxList
         visible: !isEmpty
         anchors {

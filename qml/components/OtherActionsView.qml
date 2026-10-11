@@ -20,8 +20,9 @@ import Lomiri.Components 1.3
 import "qrc:///ImageProcessor/qml/effects"
 
 import ImageProcessor 1.0
+import "Flickable"
 
-ListView {
+ListViewItem {
     id: otherActionsView
     anchors.fill: parent
     orientation: ListView.Horizontal
@@ -31,12 +32,6 @@ ListView {
     function showLevelSettings(data) {
         levelSettingsLoader.active = true;
         levelSettingsLoader.item.modelData = data;
-    }
-
-    Component.onCompleted: {
-        // WORKAROUND: Fix for wrong grid unit size
-        flickDeceleration = 1500 * units.gridUnit / 8;
-        maximumFlickVelocity = 2500 * units.gridUnit / 8;
     }
 
     // Keep same Y-pos for the image

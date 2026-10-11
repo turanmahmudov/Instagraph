@@ -20,6 +20,7 @@ import "../components/Media"
 import "../components/Actions"
 import "../components/Direct"
 import "../viewmodels"
+import "../components/Flickable"
 
 PageItem {
     id: directthreadpage
@@ -43,7 +44,7 @@ PageItem {
         threadViewModel.loadThread();
     }
 
-    ListView {
+    ListViewItem {
         id: directThreadList
         anchors {
             left: parent.left

@@ -19,6 +19,7 @@ import "../components/Feed"
 import "../components/Media"
 import "../components/Actions"
 import "../viewmodels"
+import "../components/Flickable"
 
 PageItem {
     id: newdirectmessagepage
@@ -101,7 +102,7 @@ PageItem {
                 anchors.verticalCenter: parent.verticalCenter
             }
 
-            ListView {
+            ListViewItem {
                 id: selectedUsersList
                 width: parent.width - toLabel.width - units.gu(1)
                 height: units.gu(4)
@@ -176,7 +177,7 @@ PageItem {
             }
         }
 
-        ListView {
+        ListViewItem {
             id: recipientsList
 
             width: parent.width

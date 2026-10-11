@@ -20,6 +20,7 @@ import "../components/Feed"
 import "../components/Media"
 import "../components/Actions"
 import "../viewmodels"
+import "../components/Flickable"
 
 PageItem {
     id: editprofilepage
@@ -135,7 +136,7 @@ PageItem {
         editProfileViewModel.loadProfile();
     }
 
-    Flickable {
+    FlickableItem {
         id: flickable
         anchors {
             left: parent.left

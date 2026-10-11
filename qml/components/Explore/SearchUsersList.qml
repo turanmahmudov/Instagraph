@@ -3,8 +3,9 @@ import Lomiri.Components 1.3
 
 import "../Constants"
 import "../User"
+import "../Flickable"
 
-ListView {
+ListViewItem {
     id: searchuserslist
     clip: true
 

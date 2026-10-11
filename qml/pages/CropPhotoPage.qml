@@ -11,6 +11,7 @@ import "../js/Scripts.js" as Scripts
 import "../components"
 import "../components/Constants"
 import "../components/Page"
+import "../components/Flickable"
 
 PageItem {
     id: cropphotopage
@@ -79,7 +80,7 @@ PageItem {
         height: Math.min(width, parent.height - cropphotopage.header.height - units.gu(12))
         color: "#000000"
 
-        Flickable {
+        FlickableItem {
             id: cropArea
 
             readonly property real fitWidth: frameRatio >= 1 ? stage.width : stage.height * frameRatio

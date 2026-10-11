@@ -6,6 +6,7 @@ import "../components/Constants"
 import "../components/Page"
 import "../components/Activity"
 import "../viewmodels"
+import "../components/Flickable"
 
 PageItem {
     id: activitypage
@@ -26,7 +27,7 @@ PageItem {
         viewModel.loadActivity();
     }
 
-    ListView {
+    ListViewItem {
         id: recentActivityList
         anchors {
             left: parent.left

@@ -25,8 +25,9 @@ import "../components/Media"
 import "../components/Actions"
 
 import ImageProcessor 1.0
+import "Flickable"
 
-ListView {
+ListViewItem {
     id: filtersView
     anchors.fill: parent
     orientation: ListView.Horizontal

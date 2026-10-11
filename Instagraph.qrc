@@ -196,5 +196,9 @@
         <file>qml/components/Explore/SearchPlacesList.qml</file>
         <file>qml/components/Explore/SearchTagsList.qml</file>
         <file>qml/components/Explore/SearchUsersList.qml</file>
+        <file>qml/components/Flickable/FlickableItem.qml</file>
+        <file>qml/components/Flickable/GridViewItem.qml</file>
+        <file>qml/components/Flickable/ListViewItem.qml</file>
+        <file>qml/components/Flickable/flickableUtils.js</file>
     </qresource>
 </RCC>

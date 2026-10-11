@@ -13,6 +13,7 @@ import "../components"
 import "../components/Constants"
 import "../components/Page"
 import "../viewmodels"
+import "../components/Flickable"
 
 PageItem {
     id: publishpage
@@ -130,7 +131,7 @@ PageItem {
         }
     }
 
-    Flickable {
+    FlickableItem {
         anchors {
             left: parent.left
             right: parent.right
@@ -266,7 +267,7 @@ PageItem {
                 }
             }
 
-            ListView {
+            ListViewItem {
                 visible: selectedLocation === null && count > 0
                 x: units.gu(2)
                 width: parent.width - units.gu(2)

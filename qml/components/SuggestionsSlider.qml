@@ -3,8 +3,9 @@ import "Constants"
 import Lomiri.Components 1.3
 
 import "../js/Helper.js" as Helper
+import "Flickable"
 
-ListView {
+ListViewItem {
     id: listView
 
     property var currentPage: pageLayout.primaryPage

@@ -3,6 +3,7 @@ import Lomiri.Components 1.3
 
 import "../components"
 import "../components/Page"
+import "../components/Flickable"
 
 PageItem {
     id: creditsPage
@@ -11,7 +12,7 @@ PageItem {
         title: i18n.tr("Credits")
     }
 
-    Flickable {
+    FlickableItem {
         id: flickable
         anchors {
             left: parent.left
