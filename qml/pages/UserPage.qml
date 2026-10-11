@@ -86,15 +86,11 @@ PageItem {
         height: parent.height
         contentWidth: parent.width
         contentHeight: entry_column.height
-        onContentYChanged: {
+        onEndApproached: {
             if (current_user_section === 3) {
-                if (feedViewModel.shouldLoadMoreTags(contentY, contentHeight, height)) {
-                    feedViewModel.loadMoreTags();
-                }
+                feedViewModel.loadMoreTags();
             } else {
-                if (feedViewModel.shouldLoadMore(contentY, contentHeight, height)) {
-                    feedViewModel.loadMore();
-                }
+                feedViewModel.loadMore();
             }
         }
 

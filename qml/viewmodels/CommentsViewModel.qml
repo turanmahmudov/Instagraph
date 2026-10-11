@@ -46,7 +46,7 @@ Item {
     }
 
     function canLoadMore() {
-        return moreAvailable && !nextComing;
+        return moreAvailable && !nextComing && !isLoading;
     }
 
     function postComment(text) {

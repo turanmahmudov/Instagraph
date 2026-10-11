@@ -36,8 +36,8 @@ PageItem {
             bottom: addCommentItem.top
             top: commentspage.header.bottom
         }
-        onMovementEnded: {
-            if (atYEnd && viewModel.canLoadMore()) {
+        onEndApproached: {
+            if (viewModel.canLoadMore()) {
                 viewModel.loadComments(viewModel.nextMinId);
             }
         }

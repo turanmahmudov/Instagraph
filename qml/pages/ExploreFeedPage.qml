@@ -151,11 +151,7 @@ PageItem {
             currentPage: exploreFeedPage
             model: exploreViewModel.feedModel
             refreshing: list_loading && exploreViewModel.feedModel.count == 0
-            onMovementEnded: {
-                if (atYEnd) {
-                    exploreViewModel.loadMore();
-                }
-            }
+            onEndApproached: exploreViewModel.loadMore()
             onRefreshRequested: exploreViewModel.loadFeed(true)
         }
     }

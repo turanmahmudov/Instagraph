@@ -97,12 +97,7 @@ PageItem {
             storiesTrayAllUsers: feedViewModel.storiesTrayAllUsers
             storiesTrayLoaded: feedViewModel.storiesTrayLoaded
         }
-        onContentYChanged: {
-            // Use ViewModel's helper to check if should load more
-            if (feedViewModel.shouldLoadMore(contentY, contentHeight, height)) {
-                feedViewModel.loadMore();
-            }
-        }
+        onEndApproached: feedViewModel.loadMore()
         PullToRefresh {
             refreshing: feedViewModel.isLoading && feedViewModel.feedModel.count === 0
             onRefresh: {

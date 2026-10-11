@@ -71,11 +71,7 @@ PageItem {
             bottom: parent.bottom
             top: requestsRow.bottom
         }
-        onMovementEnded: {
-            if (atYEnd) {
-                inboxViewModel.loadMore();
-            }
-        }
+        onEndApproached: inboxViewModel.loadMore()
 
         clip: true
         cacheBuffer: parent.height

@@ -104,14 +104,6 @@ BaseFeedViewModel {
     }
 
     /**
-     * Check if should load more tagged items based on scroll position
-     */
-    function shouldLoadMoreTags(contentY, contentHeight, viewHeight) {
-        var distanceFromBottom = contentHeight - contentY - viewHeight;
-        return distanceFromBottom < viewHeight * paginationThreshold && taggedMoreAvailable && !taggedNextComing && !isLoading && taggedNextMaxId;
-    }
-
-    /**
      * Load user info
      */
     function loadUserInfo() {

@@ -38,8 +38,8 @@ PageItem {
                 usernameId: user.pk
             })
         }
-        onMovementEnded: {
-            if (atYEnd && viewModel.canLoadMore())
+        onEndApproached: {
+            if (viewModel.canLoadMore())
                 viewModel.load(viewModel.nextMaxId);
         }
         PullToRefresh {

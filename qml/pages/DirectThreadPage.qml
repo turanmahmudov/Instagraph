@@ -53,11 +53,7 @@ PageItem {
             bottomMargin: units.gu(1)
             top: directthreadpage.header.bottom
         }
-        onMovementEnded: {
-            if (atYBeginning) {
-                threadViewModel.loadMore();
-            }
-        }
+        onEndApproached: threadViewModel.loadMore()
         verticalLayoutDirection: ListView.BottomToTop
         clip: true
         cacheBuffer: parent.height * 3

@@ -95,11 +95,11 @@ Item {
     }
 
     /**
-     * Check if should load more items (for use in ListView.onMovementEnded)
+     * Check if should load more items
      * @returns true if pagination should be triggered
      */
     function canLoadMore() {
-        return hasPagination && moreAvailable && !nextComing;
+        return hasPagination && moreAvailable && !nextComing && !isLoading;
     }
 
     /**

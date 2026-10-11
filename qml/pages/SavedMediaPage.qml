@@ -53,11 +53,7 @@ PageItem {
         height: parent.height
         cellWidth: gridView.width / 3
         cellHeight: cellWidth
-        onContentYChanged: {
-            if (feedViewModel.shouldLoadMore(contentY, contentHeight, height)) {
-                feedViewModel.loadMore();
-            }
-        }
+        onEndApproached: feedViewModel.loadMore()
         model: feedViewModel.feedModel
         delegate: GridFeedDelegate {
             currentDelegatePage: savedmediapage

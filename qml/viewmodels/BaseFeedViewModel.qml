@@ -19,9 +19,6 @@ Item {
     id: base
     visible: false  // ViewModels are not visual components
 
-    // Constants
-    readonly property real paginationThreshold: 2.0
-
     // Feed data
     property JsonListModel feedModel
 
@@ -69,18 +66,6 @@ Item {
         if (loading) {
             hasError = false;
         }
-    }
-
-    /**
-     * Check if should load more items based on scroll position
-     * @param contentY - Current scroll position
-     * @param contentHeight - Total content height
-     * @param viewHeight - Visible viewport height
-     * @returns true if should trigger pagination
-     */
-    function shouldLoadMore(contentY, contentHeight, viewHeight) {
-        var distanceFromBottom = contentHeight - contentY - viewHeight;
-        return distanceFromBottom < viewHeight * paginationThreshold && moreAvailable && !nextComing && !isLoading && nextMaxId;
     }
 
     // Abstract functions that child ViewModels must implement:

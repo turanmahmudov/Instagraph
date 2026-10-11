@@ -49,11 +49,7 @@ PageItem {
             bottomMargin: bottomMenu.height
             top: locationfeedpage.header.bottom
         }
-        onContentYChanged: {
-            if (feedViewModel.shouldLoadMore(contentY, contentHeight, height)) {
-                feedViewModel.loadMore();
-            }
-        }
+        onEndApproached: feedViewModel.loadMore()
 
         clip: true
         cacheBuffer: parent.height * 2
