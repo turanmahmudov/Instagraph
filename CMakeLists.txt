@@ -9,6 +9,7 @@ set(CMAKE_AUTORCC ON)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Qml REQUIRED)
 find_package(Qt5Quick REQUIRED)
+find_package(Qt5Network REQUIRED)
 
 # Get architecture for install paths
 execute_process(
@@ -56,9 +57,11 @@ install(DIRECTORY qml DESTINATION ${DATA_DIR})
 # Main executable
 set(APP_SOURCES
     main.cpp
+    DiskCacheNetworkAccessManagerFactory.cpp
 )
 
 set(APP_HEADERS
+    DiskCacheNetworkAccessManagerFactory.h
 )
 
 # Resources
@@ -69,6 +72,7 @@ add_executable(${PROJECT_NAME} ${APP_SOURCES} ${APP_HEADERS} ${APP_RESOURCES})
 target_link_libraries(${PROJECT_NAME}
     Qt5::Core
     Qt5::Gui
+    Qt5::Network
     Qt5::Qml
     Qt5::Quick
 )

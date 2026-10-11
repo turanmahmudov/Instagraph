@@ -1,3 +1,5 @@
+#include "DiskCacheNetworkAccessManagerFactory.h"
+
 #include <QGuiApplication>
 #include <QLibrary>
 #include <QQmlApplicationEngine>
@@ -10,9 +12,12 @@ int main(int argc, char * argv[]) {
 
     QGuiApplication app(argc, argv);
 
+    DiskCacheNetworkAccessManagerFactory networkAccessManagerFactory;
+
     QQuickView view;
 
     QQmlEngine * engine = view.engine();
+    engine->setNetworkAccessManagerFactory(&networkAccessManagerFactory);
 
     // Content Hub works only in a Lomiri session. `clickable desktop` sets
     // CLICKABLE_DESKTOP_MODE; IS_DESKTOP overrides the detection.
