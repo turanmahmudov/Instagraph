@@ -6,8 +6,6 @@ set(CMAKE_AUTORCC ON)
 set(PLUGIN "ImageProcessorPlugin")
 
 find_package(Qt5 REQUIRED COMPONENTS Core Qml Quick Widgets)
-set(OpenGL_GL_PREFERENCE GLVND)
-find_package(OpenGL REQUIRED)
 
 set(PLUGIN_SOURCES
     plugin.cpp
@@ -30,7 +28,6 @@ target_link_libraries(${PLUGIN}
     Qt5::Qml
     Qt5::Quick
     Qt5::Widgets
-    OpenGL::GL
 )
 
 # Output to ImageProcessor/ directory (matches qmldir module name)
